@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Lifehack</string>
+    <string name="drawer_item_exchange_rates">Курсы валют</string>
+    <string name="module_title_exchange_rates" >Курсы валют</string>
 </resources>
