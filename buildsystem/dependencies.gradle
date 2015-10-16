@@ -16,6 +16,7 @@ ext {
     //Libraries
     butterKnifeVersion = '7.0.1'
     appCompat_v7 = supportVersion
+    daggerVersion = '2.0'
 
     //Testing
     jUnitVersion = '4.12'
@@ -24,6 +25,8 @@ ext {
 
             butterKnife : "com.jakewharton:butterknife:${butterKnifeVersion}",
             appCompat_v7: "com.android.support:appcompat-v7:${appCompat_v7}",
-            jUnit:"junit:junit:${jUnitVersion}"
+            jUnit:"junit:junit:${jUnitVersion}",
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:             "com.google.dagger:dagger:${daggerVersion}",
     ]
 }

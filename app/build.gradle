@@ -40,4 +40,6 @@ dependencies {
     testCompile presentationDependencies.jUnit
     compile presentationDependencies.appCompat_v7
     compile presentationDependencies.butterKnife
+    apt presentationDependencies.daggerCompiler
+    compile presentationDependencies.dagger
 }
