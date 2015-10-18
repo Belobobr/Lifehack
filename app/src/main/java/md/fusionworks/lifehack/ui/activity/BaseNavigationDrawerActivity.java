@@ -1,5 +1,6 @@
 package md.fusionworks.lifehack.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,14 +19,16 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.presenter.BaseNavigationDrawerPresenter;
+import md.fusionworks.lifehack.ui.view.BaseNavigationDrawerView;
+import md.fusionworks.lifehack.util.Constants;
 import md.fusionworks.lifehack.util.UIUtils;
 
 /**
  * Created by admin on 03.09.2015.
  */
-public class BaseNavigationDrawerActivity extends BaseActivity {
+public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNavigationDrawerView {
 
-    protected static final int DRAWER_ITEM_EXCHANGE_RATES = 0;
     protected static final int DRAWER_ITEM_INVALID = -1;
     protected static final int DRAWER_ITEM_SEPARATOR = -2;
 
@@ -52,11 +55,13 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
     private View[] drawerItemViews = null;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Handler handler;
+    private BaseNavigationDrawerPresenter baseNavigationDrawerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initialize();
         handler = new Handler();
     }
 
@@ -72,7 +77,14 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         setupDrawerLayout();
     }
 
-    private void setupDrawerLayout() {
+    private void initialize() {
+
+        this.baseNavigationDrawerPresenter = new BaseNavigationDrawerPresenter();
+        this.baseNavigationDrawerPresenter.attachView(this);
+    }
+
+    @Override
+    public void setupDrawerLayout() {
 
         int selfItem = getSelfDrawerItem();
 
@@ -96,19 +108,22 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    protected void setTitle(String title) {
+    @Override
+    public void setTitle(String title) {
 
         getSupportActionBar().setTitle(title);
     }
 
-    private void populateDrawerItems() {
+    @Override
+    public void populateDrawerItems() {
 
-        drawerItems.add(DRAWER_ITEM_EXCHANGE_RATES);
+        drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
 
         createDrawerItems();
     }
 
-    private void createDrawerItems() {
+    @Override
+    public void createDrawerItems() {
 
         if (drawerItemsListContainer == null) {
             return;
@@ -124,7 +139,8 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         }
     }
 
-    private View makeDrawerItem(final int itemId, ViewGroup container) {
+    @Override
+    public View makeDrawerItem(final int itemId, ViewGroup container) {
         boolean selected = getSelfDrawerItem() == itemId;
         int layoutToInflate = 0;
         if (itemId == DRAWER_ITEM_SEPARATOR) {
@@ -160,19 +176,23 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         return view;
     }
 
-    protected int getSelfDrawerItem() {
+    @Override
+    public int getSelfDrawerItem() {
         return DRAWER_ITEM_INVALID;
     }
 
-    private boolean isSeparator(int itemId) {
+    @Override
+    public boolean isSeparator(int itemId) {
         return itemId == DRAWER_ITEM_SEPARATOR;
     }
 
-    private boolean isSimpleActivity(int itemId) {
+    @Override
+    public boolean isSimpleActivity(int itemId) {
         return itemId == DRAWER_ITEM_INVALID;
     }
 
-    private void formatDrawerItem(View view, int itemId, boolean selected) {
+    @Override
+    public void formatDrawerItem(View view, int itemId, boolean selected) {
         if (isSeparator(itemId)) {
             // not applicable
             return;
@@ -193,17 +213,19 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
                 getResources().getColor(R.color.navdrawer_icon_tint));
     }
 
-    private void onDrawerItemClicked(final int itemId) {
+    @Override
+    public void onDrawerItemClicked(final int itemId) {
         if (itemId == getSelfDrawerItem()) {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
 
         if (isSimpleActivity(itemId)) {
-            goToDrawerItem(itemId);
+            this.baseNavigationDrawerPresenter.goToDrawerItem(itemId);
         } else {
 
-            handler.postDelayed(() -> goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
+            handler.postDelayed(() ->
+                    this.baseNavigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
 
             setSelectedDrawerItem(itemId);
         }
@@ -211,18 +233,9 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    private void goToDrawerItem(int item) {
-        Intent intent;
-        switch (item) {
-            case DRAWER_ITEM_EXCHANGE_RATES:
-                intent = new Intent(this, ExchangeRatesActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-        }
-    }
 
-    private void setSelectedDrawerItem(int itemId) {
+    @Override
+    public void setSelectedDrawerItem(int itemId) {
 
         if (drawerItemViews != null) {
             for (int i = 0; i < drawerItemViews.length; i++) {
@@ -234,4 +247,17 @@ public class BaseNavigationDrawerActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.baseNavigationDrawerPresenter.destroy();
+    }
+
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }

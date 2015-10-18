@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.util.Constants;
 
 public class ExchangeRatesActivity extends BaseNavigationDrawerActivity {
 
@@ -21,8 +22,8 @@ public class ExchangeRatesActivity extends BaseNavigationDrawerActivity {
     }
 
     @Override
-    protected int getSelfDrawerItem() {
+    public int getSelfDrawerItem() {
 
-        return DRAWER_ITEM_EXCHANGE_RATES;
+        return Constants.DRAWER_ITEM_EXCHANGE_RATES;
     }
 }

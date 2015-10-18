@@ -36,6 +36,16 @@ public class LaunchPresenter implements Presenter<LaunchView> {
         detachView(this.launchView);
     }
 
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
     public void goToApplication() {
 
         Context context = this.launchView.getContext();

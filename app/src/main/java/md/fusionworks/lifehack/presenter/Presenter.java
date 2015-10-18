@@ -12,4 +12,8 @@ public interface Presenter<T> {
     void detachView(@NonNull T view);
 
     void destroy();
+
+    void resume();
+
+    void pause();
 }
