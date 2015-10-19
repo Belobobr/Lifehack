@@ -1,38 +1,19 @@
 package md.fusionworks.lifehack.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import md.fusionworks.lifehack.presenter.LaunchPresenter;
-import md.fusionworks.lifehack.ui.view.LaunchView;
+import md.fusionworks.lifehack.navigation.Navigator;
 
-public class LaunchActivity extends BaseActivity implements LaunchView {
+public class LaunchActivity extends BaseActivity {
 
-    private LaunchPresenter launchPresenter;
+    private Navigator navigator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initialize();
-        launchPresenter.goToApplication();
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        launchPresenter.destroy();
-    }
-
-    private void initialize() {
-
-        launchPresenter = new LaunchPresenter();
-        launchPresenter.attachView(this);
+        navigator = new Navigator(this);
+        navigator.navigateToExchangeRatesActivity();
+        finish();
     }
 }

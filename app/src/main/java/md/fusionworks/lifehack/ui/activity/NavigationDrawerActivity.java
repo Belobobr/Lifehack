@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.presenter.BaseNavigationDrawerPresenter;
-import md.fusionworks.lifehack.ui.view.BaseNavigationDrawerView;
+import md.fusionworks.lifehack.presenter.NavigationDrawerPresenter;
+import md.fusionworks.lifehack.ui.view.NavigationDrawerView;
 import md.fusionworks.lifehack.util.Constants;
 import md.fusionworks.lifehack.util.UIUtils;
 
 /**
  * Created by admin on 03.09.2015.
  */
-public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNavigationDrawerView {
+public class NavigationDrawerActivity extends BaseActivity implements NavigationDrawerView {
 
     protected static final int DRAWER_ITEM_INVALID = -1;
     protected static final int DRAWER_ITEM_SEPARATOR = -2;
@@ -54,7 +54,7 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
     private View[] drawerItemViews = null;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Handler handler;
-    private BaseNavigationDrawerPresenter baseNavigationDrawerPresenter;
+    private NavigationDrawerPresenter navigationDrawerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
 
     private void initialize() {
 
-        baseNavigationDrawerPresenter = new BaseNavigationDrawerPresenter();
-        baseNavigationDrawerPresenter.attachView(this);
+        navigationDrawerPresenter = new NavigationDrawerPresenter(this);
+        navigationDrawerPresenter.attachView(this);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        toolbar.setNavigationOnClickListener(view -> baseNavigationDrawerPresenter.openDrawer());
+        toolbar.setNavigationOnClickListener(view -> navigationDrawerPresenter.openDrawer());
         actionBarDrawerToggle.syncState();
 
         populateDrawerItems();
@@ -170,7 +170,7 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
 
         formatDrawerItem(view, itemId, selected);
 
-        view.setOnClickListener(v -> baseNavigationDrawerPresenter.onDrawerItemClicked(itemId));
+        view.setOnClickListener(v -> navigationDrawerPresenter.onDrawerItemClicked(itemId));
 
         return view;
     }
@@ -215,21 +215,21 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
     @Override
     public void onDrawerItemClicked(final int itemId) {
         if (itemId == getSelfDrawerItem()) {
-            baseNavigationDrawerPresenter.closeDrawer();
+            navigationDrawerPresenter.closeDrawer();
             return;
         }
 
         if (isSimpleActivity(itemId)) {
-            baseNavigationDrawerPresenter.goToDrawerItem(itemId);
+            navigationDrawerPresenter.goToDrawerItem(itemId);
         } else {
 
             handler.postDelayed(() ->
-                    baseNavigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
+                    navigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
 
             setSelectedDrawerItem(itemId);
         }
 
-        baseNavigationDrawerPresenter.closeDrawer();
+        navigationDrawerPresenter.closeDrawer();
     }
 
 
@@ -262,12 +262,6 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
     protected void onDestroy() {
         super.onDestroy();
 
-        this.baseNavigationDrawerPresenter.destroy();
-    }
-
-
-    @Override
-    public Context getContext() {
-        return this;
+        this.navigationDrawerPresenter.destroy();
     }
 }

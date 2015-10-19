@@ -1,12 +1,20 @@
 package md.fusionworks.lifehack.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.util.Constants;
 
-public class ExchangeRatesActivity extends BaseNavigationDrawerActivity {
+public class ExchangeRatesActivity extends NavigationDrawerActivity {
+
+
+    public static Intent getCallingIntent(Context context) {
+
+        Intent callingIntent = new Intent(context, ExchangeRatesActivity.class);
+        return callingIntent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

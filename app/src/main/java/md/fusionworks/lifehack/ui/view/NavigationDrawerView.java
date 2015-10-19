@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 /**
  * Created by ungvas on 10/18/15.
  */
-public interface BaseNavigationDrawerView extends View {
+public interface NavigationDrawerView extends View {
 
     void setupDrawerLayout();
 

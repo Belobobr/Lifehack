@@ -5,33 +5,42 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import md.fusionworks.lifehack.navigation.Navigator;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
-import md.fusionworks.lifehack.ui.view.BaseNavigationDrawerView;
+import md.fusionworks.lifehack.ui.view.NavigationDrawerView;
 import md.fusionworks.lifehack.util.Constants;
 
 /**
  * Created by ungvas on 10/18/15.
  */
-public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDrawerView> {
+public class NavigationDrawerPresenter implements Presenter<NavigationDrawerView> {
 
-    private BaseNavigationDrawerView baseNavigationDrawerView;
+    private Context context;
+    private Navigator navigator;
+    private NavigationDrawerView navigationDrawerView;
 
-    @Override
-    public void attachView(@NonNull BaseNavigationDrawerView view) {
+    public NavigationDrawerPresenter(Context context) {
 
-        baseNavigationDrawerView = view;
+        this.context = context;
+        navigator = new Navigator(context);
     }
 
     @Override
-    public void detachView(@NonNull BaseNavigationDrawerView view) {
+    public void attachView(@NonNull NavigationDrawerView view) {
 
-        baseNavigationDrawerView = null;
+        navigationDrawerView = view;
+    }
+
+    @Override
+    public void detachView(@NonNull NavigationDrawerView view) {
+
+        navigationDrawerView = null;
     }
 
     @Override
     public void destroy() {
 
-        this.detachView(baseNavigationDrawerView);
+        this.detachView(navigationDrawerView);
     }
 
     @Override
@@ -51,9 +60,7 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
 
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
 
-                Context context = baseNavigationDrawerView.getContext();
-                intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
-                context.startActivity(intentToLaunch);
+                navigator.navigateToExchangeRatesActivity();
                 ((Activity) context).finish();
                 break;
         }
@@ -61,16 +68,16 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
 
     public void onDrawerItemClicked(final int itemId) {
 
-        baseNavigationDrawerView.onDrawerItemClicked(itemId);
+        navigationDrawerView.onDrawerItemClicked(itemId);
     }
 
     public void openDrawer() {
 
-        baseNavigationDrawerView.openDrawer();
+        navigationDrawerView.openDrawer();
     }
 
     public void closeDrawer() {
 
-        baseNavigationDrawerView.closeDrawer();
+        navigationDrawerView.closeDrawer();
     }
 }
