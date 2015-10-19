@@ -58,4 +58,14 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
                 break;
         }
     }
+
+    public void onDrawerItemClicked(final int itemId) {
+
+        baseNavigationDrawerView.onDrawerItemClicked(itemId);
+    }
+
+    public void openDrawer() {
+
+        baseNavigationDrawerView.openDrawer();
+    }
 }

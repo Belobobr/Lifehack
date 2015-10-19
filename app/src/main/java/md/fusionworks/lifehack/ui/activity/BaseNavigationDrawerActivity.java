@@ -1,7 +1,6 @@
 package md.fusionworks.lifehack.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -96,7 +95,7 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        toolbar.setNavigationOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
+        toolbar.setNavigationOnClickListener(view -> baseNavigationDrawerPresenter.openDrawer());
         actionBarDrawerToggle.syncState();
 
         populateDrawerItems();
@@ -171,7 +170,7 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
 
         formatDrawerItem(view, itemId, selected);
 
-        view.setOnClickListener(v -> onDrawerItemClicked(itemId));
+        view.setOnClickListener(v -> baseNavigationDrawerPresenter.onDrawerItemClicked(itemId));
 
         return view;
     }
@@ -247,6 +246,11 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
         }
     }
 
+    @Override
+    public void openDrawer() {
+
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
 
     @Override
     protected void onDestroy() {

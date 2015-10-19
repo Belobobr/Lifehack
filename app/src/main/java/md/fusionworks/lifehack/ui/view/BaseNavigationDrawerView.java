@@ -28,4 +28,6 @@ public interface BaseNavigationDrawerView extends View {
     void onDrawerItemClicked(final int itemId);
 
     void setSelectedDrawerItem(int itemId);
+
+    void openDrawer();
 }
