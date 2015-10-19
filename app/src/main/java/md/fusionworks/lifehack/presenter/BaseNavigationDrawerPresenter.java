@@ -19,19 +19,19 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
     @Override
     public void attachView(@NonNull BaseNavigationDrawerView view) {
 
-        this.baseNavigationDrawerView = view;
+        baseNavigationDrawerView = view;
     }
 
     @Override
     public void detachView(@NonNull BaseNavigationDrawerView view) {
 
-        this.baseNavigationDrawerView = null;
+        baseNavigationDrawerView = null;
     }
 
     @Override
     public void destroy() {
 
-        this.detachView(this.baseNavigationDrawerView);
+        this.detachView(baseNavigationDrawerView);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
 
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
 
-                Context context = this.baseNavigationDrawerView.getContext();
+                Context context = baseNavigationDrawerView.getContext();
                 intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
                 context.startActivity(intentToLaunch);
                 ((Activity) context).finish();
@@ -67,5 +67,10 @@ public class BaseNavigationDrawerPresenter implements Presenter<BaseNavigationDr
     public void openDrawer() {
 
         baseNavigationDrawerView.openDrawer();
+    }
+
+    public void closeDrawer() {
+
+        baseNavigationDrawerView.closeDrawer();
     }
 }

@@ -21,19 +21,19 @@ public class LaunchPresenter implements Presenter<LaunchView> {
     @Override
     public void attachView(@NonNull LaunchView view) {
 
-        this.launchView = view;
+        launchView = view;
     }
 
     @Override
     public void detachView(@NonNull LaunchView view) {
 
-        this.launchView = null;
+        launchView = null;
     }
 
     @Override
     public void destroy() {
 
-        detachView(this.launchView);
+        detachView(launchView);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class LaunchPresenter implements Presenter<LaunchView> {
 
     public void goToApplication() {
 
-        Context context = this.launchView.getContext();
+        Context context = launchView.getContext();
         Intent intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
         context.startActivity(intentToLaunch);
         ((Activity) context).finish();

@@ -78,8 +78,8 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
 
     private void initialize() {
 
-        this.baseNavigationDrawerPresenter = new BaseNavigationDrawerPresenter();
-        this.baseNavigationDrawerPresenter.attachView(this);
+        baseNavigationDrawerPresenter = new BaseNavigationDrawerPresenter();
+        baseNavigationDrawerPresenter.attachView(this);
     }
 
     @Override
@@ -215,21 +215,21 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
     @Override
     public void onDrawerItemClicked(final int itemId) {
         if (itemId == getSelfDrawerItem()) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+            baseNavigationDrawerPresenter.closeDrawer();
             return;
         }
 
         if (isSimpleActivity(itemId)) {
-            this.baseNavigationDrawerPresenter.goToDrawerItem(itemId);
+            baseNavigationDrawerPresenter.goToDrawerItem(itemId);
         } else {
 
             handler.postDelayed(() ->
-                    this.baseNavigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
+                    baseNavigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
 
             setSelectedDrawerItem(itemId);
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START);
+        baseNavigationDrawerPresenter.closeDrawer();
     }
 
 
@@ -250,6 +250,12 @@ public class BaseNavigationDrawerActivity extends BaseActivity implements BaseNa
     public void openDrawer() {
 
         drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void closeDrawer() {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override

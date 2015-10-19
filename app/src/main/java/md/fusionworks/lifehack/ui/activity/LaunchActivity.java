@@ -15,7 +15,7 @@ public class LaunchActivity extends BaseActivity implements LaunchView {
         super.onCreate(savedInstanceState);
 
         initialize();
-        this.launchPresenter.goToApplication();
+        launchPresenter.goToApplication();
     }
 
     @Override
@@ -27,12 +27,12 @@ public class LaunchActivity extends BaseActivity implements LaunchView {
     protected void onDestroy() {
         super.onDestroy();
 
-        this.launchPresenter.destroy();
+        launchPresenter.destroy();
     }
 
     private void initialize() {
 
-        this.launchPresenter = new LaunchPresenter();
-        this.launchPresenter.attachView(this);
+        launchPresenter = new LaunchPresenter();
+        launchPresenter.attachView(this);
     }
 }
