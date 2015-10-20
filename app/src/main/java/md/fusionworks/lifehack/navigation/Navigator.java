@@ -20,5 +20,6 @@ public class Navigator {
 
         Intent intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
         context.startActivity(intentToLaunch);
+
     }
 }
