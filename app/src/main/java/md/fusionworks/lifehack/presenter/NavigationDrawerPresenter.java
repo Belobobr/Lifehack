@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+
+import md.fusionworks.lifehack.di.PerActivity;
 import md.fusionworks.lifehack.navigation.Navigator;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.view.NavigationDrawerView;
@@ -13,16 +16,18 @@ import md.fusionworks.lifehack.util.Constants;
 /**
  * Created by ungvas on 10/18/15.
  */
+@PerActivity
 public class NavigationDrawerPresenter implements Presenter<NavigationDrawerView> {
 
     private Context context;
     private Navigator navigator;
     private NavigationDrawerView navigationDrawerView;
 
-    public NavigationDrawerPresenter(Context context) {
+    @Inject
+    public NavigationDrawerPresenter(Context context, Navigator navigator) {
 
         this.context = context;
-        navigator = new Navigator(context);
+        this.navigator = navigator;
     }
 
     @Override

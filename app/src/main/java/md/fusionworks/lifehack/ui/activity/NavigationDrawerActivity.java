@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
@@ -54,7 +56,8 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
     private View[] drawerItemViews = null;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Handler handler;
-    private NavigationDrawerPresenter navigationDrawerPresenter;
+
+    @Inject NavigationDrawerPresenter navigationDrawerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
 
     private void initialize() {
 
-        navigationDrawerPresenter = new NavigationDrawerPresenter(this);
+        activityComponent.inject(this);
         navigationDrawerPresenter.attachView(this);
     }
 
