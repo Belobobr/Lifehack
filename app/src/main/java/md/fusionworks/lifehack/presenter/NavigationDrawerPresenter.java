@@ -7,9 +7,8 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import md.fusionworks.lifehack.di.PerActivity;
+import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.navigation.Navigator;
-import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.view.NavigationDrawerView;
 import md.fusionworks.lifehack.util.Constants;
 

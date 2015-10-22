@@ -1,10 +1,9 @@
 package md.fusionworks.lifehack.di.component;
 
-import android.app.Activity;
 import android.content.Context;
 
 import dagger.Component;
-import md.fusionworks.lifehack.di.PerActivity;
+import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.di.module.ActivityModule;
 import md.fusionworks.lifehack.ui.activity.BaseActivity;
 import md.fusionworks.lifehack.ui.activity.NavigationDrawerActivity;

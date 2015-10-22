@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import md.fusionworks.lifehack.di.PerActivity;
+import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 
 /**

@@ -6,4 +6,5 @@ package md.fusionworks.lifehack.util;
 public class Constants {
 
     public static final int DRAWER_ITEM_EXCHANGE_RATES = 0;
+    public static final int DRAWER_ITEM_LIFE_HACKS = 1;
 }

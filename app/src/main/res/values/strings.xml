@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Lifehack</string>
     <string name="drawer_item_exchange_rates">Курсы валют</string>
+    <string name="drawer_item_life_hacks">Лайфхаки</string>
     <string name="module_title_exchange_rates" >Курсы валют</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

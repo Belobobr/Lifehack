@@ -37,12 +37,14 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
 
     private static final int[] DRAWER_TITLE_RES_ID = new int[]{
 
-            R.string.drawer_item_exchange_rates
+            R.string.drawer_item_exchange_rates,
+            R.string.drawer_item_life_hacks
     };
 
     private static final int[] DRAWER_ICON_RES_ID = new int[]{
 
-            R.drawable.ic_attach_money_black_24dp
+            R.drawable.ic_attach_money_black_24dp,
+            0
     };
 
     @Bind(R.id.toolbar)
@@ -120,6 +122,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
     public void populateDrawerItems() {
 
         drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
+        drawerItems.add(Constants.DRAWER_ITEM_LIFE_HACKS);
 
         createDrawerItems();
     }

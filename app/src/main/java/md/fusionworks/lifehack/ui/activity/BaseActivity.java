@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import md.fusionworks.lifehack.di.HasComponent;
 import md.fusionworks.lifehack.di.component.ActivityComponent;
 import md.fusionworks.lifehack.di.component.DaggerActivityComponent;
 import md.fusionworks.lifehack.di.module.ActivityModule;
@@ -40,5 +41,10 @@ public class BaseActivity extends AppCompatActivity {
                 .activityModule(new ActivityModule(this))
                 .build();
         activityComponent.inject(this);
+    }
+
+
+    protected ActivityModule getActivityModule() {
+        return new ActivityModule(this);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import md.fusionworks.lifehack.di.PerActivity;
+import md.fusionworks.lifehack.di.scope.PerActivity;
 
 /**
  * Created by ungvas on 10/21/15.
