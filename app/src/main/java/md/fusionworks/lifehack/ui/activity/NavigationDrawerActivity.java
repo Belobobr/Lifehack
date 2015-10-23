@@ -56,6 +56,16 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
             R.drawable.ic_lens_black_24dp,
     };
 
+    private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[]{
+
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+    };
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.drawerLayout)
@@ -180,6 +190,8 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
                 DRAWER_ICON_RES_ID[itemId] : 0;
         int titleId = itemId >= 0 && itemId < DRAWER_TITLE_RES_ID.length ?
                 DRAWER_TITLE_RES_ID[itemId] : 0;
+        boolean isActive = itemId >= 0 && itemId < DRAWER_ITEM_ACTIVE_STATE.length ?
+                DRAWER_ITEM_ACTIVE_STATE[itemId] : false;
 
         iconView.setVisibility(iconId > 0 ? View.VISIBLE : View.GONE);
         if (iconId > 0) {
@@ -187,9 +199,9 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         }
         titleView.setText(getString(titleId));
 
-        formatDrawerItem(view, itemId, selected);
+        formatDrawerItem(view, itemId, selected, isActive);
 
-        if (itemId == 2)
+        if (isActive)
             view.setOnClickListener(v -> navigationDrawerPresenter.onDrawerItemClicked(itemId));
 
         return view;
@@ -211,7 +223,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
     }
 
     @Override
-    public void formatDrawerItem(View view, int itemId, boolean selected) {
+    public void formatDrawerItem(View view, int itemId, boolean selected, boolean isActive) {
         if (isSeparator(itemId)) {
             // not applicable
             return;
@@ -224,12 +236,21 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
             view.setBackgroundResource(R.drawable.selected_navdrawer_item_background);
         }
 
-        titleView.setTextColor(selected ?
-                getResources().getColor(R.color.navdrawer_text_color_selected) :
-                getResources().getColor(R.color.navdrawer_text_color));
-        iconView.setColorFilter(selected ?
-                getResources().getColor(R.color.navdrawer_icon_tint_selected) :
-                getResources().getColor(R.color.navdrawer_icon_tint));
+        int titleColorRes;
+        int iconColorRes;
+
+        if (isActive) {
+
+            titleColorRes = selected ? R.color.navdrawer_text_color_selected : R.color.navdrawer_text_color;
+            iconColorRes = selected ? R.color.navdrawer_icon_tint_selected : R.color.navdrawer_icon_tint;
+        } else {
+
+            titleColorRes = R.color.navdrawer_text_color_inactive;
+            iconColorRes = R.color.navdrawer_icon_tint_inactive;
+        }
+
+        titleView.setTextColor(getResources().getColor(titleColorRes));
+        iconView.setColorFilter(getResources().getColor(iconColorRes));
     }
 
     @Override
@@ -259,8 +280,11 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         if (drawerItemViews != null) {
             for (int i = 0; i < drawerItemViews.length; i++) {
                 if (i < drawerItems.size()) {
+
                     int thisItemId = drawerItems.get(i);
-                    formatDrawerItem(drawerItemViews[i], thisItemId, itemId == thisItemId);
+                    boolean isActive = itemId >= 0 && itemId < DRAWER_ITEM_ACTIVE_STATE.length ?
+                            DRAWER_ITEM_ACTIVE_STATE[itemId] : false;
+                    formatDrawerItem(drawerItemViews[i], thisItemId, itemId == thisItemId, isActive);
                 }
             }
         }

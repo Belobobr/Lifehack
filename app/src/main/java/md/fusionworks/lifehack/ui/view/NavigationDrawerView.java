@@ -23,7 +23,7 @@ public interface NavigationDrawerView extends View {
 
     boolean isSimpleActivity(int itemId);
 
-    void formatDrawerItem(android.view.View view, int itemId, boolean selected);
+    void formatDrawerItem(android.view.View view, int itemId, boolean selected, boolean isActive);
 
     void onDrawerItemClicked(final int itemId);
 

@@ -37,7 +37,7 @@
             android:text="MDL"
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -47,9 +47,10 @@
             android:layout_weight="20"
             android:text="EUR"
             android:textSize="@dimen/text_size_medium"
+            android:clickable="true"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_selected_state_background"
+            android:background="@drawable/bg_currency_view_state_selected"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -61,7 +62,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -73,7 +74,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -85,7 +86,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -130,7 +131,7 @@
             android:text="MDL"
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
-            android:background="@drawable/currency_field_selected_state_background"
+            android:background="@drawable/bg_currency_view_state_selected"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -142,7 +143,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -154,7 +155,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -166,7 +167,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -178,7 +179,7 @@
             android:textSize="@dimen/text_size_medium"
             android:padding="8dp"
             android:layout_marginLeft="4dp"
-            android:background="@drawable/currency_field_normal_state_background"
+            android:background="@drawable/bg_currency_view_state_normal"
             android:gravity="center"
             android:textColor="#fff"
             />
@@ -192,7 +193,7 @@
         android:padding="10dp"
         android:layout_marginTop="16dp"
         android:layout_gravity="center"
-        android:background="@drawable/currency_field_normal_state_background"
+        android:background="@drawable/bg_currency_view_state_normal"
         android:gravity="center"
         android:textColor="#fff"
         />
