@@ -3,8 +3,8 @@
               xmlns:view="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:background="@color/white"
+              android:orientation="vertical"
               android:padding="16dp"
               tools:context="md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment">
 
@@ -13,9 +13,195 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/amount_field_background"
-        android:textSize="@dimen/text_size_large"
-        view:typeface="font/Roboto-Bold.ttf"
+        android:gravity="right"
         android:inputType="numberDecimal"
+        android:padding="12dp"
+        android:text="100"
+        android:textColor="#999"
+        android:textSize="@dimen/text_size_medium"
+        view:typeface="font/Roboto-Regular.ttf"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_marginTop="8dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="MDL"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="EUR"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_selected_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="USD"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="RON"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="RUB"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="="
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        />
+
+    <md.fusionworks.lifehack.ui.widget.TypefaceEditText
+        android:id="@+id/amountOutField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/amount_field_background"
+        android:gravity="right"
+        android:textColor="#999"
+        android:inputType="numberDecimal"
+        android:padding="12dp"
+        android:text="2252.01"
+        android:enabled="false"
+        android:textSize="@dimen/text_size_medium"
+        view:typeface="font/Roboto-Regular.ttf"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_marginTop="8dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="MDL"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:background="@drawable/currency_field_selected_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="EUR"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="USD"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="RON"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="RUB"
+            android:textSize="@dimen/text_size_medium"
+            android:padding="8dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/currency_field_normal_state_background"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="Где купить"
+        android:textSize="@dimen/text_size_large"
+        android:padding="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:background="@drawable/currency_field_normal_state_background"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:text="Только открытые сейчас"
+        />
 </LinearLayout>

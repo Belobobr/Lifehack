@@ -37,14 +37,23 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
 
     private static final int[] DRAWER_TITLE_RES_ID = new int[]{
 
+
+            R.string.drawer_item_main,
+            R.string.drawer_item_life_hacks,
             R.string.drawer_item_exchange_rates,
-            R.string.drawer_item_life_hacks
+            R.string.drawer_item_prices,
+            R.string.drawer_item_sales,
+            R.string.drawer_item_settings
     };
 
     private static final int[] DRAWER_ICON_RES_ID = new int[]{
 
-            R.drawable.ic_attach_money_black_24dp,
-            0
+            R.drawable.ic_lens_black_24dp,
+            R.drawable.ic_lens_black_24dp,
+            R.drawable.ic_lens_black_24dp,
+            R.drawable.ic_lens_black_24dp,
+            R.drawable.ic_lens_black_24dp,
+            R.drawable.ic_lens_black_24dp,
     };
 
     @Bind(R.id.toolbar)
@@ -121,8 +130,12 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
     @Override
     public void populateDrawerItems() {
 
-        drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
+        drawerItems.add(Constants.DRAWER_ITEM_MAIN);
         drawerItems.add(Constants.DRAWER_ITEM_LIFE_HACKS);
+        drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
+        drawerItems.add(Constants.DRAWER_ITEM_PRICES);
+        drawerItems.add(Constants.DRAWER_ITEM_SALES);
+        drawerItems.add(Constants.DRAWER_ITEM_SETTINGS);
 
         createDrawerItems();
     }
@@ -176,7 +189,8 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
 
         formatDrawerItem(view, itemId, selected);
 
-        view.setOnClickListener(v -> navigationDrawerPresenter.onDrawerItemClicked(itemId));
+        if (itemId == 2)
+            view.setOnClickListener(v -> navigationDrawerPresenter.onDrawerItemClicked(itemId));
 
         return view;
     }
