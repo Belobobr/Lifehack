@@ -1,8 +1,8 @@
 <resources>
 
-    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light" />
+    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light"/>
 
-    <style name="Theme" parent="FrameworkRoot.Theme" />
+    <style name="Theme" parent="FrameworkRoot.Theme"/>
 
     <style name="Theme.Lifehack.Base" parent="Theme">
         <item name="windowActionBar">false</item>
@@ -10,20 +10,29 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="currencyViewStyle">@style/CurrencyViewStyle</item>
     </style>
 
-    <style name="Theme.Lifehack" parent="Theme.Lifehack.Base" />
+    <style name="Theme.Lifehack" parent="Theme.Lifehack.Base"/>
 
     <style name="Theme.Lifehack.Launch" parent="Theme.Lifehack">
         <item name="android:windowBackground">@drawable/background_launch</item>
     </style>
 
-    <style name="Theme.Lifehack.ExchangeRates" parent="Theme.Lifehack.TranslucentStatus" />
+    <style name="Theme.Lifehack.ExchangeRates" parent="Theme.Lifehack.TranslucentStatus"/>
 
     <style name="ActionBarThemeOverlay" parent="">
         <item name="android:textColorPrimary">#fff</item>
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+    <style name="CurrencyViewStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

@@ -30,17 +30,13 @@
         android:layout_marginTop="8dp"
         >
 
-        <TextView
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:text="MDL"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
-            />
+            view:typeface="font/Roboto-Regular.ttf"
+               />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
