@@ -16,7 +16,6 @@
         android:gravity="right"
         android:inputType="numberDecimal"
         android:padding="12dp"
-        android:text="100"
         android:textColor="#999"
         android:textSize="@dimen/text_size_medium"
         view:typeface="font/Roboto-Regular.ttf"
@@ -25,66 +24,58 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:layout_marginTop="8dp"
         >
 
         <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyInMdlView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:text="MDL"
             view:typeface="font/Roboto-Regular.ttf"
-               />
-        <TextView
+            />
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyInEurView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="EUR"
-            android:textSize="@dimen/text_size_medium"
-            android:clickable="true"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_selected"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyInUsdView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="USD"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyInRonView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="RON"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyInRubView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="RUB"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
     </LinearLayout>
 
@@ -103,102 +94,70 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/amount_field_background"
+        android:enabled="false"
         android:gravity="right"
-        android:textColor="#999"
         android:inputType="numberDecimal"
         android:padding="12dp"
-        android:text="2252.01"
-        android:enabled="false"
+        android:textColor="#999"
         android:textSize="@dimen/text_size_medium"
         view:typeface="font/Roboto-Regular.ttf"
         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:layout_marginTop="8dp"
         >
 
-        <TextView
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyOutMdlView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:text="MDL"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:background="@drawable/bg_currency_view_state_selected"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyOutEurView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="EUR"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyOutUsdView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="USD"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyOutRonView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="RON"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
-        <TextView
+
+        <md.fusionworks.lifehack.ui.widget.CurrencyView
+            android:id="@+id/currencyOutRubView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_weight="20"
             android:text="RUB"
-            android:textSize="@dimen/text_size_medium"
-            android:padding="8dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:textColor="#fff"
+            view:typeface="font/Roboto-Regular.ttf"
             />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="Где купить"
-        android:textSize="@dimen/text_size_large"
-        android:padding="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_currency_view_state_normal"
-        android:gravity="center"
-        android:textColor="#fff"
-        />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:text="Только открытые сейчас"
-        />
 </LinearLayout>

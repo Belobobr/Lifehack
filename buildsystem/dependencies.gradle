@@ -17,16 +17,21 @@ ext {
     butterKnifeVersion = '7.0.1'
     appCompat_v7 = supportVersion
     daggerVersion = '2.0'
+    retrofitVersion = '2.0.0-beta2'
+    gsonVersion = '2.3'
 
     //Testing
     jUnitVersion = '4.12'
 
     presentationDependencies = [
 
-            butterKnife : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            appCompat_v7: "com.android.support:appcompat-v7:${appCompat_v7}",
-            jUnit:"junit:junit:${jUnitVersion}",
-            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife   : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            appCompat_v7  : "com.android.support:appcompat-v7:${appCompat_v7}",
+            jUnit         : "junit:junit:${jUnitVersion}",
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger        : "com.google.dagger:dagger:${daggerVersion}",
+            retrofit      : "com.squareup.retrofit:retrofit:${retrofitVersion}",
+            converter_gson:"com.squareup.retrofit:converter-gson:${retrofitVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
     ]
 }

@@ -37,7 +37,6 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
 
     private static final int[] DRAWER_TITLE_RES_ID = new int[]{
 
-
             R.string.drawer_item_main,
             R.string.drawer_item_life_hacks,
             R.string.drawer_item_exchange_rates,

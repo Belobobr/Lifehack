@@ -31,6 +31,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
 
     def presentationDependencies = rootProject.ext.presentationDependencies
@@ -42,4 +46,10 @@ dependencies {
     compile presentationDependencies.butterKnife
     apt presentationDependencies.daggerCompiler
     compile presentationDependencies.dagger
+    compile presentationDependencies.retrofit
+    compile presentationDependencies.converter_gson
+    compile presentationDependencies.gson
+    compile('com.github.afollestad.material-dialogs:core:0.8.4.2@aar') {
+        transitive = true
+    }
 }
