@@ -49,7 +49,8 @@ dependencies {
     compile presentationDependencies.retrofit
     compile presentationDependencies.converter_gson
     compile presentationDependencies.gson
-    compile('com.github.afollestad.material-dialogs:core:0.8.4.2@aar') {
+    compile(presentationDependencies.materialDialogs) {
         transitive = true
     }
+    compile presentationDependencies.materialDateTimePicker
 }

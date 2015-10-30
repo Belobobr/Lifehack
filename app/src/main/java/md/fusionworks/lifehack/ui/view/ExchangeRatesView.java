@@ -13,6 +13,8 @@ public interface ExchangeRatesView extends View {
 
     void setAmountInValue(String value);
 
+    String getAmountInValue();
+
     void setAmountOutValue(String value);
 
     void initializeViewListeners();

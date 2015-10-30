@@ -101,6 +101,12 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
+    public String getAmountInValue() {
+
+      return   amountInField.getText().toString();
+    }
+
+    @Override
     public void setAmountOutValue(String value) {
 
         amountOutField.setText(value);
@@ -123,6 +129,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void afterTextChanged(Editable s) {
 
+                exchangeRatesPresenter.convert();
             }
         });
     }

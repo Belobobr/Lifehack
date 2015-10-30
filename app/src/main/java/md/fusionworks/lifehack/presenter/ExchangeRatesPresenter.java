@@ -12,9 +12,11 @@ import md.fusionworks.lifehack.api.LifehackClient;
 import md.fusionworks.lifehack.api.ServiceCreator;
 import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.BestExchange;
 import md.fusionworks.lifehack.model.Rate;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
 import md.fusionworks.lifehack.util.DateUtils;
+import md.fusionworks.lifehack.util.ExchangeRatesUtils;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -32,6 +34,8 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     private ExchangeRatesView exchangeRatesView;
 
     private LifehackClient lifehackClient;
+    private List<Rate> rateList;
+    private List<Bank> bankList;
 
     @Inject
     public ExchangeRatesPresenter(Context context) {
@@ -83,6 +87,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
                 if (response.isSuccess()) {
 
+                    bankList = response.body();
                     loadTodayRates();
                 } else {
 
@@ -109,6 +114,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
                 if (response.isSuccess()) {
 
+                    rateList = response.body();
                     setupViewByDefault();
                     exchangeRatesView.hideLoading();
                 } else {
@@ -137,5 +143,42 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         exchangeRatesView.initializeViewListeners();
         exchangeRatesView.setAmountInValue(String.valueOf(DEFAULT_AMOUNT_IN_VALUE));
+    }
+
+    public void convert() {
+
+        double amountInValue = Double.valueOf(exchangeRatesView.getAmountInValue());
+        double amountOutValue = convert(rateList, amountInValue, 1, 2, 1);
+        BestExchange bestExchange = convertBestExchange(rateList, amountInValue, 2, 1);
+        exchangeRatesView.setAmountOutValue(String.valueOf(bestExchange.getAmountOutvalue()));
+    }
+
+    private double convert(List<Rate> rateList, double amountInValue, int bankId, int currencyInId, int currencyOutId) {
+
+        List<Rate> bankRateList = ExchangeRatesUtils.getBankRates(rateList, bankId);
+        double currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyInId);
+        double currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyOutId);
+        double amountOutValue = ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+
+        return amountOutValue;
+    }
+
+    private BestExchange convertBestExchange(List<Rate> rateList, double amountInValue, int currencyInId, int currencyOutId) {
+
+        double amountOutValue = 0;
+        BestExchange bestExchange = new BestExchange();
+        for (Bank bank : bankList) {
+
+            if (bank.getId() != 1) {
+                double bankAmountOutValue = convert(rateList, amountInValue, bank.getId(), currencyInId, currencyOutId);
+                if (bankAmountOutValue > amountOutValue) {
+
+                    amountOutValue = bankAmountOutValue;
+                    bestExchange = new BestExchange(bank, amountOutValue);
+                }
+            }
+        }
+
+        return bestExchange;
     }
 }
