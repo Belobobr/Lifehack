@@ -8,16 +8,23 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.adapter.BankSpinnerAdapter;
 import md.fusionworks.lifehack.di.component.ExchangeRatesComponent;
+import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.BankSpinnerItem;
 import md.fusionworks.lifehack.presenter.ExchangeRatesPresenter;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
 
@@ -30,10 +37,13 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     EditText amountInField;
     @Bind(R.id.amountOutField)
     EditText amountOutField;
+    @Bind(R.id.bankSpinner)
+    Spinner bankSpinner;
 
     @Inject
     ExchangeRatesPresenter exchangeRatesPresenter;
     private MaterialDialog loadingRatesDialog;
+    private BankSpinnerAdapter bankSpinnerAdapter;
 
     public static ExchangeRatesFragment newInstance() {
 
@@ -51,6 +61,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
         View v = inflater.inflate(R.layout.fragment_exchange_rates, container, false);
         ButterKnife.bind(this, v);
+        setupUI();
+
         return v;
     }
 
@@ -68,17 +80,25 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         exchangeRatesPresenter.initialize();
     }
 
+    private void setupUI() {
+
+        bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
+    }
+
     @Override
     public void showLoading() {
 
-        if (loadingRatesDialog != null)
-            if (!loadingRatesDialog.isShowing())
-                loadingRatesDialog = new MaterialDialog.Builder(getActivity())
-                        .content(R.string.field_loading_rates)
-                        .progress(true, 0)
-                        .cancelable(false)
-                        .progressIndeterminateStyle(true)
-                        .show();
+        if (loadingRatesDialog == null) {
+            loadingRatesDialog = new MaterialDialog.Builder(getActivity())
+                    .content(R.string.field_loading_rates)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .progressIndeterminateStyle(true)
+                    .show();
+        }
+
+        if (!loadingRatesDialog.isShowing())
+            loadingRatesDialog.show();
     }
 
     @Override
@@ -103,7 +123,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Override
     public String getAmountInValue() {
 
-      return   amountInField.getText().toString();
+        return amountInField.getText().toString();
     }
 
     @Override
@@ -132,5 +152,38 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                 exchangeRatesPresenter.convert();
             }
         });
+        bankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                exchangeRatesPresenter.convert();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    @Override
+    public void populateBankSpinner(List<Bank> bankList) {
+
+        bankSpinnerAdapter.clear();
+        bankSpinnerAdapter.addItem(getActivity().getString(R.string.spinner_option_best_exchange), 0);
+        bankSpinnerAdapter.addHeader(getActivity().getString(R.string.spinner_option_bank_list));
+        for (Bank bank : bankList) {
+
+            bankSpinnerAdapter.addItem(bank.getName(), bank.getId());
+        }
+
+        bankSpinner.setAdapter(bankSpinnerAdapter);
+    }
+
+    @Override
+    public int getSelectedBankId() {
+
+        BankSpinnerItem bankSpinnerItem = (BankSpinnerItem) bankSpinner.getSelectedItem();
+        return bankSpinnerItem.getBankId();
     }
 }

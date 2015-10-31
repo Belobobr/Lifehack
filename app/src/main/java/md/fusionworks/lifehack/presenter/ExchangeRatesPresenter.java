@@ -141,16 +141,18 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     private void setupViewByDefault() {
 
-        exchangeRatesView.initializeViewListeners();
         exchangeRatesView.setAmountInValue(String.valueOf(DEFAULT_AMOUNT_IN_VALUE));
+        exchangeRatesView.populateBankSpinner(bankList);
+        exchangeRatesView.initializeViewListeners();
     }
 
     public void convert() {
 
+        int bankId = exchangeRatesView.getSelectedBankId();
         double amountInValue = Double.valueOf(exchangeRatesView.getAmountInValue());
-        double amountOutValue = convert(rateList, amountInValue, 1, 2, 1);
+        double amountOutValue = convert(rateList, amountInValue, 1, 2, bankId);
         BestExchange bestExchange = convertBestExchange(rateList, amountInValue, 2, 1);
-        exchangeRatesView.setAmountOutValue(String.valueOf(bestExchange.getAmountOutvalue()));
+        exchangeRatesView.setAmountOutValue(String.format("%.2f", amountOutValue));
     }
 
     private double convert(List<Rate> rateList, double amountInValue, int bankId, int currencyInId, int currencyOutId) {
