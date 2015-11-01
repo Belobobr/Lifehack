@@ -85,14 +85,18 @@
             android:layout_weight="50"
             android:layout_marginLeft="8dp"
             android:background="@drawable/bg_bank_spinner"
-            android:padding="8dp"/>
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            />
     </LinearLayout>
 
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/bestExchangeBankField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="false"
+        android:gravity="right"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_medium"
         view:typeface="font/Roboto-Regular.ttf"
