@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_calendar_black_24dp"
-        android:drawableTint="@color/divider"
+        android:drawableTint="#ff333333"
         android:layout_gravity="start|center_vertical"
         android:gravity="start|center_vertical"
         android:textSize="@dimen/text_size_large"

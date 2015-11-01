@@ -109,7 +109,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         });
     }
 
-    private void loadRates(String date) {
+    private void loadRates(String date, boolean setupViewByDefault) {
 
         exchangeRatesView.showLoading();
 
@@ -121,7 +121,12 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
                 if (response.isSuccess()) {
 
                     rateList = response.body();
-                    setupViewByDefault();
+
+                    if (setupViewByDefault)
+                        setupViewByDefault();
+                    else
+                        convert();
+
                     exchangeRatesView.hideLoading();
                 } else {
 
@@ -142,7 +147,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     private void loadTodayRates() {
 
         String today = DateUtils.getRateDateFormat().format(new Date());
-        loadRates(today);
+        loadRates(today, true);
     }
 
     private void setupViewByDefault() {
@@ -218,7 +223,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     public void onRatesDateChanged(Date date) {
 
         String dateText = DateUtils.getRateDateFormat().format(date);
-        loadRates(dateText);
+        loadRates(dateText, false);
     }
 
     private boolean currencyTheSame() {

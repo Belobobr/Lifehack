@@ -2,8 +2,10 @@ package md.fusionworks.lifehack.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -16,7 +18,7 @@ import md.fusionworks.lifehack.util.DateUtils;
 /**
  * Created by ungvas on 10/30/15.
  */
-public class DateView extends TypefaceTextView implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class DateView extends TextView implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private OnDateChangedListener onDateChangedListener;
 
@@ -39,6 +41,8 @@ public class DateView extends TypefaceTextView implements View.OnClickListener, 
 
     private void initialize() {
 
+        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "font/Roboto-Regular.ttf");
+        setTypeface(typeface);
         setDateText(new Date());
         setOnClickListener(this);
     }

@@ -21,63 +21,14 @@
         view:typeface="font/Roboto-Regular.ttf"
         />
 
-    <LinearLayout
+    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+        android:id="@+id/currencyInRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-4dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:weightSum="100"
-        >
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyInMdlView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="MDL"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyInEurView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="EUR"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyInUsdView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="USD"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyInRonView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="RON"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyInRubView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="RUB"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-    </LinearLayout>
+        android:weightSum="100"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -103,6 +54,15 @@
         view:typeface="font/Roboto-Regular.ttf"
         />
 
+    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+        android:id="@+id/currencyOutRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="100"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,82 +71,32 @@
         android:weightSum="100"
         >
 
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyOutMdlView"
+        <md.fusionworks.lifehack.ui.widget.DateView
+            android:id="@+id/ratesDateField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:text="MDL"
-            view:typeface="font/Roboto-Regular.ttf"
+            android:layout_weight="50"
             />
 
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyOutEurView"
+        <Spinner
+            android:id="@+id/bankSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="EUR"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyOutUsdView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="USD"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyOutRonView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="RON"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrencyView
-            android:id="@+id/currencyOutRubView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="20"
-            android:text="RUB"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
+            android:layout_weight="50"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/bg_bank_spinner"
+            android:padding="8dp"/>
     </LinearLayout>
-
-    <Spinner
-        android:id="@+id/bankSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/bestExchangeBankField"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <md.fusionworks.lifehack.ui.widget.DateView
-        android:id="@+id/ratesDateField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
-        android:id="@+id/currencyInRadioGroup"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="100"
-        android:orientation="horizontal"/>
+        android:singleLine="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_medium"
+        view:typeface="font/Roboto-Regular.ttf"
+        />
 
-    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
-        android:id="@+id/currencyOutRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100"/>
+
 </LinearLayout>

@@ -37,13 +37,14 @@
     </style>
 
     <style name="DateViewStyle">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:clickable">true</item>
         <item name="android:padding">8dp</item>
+        <item name="android:background">?android:selectableItemBackground</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:gravity">center</item>
         <item name="android:drawableLeft">@drawable/ic_calendar_black_24dp</item>
-        <item name="android:textColor">@color/md_divider_black</item>
+        <item name="android:textColor">#ff333333</item>
     </style>
 
 </resources>

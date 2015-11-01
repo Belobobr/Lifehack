@@ -35,7 +35,7 @@ public class CurrencyRadioGroup extends RadioGroup {
     public void addItem(Currency currency) {
 
         RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 20f);
-layoutParams.setMarginStart(getContext().getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin));
+        layoutParams.setMarginStart(getContext().getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin));
 
         RadioButton radioButton = new RadioButton(getContext());
         radioButton.setLayoutParams(layoutParams);
