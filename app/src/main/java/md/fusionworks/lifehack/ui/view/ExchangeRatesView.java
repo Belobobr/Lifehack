@@ -5,6 +5,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.Currency;
 
 /**
  * Created by ungvas on 10/22/15.
@@ -32,4 +33,20 @@ public interface ExchangeRatesView extends View {
     void setBankSelection(int position);
 
     void setBestExchangeBankText(String text);
+
+    void populateCurrencyInRadioGroup(List<Currency> currencyList);
+
+    void populateCurrencyOutRadioGroup(List<Currency> currencyList);
+
+    void clearCurrencyInRadioGroupItems();
+
+    void clearCurrencyOutRadioGroupItems();
+
+    int getCheckedCurrencyInId();
+
+    int getCheckedCurrencyOutId();
+
+    void setCurrencyInRadioGroupItemChecked(int index);
+
+    void setCurrencyOutRadioGroupChecked(int index);
 }

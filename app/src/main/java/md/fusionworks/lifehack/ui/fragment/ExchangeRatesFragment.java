@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,8 +28,10 @@ import md.fusionworks.lifehack.adapter.BankSpinnerAdapter;
 import md.fusionworks.lifehack.di.component.ExchangeRatesComponent;
 import md.fusionworks.lifehack.model.Bank;
 import md.fusionworks.lifehack.model.BankSpinnerItem;
+import md.fusionworks.lifehack.model.Currency;
 import md.fusionworks.lifehack.presenter.ExchangeRatesPresenter;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
+import md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
 
 /**
@@ -46,6 +49,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     TextView bestExchangeBankField;
     @Bind(R.id.ratesDateField)
     DateView ratesDateField;
+    @Bind(R.id.currencyInRadioGroup)
+    CurrencyRadioGroup currencyInRadioGroup;
+    @Bind(R.id.currencyOutRadioGroup)
+    CurrencyRadioGroup currencyOutRadioGroup;
 
     @Inject
     ExchangeRatesPresenter exchangeRatesPresenter;
@@ -180,7 +187,16 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             exchangeRatesPresenter.onRatesDateChanged(date);
         });
 
+        currencyInRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
+            exchangeRatesPresenter.convert();
+        });
+
+
+        currencyOutRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+
+            exchangeRatesPresenter.convert();
+        });
     }
 
     @Override
@@ -214,5 +230,53 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void setBestExchangeBankText(String text) {
 
         bestExchangeBankField.setText(text);
+    }
+
+    @Override
+    public void populateCurrencyInRadioGroup(List<Currency> currencyList) {
+
+        currencyInRadioGroup.addItems(currencyList);
+    }
+
+    @Override
+    public void populateCurrencyOutRadioGroup(List<Currency> currencyList) {
+
+        currencyOutRadioGroup.addItems(currencyList);
+    }
+
+    @Override
+    public void clearCurrencyInRadioGroupItems() {
+
+        currencyInRadioGroup.removeAllViews();
+    }
+
+    @Override
+    public void clearCurrencyOutRadioGroupItems() {
+
+        currencyInRadioGroup.removeAllViews();
+    }
+
+    @Override
+    public int getCheckedCurrencyInId() {
+
+        return currencyInRadioGroup.getCheckedRadioButtonId();
+    }
+
+    @Override
+    public int getCheckedCurrencyOutId() {
+
+        return currencyOutRadioGroup.getCheckedRadioButtonId();
+    }
+
+    @Override
+    public void setCurrencyInRadioGroupItemChecked(int index) {
+
+        currencyInRadioGroup.setItemCheckedByIndex(index);
+    }
+
+    @Override
+    public void setCurrencyOutRadioGroupChecked(int index) {
+
+        currencyOutRadioGroup.setItemCheckedByIndex(index);
     }
 }

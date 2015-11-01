@@ -165,12 +165,28 @@
         android:id="@+id/bankSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/bestExchangeBankField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <md.fusionworks.lifehack.ui.widget.DateView
         android:id="@+id/ratesDateField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+        android:id="@+id/currencyInRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"/>
+
+    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+        android:id="@+id/currencyOutRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"/>
 </LinearLayout>
