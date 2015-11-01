@@ -28,4 +28,8 @@ public interface ExchangeRatesView extends View {
     void populateBankSpinner(List<Bank> bankList);
 
     int getSelectedBankId();
+
+    void setBankSelection(int position);
+
+    void setBestExchangeBankText(String text);
 }

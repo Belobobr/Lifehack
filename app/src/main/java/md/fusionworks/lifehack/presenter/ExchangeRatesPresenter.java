@@ -107,6 +107,8 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     private void loadRates(String date) {
 
+        exchangeRatesView.showLoading();
+
         Call<List<Rate>> call = lifehackClient.getRates(date);
         call.enqueue(new Callback<List<Rate>>() {
             @Override
@@ -143,6 +145,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         exchangeRatesView.setAmountInValue(String.valueOf(DEFAULT_AMOUNT_IN_VALUE));
         exchangeRatesView.populateBankSpinner(bankList);
+        exchangeRatesView.setBankSelection(2);
         exchangeRatesView.initializeViewListeners();
     }
 
@@ -150,9 +153,19 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         int bankId = exchangeRatesView.getSelectedBankId();
         double amountInValue = Double.valueOf(exchangeRatesView.getAmountInValue());
-        double amountOutValue = convert(rateList, amountInValue, 1, 2, bankId);
-        BestExchange bestExchange = convertBestExchange(rateList, amountInValue, 2, 1);
-        exchangeRatesView.setAmountOutValue(String.format("%.2f", amountOutValue));
+
+        boolean bestExchangeOption = bankId == 0;
+        if (bestExchangeOption) {
+
+            BestExchange bestExchange = convertBestExchange(rateList, amountInValue, 2, 1);
+            exchangeRatesView.setAmountOutValue(String.format("%.2f", bestExchange.getAmountOutvalue()));
+            exchangeRatesView.setBestExchangeBankText(String.format("Используется курс банка %s", bestExchange.getBank().getName()));
+        } else {
+
+            double amountOutValue = convert(rateList, amountInValue, 1, 2, bankId);
+            exchangeRatesView.setAmountOutValue(String.format("%.2f", amountOutValue));
+            exchangeRatesView.setBestExchangeBankText("");
+        }
     }
 
     private double convert(List<Rate> rateList, double amountInValue, int bankId, int currencyInId, int currencyOutId) {
@@ -182,5 +195,11 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         }
 
         return bestExchange;
+    }
+
+   public void onRatesDateChanged(Date date){
+
+       String dateText = DateUtils.getRateDateFormat().format(date);
+       loadRates(dateText);
     }
 }

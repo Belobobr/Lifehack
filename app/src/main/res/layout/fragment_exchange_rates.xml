@@ -165,4 +165,12 @@
         android:id="@+id/bankSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        android:id="@+id/bestExchangeBankField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <md.fusionworks.lifehack.ui.widget.DateView
+        android:id="@+id/ratesDateField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

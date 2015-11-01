@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,6 +29,7 @@ import md.fusionworks.lifehack.model.Bank;
 import md.fusionworks.lifehack.model.BankSpinnerItem;
 import md.fusionworks.lifehack.presenter.ExchangeRatesPresenter;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
+import md.fusionworks.lifehack.ui.widget.DateView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +42,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     EditText amountOutField;
     @Bind(R.id.bankSpinner)
     Spinner bankSpinner;
+    @Bind(R.id.bestExchangeBankField)
+    TextView bestExchangeBankField;
+    @Bind(R.id.ratesDateField)
+    DateView ratesDateField;
 
     @Inject
     ExchangeRatesPresenter exchangeRatesPresenter;
@@ -107,6 +114,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         if (loadingRatesDialog != null)
             if (loadingRatesDialog.isShowing())
                 loadingRatesDialog.hide();
+
+        loadingRatesDialog = null;
     }
 
     @Override
@@ -152,6 +161,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                 exchangeRatesPresenter.convert();
             }
         });
+
         bankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -164,6 +174,13 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
             }
         });
+
+        ratesDateField.setOnDateChangedListener(date -> {
+
+            exchangeRatesPresenter.onRatesDateChanged(date);
+        });
+
+
     }
 
     @Override
@@ -185,5 +202,17 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
         BankSpinnerItem bankSpinnerItem = (BankSpinnerItem) bankSpinner.getSelectedItem();
         return bankSpinnerItem.getBankId();
+    }
+
+    @Override
+    public void setBankSelection(int position) {
+
+        bankSpinner.setSelection(position);
+    }
+
+    @Override
+    public void setBestExchangeBankText(String text) {
+
+        bestExchangeBankField.setText(text);
     }
 }
