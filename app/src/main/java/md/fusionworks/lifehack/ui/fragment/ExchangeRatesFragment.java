@@ -173,6 +173,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                setBestExchangeBankText("");
                 exchangeRatesPresenter.convert();
             }
 

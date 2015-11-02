@@ -32,9 +32,10 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:view="http://schemas.android.com/apk/res-auto"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:gravity="center"
+              android:orientation="horizontal">
 
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@android:id/text1"
@@ -42,11 +43,18 @@
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:paddingRight="4dp"
+        android:layout_weight="1"
         android:singleLine="true"
         android:textColor="#ff333333"
         android:textSize="16sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
-
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/spinner_triangle_sub"
+    android:tint="#ff333333"
+    android:layout_marginBottom="3dp"
+    />
 </LinearLayout>
 

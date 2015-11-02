@@ -182,11 +182,18 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
             BestExchange bestExchange = convertBestExchange(rateList, amountInValue, currencyInId, currencyOutId);
             exchangeRatesView.setAmountOutValue(String.format("%.2f", bestExchange.getAmountOutvalue()));
-            exchangeRatesView.setBestExchangeBankText(String.format("Используется курс банка %s", bestExchange.getBank().getName()));
+
+            String bestExchangeBankText = (bestExchange.getBank() != null) ?
+                    String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
+                    "Не найден подходящий банк";
+            exchangeRatesView.setBestExchangeBankText(bestExchangeBankText);
         } else {
 
-            double amountOutValue = convert(rateList, amountInValue, currencyInId, currencyOutId, bankId);
-            exchangeRatesView.setAmountOutValue(String.format("%.2f", amountOutValue));
+            double amountOutValue = convert(rateList, amountInValue, bankId, currencyInId, currencyOutId);
+
+            String amountOutValueText = (!String.valueOf(amountOutValue).equals("NaN")) ? String.format("%.2f", amountOutValue) : "-";
+
+            exchangeRatesView.setAmountOutValue(amountOutValueText);
             exchangeRatesView.setBestExchangeBankText("");
         }
     }
