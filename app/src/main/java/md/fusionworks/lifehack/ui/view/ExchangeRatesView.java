@@ -12,17 +12,17 @@ import md.fusionworks.lifehack.model.Currency;
  */
 public interface ExchangeRatesView extends View {
 
-    void showLoading();
+    void showLoadingRates();
 
-    void hideLoading();
+    void hideLoadingRates();
 
-    void showLoadingError();
+    void showLoadingRatesError();
 
-    void setAmountInValue(String value);
+    void setAmountInText(String text);
 
-    String getAmountInValue();
+    String getAmountInText();
 
-    void setAmountOutValue(String value);
+    void setAmountOutText(String text);
 
     void initializeViewListeners();
 
@@ -34,19 +34,19 @@ public interface ExchangeRatesView extends View {
 
     void setBestExchangeBankText(String text);
 
-    void populateCurrencyInRadioGroup(List<Currency> currencyList);
+    void populateCurrencyInGroup(List<Currency> currencyList);
 
-    void populateCurrencyOutRadioGroup(List<Currency> currencyList);
-
-    void clearCurrencyInRadioGroupItems();
-
-    void clearCurrencyOutRadioGroupItems();
+    void populateCurrencyOutGroup(List<Currency> currencyList);
 
     int getCheckedCurrencyInId();
 
     int getCheckedCurrencyOutId();
 
-    void setCurrencyInRadioGroupItemChecked(int index);
+    void currencyInCheckNext(int checkedId);
 
-    void setCurrencyOutRadioGroupChecked(int index);
+    void currencyOutCheckNext(int checkedId);
+
+    void setCurrencyInCheckedById(int currencyId);
+
+    void setCurrencyOutCheckedById(int currencyId);
 }

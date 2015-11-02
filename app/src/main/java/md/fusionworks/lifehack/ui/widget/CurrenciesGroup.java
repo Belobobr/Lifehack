@@ -1,8 +1,10 @@
 package md.fusionworks.lifehack.ui.widget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -14,28 +16,29 @@ import md.fusionworks.lifehack.model.Currency;
 /**
  * Created by ungvas on 11/1/15.
  */
-public class CurrencyRadioGroup extends RadioGroup {
+public class CurrenciesGroup extends RadioGroup {
 
-    public CurrencyRadioGroup(Context context) {
+    public CurrenciesGroup(Context context) {
         super(context);
     }
 
-    public CurrencyRadioGroup(Context context, AttributeSet attrs) {
+    public CurrenciesGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void addItems(List<Currency> currencyList) {
+    public void addCurrencies(List<Currency> currencyList) {
 
         for (Currency currency : currencyList) {
 
-            addItem(currency);
+            addCurrency(currency);
         }
     }
 
-    public void addItem(Currency currency) {
+    public void addCurrency(Currency currency) {
 
+        int marginLeft = getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin);
         RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 20f);
-        layoutParams.setMarginStart(getContext().getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin));
+        layoutParams.setMargins(marginLeft, 0, 0, 0);
 
         RadioButton radioButton = new RadioButton(getContext());
         radioButton.setLayoutParams(layoutParams);
@@ -43,12 +46,12 @@ public class CurrencyRadioGroup extends RadioGroup {
         radioButton.setId(currency.getId());
         radioButton.setText(currency.getName());
         radioButton.setButtonDrawable(android.R.color.transparent);
-        radioButton.setTextColor(getContext().getResources().getColor(R.color.white));
+        radioButton.setTextColor(getResources().getColor(R.color.white));
         radioButton.setBackgroundResource(R.drawable.bg_currency_radio_button);
         addView(radioButton);
     }
 
-    public void setItemCheckedByIndex(int index) {
+    public void setCurrencyCheckedByIndex(int index) {
 
         int itemsCount = getChildCount();
         if (itemsCount >= index) {
@@ -56,5 +59,27 @@ public class CurrencyRadioGroup extends RadioGroup {
             RadioButton radioButton = (RadioButton) getChildAt(index);
             radioButton.setChecked(true);
         }
+    }
+
+    public void setCurrencyCheckedById(int currencyId) {
+
+        RadioButton radioButton = (RadioButton) findViewById(currencyId);
+        radioButton.setChecked(true);
+    }
+
+    public void checkNextCurrency(int checkedId) {
+
+        View radioButton = findViewById(checkedId);
+        int index = indexOfChild(radioButton);
+        setCurrencyCheckedByIndex(getNextCurrencyIndex(index));
+    }
+
+    private int getNextCurrencyIndex(int index) {
+
+        int itemsCount = getChildCount();
+        if (index < itemsCount - 1)
+            return index + 1;
+
+        else return 0;
     }
 }

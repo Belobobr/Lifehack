@@ -11,18 +11,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.model.Bank;
 import md.fusionworks.lifehack.model.BankSpinnerItem;
 
 /**
  * Created by ungvas on 10/30/15.
  */
+@PerActivity
 public class BankSpinnerAdapter extends BaseAdapter {
 
     private Context context;
     private List<BankSpinnerItem> items = new ArrayList<>();
 
+    @Inject
     public BankSpinnerAdapter(Context context) {
         this.context = context;
     }
@@ -53,7 +58,7 @@ public class BankSpinnerAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return items.get(position).getBankId();
     }
 
     private boolean isHeader(int position) {

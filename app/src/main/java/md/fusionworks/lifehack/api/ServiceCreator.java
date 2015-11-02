@@ -21,18 +21,15 @@ public class ServiceCreator {
 
     public static <S> S createService(Class<S> serviceClass, String baseUrl, final String authToken) {
 
-        httpClient.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
+        httpClient.interceptors().add(chain -> {
+            Request original = chain.request();
 
-                Request request = original.newBuilder()
-                        .header("Accept", "application/json")
-                        .header("authorization", authToken)
-                        .build();
+            Request request = original.newBuilder()
+                    .header("Accept", "application/json")
+                    .header("authorization", authToken)
+                    .build();
 
-                return chain.proceed(request);
-            }
+            return chain.proceed(request);
         });
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();

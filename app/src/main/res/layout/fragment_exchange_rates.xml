@@ -21,7 +21,7 @@
         view:typeface="font/Roboto-Regular.ttf"
         />
 
-    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+    <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
         android:id="@+id/currencyInRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         view:typeface="font/Roboto-Regular.ttf"
         />
 
-    <md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup
+    <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
         android:id="@+id/currencyOutRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

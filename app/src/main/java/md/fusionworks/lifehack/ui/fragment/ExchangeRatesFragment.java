@@ -10,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +29,7 @@ import md.fusionworks.lifehack.model.BankSpinnerItem;
 import md.fusionworks.lifehack.model.Currency;
 import md.fusionworks.lifehack.presenter.ExchangeRatesPresenter;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
-import md.fusionworks.lifehack.ui.widget.CurrencyRadioGroup;
+import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
 
 /**
@@ -50,14 +48,15 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Bind(R.id.ratesDateField)
     DateView ratesDateField;
     @Bind(R.id.currencyInRadioGroup)
-    CurrencyRadioGroup currencyInRadioGroup;
+    CurrenciesGroup currenciesInGroup;
     @Bind(R.id.currencyOutRadioGroup)
-    CurrencyRadioGroup currencyOutRadioGroup;
+    CurrenciesGroup currenciesOutGroup;
 
-    @Inject
-    ExchangeRatesPresenter exchangeRatesPresenter;
+    @Inject ExchangeRatesPresenter exchangeRatesPresenter;
+    @Inject BankSpinnerAdapter bankSpinnerAdapter;
+
     private MaterialDialog loadingRatesDialog;
-    private BankSpinnerAdapter bankSpinnerAdapter;
+    private MaterialDialog loadingRatesErrorDialog;
 
     public static ExchangeRatesFragment newInstance() {
 
@@ -68,14 +67,12 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_exchange_rates, container, false);
         ButterKnife.bind(this, v);
-        setupUI();
 
         return v;
     }
@@ -94,13 +91,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         exchangeRatesPresenter.initialize();
     }
 
-    private void setupUI() {
-
-        bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
-    }
-
     @Override
-    public void showLoading() {
+    public void showLoadingRates() {
 
         if (loadingRatesDialog == null) {
             loadingRatesDialog = new MaterialDialog.Builder(getActivity())
@@ -116,7 +108,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void hideLoading() {
+    public void hideLoadingRates() {
 
         if (loadingRatesDialog != null)
             if (loadingRatesDialog.isShowing())
@@ -126,26 +118,26 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void showLoadingError() {
+    public void showLoadingRatesError() {
 
     }
 
     @Override
-    public void setAmountInValue(String value) {
+    public void setAmountInText(String text) {
 
-        amountInField.setText(value);
+        amountInField.setText(text);
     }
 
     @Override
-    public String getAmountInValue() {
+    public String getAmountInText() {
 
         return amountInField.getText().toString();
     }
 
     @Override
-    public void setAmountOutValue(String value) {
+    public void setAmountOutText(String text) {
 
-        amountOutField.setText(value);
+        amountOutField.setText(text);
     }
 
     @Override
@@ -165,7 +157,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void afterTextChanged(Editable s) {
 
-                exchangeRatesPresenter.convert();
+                exchangeRatesPresenter.afterAmountInTextChanged(s.toString());
             }
         });
 
@@ -173,8 +165,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                setBestExchangeBankText("");
-                exchangeRatesPresenter.convert();
+                exchangeRatesPresenter.onBankSelected(position, id);
             }
 
             @Override
@@ -188,15 +179,15 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             exchangeRatesPresenter.onRatesDateChanged(date);
         });
 
-        currencyInRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+        currenciesInGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            exchangeRatesPresenter.convert();
+            exchangeRatesPresenter.onCurrencyInChanged(group, checkedId);
         });
 
 
-        currencyOutRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+        currenciesOutGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            exchangeRatesPresenter.convert();
+            exchangeRatesPresenter.onCurrencyOutChanged(group, checkedId);
         });
     }
 
@@ -234,50 +225,50 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void populateCurrencyInRadioGroup(List<Currency> currencyList) {
+    public void populateCurrencyInGroup(List<Currency> currencyList) {
 
-        currencyInRadioGroup.addItems(currencyList);
+        currenciesInGroup.addCurrencies(currencyList);
     }
 
     @Override
-    public void populateCurrencyOutRadioGroup(List<Currency> currencyList) {
+    public void populateCurrencyOutGroup(List<Currency> currencyList) {
 
-        currencyOutRadioGroup.addItems(currencyList);
-    }
-
-    @Override
-    public void clearCurrencyInRadioGroupItems() {
-
-        currencyInRadioGroup.removeAllViews();
-    }
-
-    @Override
-    public void clearCurrencyOutRadioGroupItems() {
-
-        currencyInRadioGroup.removeAllViews();
+        currenciesOutGroup.addCurrencies(currencyList);
     }
 
     @Override
     public int getCheckedCurrencyInId() {
 
-        return currencyInRadioGroup.getCheckedRadioButtonId();
+        return currenciesInGroup.getCheckedRadioButtonId();
     }
 
     @Override
     public int getCheckedCurrencyOutId() {
 
-        return currencyOutRadioGroup.getCheckedRadioButtonId();
+        return currenciesOutGroup.getCheckedRadioButtonId();
     }
 
     @Override
-    public void setCurrencyInRadioGroupItemChecked(int index) {
+    public void currencyInCheckNext(int checkedId) {
 
-        currencyInRadioGroup.setItemCheckedByIndex(index);
+        currenciesInGroup.checkNextCurrency(checkedId);
     }
 
     @Override
-    public void setCurrencyOutRadioGroupChecked(int index) {
+    public void currencyOutCheckNext(int checkedId) {
 
-        currencyOutRadioGroup.setItemCheckedByIndex(index);
+        currenciesOutGroup.checkNextCurrency(checkedId);
+    }
+
+    @Override
+    public void setCurrencyInCheckedById(int currencyId) {
+
+        currenciesInGroup.setCurrencyCheckedById(currencyId);
+    }
+
+    @Override
+    public void setCurrencyOutCheckedById(int currencyId) {
+
+        currenciesOutGroup.setCurrencyCheckedById(currencyId);
     }
 }

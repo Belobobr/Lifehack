@@ -4,9 +4,6 @@
     <declare-styleable name="TypefaceTextView">
         <attr name="typeface" format="string"/>
     </declare-styleable>
-    <declare-styleable name="CurrencyView">
-        <attr name="currencyViewStyle" format="reference"/>
-    </declare-styleable>
     <declare-styleable name="DateView">
         <attr name="dateViewStyle" format="reference"/>
     </declare-styleable>
