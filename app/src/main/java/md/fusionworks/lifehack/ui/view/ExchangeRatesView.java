@@ -12,11 +12,17 @@ import md.fusionworks.lifehack.model.Currency;
  */
 public interface ExchangeRatesView extends View {
 
+    enum NotificationToastType {
+        INFO, ERROR
+    }
+
     void showLoadingRates();
 
     void hideLoadingRates();
 
     void showLoadingRatesError();
+
+    void showNotificationToast(String message, NotificationToastType type);
 
     void setAmountInText(String text);
 

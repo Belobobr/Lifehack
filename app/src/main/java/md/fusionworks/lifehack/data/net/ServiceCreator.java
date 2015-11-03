@@ -1,13 +1,9 @@
-package md.fusionworks.lifehack.api;
+package md.fusionworks.lifehack.data.net;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;

@@ -2,7 +2,9 @@ package md.fusionworks.lifehack.ui.fragment;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -270,5 +273,24 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void setCurrencyOutCheckedById(int currencyId) {
 
         currenciesOutGroup.setCurrencyCheckedById(currencyId);
+    }
+
+    @Override
+    public void showNotificationToast(String message, NotificationToastType type) {
+
+        Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT);
+
+        switch (type) {
+
+            case INFO:
+                break;
+            case ERROR:
+
+                View view = snackbar.getView();
+                view.setBackgroundColor(Color.RED);
+                break;
+        }
+
+        snackbar.show();
     }
 }
