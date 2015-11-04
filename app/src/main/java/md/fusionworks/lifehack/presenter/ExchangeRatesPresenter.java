@@ -86,6 +86,30 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     private void loadInitialData() {
 
         exchangeRatesView.showLoadingRates();
+        loadBanks();
+        loadCurrencies();
+        loadTodayRates();
+    }
+
+    private boolean isInitialDataLoaded() {
+
+        return (bankList != null && currencyList != null && rateList != null);
+    }
+
+    private void onInitialDataLoadedSuccess() {
+
+        exchangeRatesView.hideLoadingRates();
+        initializeUI();
+    }
+
+    private void onInitialDataLoadedError() {
+
+        exchangeRatesView.hideLoadingRates();
+        exchangeRatesView.showLoadingRatesError();
+    }
+
+
+    private void loadBanks() {
 
         exchangeRatesRepository.getBanks(new md.fusionworks.lifehack.data.net.Callback<List<Bank>>() {
             @Override
@@ -93,21 +117,20 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
                 bankList = response;
                 exchangeRatesView.populateBankSpinner(response);
-                loadCurrencies();
+
+                if (isInitialDataLoaded())
+                    onInitialDataLoadedSuccess();
             }
 
             @Override
             public void onError(Throwable t) {
 
-                exchangeRatesView.hideLoadingRates();
-                exchangeRatesView.showLoadingRatesError();
+                onInitialDataLoadedError();
             }
         });
     }
 
     private void loadCurrencies() {
-
-        exchangeRatesView.showLoadingRates();
 
         exchangeRatesRepository.getCurrencies(new md.fusionworks.lifehack.data.net.Callback<List<Currency>>() {
             @Override
@@ -116,21 +139,20 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
                 currencyList = response;
                 exchangeRatesView.populateCurrencyInGroup(response);
                 exchangeRatesView.populateCurrencyOutGroup(response);
-                loadTodayRates();
+
+                if (isInitialDataLoaded())
+                    onInitialDataLoadedSuccess();
             }
 
             @Override
             public void onError(Throwable t) {
 
                 exchangeRatesView.hideLoadingRates();
-                exchangeRatesView.showLoadingRatesError();
             }
         });
     }
 
     private void loadRates(String date, boolean initializeUI) {
-
-        exchangeRatesView.showLoadingRates();
 
         exchangeRatesRepository.getRates(date, new md.fusionworks.lifehack.data.net.Callback<List<Rate>>() {
             @Override
@@ -138,19 +160,24 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
                 rateList = response;
 
-                if (initializeUI)
-                    initializeUI();
-                else
-                    applyConversion();
 
-                exchangeRatesView.hideLoadingRates();
+                if (isInitialDataLoaded()) {
+
+                    if (initializeUI)
+                        onInitialDataLoadedSuccess();
+                    else {
+
+                        exchangeRatesView.hideLoadingRates();
+                        applyConversion();
+                    }
+                }
             }
 
             @Override
             public void onError(Throwable t) {
 
-                exchangeRatesView.hideLoadingRates();
-                exchangeRatesView.showLoadingRatesError();
+                if (initializeUI)
+                    exchangeRatesView.hideLoadingRates();
             }
         });
     }
@@ -239,27 +266,28 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         return amountOutValue;
     }
 
-  /*  private BestExchange convertBestExchange(List<Rate> rateList, double amountInValue, int currencyInId, int currencyOutId) {
+    /* private BestExchange convertBestExchange(List<Rate> rateList, double amountInValue, int currencyInId, int currencyOutId) {
 
-        double amountOutValue = 0;
-        BestExchange bestExchange = new BestExchange();
-        for (Bank bank : bankList) {
+           double amountOutValue = 0;
+           BestExchange bestExchange = new BestExchange();
+           for (Bank bank : bankList) {
 
-            if (bank.getId() != 1) {
-                double bankAmountOutValue = convertBank(rateList, amountInValue, bank.getId(), currencyInId, currencyOutId);
-                if (bankAmountOutValue > amountOutValue) {
+               if (bank.getId() != 1) {
+                   double bankAmountOutValue = convertBank(rateList, amountInValue, bank.getId(), currencyInId, currencyOutId);
+                   if (bankAmountOutValue > amountOutValue) {
 
-                    amountOutValue = bankAmountOutValue;
-                    bestExchange = new BestExchange(bank, amountOutValue);
-                }
-            }
-        }
+                       amountOutValue = bankAmountOutValue;
+                       bestExchange = new BestExchange(bank, amountOutValue);
+                   }
+               }
+           }
 
-        return bestExchange;
-    }
-*/
+           return bestExchange;
+       }
+   */
     public void onRatesDateChanged(Date date) {
 
+        exchangeRatesView.showLoadingRates();
         String dateText = DateUtils.getRateDateFormat().format(date);
         loadRates(dateText, false);
     }
