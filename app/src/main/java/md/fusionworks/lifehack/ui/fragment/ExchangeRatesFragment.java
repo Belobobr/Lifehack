@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -54,11 +56,17 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     CurrenciesGroup currenciesInGroup;
     @Bind(R.id.currencyOutRadioGroup)
     CurrenciesGroup currenciesOutGroup;
+    @Bind(R.id.exchangeRatesView)
+    LinearLayout exchangeRatesView;
+    @Bind(R.id.retryView)
+    RelativeLayout retryView;
+    @Bind(R.id.retryButton)
+    Button retryButton;
 
     @Inject ExchangeRatesPresenter exchangeRatesPresenter;
     @Inject BankSpinnerAdapter bankSpinnerAdapter;
 
-    private MaterialDialog loadingRatesDialog;
+    private MaterialDialog loadingInitialDataDialog;
     private MaterialDialog loadingRatesErrorDialog;
 
     public static ExchangeRatesFragment newInstance() {
@@ -85,6 +93,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         super.onActivityCreated(savedInstanceState);
 
         initialize();
+        setupUI();
     }
 
     private void initialize() {
@@ -94,11 +103,19 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         exchangeRatesPresenter.initialize();
     }
 
-    @Override
-    public void showLoadingRates() {
+    private void setupUI() {
 
-        if (loadingRatesDialog == null) {
-            loadingRatesDialog = new MaterialDialog.Builder(getActivity())
+        retryButton.setOnClickListener(v -> {
+
+            exchangeRatesPresenter.onRetryButtonClicked();
+        });
+    }
+
+    @Override
+    public void showLoadingInitialData() {
+
+        if (loadingInitialDataDialog == null) {
+            loadingInitialDataDialog = new MaterialDialog.Builder(getActivity())
                     .content(R.string.field_loading_rates)
                     .progress(true, 0)
                     .cancelable(false)
@@ -106,23 +123,50 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                     .show();
         }
 
-        if (!loadingRatesDialog.isShowing())
-            loadingRatesDialog.show();
+        if (!loadingInitialDataDialog.isShowing())
+            loadingInitialDataDialog.show();
     }
 
     @Override
-    public void hideLoadingRates() {
+    public void hideLoadingInitialData() {
 
-        if (loadingRatesDialog != null)
-            if (loadingRatesDialog.isShowing())
-                loadingRatesDialog.hide();
+        if (loadingInitialDataDialog != null)
+            if (loadingInitialDataDialog.isShowing())
+                loadingInitialDataDialog.hide();
 
-        loadingRatesDialog = null;
+        loadingInitialDataDialog = null;
     }
 
     @Override
-    public void showLoadingRatesError() {
+    public void showLoadingRatesError(String date) {
 
+        if (loadingRatesErrorDialog == null) {
+
+            loadingRatesErrorDialog = new MaterialDialog.Builder(getActivity())
+                    .content("Не удалось загрузить курс. Проверьте интернет соединение.")
+                    .positiveText("Попробовать снова")
+                    .negativeText("Отменить")
+                    .cancelable(false)
+                    .onNegative((materialDialog, dialogAction) -> {
+
+                        exchangeRatesPresenter.onLoadingRatesErrorCancel();
+                    })
+                    .onPositive((materialDialog, dialogAction) -> exchangeRatesPresenter.onLoadingRatesErrorTryAgain(date))
+                    .show();
+        }
+
+        if (!loadingRatesErrorDialog.isShowing())
+            loadingRatesErrorDialog.show();
+    }
+
+    @Override
+    public void hideLoadingRatesError() {
+
+        if (loadingRatesErrorDialog != null)
+            if (loadingRatesErrorDialog.isShowing())
+                loadingRatesErrorDialog.hide();
+
+        loadingRatesErrorDialog = null;
     }
 
     @Override
@@ -292,5 +336,29 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         }
 
         snackbar.show();
+    }
+
+    @Override
+    public void showExchangeRatesView() {
+
+        exchangeRatesView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideExchangeRatesView() {
+
+        exchangeRatesView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRetryView() {
+
+        retryView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideRetryView() {
+
+        retryView.setVisibility(View.GONE);
     }
 }

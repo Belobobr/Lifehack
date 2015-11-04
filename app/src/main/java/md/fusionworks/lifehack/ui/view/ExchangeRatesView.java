@@ -16,11 +16,13 @@ public interface ExchangeRatesView extends View {
         INFO, ERROR
     }
 
-    void showLoadingRates();
+    void showLoadingInitialData();
 
-    void hideLoadingRates();
+    void hideLoadingInitialData();
 
-    void showLoadingRatesError();
+    void showLoadingRatesError(String date);
+
+    void hideLoadingRatesError();
 
     void showNotificationToast(String message, NotificationToastType type);
 
@@ -55,4 +57,12 @@ public interface ExchangeRatesView extends View {
     void setCurrencyInCheckedById(int currencyId);
 
     void setCurrencyOutCheckedById(int currencyId);
+
+    void showExchangeRatesView();
+
+    void hideExchangeRatesView();
+
+    void showRetryView();
+
+    void hideRetryView();
 }

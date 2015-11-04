@@ -4,13 +4,16 @@
     xmlns:view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     >
 
+    <include
+        layout="@layout/retry_view"/>
+
     <LinearLayout
-        android:id="@+id/rootLayout"
+        android:id="@+id/exchangeRatesView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical"
         android:padding="16dp"
         tools:context="md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment">
