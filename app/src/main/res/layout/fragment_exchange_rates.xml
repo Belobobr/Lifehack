@@ -41,9 +41,10 @@
             android:weightSum="100"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:gravity="center"
             android:text="="
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
@@ -72,6 +73,28 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:weightSum="100"/>
+
+        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+            android:id="@+id/whereToBuyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_currency_view_state_normal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Где купить"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            view:typeface="font/Roboto-Regular.ttf"
+            />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Только открытые сейчас"
+            android:textSize="@dimen/text_size_medium"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,7 +128,7 @@
             android:id="@+id/bestExchangeBankField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="center"
             android:singleLine="false"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_medium"

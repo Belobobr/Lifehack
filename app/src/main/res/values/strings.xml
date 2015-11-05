@@ -13,4 +13,8 @@
     <string name="field_loading_rates">Загрузка курса...</string>
     <string name="spinner_option_best_exchange">Лучший курс</string>
     <string name="spinner_option_bank_list">Список банков</string>
+    <string name="field_title_load_rates_error">Не удалось загрузить курс.</string>
+    <string name="field_message_load_rates_error">Проверьте интернет соединение \nи пробуйте снова.</string>
+    <string name="field_try_again">Попробовать снова</string>
+    <string name="field_cancel">Отменить</string>
 </resources>

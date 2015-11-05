@@ -36,6 +36,7 @@ public class CurrenciesGroup extends RadioGroup {
 
     public void addCurrency(Currency currency) {
 
+        int padding = getResources().getDimensionPixelOffset(R.dimen.element_spacing_normal);
         int marginLeft = getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin);
         RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 20f);
         layoutParams.setMargins(marginLeft, 0, 0, 0);
@@ -44,6 +45,7 @@ public class CurrenciesGroup extends RadioGroup {
         radioButton.setLayoutParams(layoutParams);
         radioButton.setGravity(Gravity.CENTER);
         radioButton.setId(currency.getId());
+        radioButton.setPadding(padding, padding, padding, padding);
         radioButton.setText(currency.getName());
         radioButton.setButtonDrawable(android.R.color.transparent);
         radioButton.setTextColor(getResources().getColor(R.color.white));

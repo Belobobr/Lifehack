@@ -11,6 +11,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="dateViewStyle">@style/DateViewStyle</item>
+        <item name="colorButtonNormal">@color/mainColorBlue</item>
     </style>
 
     <style name="Theme.Lifehack" parent="Theme.Lifehack.Base"/>

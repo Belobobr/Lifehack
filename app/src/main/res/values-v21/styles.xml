@@ -5,6 +5,7 @@
 
     <style name="Theme.Lifehack" parent="Theme.Lifehack.Base">
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:colorButtonNormal">@color/mainColorBlue</item>
     </style>
 
     <style name="Theme.Lifehack.TranslucentStatus" parent="Theme.Lifehack">

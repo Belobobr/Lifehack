@@ -143,9 +143,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         if (loadingRatesErrorDialog == null) {
 
             loadingRatesErrorDialog = new MaterialDialog.Builder(getActivity())
-                    .content("Не удалось загрузить курс. Проверьте интернет соединение.")
-                    .positiveText("Попробовать снова")
-                    .negativeText("Отменить")
+                    .title(R.string.field_title_load_rates_error)
+                    .content(R.string.field_message_load_rates_error)
+                    .positiveText(R.string.field_try_again)
+                    .negativeText(R.string.field_cancel)
                     .cancelable(false)
                     .onNegative((materialDialog, dialogAction) -> {
 
