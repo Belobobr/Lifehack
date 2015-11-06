@@ -54,4 +54,6 @@ dependencies {
         transitive = true
     }
     compile presentationDependencies.materialDateTimePicker
+
+    compile 'com.google.android.gms:play-services:7.8.0'
 }

@@ -25,7 +25,13 @@
         <activity
             android:name=".ui.activity.ExchangeRatesActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/Theme.Lifehack.ExchangeRates"></activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCHgIMlzmjzOpDE6TG4aEDaNKICWUVQM_M" />
+
     </application>
 
 </manifest>

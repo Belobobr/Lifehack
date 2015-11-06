@@ -15,6 +15,7 @@ import md.fusionworks.lifehack.data.net.LifehackClient;
 import md.fusionworks.lifehack.data.net.ServiceCreator;
 import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.Branch;
 import md.fusionworks.lifehack.model.Currency;
 import md.fusionworks.lifehack.model.Rate;
 import md.fusionworks.lifehack.util.NetworkUtils;
@@ -102,6 +103,34 @@ public class ExchangeRatesRepository {
             call.enqueue(new retrofit.Callback<List<Rate>>() {
                 @Override
                 public void onResponse(Response<List<Rate>> response, Retrofit retrofit) {
+
+                    if (response.isSuccess()) {
+
+                        callback.onSuccess(response.body());
+                    } else {
+
+                        callback.onError(new HttpResponseException());
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                    callback.onError(new NetworkConnectionException());
+                }
+            });
+        } else
+            callback.onError(new NetworkConnectionException());
+    }
+
+    public void getBankBranches(int bankId, boolean active, @NonNull Callback<List<Branch>> callback) {
+
+        if (NetworkUtils.isThereInternetConnection(context)) {
+
+            Call<List<Branch>> call = lifehackClient.getBankBranches(bankId, active);
+            call.enqueue(new retrofit.Callback<List<Branch>>() {
+                @Override
+                public void onResponse(Response<List<Branch>> response, Retrofit retrofit) {
 
                     if (response.isSuccess()) {
 

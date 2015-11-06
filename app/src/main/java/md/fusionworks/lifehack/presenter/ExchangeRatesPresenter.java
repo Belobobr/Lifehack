@@ -9,9 +9,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.data.net.Callback;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.Branch;
 import md.fusionworks.lifehack.model.Currency;
 import md.fusionworks.lifehack.model.Rate;
 import md.fusionworks.lifehack.ui.view.ExchangeRatesView;
@@ -80,7 +83,8 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     private void loadInitialData() {
 
-        exchangeRatesView.showLoadingInitialData();
+        String text = context.getString(R.string.field_loading_rates_);
+        exchangeRatesView.showLoading(text);
         loadBanks();
         loadCurrencies();
         loadTodayRates();
@@ -95,13 +99,13 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         exchangeRatesView.hideRetryView();
         exchangeRatesView.showExchangeRatesView();
-        exchangeRatesView.hideLoadingInitialData();
+        exchangeRatesView.hideLoading();
         setupUIWithDefaultValues();
     }
 
     private void onInitialDataLoadedError() {
 
-        exchangeRatesView.hideLoadingInitialData();
+        exchangeRatesView.hideLoading();
         exchangeRatesView.hideExchangeRatesView();
         exchangeRatesView.showRetryView();
     }
@@ -178,15 +182,32 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
             public void onSuccess(List<Rate> response) {
 
                 rateList = response;
-                exchangeRatesView.hideLoadingInitialData();
+                exchangeRatesView.hideLoading();
                 applyConversion();
             }
 
             @Override
             public void onError(Throwable t) {
 
-                exchangeRatesView.hideLoadingInitialData();
+                exchangeRatesView.hideLoading();
                 exchangeRatesView.showLoadingRatesError(date);
+            }
+        });
+    }
+
+    private void loadBankBranches(int bankId, boolean active) {
+
+        exchangeRatesRepository.getBankBranches(bankId, active, new Callback<List<Branch>>() {
+            @Override
+            public void onSuccess(List<Branch> response) {
+
+                exchangeRatesView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+                exchangeRatesView.hideLoading();
             }
         });
     }
@@ -296,7 +317,8 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
    */
     public void onRatesDateChanged(Date date) {
 
-        exchangeRatesView.showLoadingInitialData();
+        String text = context.getString(R.string.field_loading_rates_);
+        exchangeRatesView.showLoading(text);
         String dateText = DateUtils.getRateDateFormat().format(date);
         loadRates(dateText);
     }
@@ -351,5 +373,15 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     public void onRetryButtonClicked() {
 
         loadInitialData();
+    }
+
+    public void onWhereToBuyButtonClicked() {
+
+        String text = context.getString(R.string.field_find_branches_);
+        exchangeRatesView.showLoading(text);
+
+        int bankId = exchangeRatesView.getSelectedBankId();
+        boolean onlyActive = exchangeRatesView.onlyActiveNow();
+        loadBankBranches(bankId, onlyActive);
     }
 }

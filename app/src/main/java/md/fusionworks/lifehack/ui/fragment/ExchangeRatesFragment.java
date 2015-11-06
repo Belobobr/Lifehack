@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,6 +63,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     RelativeLayout retryView;
     @Bind(R.id.retryButton)
     Button retryButton;
+    @Bind(R.id.whereToBuyButton)
+    TextView whereToBuyButton;
+    @Bind(R.id.onlyActiveNowCheckBox)
+    CheckBox onlyActiveNowCheckBox;
 
     @Inject ExchangeRatesPresenter exchangeRatesPresenter;
     @Inject BankSpinnerAdapter bankSpinnerAdapter;
@@ -112,11 +117,11 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void showLoadingInitialData() {
+    public void showLoading(String text) {
 
         if (loadingInitialDataDialog == null) {
             loadingInitialDataDialog = new MaterialDialog.Builder(getActivity())
-                    .content(R.string.field_loading_rates)
+                    .content(text)
                     .progress(true, 0)
                     .cancelable(false)
                     .progressIndeterminateStyle(true)
@@ -128,7 +133,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void hideLoadingInitialData() {
+    public void hideLoading() {
 
         if (loadingInitialDataDialog != null)
             if (loadingInitialDataDialog.isShowing())
@@ -236,6 +241,11 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         currenciesOutGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
             exchangeRatesPresenter.onCurrencyOutChanged(group, checkedId);
+        });
+
+        whereToBuyButton.setOnClickListener(v -> {
+
+            exchangeRatesPresenter.onWhereToBuyButtonClicked();
         });
     }
 
@@ -361,5 +371,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void hideRetryView() {
 
         retryView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onlyActiveNow() {
+        return onlyActiveNowCheckBox.isChecked();
     }
 }

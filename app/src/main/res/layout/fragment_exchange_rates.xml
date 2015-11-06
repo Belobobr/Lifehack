@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/white"
     >
@@ -10,131 +12,137 @@
     <include
         layout="@layout/retry_view"/>
 
-    <LinearLayout
-        android:id="@+id/exchangeRatesView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        tools:context="md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment">
-
-        <md.fusionworks.lifehack.ui.widget.TypefaceEditText
-            android:id="@+id/amountInField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/amount_field_background"
-            android:gravity="right"
-            android:inputType="numberDecimal"
-            android:padding="12dp"
-            android:textColor="#999"
-            android:textSize="@dimen/text_size_medium"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
-            android:id="@+id/currencyInRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-4dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:weightSum="100"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:text="="
-            android:textColor="@color/colorPrimary"
-            android:textSize="25sp"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.TypefaceEditText
-            android:id="@+id/amountOutField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/amount_field_background"
-            android:enabled="false"
-            android:gravity="right"
-            android:inputType="numberDecimal"
-            android:padding="12dp"
-            android:textColor="#999"
-            android:textSize="@dimen/text_size_medium"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
-            android:id="@+id/currencyOutRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-4dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:weightSum="100"/>
-
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-            android:id="@+id/whereToBuyButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_currency_view_state_normal"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Где купить"
-            android:clickable="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_large"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-        <android.support.v7.widget.AppCompatCheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Только открытые сейчас"
-            android:textSize="@dimen/text_size_medium"/>
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/exchangeRatesView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:weightSum="100"
-            >
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context="md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment">
 
-            <md.fusionworks.lifehack.ui.widget.DateView
-                android:id="@+id/ratesDateField"
-                android:layout_width="0dp"
+            <md.fusionworks.lifehack.ui.widget.TypefaceEditText
+                android:id="@+id/amountInField"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:background="@drawable/amount_field_background"
+                android:gravity="right"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="#999"
+                android:textSize="@dimen/text_size_medium"
+                view:typeface="font/Roboto-Regular.ttf"
                 />
 
-            <Spinner
-                android:id="@+id/bankSpinner"
-                android:layout_width="0dp"
+            <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
+                android:id="@+id/currencyInRadioGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="50"
-                android:background="@drawable/bg_bank_spinner"
-                android:paddingBottom="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="8dp"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="100"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="="
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
                 />
+
+            <md.fusionworks.lifehack.ui.widget.TypefaceEditText
+                android:id="@+id/amountOutField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/amount_field_background"
+                android:enabled="false"
+                android:gravity="right"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="#999"
+                android:textSize="@dimen/text_size_medium"
+                view:typeface="font/Roboto-Regular.ttf"
+                />
+
+            <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
+                android:id="@+id/currencyOutRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="100"/>
+
+            <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+                android:id="@+id/whereToBuyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_currency_view_state_normal"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Где купить"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
+                view:typeface="font/Roboto-Regular.ttf"
+                />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/onlyActiveNowCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Только открытые сейчас"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                >
+
+                <md.fusionworks.lifehack.ui.widget.DateView
+                    android:id="@+id/ratesDateField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    />
+
+                <Spinner
+                    android:id="@+id/bankSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/bg_bank_spinner"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp"
+                    />
+            </LinearLayout>
+
+            <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+                android:id="@+id/bestExchangeBankField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"
+                view:typeface="font/Roboto-Regular.ttf"
+                />
+
+
         </LinearLayout>
-
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-            android:id="@+id/bestExchangeBankField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:singleLine="false"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_medium"
-            view:typeface="font/Roboto-Regular.ttf"
-            />
-
-
-    </LinearLayout>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

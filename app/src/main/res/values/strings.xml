@@ -10,7 +10,8 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="field_loading_rates">Загрузка курса...</string>
+    <string name="field_loading_rates_">Загрузка курса...</string>
+    <string name="field_find_branches_">Поиск филиалов...</string>
     <string name="spinner_option_best_exchange">Лучший курс</string>
     <string name="spinner_option_bank_list">Список банков</string>
     <string name="field_title_load_rates_error">Не удалось загрузить курс.</string>

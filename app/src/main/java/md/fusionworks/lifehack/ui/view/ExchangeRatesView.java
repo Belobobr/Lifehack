@@ -16,9 +16,9 @@ public interface ExchangeRatesView extends View {
         INFO, ERROR
     }
 
-    void showLoadingInitialData();
+    void showLoading(String text);
 
-    void hideLoadingInitialData();
+    void hideLoading();
 
     void showLoadingRatesError(String date);
 
@@ -65,4 +65,6 @@ public interface ExchangeRatesView extends View {
     void showRetryView();
 
     void hideRetryView();
+
+    boolean onlyActiveNow();
 }

@@ -3,10 +3,12 @@ package md.fusionworks.lifehack.data.net;
 import java.util.List;
 
 import md.fusionworks.lifehack.model.Bank;
+import md.fusionworks.lifehack.model.Branch;
 import md.fusionworks.lifehack.model.Currency;
 import md.fusionworks.lifehack.model.Rate;
 import retrofit.Call;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -19,6 +21,7 @@ public interface LifehackClient {
     String BANKS = "api/banks.json?_format=json";
     String RATES = "api/rates.json?_format=json";
     String CURRENCIES = "api/currencies.json?_format=json";
+    String BRANCHES = "api/banks/{bank}/branches.json?_format=json";
 
     @GET(BANKS)
     Call<List<Bank>> getBanks();
@@ -28,4 +31,7 @@ public interface LifehackClient {
 
     @GET(RATES)
     Call<List<Rate>> getRates(@Query("date") String date);
+
+    @GET(BRANCHES)
+    Call<List<Branch>> getBankBranches(@Path("bank") int bank, @Query("active") boolean active);
 }
