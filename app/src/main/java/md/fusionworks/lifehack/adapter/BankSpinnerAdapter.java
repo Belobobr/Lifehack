@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.di.scope.PerActivity;
@@ -28,7 +29,7 @@ public class BankSpinnerAdapter extends BaseAdapter {
     private List<BankSpinnerItem> items = new ArrayList<>();
 
     @Inject
-    public BankSpinnerAdapter(Context context) {
+    public BankSpinnerAdapter(@Named("activity") Context context) {
         this.context = context;
     }
 

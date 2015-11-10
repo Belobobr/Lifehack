@@ -2,6 +2,8 @@ package md.fusionworks.lifehack.di.module;
 
 import android.content.Context;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 import md.fusionworks.lifehack.di.scope.PerActivity;
@@ -21,8 +23,9 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
+    @Named("activity")
     Context context() {
 
-        return context;
+        return this.context;
     }
 }

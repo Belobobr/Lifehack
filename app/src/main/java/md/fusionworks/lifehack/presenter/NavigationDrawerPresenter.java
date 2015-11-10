@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.navigation.Navigator;
@@ -23,7 +24,7 @@ public class NavigationDrawerPresenter implements Presenter<NavigationDrawerView
     private NavigationDrawerView navigationDrawerView;
 
     @Inject
-    public NavigationDrawerPresenter(Context context, Navigator navigator) {
+    public NavigationDrawerPresenter(@Named("activity") Context context, Navigator navigator) {
 
         this.context = context;
         this.navigator = navigator;

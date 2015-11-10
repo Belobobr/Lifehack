@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import md.fusionworks.lifehack.di.scope.PerActivity;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
@@ -17,7 +18,7 @@ public class Navigator {
     private Context context;
 
     @Inject
-    public Navigator(Context context) {
+    public Navigator(@Named("activity") Context context) {
 
         this.context = context;
     }

@@ -48,6 +48,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity implements H
 
         exchangeRatesComponent = DaggerExchangeRatesComponent
                 .builder()
+                .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .exchangeRatesModule(new ExchangeRatesModule())
                 .build();

@@ -1,5 +1,6 @@
 package md.fusionworks.lifehack.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.RadioGroup;
@@ -8,11 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.net.Callback;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.di.scope.PerActivity;
+import md.fusionworks.lifehack.interactor.GetBanksImpl;
 import md.fusionworks.lifehack.model.Bank;
 import md.fusionworks.lifehack.model.Branch;
 import md.fusionworks.lifehack.model.Currency;
@@ -41,12 +44,15 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     private List<Bank> bankList;
     private List<Currency> currencyList;
 
-    @Inject ExchangeRatesRepository exchangeRatesRepository;
+    private ExchangeRatesRepository exchangeRatesRepository;
+      @Inject GetBanksImpl getBanksUseCase;
 
     @Inject
-    public ExchangeRatesPresenter(Context context) {
+    public ExchangeRatesPresenter(@Named("activity") Context context) {
 
         this.context = context;
+        //getBanksUseCase = new GetBanksImpl(context);
+        exchangeRatesRepository = new ExchangeRatesRepository(context);
     }
 
     @Override
@@ -85,7 +91,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         String text = context.getString(R.string.field_loading_rates_);
         exchangeRatesView.showLoading(text);
-        loadBanks();
+       loadBanksUseCase();
         loadCurrencies();
         loadTodayRates();
     }
@@ -108,6 +114,27 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         exchangeRatesView.hideLoading();
         exchangeRatesView.hideExchangeRatesView();
         exchangeRatesView.showRetryView();
+    }
+
+    private void loadBanksUseCase() {
+
+        getBanksUseCase.execute(new Callback<List<Bank>>() {
+            @Override
+            public void onSuccess(List<Bank> response) {
+
+                bankList = response;
+                exchangeRatesView.populateBankSpinner(response);
+
+                if (isInitialDataLoaded())
+                    onInitialDataLoadedSuccess();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+                onInitialDataLoadedError();
+            }
+        });
     }
 
     private void loadBanks() {

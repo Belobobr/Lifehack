@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.data.repository;
+package md.fusionworks.lifehack.repository;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,10 +6,11 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import md.fusionworks.lifehack.data.exception.HttpResponseException;
 import md.fusionworks.lifehack.data.exception.NetworkConnectionException;
-import md.fusionworks.lifehack.data.exception.UnknownException;
 import md.fusionworks.lifehack.data.net.Callback;
 import md.fusionworks.lifehack.data.net.LifehackClient;
 import md.fusionworks.lifehack.data.net.ServiceCreator;
@@ -27,18 +28,20 @@ import retrofit.Retrofit;
  * Created by ungvas on 11/3/15.
  */
 
-public class ExchangeRatesRepository {
+@Singleton
+public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
     private Context context;
     private LifehackClient lifehackClient;
 
-
-    public ExchangeRatesRepository(Context context) {
+    @Inject
+    public ExchangeRatesRepositoryImpl(@Named("application") Context context) {
 
         this.context = context;
         lifehackClient = ServiceCreator.createService(LifehackClient.class, LifehackClient.BASE_URL, "cb5fa2d6b00257fd769d2c68bf32c1a42ea0fd7c");
     }
 
+    @Override
     public void getBanks(@NonNull Callback<List<Bank>> callback) {
 
         if (NetworkUtils.isThereInternetConnection(context)) {
@@ -67,6 +70,7 @@ public class ExchangeRatesRepository {
             callback.onError(new NetworkConnectionException());
     }
 
+    @Override
     public void getCurrencies(@NonNull Callback<List<Currency>> callback) {
 
         if (NetworkUtils.isThereInternetConnection(context)) {
@@ -95,6 +99,7 @@ public class ExchangeRatesRepository {
             callback.onError(new NetworkConnectionException());
     }
 
+    @Override
     public void getRates(String date, @NonNull Callback<List<Rate>> callback) {
 
         if (NetworkUtils.isThereInternetConnection(context)) {
@@ -123,6 +128,7 @@ public class ExchangeRatesRepository {
             callback.onError(new NetworkConnectionException());
     }
 
+    @Override
     public void getBankBranches(int bankId, boolean active, @NonNull Callback<List<Branch>> callback) {
 
         if (NetworkUtils.isThereInternetConnection(context)) {
