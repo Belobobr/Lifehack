@@ -10,6 +10,7 @@ import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.api.Callback;
 import md.fusionworks.lifehack.entity.Bank;
+import md.fusionworks.lifehack.entity.BestExchange;
 import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.entity.Rate;
@@ -271,6 +272,31 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
         if (bankId == 0) {
 
+            double amountOutValue = 0;
+            BestExchange bestExchange = new BestExchange();
+            for (Bank bank : bankList) {
+
+                if (bank.getId() != 1) {
+
+                    bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
+                    amountInValue = Converter.toDouble(exchangeRatesView.getAmountInText());
+                    currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyInId());
+                    currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyOutId());
+                    double bankAmountOutValue = convertBank(bankRateList, amountInValue, currencyInRateValue, currencyOutRateValue);
+                    if (bankAmountOutValue > amountOutValue) {
+
+                        amountOutValue = bankAmountOutValue;
+                        bestExchange = new BestExchange(bank, amountOutValue);
+                    }
+                }
+
+                exchangeRatesView.setAmountOutText(String.format("%.2f", bestExchange.getAmountOutvalue()));
+
+                String bestExchangeBankText = (bestExchange.getBank() != null) ?
+                        String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
+                        "Не найден подходящий банк";
+                exchangeRatesView.setBestExchangeBankText(bestExchangeBankText);
+            }
 
         } else {
 
@@ -285,19 +311,6 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
                 exchangeRatesView.setAmountOutText(String.format("%.2f", amountOutValue));
             }
         }
-
-/*
-        boolean bestExchangeOption = bankId == 0;
-        if (bestExchangeOption) {
-
-            BestExchange bestExchange = convertBestExchange(rateList, amountInValue, currencyInId, currencyOutId);
-            exchangeRatesView.setAmountOutText(String.format("%.2f", bestExchange.getAmountOutvalue()));
-
-            String bestExchangeBankText = (bestExchange.getBank() != null) ?
-                    String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
-                    "Не найден подходящий банк";
-            exchangeRatesView.setBestExchangeBankText(bestExchangeBankText);
-        }*/
     }
 
     private double convertBank(List<Rate> rateList, double amountInValue, double currencyInRateValue,
@@ -311,25 +324,6 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         return amountOutValue;
     }
 
-    /* private BestExchange convertBestExchange(List<Rate> rateList, double amountInValue, int currencyInId, int currencyOutId) {
-
-           double amountOutValue = 0;
-           BestExchange bestExchange = new BestExchange();
-           for (Bank bank : bankList) {
-
-               if (bank.getId() != 1) {
-                   double bankAmountOutValue = convertBank(rateList, amountInValue, bank.getId(), currencyInId, currencyOutId);
-                   if (bankAmountOutValue > amountOutValue) {
-
-                       amountOutValue = bankAmountOutValue;
-                       bestExchange = new BestExchange(bank, amountOutValue);
-                   }
-               }
-           }
-
-           return bestExchange;
-       }
-   */
     public void onRatesDateChanged(Date date) {
 
         String text = context.getString(R.string.field_loading_rates_);

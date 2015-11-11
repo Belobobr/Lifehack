@@ -55,7 +55,6 @@ public class NavigationDrawerPresenter implements Presenter<NavigationDrawerView
 
     public void goToDrawerItem(int item) {
 
-        Intent intentToLaunch;
         switch (item) {
 
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
