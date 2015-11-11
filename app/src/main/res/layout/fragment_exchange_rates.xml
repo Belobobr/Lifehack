@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:context="md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment">
+            tools:context="md.fusionworks.lifehack.exchange_rates.ExchangeRatesFragment">
 
             <md.fusionworks.lifehack.ui.widget.TypefaceEditText
                 android:id="@+id/amountInField"

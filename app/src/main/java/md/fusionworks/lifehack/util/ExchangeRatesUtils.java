@@ -3,9 +3,7 @@ package md.fusionworks.lifehack.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.model.Bank;
-import md.fusionworks.lifehack.model.BestExchange;
-import md.fusionworks.lifehack.model.Rate;
+import md.fusionworks.lifehack.entity.Rate;
 
 /**
  * Created by ungvas on 10/30/15.

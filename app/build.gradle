@@ -45,8 +45,6 @@ dependencies {
     compile presentationDependencies.appCompat_v7
     compile presentationDependencies.designSupportLibrary
     compile presentationDependencies.butterKnife
-    apt presentationDependencies.daggerCompiler
-    compile presentationDependencies.dagger
     compile presentationDependencies.retrofit
     compile presentationDependencies.converter_gson
     compile presentationDependencies.gson

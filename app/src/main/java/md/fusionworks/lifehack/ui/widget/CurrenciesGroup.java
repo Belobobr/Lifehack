@@ -1,7 +1,6 @@
 package md.fusionworks.lifehack.ui.widget;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.RadioGroup;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.model.Currency;
+import md.fusionworks.lifehack.entity.Currency;
 
 /**
  * Created by ungvas on 11/1/15.
