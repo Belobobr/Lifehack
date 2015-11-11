@@ -1,9 +1,10 @@
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:focusable="true"
+    android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -22,7 +23,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:context="md.fusionworks.lifehack.exchange_rates.ExchangeRatesFragment">
+            tools:context="md.fusionworks.lifehack.exchange_rates.CurrencyConverterFragment">
 
             <md.fusionworks.lifehack.ui.widget.TypefaceEditText
                 android:id="@+id/amountInField"
@@ -145,4 +146,4 @@
 
         </LinearLayout>
     </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
