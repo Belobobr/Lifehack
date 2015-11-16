@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.entity.Bank;
 import md.fusionworks.lifehack.entity.BankSpinnerItem;
+import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
@@ -60,6 +61,10 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     TextView whereToBuyButton;
     @Bind(R.id.onlyActiveNowCheckBox)
     CheckBox onlyActiveNowCheckBox;
+    @Bind(R.id.branchesLayout)
+    LinearLayout branchesLayout;
+    @Bind(R.id.branchesListLayout)
+    LinearLayout branchesListLayout;
 
     CurrencyConverterPresenter currencyConverterPresenter;
     BankSpinnerAdapter bankSpinnerAdapter;
@@ -271,6 +276,20 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     }
 
     @Override
+    public void setBankSelectionById(int bankId) {
+
+        List<BankSpinnerItem> bankSpinnerItemList = bankSpinnerAdapter.getAllItems();
+        int position = 0;
+        for (BankSpinnerItem bankSpinnerItem : bankSpinnerItemList) {
+
+            if (bankSpinnerItem.getBankId() == bankId)
+                bankSpinner.setSelection(position);
+
+            position++;
+        }
+    }
+
+    @Override
     public void setBestExchangeBankText(String text) {
 
         bestExchangeBankField.setText(text);
@@ -357,5 +376,29 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     @Override
     public boolean onlyActiveNow() {
         return onlyActiveNowCheckBox.isChecked();
+    }
+
+    @Override
+    public void showBranchesLayout() {
+
+        branchesLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void populateBranchesList(List<Branch> branchList) {
+
+        branchesListLayout.removeAllViews();
+
+        for (Branch branch : branchList) {
+
+            View v = getActivity().getLayoutInflater().inflate(R.layout.branches_list_item, null, false);
+            TextView nameField = (TextView) v.findViewById(R.id.nameField);
+            TextView addressField = (TextView) v.findViewById(R.id.addressField);
+
+            nameField.setText(branch.getName());
+            addressField.setText(String.format("Chișinău, %s, %s", branch.getAddress().getDistrict().getName(), branch.getAddress().getStreet()));
+
+            branchesListLayout.addView(v);
+        }
     }
 }

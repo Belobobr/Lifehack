@@ -51,6 +51,8 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
     private GetRates getRatesUseCase;
     private GetBankBranches getBankBranchesUseCase;
 
+    private BestExchange bestExchange;
+
     public CurrencyConverterPresenter(Context context) {
         this(context, new GetBanksImpl(context), new GetCurrenciesImpl(context), new GetRatesImpl(context), new GetBankBranchesImpl(context));
     }
@@ -217,6 +219,8 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
             @Override
             public void onSuccess(List<Branch> response) {
 
+                currencyConverterView.populateBranchesList(response);
+                currencyConverterView.showBranchesLayout();
                 currencyConverterView.hideLoading();
             }
 
@@ -261,6 +265,43 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
         return true;
     }
 
+    private BestExchange convertBestExchange() {
+
+        List<Rate> bankRateList;
+        double amountInValue;
+        double currencyInRateValue;
+        double currencyOutRateValue;
+        double amountOutValue = 0;
+
+        BestExchange bestExchange = new BestExchange();
+        for (Bank bank : bankList) {
+
+            if (bank.getId() != 1) {
+
+                bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
+                amountInValue = Converter.toDouble(currencyConverterView.getAmountInText());
+                currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyConverterView.getCheckedCurrencyInId());
+                currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyConverterView.getCheckedCurrencyOutId());
+                double bankAmountOutValue = convertBank(bankRateList, amountInValue, currencyInRateValue, currencyOutRateValue);
+                if (bankAmountOutValue > amountOutValue) {
+
+                    amountOutValue = bankAmountOutValue;
+                    bestExchange = new BestExchange(bank, amountOutValue);
+                }
+            }
+
+            currencyConverterView.setAmountOutText(String.format("%.2f", bestExchange.getAmountOutvalue()));
+
+            String bestExchangeBankText = (bestExchange.getBank() != null) ?
+                    String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
+                    "Не найден подходящий банк";
+            currencyConverterView.setBestExchangeBankText(bestExchangeBankText);
+        }
+
+        return bestExchange;
+    }
+
+
     public void applyConversion() {
 
         List<Rate> bankRateList;
@@ -272,32 +313,7 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
 
         if (bankId == 0) {
 
-            double amountOutValue = 0;
-            BestExchange bestExchange = new BestExchange();
-            for (Bank bank : bankList) {
-
-                if (bank.getId() != 1) {
-
-                    bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
-                    amountInValue = Converter.toDouble(currencyConverterView.getAmountInText());
-                    currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyConverterView.getCheckedCurrencyInId());
-                    currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, currencyConverterView.getCheckedCurrencyOutId());
-                    double bankAmountOutValue = convertBank(bankRateList, amountInValue, currencyInRateValue, currencyOutRateValue);
-                    if (bankAmountOutValue > amountOutValue) {
-
-                        amountOutValue = bankAmountOutValue;
-                        bestExchange = new BestExchange(bank, amountOutValue);
-                    }
-                }
-
-                currencyConverterView.setAmountOutText(String.format("%.2f", bestExchange.getAmountOutvalue()));
-
-                String bestExchangeBankText = (bestExchange.getBank() != null) ?
-                        String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
-                        "Не найден подходящий банк";
-                currencyConverterView.setBestExchangeBankText(bestExchangeBankText);
-            }
-
+            bestExchange = convertBestExchange();
         } else {
 
             bankRateList = ExchangeRatesUtils.getBankRates(rateList, currencyConverterView.getSelectedBankId());
@@ -365,6 +381,9 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
 
     public void onBankSelected(int position, long id) {
 
+        if (position != 0)
+            currencyConverterView.setBestExchangeBankText("");
+
         applyConversion();
     }
 
@@ -390,6 +409,18 @@ public class CurrencyConverterPresenter implements Presenter<CurrencyConverterVi
         currencyConverterView.showLoading(text);
 
         int bankId = currencyConverterView.getSelectedBankId();
+        if (bankId == 1) {
+
+            currencyConverterView.setBankSelection(0);
+            bankId = 0;
+        }
+
+        if (bankId == 0) {
+
+            BestExchange bestExchange = convertBestExchange();
+            bankId = bestExchange.getBank().getId();
+        }
+
         boolean onlyActive = currencyConverterView.onlyActiveNow();
         loadBankBranches(bankId, onlyActive);
     }

@@ -7,4 +7,7 @@
     <declare-styleable name="DateView">
         <attr name="dateViewStyle" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="BranchListItem">
+        <attr name="branchListItemStyle" format="reference"/>
+    </declare-styleable>
 </resources>

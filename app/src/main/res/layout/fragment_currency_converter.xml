@@ -143,7 +143,25 @@
                 view:typeface="font/Roboto-Regular.ttf"
                 />
 
-         <include layout="@layout/branches_list_header"/>
+            <LinearLayout
+                android:id="@+id/branchesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:visibility="gone"
+                >
+
+                <include layout="@layout/branches_list_header"/>
+
+                <LinearLayout
+                    android:id="@+id/branchesListLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

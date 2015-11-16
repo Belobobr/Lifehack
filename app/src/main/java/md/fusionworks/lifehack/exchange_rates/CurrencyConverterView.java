@@ -3,6 +3,7 @@ package md.fusionworks.lifehack.exchange_rates;
 import java.util.List;
 
 import md.fusionworks.lifehack.entity.Bank;
+import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.ui.View;
 
@@ -39,6 +40,8 @@ public interface CurrencyConverterView extends View {
 
     void setBankSelection(int position);
 
+    void setBankSelectionById(int bankId);
+
     void setBestExchangeBankText(String text);
 
     void populateCurrencyInGroup(List<Currency> currencyList);
@@ -66,4 +69,8 @@ public interface CurrencyConverterView extends View {
     void hideRetryView();
 
     boolean onlyActiveNow();
+
+    void showBranchesLayout();
+
+    void populateBranchesList(List<Branch> branchList);
 }

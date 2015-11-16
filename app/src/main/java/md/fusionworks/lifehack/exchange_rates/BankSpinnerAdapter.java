@@ -40,6 +40,11 @@ public class BankSpinnerAdapter extends BaseAdapter {
         items.add(new BankSpinnerItem(true, title, -1));
     }
 
+    public List<BankSpinnerItem> getAllItems() {
+
+        return items;
+    }
+
     @Override
     public int getCount() {
         return items.size();
