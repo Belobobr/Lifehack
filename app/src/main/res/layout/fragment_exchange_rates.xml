@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:context="md.fusionworks.lifehack.exchange_rates.CurrencyConverterFragment">
+            tools:context=".exchange_rates.ExchangeRatesFragment">
 
             <md.fusionworks.lifehack.ui.widget.TypefaceEditText
                 android:id="@+id/amountInField"

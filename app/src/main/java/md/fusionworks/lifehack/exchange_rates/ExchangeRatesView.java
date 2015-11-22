@@ -10,7 +10,7 @@ import md.fusionworks.lifehack.ui.View;
 /**
  * Created by ungvas on 10/22/15.
  */
-public interface CurrencyConverterView extends View {
+public interface ExchangeRatesView extends View {
 
     enum NotificationToastType {
         INFO, ERROR

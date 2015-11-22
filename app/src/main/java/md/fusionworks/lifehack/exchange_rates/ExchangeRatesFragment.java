@@ -4,6 +4,7 @@ package md.fusionworks.lifehack.exchange_rates;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ import md.fusionworks.lifehack.ui.widget.DateView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CurrencyConverterFragment extends BaseFragment implements CurrencyConverterView {
+public class ExchangeRatesFragment extends BaseFragment implements ExchangeRatesView {
 
     @Bind(R.id.amountInField)
     EditText amountInField;
@@ -66,18 +67,18 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     @Bind(R.id.branchesListLayout)
     LinearLayout branchesListLayout;
 
-    CurrencyConverterPresenter currencyConverterPresenter;
+    ExchangeRatesPresenter exchangeRatesPresenter;
     BankSpinnerAdapter bankSpinnerAdapter;
 
     private MaterialDialog loadingInitialDataDialog;
     private MaterialDialog loadingRatesErrorDialog;
 
-    public static CurrencyConverterFragment newInstance() {
+    public static ExchangeRatesFragment newInstance() {
 
-        return new CurrencyConverterFragment();
+        return new ExchangeRatesFragment();
     }
 
-    public CurrencyConverterFragment() {
+    public ExchangeRatesFragment() {
         // Required empty public constructor
     }
 
@@ -85,7 +86,7 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_currency_converter, container, false);
+        View v = inflater.inflate(R.layout.fragment_exchange_rates, container, false);
         ButterKnife.bind(this, v);
 
         return v;
@@ -101,9 +102,9 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
 
     private void initialize() {
 
-        currencyConverterPresenter = new CurrencyConverterPresenter(getActivity());
-        currencyConverterPresenter.attachView(this);
-        currencyConverterPresenter.initialize();
+        exchangeRatesPresenter = new ExchangeRatesPresenter(getActivity());
+        exchangeRatesPresenter.attachView(this);
+        exchangeRatesPresenter.initialize();
     }
 
     private void setupUI() {
@@ -111,7 +112,7 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {
 
-            currencyConverterPresenter.onRetryButtonClicked();
+            exchangeRatesPresenter.onRetryButtonClicked();
         });
     }
 
@@ -154,9 +155,9 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
                     .cancelable(false)
                     .onNegative((materialDialog, dialogAction) -> {
 
-                        currencyConverterPresenter.onLoadingRatesErrorCancel();
+                        exchangeRatesPresenter.onLoadingRatesErrorCancel();
                     })
-                    .onPositive((materialDialog, dialogAction) -> currencyConverterPresenter.onLoadingRatesErrorTryAgain(date))
+                    .onPositive((materialDialog, dialogAction) -> exchangeRatesPresenter.onLoadingRatesErrorTryAgain(date))
                     .show();
         }
 
@@ -209,7 +210,7 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
             @Override
             public void afterTextChanged(Editable s) {
 
-                currencyConverterPresenter.afterAmountInTextChanged(s.toString());
+                exchangeRatesPresenter.afterAmountInTextChanged(s.toString());
             }
         });
 
@@ -217,7 +218,7 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                currencyConverterPresenter.onBankSelected(position, id);
+                exchangeRatesPresenter.onBankSelected(position, id);
             }
 
             @Override
@@ -228,23 +229,23 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
 
         ratesDateField.setOnDateChangedListener(date -> {
 
-            currencyConverterPresenter.onRatesDateChanged(date);
+            exchangeRatesPresenter.onRatesDateChanged(date);
         });
 
         currenciesInGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            currencyConverterPresenter.onCurrencyInChanged(group, checkedId);
+            exchangeRatesPresenter.onCurrencyInChanged(group, checkedId);
         });
 
 
         currenciesOutGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            currencyConverterPresenter.onCurrencyOutChanged(group, checkedId);
+            exchangeRatesPresenter.onCurrencyOutChanged(group, checkedId);
         });
 
         whereToBuyButton.setOnClickListener(v -> {
 
-            currencyConverterPresenter.onWhereToBuyButtonClicked();
+            exchangeRatesPresenter.onWhereToBuyButtonClicked();
         });
     }
 
@@ -387,18 +388,48 @@ public class CurrencyConverterFragment extends BaseFragment implements CurrencyC
     @Override
     public void populateBranchesList(List<Branch> branchList) {
 
+        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         branchesListLayout.removeAllViews();
 
         for (Branch branch : branchList) {
 
-            View v = getActivity().getLayoutInflater().inflate(R.layout.branches_list_item, null, false);
+            View v = layoutInflater.inflate(R.layout.branches_list_item, null, false);
             TextView nameField = (TextView) v.findViewById(R.id.nameField);
             TextView addressField = (TextView) v.findViewById(R.id.addressField);
 
             nameField.setText(branch.getName());
-            addressField.setText(String.format("Chișinău, %s, %s", branch.getAddress().getDistrict().getName(), branch.getAddress().getStreet()));
+            addressField.setText(getBranchAddress(branch));
 
             branchesListLayout.addView(v);
         }
+    }
+
+    private boolean isBranchDetailEmpty(String detail) {
+
+        if (TextUtils.isEmpty(detail) || detail.equals("-"))
+            return true;
+
+        return false;
+    }
+
+    private String getBranchAddress(Branch branch) {
+
+        String address = "";
+        String locality = branch.getAddress().getDistrict().getLocality().getName();
+        String district = branch.getAddress().getDistrict().getName();
+        String street = branch.getAddress().getStreet();
+        String house = branch.getAddress().getHouse();
+        String phone = branch.getAddress().getPhone();
+
+        if (!isBranchDetailEmpty(locality))
+            address += locality;
+        if (!isBranchDetailEmpty(district))
+            address += " ," + district;
+        if (!isBranchDetailEmpty(street) || !isBranchDetailEmpty(house))
+            address += " ," + street + " " + house;
+        if (!isBranchDetailEmpty(phone))
+            address += "\n" + phone;
+
+        return address;
     }
 }

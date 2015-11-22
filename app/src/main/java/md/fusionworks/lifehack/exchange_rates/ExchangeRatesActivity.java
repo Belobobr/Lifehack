@@ -22,7 +22,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_rates);
         ButterKnife.bind(this);
-        addFragment(R.id.currencyConverterFragment, CurrencyConverterFragment.newInstance());
+        addFragment(R.id.currencyConverterFragment, ExchangeRatesFragment.newInstance());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
         return Constants.DRAWER_ITEM_EXCHANGE_RATES;
     }
 
-    public void showNotificationToast(String message, CurrencyConverterView.NotificationToastType type) {
+    public void showNotificationToast(String message, ExchangeRatesView.NotificationToastType type) {
 
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
 
