@@ -30,6 +30,10 @@ import md.fusionworks.lifehack.entity.Bank;
 import md.fusionworks.lifehack.entity.BankSpinnerItem;
 import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
+import md.fusionworks.lifehack.exchange_rates.interactor.GetBankBranchesImpl;
+import md.fusionworks.lifehack.exchange_rates.interactor.GetBanksImpl;
+import md.fusionworks.lifehack.exchange_rates.interactor.GetCurrenciesImpl;
+import md.fusionworks.lifehack.exchange_rates.interactor.GetRatesImpl;
 import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
@@ -38,7 +42,7 @@ import md.fusionworks.lifehack.util.DateUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExchangeRatesFragment extends BaseFragment implements ExchangeRatesView {
+public class ExchangeRatesFragment extends BaseFragment implements ExchangeRatesContract.View {
 
     @Bind(R.id.amountInField)
     EditText amountInField;
@@ -69,7 +73,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Bind(R.id.branchesListLayout)
     LinearLayout branchesListLayout;
 
-    ExchangeRatesPresenter exchangeRatesPresenter;
+    private ExchangeRatesContract.UserActionsListener userActionsListener;
     BankSpinnerAdapter bankSpinnerAdapter;
 
     private MaterialDialog loadingInitialDataDialog;
@@ -98,15 +102,14 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initialize();
+        initializePresenter();
         setupUI();
     }
 
-    private void initialize() {
+    private void initializePresenter() {
 
-        exchangeRatesPresenter = new ExchangeRatesPresenter(getActivity());
-        exchangeRatesPresenter.attachView(this);
-        exchangeRatesPresenter.initialize();
+        userActionsListener = new ExchangeRatesPresenter(this, new GetBanksImpl(getActivity()), new GetCurrenciesImpl(getActivity()), new GetRatesImpl(getActivity()), new GetBankBranchesImpl(getActivity()));
+        userActionsListener.initialize();
     }
 
     private void setupUI() {
@@ -114,12 +117,14 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {
 
-            exchangeRatesPresenter.onRetryButtonClicked();
+            userActionsListener.onRetryButtonClicked();
         });
     }
 
     @Override
-    public void showLoading(String text) {
+    public void showLoading(int resourceId) {
+
+        String text = getString(resourceId);
 
         if (loadingInitialDataDialog == null) {
             loadingInitialDataDialog = new MaterialDialog.Builder(getActivity())
@@ -157,9 +162,9 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                     .cancelable(false)
                     .onNegative((materialDialog, dialogAction) -> {
 
-                        exchangeRatesPresenter.onLoadingRatesErrorCancel();
+                        userActionsListener.onLoadingRatesErrorCancel();
                     })
-                    .onPositive((materialDialog, dialogAction) -> exchangeRatesPresenter.onLoadingRatesErrorTryAgain(date))
+                    .onPositive((materialDialog, dialogAction) -> userActionsListener.onLoadingRatesErrorTryAgain(date))
                     .show();
         }
 
@@ -212,7 +217,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void afterTextChanged(Editable s) {
 
-                exchangeRatesPresenter.afterAmountInTextChanged(s.toString());
+                userActionsListener.afterAmountInTextChanged(s.toString());
             }
         });
 
@@ -220,7 +225,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                exchangeRatesPresenter.onBankSelected(position, id);
+                userActionsListener.onBankSelected(position, id);
             }
 
             @Override
@@ -231,23 +236,23 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
         ratesDateField.setOnDateChangedListener(date -> {
 
-            exchangeRatesPresenter.onRatesDateChanged(date);
+            userActionsListener.onRatesDateChanged(date);
         });
 
         currenciesInGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            exchangeRatesPresenter.onCurrencyInChanged(group, checkedId);
+            userActionsListener.onCurrencyInChanged(group, checkedId);
         });
 
 
         currenciesOutGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            exchangeRatesPresenter.onCurrencyOutChanged(group, checkedId);
+            userActionsListener.onCurrencyOutChanged(group, checkedId);
         });
 
         whereToBuyButton.setOnClickListener(v -> {
 
-            exchangeRatesPresenter.onWhereToBuyButtonClicked();
+            userActionsListener.onWhereToBuyButtonClicked();
         });
     }
 

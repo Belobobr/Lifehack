@@ -1,7 +1,5 @@
 package md.fusionworks.lifehack.exchange_rates;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.widget.RadioGroup;
 
 import java.util.Date;
@@ -15,23 +13,17 @@ import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.entity.Rate;
 import md.fusionworks.lifehack.exchange_rates.interactor.GetBankBranches;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBankBranchesImpl;
 import md.fusionworks.lifehack.exchange_rates.interactor.GetBanks;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBanksImpl;
 import md.fusionworks.lifehack.exchange_rates.interactor.GetCurrencies;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetCurrenciesImpl;
 import md.fusionworks.lifehack.exchange_rates.interactor.GetRates;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetRatesImpl;
-import md.fusionworks.lifehack.ui.Presenter;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
 
 /**
- * Created by ungvas on 10/22/15.
+ * Created by ungvas on 11/23/15.
  */
-
-public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
+public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActionsListener {
 
     private static final int DEFAULT_AMOUNT_IN_VALUE = 100;
     public static final int DEFAULT_CURRENCY_IN_ID = 2;
@@ -39,8 +31,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     public static final int DEFAULT_BANK_ID = 2;
     public static final String NO_EXCHANGE_RATES_OUT_VALUE = "-";
 
-    private Context context;
-    private ExchangeRatesView exchangeRatesView;
+    private ExchangeRatesContract.View exchangeRatesView;
 
     private List<Rate> rateList;
     private List<Bank> bankList;
@@ -53,45 +44,15 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     private BestExchange bestExchange;
 
-    public ExchangeRatesPresenter(Context context) {
-        this(context, new GetBanksImpl(context), new GetCurrenciesImpl(context), new GetRatesImpl(context), new GetBankBranchesImpl(context));
-    }
+    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, GetBanks getBanksUseCase, GetCurrencies getCurrenciesUseCase, GetRates getRatesUseCase, GetBankBranches getBankBranchesUseCase) {
 
-    ExchangeRatesPresenter(Context context, GetBanks getBanksUseCase, GetCurrencies getCurrenciesUseCase, GetRates getRatesUseCase, GetBankBranches getBankBranchesUseCase) {
-
-        this.context = context;
+        this.exchangeRatesView = exchangeRatesView;
         this.getBanksUseCase = getBanksUseCase;
         this.getCurrenciesUseCase = getCurrenciesUseCase;
         this.getRatesUseCase = getRatesUseCase;
         this.getBankBranchesUseCase = getBankBranchesUseCase;
     }
 
-    @Override
-    public void attachView(@NonNull ExchangeRatesView view) {
-
-        exchangeRatesView = view;
-    }
-
-    @Override
-    public void detachView(@NonNull ExchangeRatesView view) {
-
-        exchangeRatesView = null;
-    }
-
-    @Override
-    public void destroy() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
 
     public void initialize() {
 
@@ -100,8 +61,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     private void loadInitialData() {
 
-        String text = context.getString(R.string.field_loading_rates_);
-        exchangeRatesView.showLoading(text);
+        exchangeRatesView.showLoading(R.string.field_loading_rates_);
         loadBanksUseCase();
         loadCurrenciesUseCase();
         loadTodayRates();
@@ -250,7 +210,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
     private void notifyNoExchangeRates() {
 
         exchangeRatesView.showNotificationToast("Нету курса",
-                ExchangeRatesView.NotificationToastType.ERROR);
+                ExchangeRatesContract.View.NotificationToastType.ERROR);
         exchangeRatesView.setAmountOutText(NO_EXCHANGE_RATES_OUT_VALUE);
     }
 
@@ -342,8 +302,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     public void onRatesDateChanged(Date date) {
 
-        String text = context.getString(R.string.field_loading_rates_);
-        exchangeRatesView.showLoading(text);
+        exchangeRatesView.showLoading(R.string.field_loading_rates_);
         String dateText = DateUtils.getRateDateFormat().format(date);
         loadRates(dateText);
     }
@@ -405,8 +364,7 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
 
     public void onWhereToBuyButtonClicked() {
 
-        String text = context.getString(R.string.field_find_branches_);
-        exchangeRatesView.showLoading(text);
+        exchangeRatesView.showLoading(R.string.field_find_branches_);
 
         int bankId = exchangeRatesView.getSelectedBankId();
         if (bankId == 1) {
@@ -424,4 +382,5 @@ public class ExchangeRatesPresenter implements Presenter<ExchangeRatesView> {
         boolean onlyActive = exchangeRatesView.onlyActiveNow();
         loadBankBranches(bankId, onlyActive);
     }
+
 }
