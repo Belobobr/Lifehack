@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,6 +33,7 @@ import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
+import md.fusionworks.lifehack.util.DateUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -396,9 +398,11 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             View v = layoutInflater.inflate(R.layout.branches_list_item, null, false);
             TextView nameField = (TextView) v.findViewById(R.id.nameField);
             TextView addressField = (TextView) v.findViewById(R.id.addressField);
+            TextView scheduleField = (TextView) v.findViewById(R.id.scheduleField);
 
             nameField.setText(branch.getName());
             addressField.setText(getBranchAddress(branch));
+            scheduleField.setText(getBranchScheduleBreak(branch));
 
             branchesListLayout.addView(v);
         }
@@ -431,5 +435,59 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             address += "\n" + phone;
 
         return address;
+    }
+
+    private String getBranchSchedule(Branch branch) {
+
+        String schedule = "";
+
+
+        return schedule;
+    }
+
+    private String getBranchScheduleBreak(Branch branch) {
+
+        String scheduleBreak = "";
+        Date breakStart = null;
+        Date breakEnd = null;
+
+        if (branch.getSchedule().getMonday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getMonday().getBreakStart();
+            breakEnd = branch.getSchedule().getMonday().getBreakEnd();
+        } else if (branch.getSchedule().getTuesday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getTuesday().getBreakStart();
+            breakEnd = branch.getSchedule().getTuesday().getBreakEnd();
+        } else if (branch.getSchedule().getThursday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getThursday().getBreakStart();
+            breakEnd = branch.getSchedule().getThursday().getBreakEnd();
+        } else if (branch.getSchedule().getWednesday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getWednesday().getBreakStart();
+            breakEnd = branch.getSchedule().getWednesday().getBreakEnd();
+        } else if (branch.getSchedule().getFriday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getFriday().getBreakStart();
+            breakEnd = branch.getSchedule().getFriday().getBreakEnd();
+        } else if (branch.getSchedule().getSaturday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getSaturday().getBreakStart();
+            breakEnd = branch.getSchedule().getSaturday().getBreakEnd();
+        } else if (branch.getSchedule().getSunday().getBreakStart() != null) {
+
+            breakStart = branch.getSchedule().getSunday().getBreakStart();
+            breakEnd = branch.getSchedule().getSunday().getBreakEnd();
+        }
+
+        if (breakStart != null && breakEnd != null) {
+
+            String start = DateUtils.getBranchScheduleBreakFormat().format(breakStart);
+            String end = DateUtils.getBranchScheduleBreakFormat().format(breakEnd);
+            scheduleBreak = String.format("(перерыв %s - %s)", start, end);
+        }
+
+        return scheduleBreak;
     }
 }

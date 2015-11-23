@@ -24,7 +24,7 @@ import md.fusionworks.lifehack.util.UIUtils;
 /**
  * Created by admin on 03.09.2015.
  */
-public class NavigationDrawerActivity extends BaseActivity implements NavigationDrawerView {
+public class NavigationDrawerActivity extends BaseActivity{
 
     protected static final int DRAWER_ITEM_INVALID = -1;
     protected static final int DRAWER_ITEM_SEPARATOR = -2;
@@ -73,13 +73,13 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Handler handler;
 
-    NavigationDrawerPresenter navigationDrawerPresenter;
+    private NavigationDrawerContract.UserActionsListener userActionsListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initialize();
+        userActionsListener = new NavigationDrawerPresenter(this, navigator);
         handler = new Handler();
     }
 
@@ -95,14 +95,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         setupDrawerLayout();
     }
 
-    private void initialize() {
-
-        navigationDrawerPresenter = new NavigationDrawerPresenter(this, navigator);
-        navigationDrawerPresenter.attachView(this);
-    }
-
-    @Override
-    public void setupDrawerLayout() {
+    private void setupDrawerLayout() {
 
         int selfItem = getSelfDrawerItem();
 
@@ -114,7 +107,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        toolbar.setNavigationOnClickListener(view -> navigationDrawerPresenter.openDrawer());
+        toolbar.setNavigationOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
         actionBarDrawerToggle.syncState();
 
         populateDrawerItems();
@@ -126,14 +119,12 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
     public void setTitle(String title) {
 
         getSupportActionBar().setTitle(title);
     }
 
-    @Override
-    public void populateDrawerItems() {
+    private void populateDrawerItems() {
 
         drawerItems.add(Constants.DRAWER_ITEM_MAIN);
         drawerItems.add(Constants.DRAWER_ITEM_LIFE_HACKS);
@@ -145,8 +136,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         createDrawerItems();
     }
 
-    @Override
-    public void createDrawerItems() {
+    private void createDrawerItems() {
 
         if (drawerItemsListContainer == null) {
             return;
@@ -162,8 +152,7 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         }
     }
 
-    @Override
-    public View makeDrawerItem(final int itemId, ViewGroup container) {
+    private View makeDrawerItem(final int itemId, ViewGroup container) {
         boolean selected = getSelfDrawerItem() == itemId;
         int layoutToInflate = 0;
         if (itemId == DRAWER_ITEM_SEPARATOR) {
@@ -197,28 +186,24 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         formatDrawerItem(view, itemId, selected, isActive);
 
         if (isActive)
-            view.setOnClickListener(v -> navigationDrawerPresenter.onDrawerItemClicked(itemId));
+            view.setOnClickListener(v -> onDrawerItemClicked(itemId));
 
         return view;
     }
 
-    @Override
     public int getSelfDrawerItem() {
         return DRAWER_ITEM_INVALID;
     }
 
-    @Override
-    public boolean isSeparator(int itemId) {
+    private boolean isSeparator(int itemId) {
         return itemId == DRAWER_ITEM_SEPARATOR;
     }
 
-    @Override
-    public boolean isSimpleActivity(int itemId) {
+    private boolean isSimpleActivity(int itemId) {
         return itemId == DRAWER_ITEM_INVALID;
     }
 
-    @Override
-    public void formatDrawerItem(View view, int itemId, boolean selected, boolean isActive) {
+    private void formatDrawerItem(View view, int itemId, boolean selected, boolean isActive) {
         if (isSeparator(itemId)) {
             // not applicable
             return;
@@ -248,29 +233,26 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
         iconView.setColorFilter(getResources().getColor(iconColorRes));
     }
 
-    @Override
-    public void onDrawerItemClicked(final int itemId) {
+    private void onDrawerItemClicked(final int itemId) {
         if (itemId == getSelfDrawerItem()) {
-            navigationDrawerPresenter.closeDrawer();
+            drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
 
         if (isSimpleActivity(itemId)) {
-            navigationDrawerPresenter.goToDrawerItem(itemId);
+            userActionsListener.goToDrawerItem(itemId);
         } else {
 
             handler.postDelayed(() ->
-                    navigationDrawerPresenter.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
+                    userActionsListener.goToDrawerItem(itemId), DRAWER_LAUNCH_DELAY);
 
             setSelectedDrawerItem(itemId);
         }
 
-        navigationDrawerPresenter.closeDrawer();
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-
-    @Override
-    public void setSelectedDrawerItem(int itemId) {
+    private void setSelectedDrawerItem(int itemId) {
 
         if (drawerItemViews != null) {
             for (int i = 0; i < drawerItemViews.length; i++) {
@@ -283,24 +265,5 @@ public class NavigationDrawerActivity extends BaseActivity implements Navigation
                 }
             }
         }
-    }
-
-    @Override
-    public void openDrawer() {
-
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    @Override
-    public void closeDrawer() {
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        this.navigationDrawerPresenter.destroy();
     }
 }

@@ -12,6 +12,10 @@ public class Day {
     private int id;
     private Date start;
     private Date end;
+    @SerializedName("break_start")
+    private Date breakStart;
+    @SerializedName("break_end")
+    private Date breakEnd;
     @SerializedName("day_off")
     private boolean dayOff;
 
@@ -44,6 +48,22 @@ public class Day {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public Date getBreakStart() {
+        return breakStart;
+    }
+
+    public void setBreakStart(Date breakStart) {
+        this.breakStart = breakStart;
+    }
+
+    public Date getBreakEnd() {
+        return breakEnd;
+    }
+
+    public void setBreakEnd(Date breakEnd) {
+        this.breakEnd = breakEnd;
     }
 
     public boolean isDayOff() {
