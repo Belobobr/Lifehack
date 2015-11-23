@@ -81,25 +81,23 @@ public interface ExchangeRatesContract {
 
     interface UserActionsListener {
 
-        void initialize();
+        void loadInitialData();
 
-        void onRetryButtonClicked();
+        void applyConversion();
 
-        void onWhereToBuyButtonClicked();
+        void showWhereToBuyBranches();
 
-        void onLoadingRatesErrorTryAgain(String date);
+        void tryAgainLoadingRates(String date);
 
-        void onLoadingRatesErrorCancel();
+        void cancelLoadingRates();
 
-        void onBankSelected(int position, long id);
+        void applyConversionOnBankSelected(int position, long id);
 
-        void afterAmountInTextChanged(String text);
+        void applyConversionOnCurrencyOutChanged(RadioGroup radioGroup, int checkedId);
 
-        void onCurrencyOutChanged(RadioGroup radioGroup, int checkedId);
+        void applyConversionOnCurrencyInChanged(RadioGroup radioGroup, int checkedId);
 
-        void onCurrencyInChanged(RadioGroup radioGroup, int checkedId);
-
-        void onRatesDateChanged(Date date);
+        void applyConversionOnRatesDateChanged(Date date);
 
     }
 }

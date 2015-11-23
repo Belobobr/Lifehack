@@ -54,12 +54,8 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
 
-    public void initialize() {
-
-        loadInitialData();
-    }
-
-    private void loadInitialData() {
+    @Override
+    public void loadInitialData() {
 
         exchangeRatesView.showLoading(R.string.field_loading_rates_);
         loadBanksUseCase();
@@ -261,7 +257,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         return bestExchange;
     }
 
-
+    @Override
     public void applyConversion() {
 
         List<Rate> bankRateList;
@@ -300,14 +296,16 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         return amountOutValue;
     }
 
-    public void onRatesDateChanged(Date date) {
+    @Override
+    public void applyConversionOnRatesDateChanged(Date date) {
 
         exchangeRatesView.showLoading(R.string.field_loading_rates_);
         String dateText = DateUtils.getRateDateFormat().format(date);
         loadRates(dateText);
     }
 
-    public void onCurrencyInChanged(RadioGroup radioGroup, int checkedId) {
+    @Override
+    public void applyConversionOnCurrencyInChanged(RadioGroup radioGroup, int checkedId) {
 
         int currencyInId = checkedId;
         int currencyOutId = exchangeRatesView.getCheckedCurrencyOutId();
@@ -320,7 +318,8 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         applyConversion();
     }
 
-    public void onCurrencyOutChanged(RadioGroup radioGroup, int checkedId) {
+    @Override
+    public void applyConversionOnCurrencyOutChanged(RadioGroup radioGroup, int checkedId) {
 
         int currencyOutId = checkedId;
         int currencyInId = exchangeRatesView.getCheckedCurrencyInId();
@@ -333,12 +332,8 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         applyConversion();
     }
 
-    public void afterAmountInTextChanged(String text) {
-
-        applyConversion();
-    }
-
-    public void onBankSelected(int position, long id) {
+    @Override
+    public void applyConversionOnBankSelected(int position, long id) {
 
         if (position != 0)
             exchangeRatesView.setBestExchangeBankText("");
@@ -346,23 +341,21 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         applyConversion();
     }
 
-    public void onLoadingRatesErrorCancel() {
+    @Override
+    public void cancelLoadingRates() {
 
         exchangeRatesView.hideLoadingRatesError();
     }
 
-    public void onLoadingRatesErrorTryAgain(String date) {
+    @Override
+    public void tryAgainLoadingRates(String date) {
 
         exchangeRatesView.hideLoadingRatesError();
         loadRates(date);
     }
 
-    public void onRetryButtonClicked() {
-
-        loadInitialData();
-    }
-
-    public void onWhereToBuyButtonClicked() {
+    @Override
+    public void showWhereToBuyBranches() {
 
         exchangeRatesView.showLoading(R.string.field_find_branches_);
 
@@ -382,5 +375,4 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         boolean onlyActive = exchangeRatesView.onlyActiveNow();
         loadBankBranches(bankId, onlyActive);
     }
-
 }
