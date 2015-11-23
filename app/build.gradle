@@ -4,19 +4,17 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
 
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
 
-        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-        applicationId globalConfiguration.getAt("androidApplicationId")
-        versionCode globalConfiguration.getAt("androidVersionCode")
-        versionName globalConfiguration.getAt("androidVersionName")
+        applicationId rootProject.ext.androidApplicationId
+        versionCode rootProject.ext.androidVersionCode
+        versionName rootProject.ext.androidVersionName
     }
     buildTypes {
         release {
@@ -37,21 +35,20 @@ repositories {
 
 dependencies {
 
-    def presentationDependencies = rootProject.ext.presentationDependencies
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile presentationDependencies.jUnit
-    compile presentationDependencies.appCompat_v7
-    compile presentationDependencies.designSupportLibrary
-    compile presentationDependencies.butterKnife
-    compile presentationDependencies.retrofit
-    compile presentationDependencies.converter_gson
-    compile presentationDependencies.gson
-    compile(presentationDependencies.materialDialogs) {
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
+    compile "com.android.support:design:$rootProject.designSupportLibrary"
+    testCompile "junit:junit:$rootProject.jUnitVersion"
+    compile "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    compile "com.squareup.retrofit:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit:converter-gson:$rootProject.retrofitVersion"
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    compile("com.github.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion") {
         transitive = true
     }
-    compile presentationDependencies.materialDateTimePicker
-
-    compile 'com.google.android.gms:play-services:7.8.0'
+    compile "com.wdullaer:materialdatetimepicker:$rootProject.materialDateTimePickerVersion"
+    compile "com.google.android.gms:play-services:8.3.0"
 }
