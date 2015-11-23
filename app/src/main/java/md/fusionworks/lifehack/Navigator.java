@@ -1,5 +1,6 @@
 package md.fusionworks.lifehack;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -22,5 +23,6 @@ public class Navigator {
 
         Intent intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
         context.startActivity(intentToLaunch);
+        ((Activity) context).finish();
     }
 }

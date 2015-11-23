@@ -24,7 +24,7 @@ import md.fusionworks.lifehack.util.UIUtils;
 /**
  * Created by admin on 03.09.2015.
  */
-public class NavigationDrawerActivity extends BaseActivity{
+public class NavigationDrawerActivity extends BaseActivity {
 
     protected static final int DRAWER_ITEM_INVALID = -1;
     protected static final int DRAWER_ITEM_SEPARATOR = -2;
@@ -79,7 +79,7 @@ public class NavigationDrawerActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userActionsListener = new NavigationDrawerPresenter(this, navigator);
+        userActionsListener = new NavigationDrawerPresenter(navigator);
         handler = new Handler();
     }
 
@@ -96,8 +96,6 @@ public class NavigationDrawerActivity extends BaseActivity{
     }
 
     private void setupDrawerLayout() {
-
-        int selfItem = getSelfDrawerItem();
 
         if (drawerLayout == null) {
             return;

@@ -1,8 +1,5 @@
 package md.fusionworks.lifehack.navigation_drawer;
 
-import android.app.Activity;
-import android.content.Context;
-
 import md.fusionworks.lifehack.Navigator;
 import md.fusionworks.lifehack.util.Constants;
 
@@ -11,12 +8,10 @@ import md.fusionworks.lifehack.util.Constants;
  */
 public class NavigationDrawerPresenter implements NavigationDrawerContract.UserActionsListener {
 
-    private Context context;
     private Navigator navigator;
 
-    public NavigationDrawerPresenter(Context context, Navigator navigator) {
+    public NavigationDrawerPresenter(Navigator navigator) {
 
-        this.context = context;
         this.navigator = navigator;
     }
 
@@ -28,7 +23,6 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.UserA
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
 
                 navigator.navigateToExchangeRatesActivity();
-                ((Activity) context).finish();
                 break;
         }
     }

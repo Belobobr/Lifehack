@@ -11,6 +11,5 @@ public class LaunchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         navigator.navigateToExchangeRatesActivity();
-        finish();
     }
 }
