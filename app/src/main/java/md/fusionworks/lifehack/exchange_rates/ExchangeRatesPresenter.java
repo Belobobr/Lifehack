@@ -12,10 +12,7 @@ import md.fusionworks.lifehack.entity.BestExchange;
 import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
 import md.fusionworks.lifehack.entity.Rate;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBankBranches;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBanks;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetCurrencies;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetRates;
+import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
@@ -36,30 +33,22 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     private List<Rate> rateList;
     private List<Bank> bankList;
     private List<Currency> currencyList;
-
-    private GetBanks getBanksUseCase;
-    private GetCurrencies getCurrenciesUseCase;
-    private GetRates getRatesUseCase;
-    private GetBankBranches getBankBranchesUseCase;
-
     private BestExchange bestExchange;
 
-    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, GetBanks getBanksUseCase, GetCurrencies getCurrenciesUseCase, GetRates getRatesUseCase, GetBankBranches getBankBranchesUseCase) {
+    private ExchangeRatesRepository exchangeRatesRepository;
+
+    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, ExchangeRatesRepository exchangeRatesRepository) {
 
         this.exchangeRatesView = exchangeRatesView;
-        this.getBanksUseCase = getBanksUseCase;
-        this.getCurrenciesUseCase = getCurrenciesUseCase;
-        this.getRatesUseCase = getRatesUseCase;
-        this.getBankBranchesUseCase = getBankBranchesUseCase;
+        this.exchangeRatesRepository = exchangeRatesRepository;
     }
-
 
     @Override
     public void loadInitialData() {
 
         exchangeRatesView.showLoading(R.string.field_loading_rates_);
-        loadBanksUseCase();
-        loadCurrenciesUseCase();
+        loadBanks();
+        loadCurrencies();
         loadTodayRates();
     }
 
@@ -83,9 +72,9 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         exchangeRatesView.showRetryView();
     }
 
-    private void loadBanksUseCase() {
+    private void loadBanks() {
 
-        getBanksUseCase.execute(new Callback<List<Bank>>() {
+        exchangeRatesRepository.getBanks(new Callback<List<Bank>>() {
             @Override
             public void onSuccess(List<Bank> response) {
 
@@ -104,9 +93,9 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         });
     }
 
-    private void loadCurrenciesUseCase() {
+    private void loadCurrencies() {
 
-        getCurrenciesUseCase.execute(new Callback<List<Currency>>() {
+        exchangeRatesRepository.getCurrencies(new Callback<List<Currency>>() {
             @Override
             public void onSuccess(List<Currency> response) {
 
@@ -128,7 +117,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadInitialRates(String date) {
 
-        getRatesUseCase.execute(date, new Callback<List<Rate>>() {
+        exchangeRatesRepository.getRates(date, new Callback<List<Rate>>() {
             @Override
             public void onSuccess(List<Rate> response) {
 
@@ -150,8 +139,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadRates(String date) {
 
-
-        getRatesUseCase.execute(date, new Callback<List<Rate>>() {
+        exchangeRatesRepository.getRates(date, new Callback<List<Rate>>() {
             @Override
             public void onSuccess(List<Rate> response) {
 
@@ -171,7 +159,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadBankBranches(int bankId, boolean active) {
 
-        getBankBranchesUseCase.execute(bankId, active, new Callback<List<Branch>>() {
+        exchangeRatesRepository.getBankBranches(bankId, active, new Callback<List<Branch>>() {
             @Override
             public void onSuccess(List<Branch> response) {
 

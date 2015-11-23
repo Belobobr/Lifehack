@@ -30,10 +30,7 @@ import md.fusionworks.lifehack.entity.Bank;
 import md.fusionworks.lifehack.entity.BankSpinnerItem;
 import md.fusionworks.lifehack.entity.Branch;
 import md.fusionworks.lifehack.entity.Currency;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBankBranchesImpl;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetBanksImpl;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetCurrenciesImpl;
-import md.fusionworks.lifehack.exchange_rates.interactor.GetRatesImpl;
+import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepositoryImpl;
 import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
@@ -102,7 +99,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        userActionsListener = new ExchangeRatesPresenter(this, new GetBanksImpl(getActivity()), new GetCurrenciesImpl(getActivity()), new GetRatesImpl(getActivity()), new GetBankBranchesImpl(getActivity()));
+        userActionsListener = new ExchangeRatesPresenter(this, new ExchangeRatesRepositoryImpl(getActivity()));
         userActionsListener.loadInitialData();
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {
