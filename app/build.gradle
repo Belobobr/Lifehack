@@ -37,12 +37,10 @@ dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    testCompile "junit:junit:$rootProject.jUnitVersion"
     compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
     compile "com.android.support:design:$rootProject.designSupportLibrary"
-    testCompile "junit:junit:$rootProject.jUnitVersion"
-    compile "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     compile "com.squareup.retrofit:retrofit:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit:converter-gson:$rootProject.retrofitVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
