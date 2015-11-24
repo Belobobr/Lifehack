@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:gravity="start|center_vertical"
-        android:textSize="@dimen/text_size_large"
+        android:textColor="#666"
+        android:textSize="@dimen/text_size_medium"
         view:typeface="font/Roboto-Regular.ttf"
         />
 

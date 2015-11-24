@@ -470,6 +470,11 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             addressField.setText(getBranchAddress(branch));
             scheduleField.setText(getBranchScheduleBreak(branch));
 
+            nameField.setOnClickListener(v1 -> {
+
+                showInfoWindow(branch);
+            });
+
             branchesListLayout.addView(v);
         }
     }
@@ -559,6 +564,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
     @Override
     public void showInfoWindow(Branch branch) {
+
+        mapHelper.goToPosition(branch.getAddress().getLocation().getLat(),branch.getAddress().getLocation().getLng(),false);
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(branch.getName())
