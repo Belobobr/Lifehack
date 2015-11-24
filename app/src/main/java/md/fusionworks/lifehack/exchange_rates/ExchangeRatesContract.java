@@ -77,6 +77,10 @@ public interface ExchangeRatesContract {
         void showBranchesLayout();
 
         void populateBranchesList(List<Branch> branchList);
+
+        void populateBranchesMap(List<Branch> branchList);
+
+        void showInfoWindow(Branch branch);
     }
 
     interface UserActionsListener {
@@ -99,5 +103,6 @@ public interface ExchangeRatesContract {
 
         void applyConversionOnRatesDateChanged(Date date);
 
+        void showInfoWindow(Branch branch);
     }
 }

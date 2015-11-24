@@ -163,6 +163,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
             @Override
             public void onSuccess(List<Branch> response) {
 
+                exchangeRatesView.populateBranchesMap(response);
                 exchangeRatesView.populateBranchesList(response);
                 exchangeRatesView.showBranchesLayout();
                 exchangeRatesView.hideLoading();
@@ -362,5 +363,10 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
         boolean onlyActive = exchangeRatesView.onlyActiveNow();
         loadBankBranches(bankId, onlyActive);
+    }
+
+    @Override
+    public void showInfoWindow(Branch branch) {
+
     }
 }

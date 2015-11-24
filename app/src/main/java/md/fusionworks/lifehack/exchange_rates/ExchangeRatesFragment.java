@@ -2,6 +2,7 @@ package md.fusionworks.lifehack.exchange_rates;
 
 
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -19,9 +20,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,12 +80,16 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     LinearLayout branchesLayout;
     @Bind(R.id.branchesListLayout)
     LinearLayout branchesListLayout;
+    @Bind(R.id.map)
+    MapView mapView;
 
     private ExchangeRatesContract.UserActionsListener userActionsListener;
-    BankSpinnerAdapter bankSpinnerAdapter;
-
+    private BankSpinnerAdapter bankSpinnerAdapter;
     private MaterialDialog loadingInitialDataDialog;
     private MaterialDialog loadingRatesErrorDialog;
+    private GoogleMap map;
+    private MapHelper mapHelper;
+    private Map<Marker, Branch> branchMap = new HashMap<>();
 
     public static ExchangeRatesFragment newInstance() {
 
@@ -92,6 +107,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         View v = inflater.inflate(R.layout.fragment_exchange_rates, container, false);
         ButterKnife.bind(this, v);
 
+        initializeMap(savedInstanceState);
+
         return v;
     }
 
@@ -105,6 +122,38 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         retryButton.setOnClickListener(v -> {
 
             userActionsListener.loadInitialData();
+        });
+    }
+
+    private void initializeMap(Bundle savedInstanceState) {
+
+        mapView.onCreate(savedInstanceState);
+        map = mapView.getMap();
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.setMyLocationEnabled(true);
+
+        MapsInitializer.initialize(this.getActivity());
+        mapHelper = MapHelper.newInstance(getActivity(), map);
+
+        Location location = map.getMyLocation();
+        if (location != null) {
+
+            mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
+            mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, 12f);
+        } else
+            map.setOnMyLocationChangeListener(arg0 -> {
+
+                mapHelper.createMarker(arg0.getLatitude(), arg0.getLongitude(), R.drawable.home_pin_icon);
+                mapHelper.goToPosition(arg0.getLatitude(), arg0.getLongitude(), false, 12f);
+                map.setOnMyLocationChangeListener(null);
+            });
+
+        map.setOnMarkerClickListener(marker -> {
+
+            if (branchMap.get(marker) != null)
+                showInfoWindow(branchMap.get(marker));
+            //  userActionsListener.showInfoWindow(branchMap.get(marker));
+            return true;
         });
     }
 
@@ -380,6 +429,31 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
+    public void populateBranchesMap(List<Branch> branchList) {
+
+        map.clear();
+
+        Location location = map.getMyLocation();
+        if (location != null) {
+
+            mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
+            mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, 12f);
+        } else
+            map.setOnMyLocationChangeListener(arg0 -> {
+
+                mapHelper.createMarker(arg0.getLatitude(), arg0.getLongitude(), R.drawable.home_pin_icon);
+                mapHelper.goToPosition(arg0.getLatitude(), arg0.getLongitude(), false, 12f);
+                map.setOnMyLocationChangeListener(null);
+            });
+
+        for (Branch branch : branchList) {
+
+            Marker marker = mapHelper.createMarker(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
+            branchMap.put(marker, branch);
+        }
+    }
+
+    @Override
     public void populateBranchesList(List<Branch> branchList) {
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
@@ -481,5 +555,38 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         }
 
         return scheduleBreak;
+    }
+
+    @Override
+    public void showInfoWindow(Branch branch) {
+
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .title(branch.getName())
+                .customView(R.layout.info_window_view, true)
+                .positiveText("Закрыть")
+                .build();
+
+        TextView addressField = (TextView) dialog.getCustomView().findViewById(R.id.addressField);
+        addressField.setText(getBranchAddress(branch));
+
+        dialog.show();
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }
