@@ -18,4 +18,6 @@
     <string name="field_message_load_rates_error">Проверьте интернет соединение \nи пробуйте снова.</string>
     <string name="field_try_again">Попробовать снова</string>
     <string name="field_cancel">Отменить</string>
+    <string name="field_something_gone_wrong">Что-то пошло не так.</string>
+    <string name="field_no_rate">Нету курса</string>
 </resources>

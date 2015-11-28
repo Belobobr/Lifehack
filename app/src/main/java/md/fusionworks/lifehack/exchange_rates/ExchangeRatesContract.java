@@ -24,11 +24,7 @@ public interface ExchangeRatesContract {
 
         void hideLoading();
 
-        void showLoadingRatesError(String date);
-
-        void hideLoadingRatesError();
-
-        void showNotificationToast(String message, NotificationToastType type);
+        void showNotificationToast(NotificationToastType type, int stringResId);
 
         void setAmountInText(String text);
 
@@ -90,10 +86,6 @@ public interface ExchangeRatesContract {
         void applyConversion();
 
         void onWhereToBuyAction();
-
-        void onTryAgainLoadingRateAction(String date);
-
-        void onCancelLoadingRateAction();
 
         void onBankSelected(int position, long id);
 

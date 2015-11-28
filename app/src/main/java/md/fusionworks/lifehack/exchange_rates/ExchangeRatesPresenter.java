@@ -1,7 +1,5 @@
 package md.fusionworks.lifehack.exchange_rates;
 
-import android.widget.RadioGroup;
-
 import java.util.Date;
 import java.util.List;
 
@@ -152,7 +150,8 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
             public void onError(Throwable t) {
 
                 exchangeRatesView.hideLoading();
-                exchangeRatesView.showLoadingRatesError(date);
+                exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
+
             }
         });
     }
@@ -173,6 +172,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
             public void onError(Throwable t) {
 
                 exchangeRatesView.hideLoading();
+                exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
             }
         });
     }
@@ -194,8 +194,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void notifyNoExchangeRates() {
 
-        exchangeRatesView.showNotificationToast("Нету курса",
-                ExchangeRatesContract.View.NotificationToastType.ERROR);
+        exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_no_rate);
         exchangeRatesView.setAmountOutText(NO_EXCHANGE_RATES_OUT_VALUE);
     }
 
@@ -328,19 +327,6 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
             exchangeRatesView.setBestExchangeBankText("");
 
         applyConversion();
-    }
-
-    @Override
-    public void onCancelLoadingRateAction() {
-
-        exchangeRatesView.hideLoadingRatesError();
-    }
-
-    @Override
-    public void onTryAgainLoadingRateAction(String date) {
-
-        exchangeRatesView.hideLoadingRatesError();
-        loadRates(date);
     }
 
     @Override

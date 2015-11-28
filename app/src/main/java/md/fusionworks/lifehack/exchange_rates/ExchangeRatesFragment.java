@@ -83,7 +83,6 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     private ExchangeRatesContract.UserActionsListener userActionsListener;
     private BankSpinnerAdapter bankSpinnerAdapter;
     private MaterialDialog loadingInitialDataDialog;
-    private MaterialDialog loadingRatesErrorDialog;
     private GoogleMap map;
     private MapHelper mapHelper;
     private Map<Marker, Branch> branchMap = new HashMap<>();
@@ -188,39 +187,6 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                 loadingInitialDataDialog.hide();
 
         loadingInitialDataDialog = null;
-    }
-
-    @Override
-    public void showLoadingRatesError(String date) {
-
-        if (loadingRatesErrorDialog == null) {
-
-            loadingRatesErrorDialog = new MaterialDialog.Builder(getActivity())
-                    .title(R.string.field_title_load_rates_error)
-                    .content(R.string.field_message_load_rates_error)
-                    .positiveText(R.string.field_try_again)
-                    .negativeText(R.string.field_cancel)
-                    .cancelable(false)
-                    .onNegative((materialDialog, dialogAction) -> {
-
-                        userActionsListener.onCancelLoadingRateAction();
-                    })
-                    .onPositive((materialDialog, dialogAction) -> userActionsListener.onTryAgainLoadingRateAction(date))
-                    .show();
-        }
-
-        if (!loadingRatesErrorDialog.isShowing())
-            loadingRatesErrorDialog.show();
-    }
-
-    @Override
-    public void hideLoadingRatesError() {
-
-        if (loadingRatesErrorDialog != null)
-            if (loadingRatesErrorDialog.isShowing())
-                loadingRatesErrorDialog.hide();
-
-        loadingRatesErrorDialog = null;
     }
 
     @Override
@@ -393,9 +359,9 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void showNotificationToast(String message, NotificationToastType type) {
+    public void showNotificationToast(NotificationToastType type, int stringResId) {
 
-        ((ExchangeRatesActivity) getActivity()).showNotificationToast(message, type);
+        ((ExchangeRatesActivity) getActivity()).showNotificationToast(type, stringResId);
     }
 
     @Override

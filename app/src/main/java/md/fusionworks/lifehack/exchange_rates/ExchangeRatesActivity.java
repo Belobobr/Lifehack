@@ -38,7 +38,9 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
         return Constants.DRAWER_ITEM_EXCHANGE_RATES;
     }
 
-    public void showNotificationToast(String message, ExchangeRatesContract.View.NotificationToastType type) {
+    public void showNotificationToast(ExchangeRatesContract.View.NotificationToastType type, int stringResId) {
+
+        String message = getString(stringResId);
 
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
 
