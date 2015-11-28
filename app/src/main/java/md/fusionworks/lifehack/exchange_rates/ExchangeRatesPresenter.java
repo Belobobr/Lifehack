@@ -286,7 +286,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void applyConversionOnRatesDateChanged(Date date) {
+    public void onRatesDateChanged(Date date) {
 
         exchangeRatesView.showLoading(R.string.field_loading_rates_);
         String dateText = DateUtils.getRateDateFormat().format(date);
@@ -294,7 +294,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void applyConversionOnCurrencyInChanged(RadioGroup radioGroup, int checkedId) {
+    public void onCurrencyInChanged(int checkedId) {
 
         int currencyInId = checkedId;
         int currencyOutId = exchangeRatesView.getCheckedCurrencyOutId();
@@ -308,7 +308,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void applyConversionOnCurrencyOutChanged(RadioGroup radioGroup, int checkedId) {
+    public void onCurrencyOutChanged(int checkedId) {
 
         int currencyOutId = checkedId;
         int currencyInId = exchangeRatesView.getCheckedCurrencyInId();
@@ -322,7 +322,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void applyConversionOnBankSelected(int position, long id) {
+    public void onBankSelected(int position, long id) {
 
         if (position != 0)
             exchangeRatesView.setBestExchangeBankText("");
@@ -331,20 +331,20 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void cancelLoadingRates() {
+    public void onCancelLoadingRateAction() {
 
         exchangeRatesView.hideLoadingRatesError();
     }
 
     @Override
-    public void tryAgainLoadingRates(String date) {
+    public void onTryAgainLoadingRateAction(String date) {
 
         exchangeRatesView.hideLoadingRatesError();
         loadRates(date);
     }
 
     @Override
-    public void showWhereToBuyBranches() {
+    public void onWhereToBuyAction() {
 
         exchangeRatesView.showLoading(R.string.field_find_branches_);
 
@@ -366,7 +366,20 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void showInfoWindow(Branch branch) {
+    public void onRetryAction() {
 
+        loadInitialData();
+    }
+
+    @Override
+    public void onAmountInChanged(String text) {
+
+        applyConversion();
+    }
+
+    @Override
+    public void onShowInfoWindowAction(Branch branch) {
+
+        exchangeRatesView.showInfoWindow(branch);
     }
 }

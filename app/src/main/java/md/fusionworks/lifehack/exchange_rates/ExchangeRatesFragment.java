@@ -20,14 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -52,6 +48,7 @@ import md.fusionworks.lifehack.util.DateUtils;
  */
 public class ExchangeRatesFragment extends BaseFragment implements ExchangeRatesContract.View {
 
+    public static final float CAMERA_ZOOM = 12f;
     @Bind(R.id.amountInField)
     EditText amountInField;
     @Bind(R.id.amountOutField)
@@ -121,7 +118,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {
 
-            userActionsListener.loadInitialData();
+            userActionsListener.onRetryAction();
         });
     }
 
@@ -135,26 +132,34 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         MapsInitializer.initialize(this.getActivity());
         mapHelper = MapHelper.newInstance(getActivity(), map);
 
-        Location location = map.getMyLocation();
-        if (location != null) {
-
-            mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
-            mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, 12f);
-        } else
-            map.setOnMyLocationChangeListener(arg0 -> {
-
-                mapHelper.createMarker(arg0.getLatitude(), arg0.getLongitude(), R.drawable.home_pin_icon);
-                mapHelper.goToPosition(arg0.getLatitude(), arg0.getLongitude(), false, 12f);
-                map.setOnMyLocationChangeListener(null);
-            });
+        showMyLocationOnMap();
 
         map.setOnMarkerClickListener(marker -> {
 
             if (branchMap.get(marker) != null)
-                showInfoWindow(branchMap.get(marker));
-            //  userActionsListener.showInfoWindow(branchMap.get(marker));
+                userActionsListener.onShowInfoWindowAction(branchMap.get(marker));
             return true;
         });
+    }
+
+    private void showMyLocationOnMap() {
+
+        Location location = map.getMyLocation();
+        if (location != null) {
+
+            pinHomeMarker(location);
+        } else
+            map.setOnMyLocationChangeListener(arg0 -> {
+
+                pinHomeMarker(arg0);
+                map.setOnMyLocationChangeListener(null);
+            });
+    }
+
+    private void pinHomeMarker(Location location) {
+
+        mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
+        mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, CAMERA_ZOOM);
     }
 
     @Override
@@ -198,9 +203,9 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                     .cancelable(false)
                     .onNegative((materialDialog, dialogAction) -> {
 
-                        userActionsListener.cancelLoadingRates();
+                        userActionsListener.onCancelLoadingRateAction();
                     })
-                    .onPositive((materialDialog, dialogAction) -> userActionsListener.tryAgainLoadingRates(date))
+                    .onPositive((materialDialog, dialogAction) -> userActionsListener.onTryAgainLoadingRateAction(date))
                     .show();
         }
 
@@ -253,7 +258,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void afterTextChanged(Editable s) {
 
-                userActionsListener.applyConversion();
+                userActionsListener.onAmountInChanged(s.toString());
             }
         });
 
@@ -261,7 +266,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                userActionsListener.applyConversionOnBankSelected(position, id);
+                userActionsListener.onBankSelected(position, id);
             }
 
             @Override
@@ -272,23 +277,23 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
         ratesDateField.setOnDateChangedListener(date -> {
 
-            userActionsListener.applyConversionOnRatesDateChanged(date);
+            userActionsListener.onRatesDateChanged(date);
         });
 
         currenciesInGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            userActionsListener.applyConversionOnCurrencyInChanged(group, checkedId);
+            userActionsListener.onCurrencyInChanged(checkedId);
         });
 
 
         currenciesOutGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            userActionsListener.applyConversionOnCurrencyOutChanged(group, checkedId);
+            userActionsListener.onCurrencyOutChanged(checkedId);
         });
 
         whereToBuyButton.setOnClickListener(v -> {
 
-            userActionsListener.showWhereToBuyBranches();
+            userActionsListener.onWhereToBuyAction();
         });
     }
 
@@ -432,19 +437,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void populateBranchesMap(List<Branch> branchList) {
 
         map.clear();
-
-        Location location = map.getMyLocation();
-        if (location != null) {
-
-            mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
-            mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, 12f);
-        } else
-            map.setOnMyLocationChangeListener(arg0 -> {
-
-                mapHelper.createMarker(arg0.getLatitude(), arg0.getLongitude(), R.drawable.home_pin_icon);
-                mapHelper.goToPosition(arg0.getLatitude(), arg0.getLongitude(), false, 12f);
-                map.setOnMyLocationChangeListener(null);
-            });
+        showMyLocationOnMap();
 
         for (Branch branch : branchList) {
 
@@ -472,7 +465,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
             nameField.setOnClickListener(v1 -> {
 
-                showInfoWindow(branch);
+                userActionsListener.onShowInfoWindowAction(branch);
             });
 
             branchesListLayout.addView(v);
@@ -565,7 +558,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Override
     public void showInfoWindow(Branch branch) {
 
-        mapHelper.goToPosition(branch.getAddress().getLocation().getLat(),branch.getAddress().getLocation().getLng(),false);
+        mapHelper.goToPosition(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), false);
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(branch.getName())

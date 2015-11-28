@@ -89,20 +89,24 @@ public interface ExchangeRatesContract {
 
         void applyConversion();
 
-        void showWhereToBuyBranches();
+        void onWhereToBuyAction();
 
-        void tryAgainLoadingRates(String date);
+        void onTryAgainLoadingRateAction(String date);
 
-        void cancelLoadingRates();
+        void onCancelLoadingRateAction();
 
-        void applyConversionOnBankSelected(int position, long id);
+        void onBankSelected(int position, long id);
 
-        void applyConversionOnCurrencyOutChanged(RadioGroup radioGroup, int checkedId);
+        void onCurrencyOutChanged(int checkedId);
 
-        void applyConversionOnCurrencyInChanged(RadioGroup radioGroup, int checkedId);
+        void onCurrencyInChanged(int checkedId);
 
-        void applyConversionOnRatesDateChanged(Date date);
+        void onRatesDateChanged(Date date);
 
-        void showInfoWindow(Branch branch);
+        void onRetryAction();
+
+        void onAmountInChanged(String text);
+
+        void onShowInfoWindowAction(Branch branch);
     }
 }
