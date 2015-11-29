@@ -31,7 +31,6 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     private List<Rate> rateList;
     private List<Bank> bankList;
     private List<Currency> currencyList;
-    private BestExchange bestExchange;
 
     private ExchangeRatesRepository exchangeRatesRepository;
 
@@ -224,9 +223,9 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
                 bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
                 amountInValue = Converter.toDouble(exchangeRatesView.getAmountInText());
-                currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyInId());
-                currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyOutId());
-                double bankAmountOutValue = convertBank(bankRateList, amountInValue, currencyInRateValue, currencyOutRateValue);
+                currencyInRateValue = ExchangeRatesUtils.getCurrencyRateValue(bankRateList, exchangeRatesView.getCheckedCurrencyInId());
+                currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateValue(bankRateList, exchangeRatesView.getCheckedCurrencyOutId());
+                double bankAmountOutValue = ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
                 if (bankAmountOutValue > amountOutValue) {
 
                     amountOutValue = bankAmountOutValue;
@@ -248,40 +247,30 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     @Override
     public void applyConversion() {
 
+        int bankId = exchangeRatesView.getSelectedBankId();
+        if (bankId == 0)
+            convertBestExchange();
+        else
+            convertBank(bankId);
+    }
+
+    private void convertBank(int bankId) {
+
         List<Rate> bankRateList;
         double amountInValue;
         double currencyInRateValue;
         double currencyOutRateValue;
 
-        int bankId = exchangeRatesView.getSelectedBankId();
+        bankRateList = ExchangeRatesUtils.getBankRates(rateList, bankId);
+        amountInValue = Converter.toDouble(exchangeRatesView.getAmountInText());
+        currencyInRateValue = ExchangeRatesUtils.getCurrencyRateValue(bankRateList, exchangeRatesView.getCheckedCurrencyInId());
+        currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateValue(bankRateList, exchangeRatesView.getCheckedCurrencyOutId());
 
-        if (bankId == 0) {
+        if (validateConversionParams(bankRateList, currencyInRateValue, currencyOutRateValue)) {
 
-            bestExchange = convertBestExchange();
-        } else {
-
-            bankRateList = ExchangeRatesUtils.getBankRates(rateList, exchangeRatesView.getSelectedBankId());
-            amountInValue = Converter.toDouble(exchangeRatesView.getAmountInText());
-            currencyInRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyInId());
-            currencyOutRateValue = ExchangeRatesUtils.getCurrencyRateList(bankRateList, exchangeRatesView.getCheckedCurrencyOutId());
-
-            if (validateConversionParams(bankRateList, currencyInRateValue, currencyOutRateValue)) {
-
-                double amountOutValue = convertBank(bankRateList, amountInValue, currencyInRateValue, currencyOutRateValue);
-                exchangeRatesView.setAmountOutText(String.format("%.2f", amountOutValue));
-            }
+            double amountOutValue = ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+            exchangeRatesView.setAmountOutText(String.format("%.2f", amountOutValue));
         }
-    }
-
-    private double convertBank(List<Rate> rateList, double amountInValue, double currencyInRateValue,
-                               double currencyOutRateValue) {
-
-        if (amountInValue == 0)
-            return 0;
-
-        double amountOutValue = ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
-
-        return amountOutValue;
     }
 
     @Override

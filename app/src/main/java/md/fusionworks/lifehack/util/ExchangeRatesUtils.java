@@ -22,7 +22,7 @@ public class ExchangeRatesUtils {
         return bankRateList;
     }
 
-    public static double getCurrencyRateList(List<Rate> rateList, int currencyId) {
+    public static double getCurrencyRateValue(List<Rate> rateList, int currencyId) {
 
         for (Rate rate : rateList) {
 
@@ -34,6 +34,9 @@ public class ExchangeRatesUtils {
     }
 
     public static double convert(double amountInValue, double currencyInValue, double currencyOutValue) {
+
+        if (amountInValue == 0 || currencyInValue == 0 || currencyOutValue == 0)
+            return 0;
 
         return amountInValue * currencyInValue / currencyOutValue;
     }
