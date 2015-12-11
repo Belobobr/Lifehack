@@ -301,6 +301,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
                 bankSpinner.setSelection(position);
 
             position++;
+
         }
     }
 

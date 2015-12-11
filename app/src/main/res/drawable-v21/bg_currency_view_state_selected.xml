@@ -5,5 +5,5 @@
             <solid android:color="@color/colorPrimary" />
         </shape>
     </item>
-
+    <item android:drawable="?android:selectableItemBackground" />
 </layer-list>

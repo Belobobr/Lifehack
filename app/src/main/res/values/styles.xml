@@ -20,6 +20,8 @@
 
     <style name="Theme.Lifehack" parent="Theme.Lifehack.Base"/>
 
+    <style name="Theme.Lifehack.TranslucentStatus" parent="Theme.Lifehack"/>
+
     <style name="Theme.Lifehack.Launch" parent="Theme.Lifehack">
         <item name="android:windowBackground">@drawable/background_launch</item>
     </style>
