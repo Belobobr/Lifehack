@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.BaseActivity;
 import md.fusionworks.lifehack.util.Constants;
 import md.fusionworks.lifehack.util.UIUtils;
 
@@ -32,7 +31,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     private static final int DRAWER_LAUNCH_DELAY = 250;
 
     private static final int[] DRAWER_TITLE_RES_ID = new int[]{
-
             R.string.drawer_item_main,
             R.string.drawer_item_life_hacks,
             R.string.drawer_item_exchange_rates,
@@ -42,7 +40,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     };
 
     private static final int[] DRAWER_ICON_RES_ID = new int[]{
-
             R.drawable.ic_lens_black_24dp,
             R.drawable.ic_lens_black_24dp,
             R.drawable.ic_lens_black_24dp,
@@ -52,7 +49,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     };
 
     private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[]{
-
             false,
             false,
             true,
@@ -92,7 +88,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     private void setupDrawerLayout() {
-
         if (drawerLayout == null) {
             return;
         }
@@ -114,12 +109,10 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     public void setTitle(String title) {
-
         getSupportActionBar().setTitle(title);
     }
 
     private void populateDrawerItems() {
-
         drawerItems.add(Constants.DRAWER_ITEM_MAIN);
         drawerItems.add(Constants.DRAWER_ITEM_LIFE_HACKS);
         drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
@@ -131,7 +124,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     private void createDrawerItems() {
-
         if (drawerItemsListContainer == null) {
             return;
         }
@@ -248,7 +240,6 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     private void setSelectedDrawerItem(int itemId) {
-
         if (drawerItemViews != null) {
             for (int i = 0; i < drawerItemViews.length; i++) {
                 if (i < drawerItems.size()) {
@@ -263,12 +254,11 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     public void goToDrawerItem(int item) {
-
         switch (item) {
 
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
 
-                navigator.navigateToExchangeRatesActivity();
+                navigator.navigateToExchangeRatesActivity(this);
                 break;
         }
     }

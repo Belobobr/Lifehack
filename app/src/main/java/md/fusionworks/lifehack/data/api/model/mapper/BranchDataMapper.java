@@ -3,14 +3,14 @@ package md.fusionworks.lifehack.data.api.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.data.api.model.Branch;
-import md.fusionworks.lifehack.ui.model.AddressModel;
-import md.fusionworks.lifehack.ui.model.BranchModel;
-import md.fusionworks.lifehack.ui.model.DayModel;
-import md.fusionworks.lifehack.ui.model.DistrictModel;
-import md.fusionworks.lifehack.ui.model.LocalityModel;
-import md.fusionworks.lifehack.ui.model.LocationModel;
-import md.fusionworks.lifehack.ui.model.ScheduleModel;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch;
+import md.fusionworks.lifehack.ui.model.exchange_rates.AddressModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.DayModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.DistrictModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.LocalityModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.LocationModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.ScheduleModel;
 
 /**
  * Created by ungvas on 2/10/16.

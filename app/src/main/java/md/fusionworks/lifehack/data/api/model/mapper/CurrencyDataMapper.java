@@ -3,10 +3,8 @@ package md.fusionworks.lifehack.data.api.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.data.api.model.Bank;
-import md.fusionworks.lifehack.data.api.model.Currency;
-import md.fusionworks.lifehack.ui.model.BankModel;
-import md.fusionworks.lifehack.ui.model.CurrencyModel;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Currency;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 
 /**
  * Created by ungvas on 2/10/16.

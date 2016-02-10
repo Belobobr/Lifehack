@@ -33,16 +33,15 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.data.api.model.Branch;
-import md.fusionworks.lifehack.data.repository.NewExchangeRatesRepository;
-import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepositoryImpl;
-import md.fusionworks.lifehack.ui.BaseFragment;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch;
+import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.fragment.BaseFragment;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
-import md.fusionworks.lifehack.ui.model.BankModel;
-import md.fusionworks.lifehack.ui.model.BankSpinnerItemModel;
-import md.fusionworks.lifehack.ui.model.BranchModel;
-import md.fusionworks.lifehack.ui.model.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
 import md.fusionworks.lifehack.util.DateUtils;
@@ -117,7 +116,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        userActionsListener = new ExchangeRatesPresenter(this, new ExchangeRatesRepositoryImpl(getActivity()), new NewExchangeRatesRepository(getActivity()));
+        userActionsListener = new ExchangeRatesPresenter(this, new ExchangeRatesRepository(getActivity()));
         userActionsListener.loadInitialData();
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {

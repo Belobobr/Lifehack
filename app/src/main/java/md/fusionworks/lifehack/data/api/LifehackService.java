@@ -2,10 +2,10 @@ package md.fusionworks.lifehack.data.api;
 
 import java.util.List;
 
-import md.fusionworks.lifehack.data.api.model.Bank;
-import md.fusionworks.lifehack.data.api.model.Branch;
-import md.fusionworks.lifehack.data.api.model.Currency;
-import md.fusionworks.lifehack.data.api.model.Rate;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Bank;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Currency;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Rate;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

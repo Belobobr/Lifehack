@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.model.BankSpinnerItemModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
 
 /**
  * Created by ungvas on 10/30/15.

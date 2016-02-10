@@ -3,8 +3,8 @@ package md.fusionworks.lifehack.data.api.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.data.api.model.Rate;
-import md.fusionworks.lifehack.ui.model.RateModel;
+import md.fusionworks.lifehack.data.api.model.exchange_rates.Rate;
+import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 
 /**
  * Created by ungvas on 2/10/16.

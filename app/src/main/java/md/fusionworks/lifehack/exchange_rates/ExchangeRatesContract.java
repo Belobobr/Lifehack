@@ -3,9 +3,9 @@ package md.fusionworks.lifehack.exchange_rates;
 import java.util.Date;
 import java.util.List;
 
-import md.fusionworks.lifehack.ui.model.BankModel;
-import md.fusionworks.lifehack.ui.model.BranchModel;
-import md.fusionworks.lifehack.ui.model.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 
 /**
  * Created by ungvas on 11/23/15.

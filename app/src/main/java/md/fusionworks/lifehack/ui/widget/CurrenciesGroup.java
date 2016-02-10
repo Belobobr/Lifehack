@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.model.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 
 /**
  * Created by ungvas on 11/1/15.

@@ -4,19 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.data.api.model.Branch;
-import md.fusionworks.lifehack.data.repository.NewExchangeRatesRepository;
-import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepository;
-import md.fusionworks.lifehack.ui.model.BankModel;
-import md.fusionworks.lifehack.ui.model.BestExchangeModel;
-import md.fusionworks.lifehack.ui.model.BranchModel;
-import md.fusionworks.lifehack.ui.model.CurrencyModel;
-import md.fusionworks.lifehack.ui.model.RateModel;
+import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.ExchangeRatesInitialData;
+import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
+import rx.Observable;
 
 /**
  * Created by ungvas on 11/23/15.
@@ -36,27 +36,53 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     private List<CurrencyModel> currencyList;
 
     private ExchangeRatesRepository exchangeRatesRepository;
-    private NewExchangeRatesRepository newExchangeRatesRepository;
 
-    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, ExchangeRatesRepository exchangeRatesRepository, NewExchangeRatesRepository newExchangeRatesRepository) {
-
+    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, ExchangeRatesRepository exchangeRatesRepository) {
         this.exchangeRatesView = exchangeRatesView;
         this.exchangeRatesRepository = exchangeRatesRepository;
-        this.newExchangeRatesRepository = newExchangeRatesRepository;
     }
 
     @Override
     public void loadInitialData() {
 
         exchangeRatesView.showLoading(R.string.field_loading_rates_);
-        loadBanks();
-        loadCurrencies();
-        loadTodayRates();
+        loadInitialDataRx();
     }
 
-    private boolean isInitialDataLoaded() {
+    private void loadInitialDataRx() {
+        Observable<List<BankModel>> bankObservable = exchangeRatesRepository.getBanks()
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
 
-        return (bankList != null && currencyList != null && rateList != null);
+        Observable<List<CurrencyModel>> currencyObservable = exchangeRatesRepository.getCurrencies()
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+
+        String today = DateUtils.getRateDateFormat().format(new Date());
+        Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today)
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+
+        Observable.zip(bankObservable, currencyObservable, rateObservable, (bankModels, currencyModels, rateModels) ->
+                new ExchangeRatesInitialData(bankModels, currencyModels, rateModels))
+                .subscribe(new ObserverAdapter<ExchangeRatesInitialData>() {
+                    @Override
+                    public void onNext(ExchangeRatesInitialData exchangeRatesInitialData) {
+
+                        bankList = exchangeRatesInitialData.getBankModelList();
+                        exchangeRatesView.populateBankSpinner(bankList);
+
+                        currencyList = exchangeRatesInitialData.getCurrencyModelList();
+                        exchangeRatesView.populateCurrencyInGroup(currencyList);
+                        exchangeRatesView.populateCurrencyOutGroup(currencyList);
+
+                        rateList = exchangeRatesInitialData.getRateModelList();
+
+                        onInitialDataLoadedSuccess();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        onInitialDataLoadedError();
+                    }
+                });
     }
 
     private void onInitialDataLoadedSuccess() {
@@ -74,76 +100,10 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         exchangeRatesView.showRetryView();
     }
 
-    private void loadBanks() {
-
-        newExchangeRatesRepository.getBanks()
-                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-                .subscribe(new ObserverAdapter<List<BankModel>>() {
-
-                    @Override
-                    public void onNext(List<BankModel> bankModels) {
-                        bankList = bankModels;
-                        exchangeRatesView.populateBankSpinner(bankModels);
-
-                        if (isInitialDataLoaded())
-                            onInitialDataLoadedSuccess();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onInitialDataLoadedError();
-                    }
-                });
-    }
-
-    private void loadCurrencies() {
-
-        newExchangeRatesRepository.getCurrencies()
-                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-                .subscribe(new ObserverAdapter<List<CurrencyModel>>() {
-                    @Override
-                    public void onNext(List<CurrencyModel> currencyModels) {
-                        currencyList = currencyModels;
-                        exchangeRatesView.populateCurrencyInGroup(currencyModels);
-                        exchangeRatesView.populateCurrencyOutGroup(currencyModels);
-
-                        if (isInitialDataLoaded())
-                            onInitialDataLoadedSuccess();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onInitialDataLoadedError();
-                    }
-                });
-    }
-
-    private void loadInitialRates(String date) {
-
-        newExchangeRatesRepository.getRates(date)
-                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-                .subscribe(new ObserverAdapter<List<RateModel>>() {
-                    @Override
-                    public void onNext(List<RateModel> rateModels) {
-                        rateList = rateModels;
-
-
-                        if (isInitialDataLoaded()) {
-                            onInitialDataLoadedSuccess();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onInitialDataLoadedError();
-                    }
-                });
-    }
-
     private void loadRates(String date) {
 
 
-        newExchangeRatesRepository.getRates(date)
+        exchangeRatesRepository.getRates(date)
                 .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
                 .subscribe(new ObserverAdapter<List<RateModel>>() {
                     @Override
@@ -164,7 +124,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadBankBranches(int bankId, boolean active) {
 
-        newExchangeRatesRepository.getBranches(bankId, active)
+        exchangeRatesRepository.getBranches(bankId, active)
                 .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
                 .subscribe(new ObserverAdapter<List<BranchModel>>() {
                     @Override
@@ -182,12 +142,6 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
                     }
                 });
-    }
-
-    private void loadTodayRates() {
-
-        String today = DateUtils.getRateDateFormat().format(new Date());
-        loadInitialRates(today);
     }
 
     private void setupUIWithDefaultValues() {
