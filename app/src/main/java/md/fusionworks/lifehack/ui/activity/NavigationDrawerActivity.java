@@ -258,7 +258,7 @@ public class NavigationDrawerActivity extends BaseActivity {
 
             case Constants.DRAWER_ITEM_EXCHANGE_RATES:
 
-                navigator.navigateToExchangeRatesActivity(this);
+                getNavigator().navigateToExchangeRatesActivity(this);
                 break;
         }
     }

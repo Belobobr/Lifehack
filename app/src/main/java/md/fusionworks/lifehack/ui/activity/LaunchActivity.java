@@ -8,7 +8,7 @@ public class LaunchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        navigator.navigateToExchangeRatesActivity(this);
+        getNavigator().navigateToExchangeRatesActivity(this);
         finish();
     }
 }

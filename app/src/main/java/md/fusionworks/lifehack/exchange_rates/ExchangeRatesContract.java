@@ -22,7 +22,7 @@ public interface ExchangeRatesContract {
 
         void hideLoading();
 
-        void showNotificationToast(NotificationToastType type, int stringResId);
+        void showNotificationToast(int type, int stringResId);
 
         void setAmountInText(String text);
 

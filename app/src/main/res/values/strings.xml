@@ -20,4 +20,5 @@
     <string name="field_cancel">Отменить</string>
     <string name="field_something_gone_wrong">Что-то пошло не так.</string>
     <string name="field_no_rate">Нету курса</string>
+    <string name="action_retry">Retry</string>
 </resources>

@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.Date;
@@ -44,6 +45,7 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
+import md.fusionworks.lifehack.util.Constants;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.MapHelper;
 
@@ -128,20 +130,22 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     private void initializeMap(Bundle savedInstanceState) {
 
         mapView.onCreate(savedInstanceState);
-        map = mapView.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.setMyLocationEnabled(true);
+        mapView.getMapAsync(googleMap -> {
+            map = googleMap;
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+            map.setMyLocationEnabled(true);
 
-        MapsInitializer.initialize(this.getActivity());
-        mapHelper = MapHelper.newInstance(getActivity(), map);
+            MapsInitializer.initialize(getActivity());
+            mapHelper = MapHelper.newInstance(getActivity(), map);
 
-        showMyLocationOnMap();
+            showMyLocationOnMap();
 
-        map.setOnMarkerClickListener(marker -> {
+            map.setOnMarkerClickListener(marker -> {
 
-            if (branchMap.get(marker) != null)
-                userActionsListener.onShowInfoWindowAction(branchMap.get(marker));
-            return true;
+                if (branchMap.get(marker) != null)
+                    userActionsListener.onShowInfoWindowAction(branchMap.get(marker));
+                return true;
+            });
         });
     }
 
@@ -364,9 +368,10 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void showNotificationToast(NotificationToastType type, int stringResId) {
+    public void showNotificationToast(int type, int stringResId) {
 
-        ((ExchangeRatesActivity) getActivity()).showNotificationToast(type, stringResId);
+        showNotificationToast(type, getString(stringResId));
+//        ((ExchangeRatesActivity) getActivity()).showNotificationToast(type, stringResId);
     }
 
     @Override
@@ -545,8 +550,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
     @Override
     public void onResume() {
-        mapView.onResume();
         super.onResume();
+        mapView.onResume();
     }
 
     @Override

@@ -34,5 +34,4 @@ public class UIUtils {
             view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
         }
     }
-
 }

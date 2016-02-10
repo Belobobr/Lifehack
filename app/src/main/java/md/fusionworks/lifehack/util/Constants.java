@@ -11,4 +11,9 @@ public class Constants {
     public static final int DRAWER_ITEM_PRICES = 3;
     public static final int DRAWER_ITEM_SALES = 4;
     public static final int DRAWER_ITEM_SETTINGS = 5;
+
+    public static final int NOTIFICATION_TOAST_INFO = 100;
+    public static final int NOTIFICATION_TOAST_ERROR = 101;
+
+    public static final int NOTIFICATION_TOAST_SHOW_DELAY = 500;
 }

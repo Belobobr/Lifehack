@@ -2,7 +2,9 @@ package md.fusionworks.lifehack.util.rx;
 
 import java.io.IOException;
 
+import md.fusionworks.lifehack.data.api.ResponseCode;
 import md.fusionworks.lifehack.data.api.exception.NotFoundException;
+import md.fusionworks.lifehack.data.api.exception.UnknownException;
 import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,7 +36,10 @@ public class ObservableTransformation {
                         subscriber.onNext(tResponse);
                         subscriber.onCompleted();
                     } else {
-                        subscriber.onError(new NotFoundException());
+                        if (tResponse.code() == ResponseCode.NOT_FOUND)
+                            subscriber.onError(new NotFoundException());
+                        else
+                            subscriber.onError(new UnknownException());
                     }
                 }))
                 .retryWhen(new RetryWithDelayIf(MAX_RETRIES, RETRY_DELAY_MILLIS, throwable -> throwable instanceof IOException))
