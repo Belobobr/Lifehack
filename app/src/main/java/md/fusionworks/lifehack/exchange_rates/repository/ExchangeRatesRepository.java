@@ -4,11 +4,11 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import md.fusionworks.lifehack.api.Callback;
-import md.fusionworks.lifehack.entity.Bank;
-import md.fusionworks.lifehack.entity.Branch;
-import md.fusionworks.lifehack.entity.Currency;
-import md.fusionworks.lifehack.entity.Rate;
+import md.fusionworks.lifehack.data.api.Callback;
+import md.fusionworks.lifehack.data.api.model.Bank;
+import md.fusionworks.lifehack.data.api.model.Branch;
+import md.fusionworks.lifehack.data.api.model.Currency;
+import md.fusionworks.lifehack.data.api.model.Rate;
 
 /**
  * Created by ungvas on 11/10/15.

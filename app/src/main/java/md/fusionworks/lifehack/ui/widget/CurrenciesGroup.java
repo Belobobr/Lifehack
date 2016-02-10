@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.entity.Currency;
+import md.fusionworks.lifehack.ui.model.CurrencyModel;
 
 /**
  * Created by ungvas on 11/1/15.
@@ -25,15 +25,15 @@ public class CurrenciesGroup extends RadioGroup {
         super(context, attrs);
     }
 
-    public void addCurrencies(List<Currency> currencyList) {
+    public void addCurrencies(List<CurrencyModel> currencyList) {
 
-        for (Currency currency : currencyList) {
+        for (CurrencyModel currency : currencyList) {
 
             addCurrency(currency);
         }
     }
 
-    public void addCurrency(Currency currency) {
+    public void addCurrency(CurrencyModel currency) {
 
         int padding = getResources().getDimensionPixelOffset(R.dimen.element_spacing_normal);
         int marginLeft = getResources().getDimensionPixelOffset(R.dimen.currency_radio_button_margin);

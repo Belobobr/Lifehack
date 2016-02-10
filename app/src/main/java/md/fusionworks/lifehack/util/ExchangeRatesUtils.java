@@ -3,17 +3,18 @@ package md.fusionworks.lifehack.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.entity.Rate;
+import md.fusionworks.lifehack.data.api.model.Rate;
+import md.fusionworks.lifehack.ui.model.RateModel;
 
 /**
  * Created by ungvas on 10/30/15.
  */
 public class ExchangeRatesUtils {
 
-    public static List<Rate> getBankRates(List<Rate> rateList, int bankId) {
+    public static List<RateModel> getBankRates(List<RateModel> rateList, int bankId) {
 
-        List<Rate> bankRateList = new ArrayList<>();
-        for (Rate rate : rateList) {
+        List<RateModel> bankRateList = new ArrayList<>();
+        for (RateModel rate : rateList) {
 
             if (rate.getBank().getId() == bankId)
                 bankRateList.add(rate);
@@ -22,9 +23,9 @@ public class ExchangeRatesUtils {
         return bankRateList;
     }
 
-    public static double getCurrencyRateValue(List<Rate> rateList, int currencyId) {
+    public static double getCurrencyRateValue(List<RateModel> rateList, int currencyId) {
 
-        for (Rate rate : rateList) {
+        for (RateModel rate : rateList) {
 
             if (rate.getCurrency().getId() == currencyId)
                 return rate.getRateIn();

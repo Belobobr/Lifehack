@@ -33,15 +33,20 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.entity.Bank;
-import md.fusionworks.lifehack.entity.BankSpinnerItem;
-import md.fusionworks.lifehack.entity.Branch;
-import md.fusionworks.lifehack.entity.Currency;
+import md.fusionworks.lifehack.data.api.model.Branch;
+import md.fusionworks.lifehack.data.repository.NewExchangeRatesRepository;
 import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepositoryImpl;
 import md.fusionworks.lifehack.ui.BaseFragment;
+import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
+import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
+import md.fusionworks.lifehack.ui.model.BankModel;
+import md.fusionworks.lifehack.ui.model.BankSpinnerItemModel;
+import md.fusionworks.lifehack.ui.model.BranchModel;
+import md.fusionworks.lifehack.ui.model.CurrencyModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
 import md.fusionworks.lifehack.util.DateUtils;
+import md.fusionworks.lifehack.util.MapHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +90,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     private MaterialDialog loadingInitialDataDialog;
     private GoogleMap map;
     private MapHelper mapHelper;
-    private Map<Marker, Branch> branchMap = new HashMap<>();
+    private Map<Marker, BranchModel> branchMap = new HashMap<>();
 
     public static ExchangeRatesFragment newInstance() {
 
@@ -112,7 +117,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        userActionsListener = new ExchangeRatesPresenter(this, new ExchangeRatesRepositoryImpl(getActivity()));
+        userActionsListener = new ExchangeRatesPresenter(this, new ExchangeRatesRepositoryImpl(getActivity()), new NewExchangeRatesRepository(getActivity()));
         userActionsListener.loadInitialData();
         bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
         retryButton.setOnClickListener(v -> {
@@ -264,12 +269,12 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void populateBankSpinner(List<Bank> bankList) {
+    public void populateBankSpinner(List<BankModel> bankList) {
 
         bankSpinnerAdapter.clear();
         bankSpinnerAdapter.addItem(getActivity().getString(R.string.spinner_option_best_exchange), 0);
         bankSpinnerAdapter.addHeader(getActivity().getString(R.string.spinner_option_bank_list));
-        for (Bank bank : bankList) {
+        for (BankModel bank : bankList) {
 
             bankSpinnerAdapter.addItem(bank.getName(), bank.getId());
         }
@@ -280,8 +285,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Override
     public int getSelectedBankId() {
 
-        BankSpinnerItem bankSpinnerItem = (BankSpinnerItem) bankSpinner.getSelectedItem();
-        return bankSpinnerItem.getBankId();
+        BankSpinnerItemModel bankSpinnerItemModel = (BankSpinnerItemModel) bankSpinner.getSelectedItem();
+        return bankSpinnerItemModel.getBankId();
     }
 
     @Override
@@ -293,11 +298,11 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Override
     public void setBankSelectionById(int bankId) {
 
-        List<BankSpinnerItem> bankSpinnerItemList = bankSpinnerAdapter.getAllItems();
+        List<BankSpinnerItemModel> bankSpinnerItemModelList = bankSpinnerAdapter.getAllItems();
         int position = 0;
-        for (BankSpinnerItem bankSpinnerItem : bankSpinnerItemList) {
+        for (BankSpinnerItemModel bankSpinnerItemModel : bankSpinnerItemModelList) {
 
-            if (bankSpinnerItem.getBankId() == bankId)
+            if (bankSpinnerItemModel.getBankId() == bankId)
                 bankSpinner.setSelection(position);
 
             position++;
@@ -312,13 +317,13 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void populateCurrencyInGroup(List<Currency> currencyList) {
+    public void populateCurrencyInGroup(List<CurrencyModel> currencyList) {
 
         currenciesInGroup.addCurrencies(currencyList);
     }
 
     @Override
-    public void populateCurrencyOutGroup(List<Currency> currencyList) {
+    public void populateCurrencyOutGroup(List<CurrencyModel> currencyList) {
 
         currenciesOutGroup.addCurrencies(currencyList);
     }
@@ -401,12 +406,12 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void populateBranchesMap(List<Branch> branchList) {
+    public void populateBranchesMap(List<BranchModel> branchList) {
 
         map.clear();
         showMyLocationOnMap();
 
-        for (Branch branch : branchList) {
+        for (BranchModel branch : branchList) {
 
             Marker marker = mapHelper.createMarker(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
             branchMap.put(marker, branch);
@@ -414,12 +419,12 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void populateBranchesList(List<Branch> branchList) {
+    public void populateBranchesList(List<BranchModel> branchList) {
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         branchesListLayout.removeAllViews();
 
-        for (Branch branch : branchList) {
+        for (BranchModel branch : branchList) {
 
             View v = layoutInflater.inflate(R.layout.branches_list_item, null, false);
             TextView nameField = (TextView) v.findViewById(R.id.nameField);
@@ -447,7 +452,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         return false;
     }
 
-    private String getBranchAddress(Branch branch) {
+    private String getBranchAddress(BranchModel branch) {
 
         String address = "";
         String locality = branch.getAddress().getDistrict().getLocality().getName();
@@ -476,7 +481,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
         return schedule;
     }
 
-    private String getBranchScheduleBreak(Branch branch) {
+    private String getBranchScheduleBreak(BranchModel branch) {
 
         String scheduleBreak = "";
         Date breakStart = null;
@@ -523,7 +528,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     }
 
     @Override
-    public void showInfoWindow(Branch branch) {
+    public void showInfoWindow(BranchModel branch) {
 
         mapHelper.goToPosition(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), false);
 

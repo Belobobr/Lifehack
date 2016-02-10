@@ -4,16 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.api.Callback;
-import md.fusionworks.lifehack.entity.Bank;
-import md.fusionworks.lifehack.entity.BestExchange;
-import md.fusionworks.lifehack.entity.Branch;
-import md.fusionworks.lifehack.entity.Currency;
-import md.fusionworks.lifehack.entity.Rate;
+import md.fusionworks.lifehack.data.api.model.Branch;
+import md.fusionworks.lifehack.data.repository.NewExchangeRatesRepository;
 import md.fusionworks.lifehack.exchange_rates.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.model.BankModel;
+import md.fusionworks.lifehack.ui.model.BestExchangeModel;
+import md.fusionworks.lifehack.ui.model.BranchModel;
+import md.fusionworks.lifehack.ui.model.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.RateModel;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
+import md.fusionworks.lifehack.util.rx.ObservableTransformation;
+import md.fusionworks.lifehack.util.rx.ObserverAdapter;
 
 /**
  * Created by ungvas on 11/23/15.
@@ -28,16 +31,18 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private ExchangeRatesContract.View exchangeRatesView;
 
-    private List<Rate> rateList;
-    private List<Bank> bankList;
-    private List<Currency> currencyList;
+    private List<RateModel> rateList;
+    private List<BankModel> bankList;
+    private List<CurrencyModel> currencyList;
 
     private ExchangeRatesRepository exchangeRatesRepository;
+    private NewExchangeRatesRepository newExchangeRatesRepository;
 
-    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, ExchangeRatesRepository exchangeRatesRepository) {
+    public ExchangeRatesPresenter(ExchangeRatesContract.View exchangeRatesView, ExchangeRatesRepository exchangeRatesRepository, NewExchangeRatesRepository newExchangeRatesRepository) {
 
         this.exchangeRatesView = exchangeRatesView;
         this.exchangeRatesRepository = exchangeRatesRepository;
+        this.newExchangeRatesRepository = newExchangeRatesRepository;
     }
 
     @Override
@@ -71,109 +76,112 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadBanks() {
 
-        exchangeRatesRepository.getBanks(new Callback<List<Bank>>() {
-            @Override
-            public void onSuccess(List<Bank> response) {
+        newExchangeRatesRepository.getBanks()
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+                .subscribe(new ObserverAdapter<List<BankModel>>() {
 
-                bankList = response;
-                exchangeRatesView.populateBankSpinner(response);
+                    @Override
+                    public void onNext(List<BankModel> bankModels) {
+                        bankList = bankModels;
+                        exchangeRatesView.populateBankSpinner(bankModels);
 
-                if (isInitialDataLoaded())
-                    onInitialDataLoadedSuccess();
-            }
+                        if (isInitialDataLoaded())
+                            onInitialDataLoadedSuccess();
+                    }
 
-            @Override
-            public void onError(Throwable t) {
-
-                onInitialDataLoadedError();
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        onInitialDataLoadedError();
+                    }
+                });
     }
 
     private void loadCurrencies() {
 
-        exchangeRatesRepository.getCurrencies(new Callback<List<Currency>>() {
-            @Override
-            public void onSuccess(List<Currency> response) {
+        newExchangeRatesRepository.getCurrencies()
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+                .subscribe(new ObserverAdapter<List<CurrencyModel>>() {
+                    @Override
+                    public void onNext(List<CurrencyModel> currencyModels) {
+                        currencyList = currencyModels;
+                        exchangeRatesView.populateCurrencyInGroup(currencyModels);
+                        exchangeRatesView.populateCurrencyOutGroup(currencyModels);
 
-                currencyList = response;
-                exchangeRatesView.populateCurrencyInGroup(response);
-                exchangeRatesView.populateCurrencyOutGroup(response);
+                        if (isInitialDataLoaded())
+                            onInitialDataLoadedSuccess();
+                    }
 
-                if (isInitialDataLoaded())
-                    onInitialDataLoadedSuccess();
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-                onInitialDataLoadedError();
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        onInitialDataLoadedError();
+                    }
+                });
     }
 
     private void loadInitialRates(String date) {
 
-        exchangeRatesRepository.getRates(date, new Callback<List<Rate>>() {
-            @Override
-            public void onSuccess(List<Rate> response) {
+        newExchangeRatesRepository.getRates(date)
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+                .subscribe(new ObserverAdapter<List<RateModel>>() {
+                    @Override
+                    public void onNext(List<RateModel> rateModels) {
+                        rateList = rateModels;
 
-                rateList = response;
 
+                        if (isInitialDataLoaded()) {
+                            onInitialDataLoadedSuccess();
+                        }
+                    }
 
-                if (isInitialDataLoaded()) {
-                    onInitialDataLoadedSuccess();
-                }
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-                onInitialDataLoadedError();
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        onInitialDataLoadedError();
+                    }
+                });
     }
 
     private void loadRates(String date) {
 
-        exchangeRatesRepository.getRates(date, new Callback<List<Rate>>() {
-            @Override
-            public void onSuccess(List<Rate> response) {
 
-                rateList = response;
-                exchangeRatesView.hideLoading();
-                applyConversion();
-            }
+        newExchangeRatesRepository.getRates(date)
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+                .subscribe(new ObserverAdapter<List<RateModel>>() {
+                    @Override
+                    public void onNext(List<RateModel> rateModels) {
+                        rateList = rateModels;
+                        exchangeRatesView.hideLoading();
+                        applyConversion();
+                    }
 
-            @Override
-            public void onError(Throwable t) {
+                    @Override
+                    public void onError(Throwable e) {
+                        exchangeRatesView.hideLoading();
+                        exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
 
-                exchangeRatesView.hideLoading();
-                exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
-
-            }
-        });
+                    }
+                });
     }
 
     private void loadBankBranches(int bankId, boolean active) {
 
-        exchangeRatesRepository.getBankBranches(bankId, active, new Callback<List<Branch>>() {
-            @Override
-            public void onSuccess(List<Branch> response) {
+        newExchangeRatesRepository.getBranches(bankId, active)
+                .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+                .subscribe(new ObserverAdapter<List<BranchModel>>() {
+                    @Override
+                    public void onNext(List<BranchModel> branchModels) {
+                        exchangeRatesView.populateBranchesMap(branchModels);
+                        exchangeRatesView.populateBranchesList(branchModels);
+                        exchangeRatesView.showBranchesLayout();
+                        exchangeRatesView.hideLoading();
+                    }
 
-                exchangeRatesView.populateBranchesMap(response);
-                exchangeRatesView.populateBranchesList(response);
-                exchangeRatesView.showBranchesLayout();
-                exchangeRatesView.hideLoading();
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        exchangeRatesView.hideLoading();
+                        exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
 
-            @Override
-            public void onError(Throwable t) {
-
-                exchangeRatesView.hideLoading();
-                exchangeRatesView.showNotificationToast(ExchangeRatesContract.View.NotificationToastType.ERROR, R.string.field_something_gone_wrong);
-            }
-        });
+                    }
+                });
     }
 
     private void loadTodayRates() {
@@ -197,7 +205,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         exchangeRatesView.setAmountOutText(NO_EXCHANGE_RATES_OUT_VALUE);
     }
 
-    private boolean validateConversionParams(List<Rate> bankRateList, double currencyInRateValue, double currencyOutRateValue) {
+    private boolean validateConversionParams(List<RateModel> bankRateList, double currencyInRateValue, double currencyOutRateValue) {
 
         if (bankRateList.size() == 0 || currencyInRateValue == 0 || currencyOutRateValue == 0) {
 
@@ -208,16 +216,16 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         return true;
     }
 
-    private BestExchange convertBestExchange() {
+    private BestExchangeModel convertBestExchange() {
 
-        List<Rate> bankRateList;
+        List<RateModel> bankRateList;
         double amountInValue;
         double currencyInRateValue;
         double currencyOutRateValue;
         double amountOutValue = 0;
 
-        BestExchange bestExchange = new BestExchange();
-        for (Bank bank : bankList) {
+        BestExchangeModel bestExchangeModel = new BestExchangeModel();
+        for (BankModel bank : bankList) {
 
             if (bank.getId() != 1) {
 
@@ -229,19 +237,19 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
                 if (bankAmountOutValue > amountOutValue) {
 
                     amountOutValue = bankAmountOutValue;
-                    bestExchange = new BestExchange(bank, amountOutValue);
+                    bestExchangeModel = new BestExchangeModel(bank, amountOutValue);
                 }
             }
 
-            exchangeRatesView.setAmountOutText(String.format("%.2f", bestExchange.getAmountOutvalue()));
+            exchangeRatesView.setAmountOutText(String.format("%.2f", bestExchangeModel.getAmountOutvalue()));
 
-            String bestExchangeBankText = (bestExchange.getBank() != null) ?
-                    String.format("Используется курс банка %s", bestExchange.getBank().getName()) :
+            String bestExchangeBankText = (bestExchangeModel.getBank() != null) ?
+                    String.format("Используется курс банка %s", bestExchangeModel.getBank().getName()) :
                     "Не найден подходящий банк";
             exchangeRatesView.setBestExchangeBankText(bestExchangeBankText);
         }
 
-        return bestExchange;
+        return bestExchangeModel;
     }
 
     @Override
@@ -256,7 +264,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void convertBank(int bankId) {
 
-        List<Rate> bankRateList;
+        List<RateModel> bankRateList;
         double amountInValue;
         double currencyInRateValue;
         double currencyOutRateValue;
@@ -332,8 +340,8 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
         if (bankId == 0) {
 
-            BestExchange bestExchange = convertBestExchange();
-            bankId = bestExchange.getBank().getId();
+            BestExchangeModel bestExchangeModel = convertBestExchange();
+            bankId = bestExchangeModel.getBank().getId();
         }
 
         boolean onlyActive = exchangeRatesView.onlyActiveNow();
@@ -353,7 +361,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
     }
 
     @Override
-    public void onShowInfoWindowAction(Branch branch) {
+    public void onShowInfoWindowAction(BranchModel branch) {
 
         exchangeRatesView.showInfoWindow(branch);
     }

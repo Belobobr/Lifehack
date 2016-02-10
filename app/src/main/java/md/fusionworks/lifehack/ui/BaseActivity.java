@@ -5,8 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import md.fusionworks.lifehack.Navigator;
-
 /**
  * Created by ungvas on 10/15/15.
  */
