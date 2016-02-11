@@ -19,18 +19,17 @@ package md.fusionworks.lifehack.util;
 import android.os.Build;
 import android.view.View;
 
-
 /**
  * An assortment of UI helpers.
  */
 public class UIUtils {
 
-    public static void setAccessibilityIgnore(View view) {
-        view.setClickable(false);
-        view.setFocusable(false);
-        view.setContentDescription("");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        }
+  public static void setAccessibilityIgnore(View view) {
+    view.setClickable(false);
+    view.setFocusable(false);
+    view.setContentDescription("");
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+      view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
     }
+  }
 }

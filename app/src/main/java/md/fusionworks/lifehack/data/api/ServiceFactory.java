@@ -16,31 +16,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
 
-    public static LifehackService buildLifehackService() {
+  public static LifehackService buildLifehackService() {
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
-                : HttpLoggingInterceptor.Level.NONE);
+    HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+    httpLoggingInterceptor.setLevel(
+        BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(new HeaderInterceptor())
-                .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-                .build();
+    OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(new HeaderInterceptor())
+        .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .build();
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
+    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(LifehackService.ENDPOINT)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(LifehackService.ENDPOINT)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
 
-        return retrofit.create(LifehackService.class);
-    }
-
+    return retrofit.create(LifehackService.class);
+  }
 }

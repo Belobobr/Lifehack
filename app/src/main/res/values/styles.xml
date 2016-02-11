@@ -1,72 +1,84 @@
 <resources>
 
-    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light"/>
+  <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light"/>
 
-    <style name="Theme" parent="FrameworkRoot.Theme"/>
+  <style name="Theme" parent="FrameworkRoot.Theme"/>
 
-    <style name="Theme.Lifehack.Base" parent="Theme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="dateViewStyle">@style/DateViewStyle</item>
-        <item name="branchListItemStyle">@style/BranchListItemStyle</item>
-        <item name="colorButtonNormal">@color/mainColorBlue</item>
-        <item name="android:popupMenuStyle">@style/Widget.Lifehack.PopupMenu</item>
-        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.LargePopupMenu
-        </item>
-    </style>
+  <style name="Theme.Lifehack.Base" parent="Theme">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="dateViewStyle">@style/DateViewStyle</item>
+    <item name="branchListItemStyle">@style/BranchListItemStyle</item>
+    <item name="colorButtonNormal">@color/mainColorBlue</item>
+    <item name="android:popupMenuStyle">@style/Widget.Lifehack.PopupMenu</item>
+    <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.LargePopupMenu
+    </item>
+  </style>
 
-    <style name="Theme.Lifehack" parent="Theme.Lifehack.Base"/>
+  <style name="Theme.Lifehack" parent="Theme.Lifehack.Base"/>
 
-    <style name="Theme.Lifehack.TranslucentStatus" parent="Theme.Lifehack"/>
+  <style name="Theme.Lifehack.TranslucentStatus" parent="Theme.Lifehack"/>
 
-    <style name="Theme.Lifehack.Launch" parent="Theme.Lifehack">
-        <item name="android:windowBackground">@drawable/background_launch</item>
-    </style>
+  <style name="Theme.Lifehack.Launch" parent="Theme.Lifehack">
+    <item name="android:windowBackground">@drawable/background_launch</item>
+  </style>
 
-    <style name="Theme.Lifehack.ExchangeRates" parent="Theme.Lifehack.TranslucentStatus"/>
+  <style name="Theme.Lifehack.ExchangeRates" parent="Theme.Lifehack.TranslucentStatus"/>
 
-    <style name="Widget.Lifehack.PopupMenu" parent="Widget.AppCompat.Light.PopupMenu">
-        <item name="android:textColor">#000</item>
-    </style>
+  <style name="Widget.Lifehack.PopupMenu" parent="Widget.AppCompat.Light.PopupMenu">
+    <item name="android:textColor">#000</item>
+  </style>
 
-    <style name="TextAppearance.LargePopupMenu" parent="TextAppearance.AppCompat.Widget.PopupMenu.Large">
-        <item name="android:textColor">@color/black</item>
-    </style>
+  <style name="TextAppearance.LargePopupMenu" parent="TextAppearance.AppCompat.Widget.PopupMenu.Large">
+    <item name="android:textColor">@color/black</item>
+  </style>
 
-    <style name="ActionBarThemeOverlay" parent="">
-        <item name="android:textColorPrimary">#fff</item>
-        <item name="colorControlNormal">#fff</item>
-        <item name="colorControlHighlight">#3fff</item>
-    </style>
+  <style name="ActionBarThemeOverlay" parent="">
+    <item name="android:textColorPrimary">#fff</item>
+    <item name="colorControlNormal">#fff</item>
+    <item name="colorControlHighlight">#3fff</item>
+  </style>
 
-    <style name="DateViewStyle">
-        <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:clickable">true</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:drawablePadding">8dp</item>
-        <item name="android:gravity">left</item>
-        <item name="android:drawableLeft">@drawable/ic_calendar_black_24dp</item>
-        <item name="android:textColor">#ff333333</item>
-    </style>
+  <style name="DateViewStyle">
+    <item name="android:textSize">@dimen/text_size_large</item>
+    <item name="android:clickable">true</item>
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:background">?android:selectableItemBackground</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:gravity">left</item>
+    <item name="android:drawableLeft">@drawable/ic_calendar_black_24dp</item>
+    <item name="android:textColor">#ff333333</item>
+  </style>
 
 
-    <style name="Theme.Lifehack.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+  <style name="Theme.Lifehack.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="Theme.Lifehack.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+  <style name="Theme.Lifehack.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="BranchListItemStyle">
-        <item name="android:background">@color/navdrawer_background</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:paddingBottom">1dp</item>
-        <item name="android:paddingLeft">1dp</item>
-        <item name="android:paddingRight">1dp</item>
-        <item name="android:weightSum">100</item>
-    </style>
+  <style name="BranchListItemStyle">
+    <item name="android:background">@color/navdrawer_background</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:paddingBottom">1dp</item>
+    <item name="android:paddingLeft">1dp</item>
+    <item name="android:paddingRight">1dp</item>
+    <item name="android:weightSum">100</item>
+  </style>
+
+  <style name="LoadingDialogStyle" parent="Theme.AppCompat.Dialog">
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowTitleStyle">@null</item>
+    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:background">@android:color/transparent</item>
+  </style>
 
 </resources>

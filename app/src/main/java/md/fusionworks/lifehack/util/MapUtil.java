@@ -13,25 +13,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapUtil {
 
-    public static void goToPosition(GoogleMap map, Double latitude, Double longitude, boolean animateCamera) {
-        float zoom = map.getCameraPosition().zoom;
-        goToPosition(map, latitude, longitude, animateCamera, zoom);
-    }
+  public static void goToPosition(GoogleMap map, Double latitude, Double longitude,
+      boolean animateCamera) {
+    float zoom = map.getCameraPosition().zoom;
+    goToPosition(map, latitude, longitude, animateCamera, zoom);
+  }
 
-    public static void goToPosition(GoogleMap map, Double latitude, Double longitude, boolean animateCamera, float zoom) {
-        CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude))
-                .zoom(zoom).build();
-        if (animateCamera)
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-        else
-            map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
+  public static void goToPosition(GoogleMap map, Double latitude, Double longitude,
+      boolean animateCamera, float zoom) {
+    CameraPosition position =
+        new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(zoom).build();
+    if (animateCamera) {
+      map.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+    } else {
+      map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
     }
+  }
 
-    public static Marker createMarker(GoogleMap map, Double latitude, Double longitude, int iconResId) {
-        LatLng latLng = new LatLng(latitude, longitude);
-        return map.addMarker(new MarkerOptions()
-                .position(latLng)
-                .icon(BitmapDescriptorFactory.fromResource(iconResId)));
-    }
+  public static Marker createMarker(GoogleMap map, Double latitude, Double longitude,
+      int iconResId) {
+    LatLng latLng = new LatLng(latitude, longitude);
+    return map.addMarker(
+        new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(iconResId)));
+  }
 }

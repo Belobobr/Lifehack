@@ -7,11 +7,10 @@ import android.text.TextUtils;
  */
 public class Converter {
 
-    public static double toDouble(String value) {
+  public static double toDouble(String value) {
 
-        if (TextUtils.isEmpty(value))
-            return 0;
+    if (TextUtils.isEmpty(value)) return 0;
 
-        return Double.valueOf(value);
-    }
+    return Double.valueOf(value);
+  }
 }

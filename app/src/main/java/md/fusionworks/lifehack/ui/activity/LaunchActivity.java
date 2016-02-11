@@ -4,11 +4,10 @@ import android.os.Bundle;
 
 public class LaunchActivity extends BaseActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        getNavigator().navigateToExchangeRatesActivity(this);
-        finish();
-    }
+    getNavigator().navigateToExchangeRatesActivity(this);
+    finish();
+  }
 }

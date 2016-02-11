@@ -5,47 +5,47 @@ package md.fusionworks.lifehack.data.api.model.exchange_rates;
  */
 public class Branch {
 
-    private int id;
-    private String name;
-    private Address address;
-    private Schedule schedule;
+  private int id;
+  private String name;
+  private Address address;
+  private Schedule schedule;
 
-    public Branch(int id, String name, Address address, Schedule schedule) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.schedule = schedule;
-    }
+  public Branch(int id, String name, Address address, Schedule schedule) {
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.schedule = schedule;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Address getAddress() {
-        return address;
-    }
+  public Address getAddress() {
+    return address;
+  }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+  public void setAddress(Address address) {
+    this.address = address;
+  }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
+  public Schedule getSchedule() {
+    return schedule;
+  }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
+  public void setSchedule(Schedule schedule) {
+    this.schedule = schedule;
+  }
 }

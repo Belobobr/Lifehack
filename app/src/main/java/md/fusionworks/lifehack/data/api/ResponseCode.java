@@ -5,5 +5,5 @@ package md.fusionworks.lifehack.data.api;
  */
 public class ResponseCode {
 
-    public static int NOT_FOUND = 404;
+  public static int NOT_FOUND = 404;
 }

@@ -5,37 +5,37 @@ package md.fusionworks.lifehack.ui.model.exchange_rates;
  */
 public class BankSpinnerItemModel {
 
-    private boolean isHeader;
-    private String title;
-    private int bankId;
+  private boolean isHeader;
+  private String title;
+  private int bankId;
 
-    public BankSpinnerItemModel(boolean isHeader, String title, int bankId) {
-        this.isHeader = isHeader;
-        this.title = title;
-        this.bankId = bankId;
-    }
+  public BankSpinnerItemModel(boolean isHeader, String title, int bankId) {
+    this.isHeader = isHeader;
+    this.title = title;
+    this.bankId = bankId;
+  }
 
-    public boolean isHeader() {
-        return isHeader;
-    }
+  public boolean isHeader() {
+    return isHeader;
+  }
 
-    public void setIsHeader(boolean isHeader) {
-        this.isHeader = isHeader;
-    }
+  public void setIsHeader(boolean isHeader) {
+    this.isHeader = isHeader;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public int getBankId() {
-        return bankId;
-    }
+  public int getBankId() {
+    return bankId;
+  }
 
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
-    }
+  public void setBankId(int bankId) {
+    this.bankId = bankId;
+  }
 }

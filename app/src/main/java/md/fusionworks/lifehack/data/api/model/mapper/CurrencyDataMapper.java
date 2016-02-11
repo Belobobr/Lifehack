@@ -11,20 +11,20 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
  */
 public class CurrencyDataMapper {
 
-    public CurrencyModel transform(Currency currency) {
-        return new CurrencyModel(currency.getId(), currency.getName());
+  public CurrencyModel transform(Currency currency) {
+    return new CurrencyModel(currency.getId(), currency.getName());
+  }
+
+  public List<CurrencyModel> transform(List<Currency> currencyList) {
+    List<CurrencyModel> currencyModelList = new ArrayList<>(currencyList.size());
+    CurrencyModel currencyModel;
+    for (Currency currency : currencyList) {
+      currencyModel = transform(currency);
+      if (currencyModel != null) {
+        currencyModelList.add(currencyModel);
+      }
     }
 
-    public List<CurrencyModel> transform(List<Currency> currencyList) {
-        List<CurrencyModel> currencyModelList = new ArrayList<>(currencyList.size());
-        CurrencyModel currencyModel;
-        for (Currency currency : currencyList) {
-            currencyModel = transform(currency);
-            if (currencyModel != null) {
-                currencyModelList.add(currencyModel);
-            }
-        }
-
-        return currencyModelList;
-    }
+    return currencyModelList;
+  }
 }

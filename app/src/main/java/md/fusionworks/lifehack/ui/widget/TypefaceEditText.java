@@ -11,39 +11,39 @@ import md.fusionworks.lifehack.util.TypefaceCache;
 
 public class TypefaceEditText extends EditText {
 
-    public TypefaceEditText(Context context) {
-        super(context);
+  public TypefaceEditText(Context context) {
+    super(context);
+  }
+
+  public TypefaceEditText(Context context, AttributeSet attrs) {
+    super(context, attrs);
+
+    TypedArray ta =
+        context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
+    try {
+      String font = ta.getString(R.styleable.TypefaceTextView_typeface);
+      Typeface typeface = TypefaceCache.getTypeface(context, font);
+      if (null != typeface) {
+        setTypeface(typeface);
+      }
+    } finally {
+      ta.recycle();
     }
+  }
 
-    public TypefaceEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
+  public TypefaceEditText(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
 
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
-        try {
-            String font = ta.getString(R.styleable.TypefaceTextView_typeface);
-            Typeface typeface = TypefaceCache.getTypeface(context, font);
-            if (null != typeface) {
-                setTypeface(typeface);
-            }
-
-        } finally {
-            ta.recycle();
-        }
+    TypedArray ta =
+        context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
+    try {
+      String font = ta.getString(R.styleable.TypefaceTextView_typeface);
+      Typeface typeface = TypefaceCache.getTypeface(context, font);
+      if (null != typeface) {
+        setTypeface(typeface);
+      }
+    } finally {
+      ta.recycle();
     }
-
-    public TypefaceEditText(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
-        try {
-            String font = ta.getString(R.styleable.TypefaceTextView_typeface);
-            Typeface typeface = TypefaceCache.getTypeface(context, font);
-            if (null != typeface) {
-                setTypeface(typeface);
-            }
-
-        } finally {
-            ta.recycle();
-        }
-    }
+  }
 }

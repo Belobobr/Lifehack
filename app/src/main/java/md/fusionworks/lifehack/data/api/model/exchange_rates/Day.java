@@ -9,68 +9,65 @@ import java.util.Date;
  */
 public class Day {
 
-    private int id;
-    private Date start;
-    private Date end;
-    @SerializedName("break_start")
-    private Date breakStart;
-    @SerializedName("break_end")
-    private Date breakEnd;
-    @SerializedName("day_off")
-    private boolean dayOff;
+  private int id;
+  private Date start;
+  private Date end;
+  @SerializedName("break_start") private Date breakStart;
+  @SerializedName("break_end") private Date breakEnd;
+  @SerializedName("day_off") private boolean dayOff;
 
-    public Day(int id, Date start, Date end, boolean dayOff) {
-        this.id = id;
-        this.start = start;
-        this.end = end;
-        this.dayOff = dayOff;
-    }
+  public Day(int id, Date start, Date end, boolean dayOff) {
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.dayOff = dayOff;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public Date getStart() {
-        return start;
-    }
+  public Date getStart() {
+    return start;
+  }
 
-    public void setStart(Date start) {
-        this.start = start;
-    }
+  public void setStart(Date start) {
+    this.start = start;
+  }
 
-    public Date getEnd() {
-        return end;
-    }
+  public Date getEnd() {
+    return end;
+  }
 
-    public void setEnd(Date end) {
-        this.end = end;
-    }
+  public void setEnd(Date end) {
+    this.end = end;
+  }
 
-    public Date getBreakStart() {
-        return breakStart;
-    }
+  public Date getBreakStart() {
+    return breakStart;
+  }
 
-    public void setBreakStart(Date breakStart) {
-        this.breakStart = breakStart;
-    }
+  public void setBreakStart(Date breakStart) {
+    this.breakStart = breakStart;
+  }
 
-    public Date getBreakEnd() {
-        return breakEnd;
-    }
+  public Date getBreakEnd() {
+    return breakEnd;
+  }
 
-    public void setBreakEnd(Date breakEnd) {
-        this.breakEnd = breakEnd;
-    }
+  public void setBreakEnd(Date breakEnd) {
+    this.breakEnd = breakEnd;
+  }
 
-    public boolean isDayOff() {
-        return dayOff;
-    }
+  public boolean isDayOff() {
+    return dayOff;
+  }
 
-    public void setDayOff(boolean dayOff) {
-        this.dayOff = dayOff;
-    }
+  public void setDayOff(boolean dayOff) {
+    this.dayOff = dayOff;
+  }
 }

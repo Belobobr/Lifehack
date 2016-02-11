@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="TypefaceTextView">
-        <attr name="typeface" format="string"/>
-    </declare-styleable>
-    <declare-styleable name="DateView">
-        <attr name="dateViewStyle" format="reference"/>
-    </declare-styleable>
-    <declare-styleable name="BranchListItem">
-        <attr name="branchListItemStyle" format="reference"/>
-    </declare-styleable>
+  <declare-styleable name="TypefaceTextView">
+    <attr format="string" name="typeface"/>
+  </declare-styleable>
+  <declare-styleable name="DateView">
+    <attr format="reference" name="dateViewStyle"/>
+  </declare-styleable>
+  <declare-styleable name="BranchListItem">
+    <attr format="reference" name="branchListItemStyle"/>
+  </declare-styleable>
 </resources>

@@ -9,14 +9,14 @@ import android.net.NetworkInfo;
  */
 public class NetworkUtils {
 
-    public static boolean isThereInternetConnection(Context context) {
-        boolean isConnected;
+  public static boolean isThereInternetConnection(Context context) {
+    boolean isConnected;
 
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+    isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
 
-        return isConnected;
-    }
+    return isConnected;
+  }
 }

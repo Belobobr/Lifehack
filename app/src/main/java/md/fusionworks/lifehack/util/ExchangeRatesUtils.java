@@ -10,34 +10,32 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
  */
 public class ExchangeRatesUtils {
 
-    public static List<RateModel> getBankRates(List<RateModel> rateList, int bankId) {
+  public static List<RateModel> getBankRates(List<RateModel> rateList, int bankId) {
 
-        List<RateModel> bankRateList = new ArrayList<>();
-        for (RateModel rate : rateList) {
+    List<RateModel> bankRateList = new ArrayList<>();
+    for (RateModel rate : rateList) {
 
-            if (rate.getBank().getId() == bankId)
-                bankRateList.add(rate);
-        }
-
-        return bankRateList;
+      if (rate.getBank().getId() == bankId) bankRateList.add(rate);
     }
 
-    public static double getCurrencyRateValue(List<RateModel> rateList, int currencyId) {
+    return bankRateList;
+  }
 
-        for (RateModel rate : rateList) {
+  public static double getCurrencyRateValue(List<RateModel> rateList, int currencyId) {
 
-            if (rate.getCurrency().getId() == currencyId)
-                return rate.getRateIn();
-        }
+    for (RateModel rate : rateList) {
 
-        return 0;
+      if (rate.getCurrency().getId() == currencyId) return rate.getRateIn();
     }
 
-    public static double convert(double amountInValue, double currencyInValue, double currencyOutValue) {
+    return 0;
+  }
 
-        if (amountInValue == 0 || currencyInValue == 0 || currencyOutValue == 0)
-            return 0;
+  public static double convert(double amountInValue, double currencyInValue,
+      double currencyOutValue) {
 
-        return amountInValue * currencyInValue / currencyOutValue;
-    }
+    if (amountInValue == 0 || currencyInValue == 0 || currencyOutValue == 0) return 0;
+
+    return amountInValue * currencyInValue / currencyOutValue;
+  }
 }

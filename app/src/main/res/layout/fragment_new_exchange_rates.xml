@@ -147,32 +147,6 @@
           view:typeface="font/Roboto-Regular.ttf"
           />
 
-      <LinearLayout
-          android:id="@+id/branchesLayout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:paddingTop="8dp"
-          android:visibility="gone"
-          >
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:paddingBottom="8dp"
-            />
-
-        <include layout="@layout/branches_list_header"/>
-
-        <LinearLayout
-            android:id="@+id/branchesListLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
     </LinearLayout>
   </ScrollView>
 </LinearLayout>

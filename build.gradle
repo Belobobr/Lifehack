@@ -38,10 +38,11 @@ allprojects {
         gsonVersion = '2.3'
         materialDialogsVersion = '0.8.4.2@aar'
         materialDateTimePickerVersion = '1.5.4'
-        playServicesVersion='8.4.0'
-        okHttpVersion='3.1.1'
-        rxJavaVersion='1.1.0'
-        rxLifeCycleVersion='0.4.0'
+        playServicesVersion = '8.4.0'
+        okHttpVersion = '3.1.1'
+        rxJavaVersion = '1.1.0'
+        rxLifeCycleVersion = '0.4.0'
+        smoothProgressBarVersion = '1.2.0'
 
         jUnitVersion = '4.12'
     }

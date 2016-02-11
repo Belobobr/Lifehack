@@ -9,31 +9,29 @@ import android.widget.TextView;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.util.TypefaceCache;
 
+public class TypefaceTextView extends TextView {
 
-public class TypefaceTextView extends TextView
-{
+  public TypefaceTextView(Context context) {
+    this(context, null);
+  }
 
-    public TypefaceTextView(Context context) {
-        this(context, null);
+  public TypefaceTextView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
+
+  public TypefaceTextView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+
+    TypedArray ta =
+        context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
+    try {
+      String font = ta.getString(R.styleable.TypefaceTextView_typeface);
+      Typeface typeface = TypefaceCache.getTypeface(context, font);
+      if (null != typeface) {
+        setTypeface(typeface);
+      }
+    } finally {
+      ta.recycle();
     }
-
-    public TypefaceTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public TypefaceTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0);
-        try {
-            String font = ta.getString(R.styleable.TypefaceTextView_typeface);
-            Typeface typeface = TypefaceCache.getTypeface(context, font);
-            if (null != typeface) {
-                setTypeface(typeface);
-            }
-
-        } finally {
-            ta.recycle();
-        }
-    }
+  }
 }

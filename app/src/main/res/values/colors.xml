@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="colorPrimary">#FF825C</color>
-    <color name="colorPrimaryDark">#FF531F</color>
-    <color name="colorAccent">#FF997B</color>
-    <color name="navdrawer_background">#333333</color>
-    <color name="navdrawer_text_color">@color/white</color>
-    <color name="navdrawer_text_color_inactive">@color/navdrawer_icon_tint</color>
-    <color name="navdrawer_text_color_selected">@color/white</color>
-    <color name="navdrawer_icon_tint">#666666</color>
-    <color name="navdrawer_icon_tint_inactive">@color/navdrawer_icon_tint</color>
-    <color name="navdrawer_icon_tint_selected">@color/white</color>
-    <color name="divider">#DDDDDD</color>
-    <color name="mainColorBlue">#359BED</color>
+  <color name="white">#FFFFFF</color>
+  <color name="black">#000000</color>
+  <color name="colorPrimary">#FF825C</color>
+  <color name="colorPrimaryDark">#FF531F</color>
+  <color name="colorAccent">#FF997B</color>
+  <color name="navdrawer_background">#333333</color>
+  <color name="navdrawer_text_color">@color/white</color>
+  <color name="navdrawer_text_color_inactive">@color/navdrawer_icon_tint</color>
+  <color name="navdrawer_text_color_selected">@color/white</color>
+  <color name="navdrawer_icon_tint">#666666</color>
+  <color name="navdrawer_icon_tint_inactive">@color/navdrawer_icon_tint</color>
+  <color name="navdrawer_icon_tint_selected">@color/white</color>
+  <color name="divider">#DDDDDD</color>
+  <color name="mainColorBlue">#359BED</color>
 </resources>

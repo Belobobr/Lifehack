@@ -1,24 +1,24 @@
 <resources>
-    <string name="app_name">Lifehack</string>
-    <string name="drawer_item_exchange_rates">Курсы валют</string>
-    <string name="drawer_item_main">Главная</string>
-    <string name="drawer_item_prices">Цены</string>
-    <string name="drawer_item_sales">Скидки</string>
-    <string name="drawer_item_settings">Настройки</string>
-    <string name="drawer_item_life_hacks">Лайфхаки</string>
-    <string name="module_title_exchange_rates" >Курсы валют</string>
+  <string name="app_name">Lifehack</string>
+  <string name="drawer_item_exchange_rates">Курсы валют</string>
+  <string name="drawer_item_main">Главная</string>
+  <string name="drawer_item_prices">Цены</string>
+  <string name="drawer_item_sales">Скидки</string>
+  <string name="drawer_item_settings">Настройки</string>
+  <string name="drawer_item_life_hacks">Лайфхаки</string>
+  <string name="module_title_exchange_rates">Курсы валют</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="field_loading_rates_">Загрузка курса...</string>
-    <string name="field_find_branches_">Поиск филиалов...</string>
-    <string name="spinner_option_best_exchange">Лучший курс</string>
-    <string name="spinner_option_bank_list">Список банков</string>
-    <string name="field_title_load_rates_error">Не удалось загрузить курс.</string>
-    <string name="field_message_load_rates_error">Проверьте интернет соединение \nи пробуйте снова.</string>
-    <string name="field_try_again">Попробовать снова</string>
-    <string name="field_cancel">Отменить</string>
-    <string name="field_something_gone_wrong">Что-то пошло не так.</string>
-    <string name="field_no_rate">Нету курса</string>
-    <string name="action_retry">Retry</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="field_loading_rates_">Загрузка курса...</string>
+  <string name="field_find_branches_">Поиск филиалов...</string>
+  <string name="spinner_option_best_exchange">Лучший курс</string>
+  <string name="spinner_option_bank_list">Список банков</string>
+  <string name="field_title_load_rates_error">Не удалось загрузить курс.</string>
+  <string name="field_message_load_rates_error">Проверьте интернет соединение \nи пробуйте снова.</string>
+  <string name="field_try_again">Попробовать снова</string>
+  <string name="field_cancel">Отменить</string>
+  <string name="field_something_gone_wrong">Что-то пошло не так.</string>
+  <string name="field_no_rate">Нету курса</string>
+  <string name="action_retry">Retry</string>
 </resources>

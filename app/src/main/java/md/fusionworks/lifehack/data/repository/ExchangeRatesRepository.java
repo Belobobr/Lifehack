@@ -22,44 +22,44 @@ import rx.Observable;
  */
 public class ExchangeRatesRepository {
 
-    private Context context;
-    private LifehackService lifehackService;
+  private Context context;
+  private LifehackService lifehackService;
 
-    private BankDataMapper bankDataMapper;
-    private CurrencyDataMapper currencyDataMapper;
-    private RateDataMapper rateDataMapper;
-    private BranchDataMapper branchDataMapper;
+  private BankDataMapper bankDataMapper;
+  private CurrencyDataMapper currencyDataMapper;
+  private RateDataMapper rateDataMapper;
+  private BranchDataMapper branchDataMapper;
 
-    public ExchangeRatesRepository(Context context) {
-        this.context = context;
-        lifehackService = ServiceFactory.buildLifehackService();
-        bankDataMapper = new BankDataMapper();
-        currencyDataMapper = new CurrencyDataMapper();
-        rateDataMapper = new RateDataMapper(bankDataMapper, currencyDataMapper);
-        branchDataMapper = new BranchDataMapper();
-    }
+  public ExchangeRatesRepository(Context context) {
+    this.context = context;
+    lifehackService = ServiceFactory.buildLifehackService();
+    bankDataMapper = new BankDataMapper();
+    currencyDataMapper = new CurrencyDataMapper();
+    rateDataMapper = new RateDataMapper(bankDataMapper, currencyDataMapper);
+    branchDataMapper = new BranchDataMapper();
+  }
 
-    public Observable<List<BankModel>> getBanks() {
-        return lifehackService.getBanks()
-                .compose(ObservableTransformation.applyApiRequestConfiguration())
-                .map(banks -> bankDataMapper.transform(banks));
-    }
+  public Observable<List<BankModel>> getBanks() {
+    return lifehackService.getBanks()
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
+        .map(banks -> bankDataMapper.transform(banks));
+  }
 
-    public Observable<List<CurrencyModel>> getCurrencies() {
-        return lifehackService.getCurrencies()
-                .compose(ObservableTransformation.applyApiRequestConfiguration())
-                .map(currencies -> currencyDataMapper.transform(currencies));
-    }
+  public Observable<List<CurrencyModel>> getCurrencies() {
+    return lifehackService.getCurrencies()
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
+        .map(currencies -> currencyDataMapper.transform(currencies));
+  }
 
-    public Observable<List<RateModel>> getRates(String date) {
-        return lifehackService.getRates(date)
-                .compose(ObservableTransformation.applyApiRequestConfiguration())
-                .map(rates -> rateDataMapper.transform(rates));
-    }
+  public Observable<List<RateModel>> getRates(String date) {
+    return lifehackService.getRates(date)
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
+        .map(rates -> rateDataMapper.transform(rates));
+  }
 
-    public Observable<List<BranchModel>> getBranches(int bankId, boolean active) {
-        return lifehackService.getBankBranches(bankId, active)
-                .compose(ObservableTransformation.applyApiRequestConfiguration())
-                .map(branches -> branchDataMapper.transform(branches));
-    }
+  public Observable<List<BranchModel>> getBranches(int bankId, boolean active) {
+    return lifehackService.getBankBranches(bankId, active)
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
+        .map(branches -> branchDataMapper.transform(branches));
+  }
 }

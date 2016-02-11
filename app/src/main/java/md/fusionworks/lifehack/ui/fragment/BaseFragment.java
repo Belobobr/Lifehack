@@ -18,53 +18,51 @@ import md.fusionworks.lifehack.ui.navigator.Navigator;
  */
 public class BaseFragment extends RxFragment {
 
-    private BaseActivity baseActivity;
+  private BaseActivity baseActivity;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            baseActivity = (BaseActivity) context;
-            onFragmentAttached(context);
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement BaseActivity");
-        }
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    try {
+      baseActivity = (BaseActivity) context;
+      onFragmentAttached(context);
+    } catch (ClassCastException e) {
+      throw new ClassCastException(context.toString() + " must implement BaseActivity");
     }
+  }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
 
-    protected View inflateAndBindViews(LayoutInflater inflater, @LayoutRes int layoutResId, ViewGroup container) {
-        View view = inflater.inflate(layoutResId, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
+  protected View inflateAndBindViews(LayoutInflater inflater, @LayoutRes int layoutResId,
+      ViewGroup container) {
+    View view = inflater.inflate(layoutResId, container, false);
+    ButterKnife.bind(this, view);
+    return view;
+  }
 
+  protected void onFragmentAttached(Context context) {
+  }
 
-    protected void onFragmentAttached(Context context) {
-    }
+  protected void showNotificationToast(int type, String message) {
+    baseActivity.showNotificationToast(type, message);
+  }
 
-    protected void showNotificationToast(int type, String message) {
-        baseActivity.showNotificationToast(type, message);
-    }
+  protected void showNotificationToast(int type, String message,
+      NotificationToastActionListener notificationToastActionListener) {
+    baseActivity.showNotificationToast(type, message, notificationToastActionListener);
+  }
 
-    protected void showNotificationToast(int type, String message, NotificationToastActionListener notificationToastActionListener) {
-        baseActivity.showNotificationToast(type, message, notificationToastActionListener);
-    }
+  protected Navigator getNavigator() {
+    return baseActivity.getNavigator();
+  }
 
-    protected Navigator getNavigator() {
-        return baseActivity.getNavigator();
-    }
+  protected void showLoadingDialog() {
+    baseActivity.showLoadingDialog();
+  }
 
-    protected void showLoadingDialog(String message) {
-        baseActivity.showLoadingDialog(message);
-    }
-
-    protected void hideLoadingDialog() {
-        baseActivity.hideLoadingDialog();
-    }
+  protected void hideLoadingDialog() {
+    baseActivity.hideLoadingDialog();
+  }
 }

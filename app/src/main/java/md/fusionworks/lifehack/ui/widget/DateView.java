@@ -18,77 +18,74 @@ import md.fusionworks.lifehack.util.DateUtils;
 /**
  * Created by ungvas on 10/30/15.
  */
-public class DateView extends TextView implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class DateView extends TextView
+    implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private OnDateChangedListener onDateChangedListener;
+  private OnDateChangedListener onDateChangedListener;
 
-    public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
-        this.onDateChangedListener = onDateChangedListener;
-    }
+  public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
+    this.onDateChangedListener = onDateChangedListener;
+  }
 
-    public DateView(Context context) {
-        super(context, null, R.attr.dateViewStyle);
+  public DateView(Context context) {
+    super(context, null, R.attr.dateViewStyle);
 
-        initialize();
-    }
+    initialize();
+  }
 
-    public DateView(Context context, AttributeSet attrs) {
+  public DateView(Context context, AttributeSet attrs) {
 
-        super(context, attrs, R.attr.dateViewStyle);
+    super(context, attrs, R.attr.dateViewStyle);
 
-        initialize();
-    }
+    initialize();
+  }
 
-    private void initialize() {
+  private void initialize() {
 
-        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "font/Roboto-Regular.ttf");
-        setTypeface(typeface);
-        setDateText(new Date());
-        setOnClickListener(this);
-    }
+    Typeface typeface =
+        Typeface.createFromAsset(getResources().getAssets(), "font/Roboto-Regular.ttf");
+    setTypeface(typeface);
+    setDateText(new Date());
+    setOnClickListener(this);
+  }
 
-    private void setDateText(Date date) {
+  private void setDateText(Date date) {
 
-        setText(DateUtils.getDateViewFormat().format(date));
-        setTag(date);
-    }
+    setText(DateUtils.getDateViewFormat().format(date));
+    setTag(date);
+  }
 
-    @Override
-    public void onClick(View v) {
+  @Override public void onClick(View v) {
 
-        Date currentSelectedDate = (Date) getTag();
-        Calendar currentSelectedCalendar = Calendar.getInstance();
-        currentSelectedCalendar.setTime(currentSelectedDate);
-        showDatePickerDialog(currentSelectedCalendar.get(Calendar.YEAR), currentSelectedCalendar.get(Calendar.MONTH), currentSelectedCalendar.get(Calendar.DAY_OF_MONTH));
-    }
+    Date currentSelectedDate = (Date) getTag();
+    Calendar currentSelectedCalendar = Calendar.getInstance();
+    currentSelectedCalendar.setTime(currentSelectedDate);
+    showDatePickerDialog(currentSelectedCalendar.get(Calendar.YEAR),
+        currentSelectedCalendar.get(Calendar.MONTH),
+        currentSelectedCalendar.get(Calendar.DAY_OF_MONTH));
+  }
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+  @Override
+  public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-        Date selectedDate = DateUtils.createDate(year, monthOfYear, dayOfMonth);
-        setDateText(selectedDate);
+    Date selectedDate = DateUtils.createDate(year, monthOfYear, dayOfMonth);
+    setDateText(selectedDate);
 
-        if (onDateChangedListener != null)
-            onDateChangedListener.onDateChanged(selectedDate);
-    }
+    if (onDateChangedListener != null) onDateChangedListener.onDateChanged(selectedDate);
+  }
 
-    private void showDatePickerDialog(int year, int monthOfYear, int dayOfMonth) {
+  private void showDatePickerDialog(int year, int monthOfYear, int dayOfMonth) {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
 
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                this,
-                year,
-                monthOfYear,
-                dayOfMonth
-        );
-        dpd.setMaxDate(calendar);
-        dpd.show(((Activity) getContext()).getFragmentManager(), "DatePickerDialog");
-    }
+    DatePickerDialog dpd = DatePickerDialog.newInstance(this, year, monthOfYear, dayOfMonth);
+    dpd.setMaxDate(calendar);
+    dpd.show(((Activity) getContext()).getFragmentManager(), "DatePickerDialog");
+  }
 
-    public interface OnDateChangedListener {
+  public interface OnDateChangedListener {
 
-        void onDateChanged(Date date);
-    }
+    void onDateChanged(Date date);
+  }
 }

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="start"
-              android:background="@color/navdrawer_background"
-              android:clickable="true"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/navdrawer_background"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    >
 
 
-    <LinearLayout
-        android:id="@+id/drawerItemsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/element_spacing_normal"
-        android:layout_marginTop="@dimen/drawer_items_container_margin_top"
-        android:orientation="vertical"></LinearLayout>
+  <LinearLayout
+      android:id="@+id/drawerItemsContainer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/element_spacing_normal"
+      android:layout_marginTop="@dimen/drawer_items_container_margin_top"
+      android:orientation="vertical"
+      ></LinearLayout>
 
 </LinearLayout>

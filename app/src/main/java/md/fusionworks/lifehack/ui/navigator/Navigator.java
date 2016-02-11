@@ -11,12 +11,12 @@ import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 
 public class Navigator {
 
-    public Navigator() {
-    }
+  public Navigator() {
+  }
 
-    public void navigateToExchangeRatesActivity(Context context) {
+  public void navigateToExchangeRatesActivity(Context context) {
 
-        Intent intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
-        context.startActivity(intentToLaunch);
-    }
+    Intent intentToLaunch = new Intent(context, ExchangeRatesActivity.class);
+    context.startActivity(intentToLaunch);
+  }
 }

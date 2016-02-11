@@ -5,37 +5,37 @@ package md.fusionworks.lifehack.ui.model.exchange_rates;
  */
 public class DistrictModel {
 
-    private String id;
-    private String name;
-    private LocalityModel locality;
+  private String id;
+  private String name;
+  private LocalityModel locality;
 
-    public DistrictModel(String id, String name, LocalityModel locality) {
-        this.id = id;
-        this.name = name;
-        this.locality = locality;
-    }
+  public DistrictModel(String id, String name, LocalityModel locality) {
+    this.id = id;
+    this.name = name;
+    this.locality = locality;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public LocalityModel getLocality() {
-        return locality;
-    }
+  public LocalityModel getLocality() {
+    return locality;
+  }
 
-    public void setLocality(LocalityModel locality) {
-        this.locality = locality;
-    }
+  public void setLocality(LocalityModel locality) {
+    this.locality = locality;
+  }
 }

@@ -7,25 +7,26 @@ import java.util.List;
  */
 public class ExchangeRatesInitialData {
 
-    private List<BankModel> bankModelList;
-    private List<CurrencyModel> currencyModelList;
-    private List<RateModel> rateModelList;
+  private List<BankModel> bankModelList;
+  private List<CurrencyModel> currencyModelList;
+  private List<RateModel> rateModelList;
 
-    public ExchangeRatesInitialData(List<BankModel> bankModelList, List<CurrencyModel> currencyModelList, List<RateModel> rateModelList) {
-        this.bankModelList = bankModelList;
-        this.currencyModelList = currencyModelList;
-        this.rateModelList = rateModelList;
-    }
+  public ExchangeRatesInitialData(List<BankModel> bankModelList,
+      List<CurrencyModel> currencyModelList, List<RateModel> rateModelList) {
+    this.bankModelList = bankModelList;
+    this.currencyModelList = currencyModelList;
+    this.rateModelList = rateModelList;
+  }
 
-    public List<BankModel> getBankModelList() {
-        return bankModelList;
-    }
+  public List<BankModel> getBankModelList() {
+    return bankModelList;
+  }
 
-    public List<CurrencyModel> getCurrencyModelList() {
-        return currencyModelList;
-    }
+  public List<CurrencyModel> getCurrencyModelList() {
+    return currencyModelList;
+  }
 
-    public List<RateModel> getRateModelList() {
-        return rateModelList;
-    }
+  public List<RateModel> getRateModelList() {
+    return rateModelList;
+  }
 }

@@ -7,30 +7,30 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
  */
 public class BestExchangeModel {
 
-    private BankModel bank;
-    private double amountOutvalue;
+  private BankModel bank;
+  private double amountOutvalue;
 
-    public BestExchangeModel() {
-    }
+  public BestExchangeModel() {
+  }
 
-    public BestExchangeModel(BankModel bank, double amountOutvalue) {
-        this.bank = bank;
-        this.amountOutvalue = amountOutvalue;
-    }
+  public BestExchangeModel(BankModel bank, double amountOutvalue) {
+    this.bank = bank;
+    this.amountOutvalue = amountOutvalue;
+  }
 
-    public BankModel getBank() {
-        return bank;
-    }
+  public BankModel getBank() {
+    return bank;
+  }
 
-    public void setBank(BankModel bank) {
-        this.bank = bank;
-    }
+  public void setBank(BankModel bank) {
+    this.bank = bank;
+  }
 
-    public double getAmountOutvalue() {
-        return amountOutvalue;
-    }
+  public double getAmountOutvalue() {
+    return amountOutvalue;
+  }
 
-    public void setAmountOutvalue(double amountOutvalue) {
-        this.amountOutvalue = amountOutvalue;
-    }
+  public void setAmountOutvalue(double amountOutvalue) {
+    this.amountOutvalue = amountOutvalue;
+  }
 }
