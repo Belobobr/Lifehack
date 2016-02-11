@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.navigator.Navigator;
-import md.fusionworks.lifehack.util.Constants;
+import md.fusionworks.lifehack.util.Constant;
 
 /**
  * Created by ungvas on 10/15/15.
@@ -60,24 +60,24 @@ public class BaseActivity extends AppCompatActivity {
         if (coordinatorLayout != null)
             coordinatorLayout.postDelayed(() -> {
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
-                if (type == Constants.NOTIFICATION_TOAST_ERROR)
+                if (type == Constant.NOTIFICATION_TOAST_ERROR)
                     snackbar.getView().setBackgroundColor(Color.RED);
                 snackbar.show();
-            }, Constants.NOTIFICATION_TOAST_SHOW_DELAY);
+            }, Constant.NOTIFICATION_TOAST_SHOW_DELAY);
     }
 
     public void showNotificationToast(int type, String message, NotificationToastActionListener notificationToastActionListener) {
         if (coordinatorLayout != null)
             coordinatorLayout.postDelayed(() -> {
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE);
-                if (type == Constants.NOTIFICATION_TOAST_ERROR)
+                if (type == Constant.NOTIFICATION_TOAST_ERROR)
                     snackbar.getView().setBackgroundColor(Color.RED);
                 snackbar.setAction(R.string.action_retry, v -> {
                     if (notificationToastActionListener != null)
                         notificationToastActionListener.onClick();
                 });
                 snackbar.show();
-            }, Constants.NOTIFICATION_TOAST_SHOW_DELAY);
+            }, Constant.NOTIFICATION_TOAST_SHOW_DELAY);
     }
 
     public Navigator getNavigator() {

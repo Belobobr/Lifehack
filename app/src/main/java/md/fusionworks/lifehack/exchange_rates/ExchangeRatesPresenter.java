@@ -11,7 +11,7 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.ExchangeRatesInitialData;
 import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
-import md.fusionworks.lifehack.util.Constants;
+import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
@@ -103,7 +103,6 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void loadRates(String date) {
 
-
         exchangeRatesRepository.getRates(date)
                 .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
                 .subscribe(new ObserverAdapter<List<RateModel>>() {
@@ -117,7 +116,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
                     @Override
                     public void onError(Throwable e) {
                         exchangeRatesView.hideLoading();
-                        exchangeRatesView.showNotificationToast(Constants.NOTIFICATION_TOAST_ERROR, R.string.field_something_gone_wrong);
+                        exchangeRatesView.showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, R.string.field_something_gone_wrong);
 
                     }
                 });
@@ -139,7 +138,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
                     @Override
                     public void onError(Throwable e) {
                         exchangeRatesView.hideLoading();
-                        exchangeRatesView.showNotificationToast(Constants.NOTIFICATION_TOAST_ERROR, R.string.field_something_gone_wrong);
+                        exchangeRatesView.showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, R.string.field_something_gone_wrong);
 
                     }
                 });
@@ -156,7 +155,7 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
 
     private void notifyNoExchangeRates() {
 
-        exchangeRatesView.showNotificationToast(Constants.NOTIFICATION_TOAST_ERROR, R.string.field_no_rate);
+        exchangeRatesView.showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, R.string.field_no_rate);
         exchangeRatesView.setAmountOutText(NO_EXCHANGE_RATES_OUT_VALUE);
     }
 

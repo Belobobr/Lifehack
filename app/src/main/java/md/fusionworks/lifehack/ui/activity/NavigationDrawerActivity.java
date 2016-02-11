@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.util.Constants;
+import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.UIUtils;
 
 /**
@@ -113,12 +113,12 @@ public class NavigationDrawerActivity extends BaseActivity {
     }
 
     private void populateDrawerItems() {
-        drawerItems.add(Constants.DRAWER_ITEM_MAIN);
-        drawerItems.add(Constants.DRAWER_ITEM_LIFE_HACKS);
-        drawerItems.add(Constants.DRAWER_ITEM_EXCHANGE_RATES);
-        drawerItems.add(Constants.DRAWER_ITEM_PRICES);
-        drawerItems.add(Constants.DRAWER_ITEM_SALES);
-        drawerItems.add(Constants.DRAWER_ITEM_SETTINGS);
+        drawerItems.add(Constant.DRAWER_ITEM_MAIN);
+        drawerItems.add(Constant.DRAWER_ITEM_LIFE_HACKS);
+        drawerItems.add(Constant.DRAWER_ITEM_EXCHANGE_RATES);
+        drawerItems.add(Constant.DRAWER_ITEM_PRICES);
+        drawerItems.add(Constant.DRAWER_ITEM_SALES);
+        drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
         createDrawerItems();
     }
@@ -256,7 +256,7 @@ public class NavigationDrawerActivity extends BaseActivity {
     public void goToDrawerItem(int item) {
         switch (item) {
 
-            case Constants.DRAWER_ITEM_EXCHANGE_RATES:
+            case Constant.DRAWER_ITEM_EXCHANGE_RATES:
 
                 getNavigator().navigateToExchangeRatesActivity(this);
                 break;

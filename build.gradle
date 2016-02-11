@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta2'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
 
@@ -32,12 +32,16 @@ allprojects {
 
         butterKnifeVersion = '7.0.1'
         appCompat_v7Version = supportVersion
-        designSupportLibrary = supportVersion
+        designSupportLibraryVersion = supportVersion
         daggerVersion = '2.0'
         retrofitVersion = '2.0.0-SNAPSHOT'
         gsonVersion = '2.3'
         materialDialogsVersion = '0.8.4.2@aar'
         materialDateTimePickerVersion = '1.5.4'
+        playServicesVersion='8.4.0'
+        okHttpVersion='3.1.1'
+        rxJavaVersion='1.1.0'
+        rxLifeCycleVersion='0.4.0'
 
         jUnitVersion = '4.12'
     }

@@ -26,7 +26,6 @@ import android.view.View;
 public class UIUtils {
 
     public static void setAccessibilityIgnore(View view) {
-
         view.setClickable(false);
         view.setFocusable(false);
         view.setContentDescription("");

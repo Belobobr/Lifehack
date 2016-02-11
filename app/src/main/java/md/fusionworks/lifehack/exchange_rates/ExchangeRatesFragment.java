@@ -23,7 +23,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.Date;
@@ -37,7 +36,6 @@ import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.ui.fragment.BaseFragment;
-import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
@@ -45,9 +43,8 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
-import md.fusionworks.lifehack.util.Constants;
 import md.fusionworks.lifehack.util.DateUtils;
-import md.fusionworks.lifehack.util.MapHelper;
+import md.fusionworks.lifehack.util.MapUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,7 +87,6 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     private BankSpinnerAdapter bankSpinnerAdapter;
     private MaterialDialog loadingInitialDataDialog;
     private GoogleMap map;
-    private MapHelper mapHelper;
     private Map<Marker, BranchModel> branchMap = new HashMap<>();
 
     public static ExchangeRatesFragment newInstance() {
@@ -136,7 +132,6 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
             map.setMyLocationEnabled(true);
 
             MapsInitializer.initialize(getActivity());
-            mapHelper = MapHelper.newInstance(getActivity(), map);
 
             showMyLocationOnMap();
 
@@ -165,8 +160,8 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
     private void pinHomeMarker(Location location) {
 
-        mapHelper.createMarker(location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
-        mapHelper.goToPosition(location.getLatitude(), location.getLongitude(), false, CAMERA_ZOOM);
+        MapUtil.createMarker(map, location.getLatitude(), location.getLongitude(), R.drawable.home_pin_icon);
+        MapUtil.goToPosition(map, location.getLatitude(), location.getLongitude(), false, CAMERA_ZOOM);
     }
 
     @Override
@@ -417,7 +412,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
 
         for (BranchModel branch : branchList) {
 
-            Marker marker = mapHelper.createMarker(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
+            Marker marker = MapUtil.createMarker(map, branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
             branchMap.put(marker, branch);
         }
     }
@@ -534,7 +529,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     @Override
     public void showInfoWindow(BranchModel branch) {
 
-        mapHelper.goToPosition(branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), false);
+        MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(), branch.getAddress().getLocation().getLng(), false);
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(branch.getName())

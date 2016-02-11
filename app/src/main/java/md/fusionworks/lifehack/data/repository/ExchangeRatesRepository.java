@@ -32,7 +32,7 @@ public class ExchangeRatesRepository {
 
     public ExchangeRatesRepository(Context context) {
         this.context = context;
-        lifehackService = ServiceFactory.makeLifehackService(context);
+        lifehackService = ServiceFactory.buildLifehackService();
         bankDataMapper = new BankDataMapper();
         currencyDataMapper = new CurrencyDataMapper();
         rateDataMapper = new RateDataMapper(bankDataMapper, currencyDataMapper);

@@ -5,14 +5,13 @@ import java.io.IOException;
 import md.fusionworks.lifehack.data.api.ResponseCode;
 import md.fusionworks.lifehack.data.api.exception.NotFoundException;
 import md.fusionworks.lifehack.data.api.exception.UnknownException;
+import md.fusionworks.lifehack.util.Constant;
 import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ObservableTransformation {
-    public static final int RETRY_DELAY_MILLIS = 1000;
-    public static final int MAX_RETRIES = 3;
 
     private static Observable.Transformer ioToMainThreadSchedulerTransformer;
     private static Observable.Transformer apiRequestConfigurationTransformer;
@@ -42,7 +41,7 @@ public class ObservableTransformation {
                             subscriber.onError(new UnknownException());
                     }
                 }))
-                .retryWhen(new RetryWithDelayIf(MAX_RETRIES, RETRY_DELAY_MILLIS, throwable -> throwable instanceof IOException))
+                .retryWhen(new RetryWithDelayIf(Constant.MAX_RETRIES, Constant.RETRY_DELAY_MILLIS, throwable -> throwable instanceof IOException))
                 .map(t -> t.body());
     }
 

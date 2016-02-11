@@ -1,7 +1,5 @@
 package md.fusionworks.lifehack.util;
 
-import android.content.Context;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -13,29 +11,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by ungvas on 9/29/15.
  */
-public class MapHelper {
+public class MapUtil {
 
-    private Context context;
-    private GoogleMap map;
-
-    public MapHelper(Context context, GoogleMap map) {
-        this.context = context;
-        this.map = map;
-    }
-
-    public static MapHelper newInstance(Context context, GoogleMap map) {
-
-        return new MapHelper(context, map);
-    }
-
-    public void goToPosition(Double latitude, Double longitude, boolean animateCamera) {
-
+    public static void goToPosition(GoogleMap map, Double latitude, Double longitude, boolean animateCamera) {
         float zoom = map.getCameraPosition().zoom;
-        goToPosition(latitude, longitude, animateCamera, zoom);
+        goToPosition(map, latitude, longitude, animateCamera, zoom);
     }
 
-    public void goToPosition(Double latitude, Double longitude, boolean animateCamera, float zoom) {
-
+    public static void goToPosition(GoogleMap map, Double latitude, Double longitude, boolean animateCamera, float zoom) {
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude))
                 .zoom(zoom).build();
@@ -45,8 +28,7 @@ public class MapHelper {
             map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
     }
 
-    public Marker createMarker(Double latitude, Double longitude, int iconResId) {
-
+    public static Marker createMarker(GoogleMap map, Double latitude, Double longitude, int iconResId) {
         LatLng latLng = new LatLng(latitude, longitude);
         return map.addMarker(new MarkerOptions()
                 .position(latLng)

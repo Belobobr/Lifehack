@@ -3,7 +3,7 @@ package md.fusionworks.lifehack.util;
 /**
  * Created by ungvas on 10/18/15.
  */
-public class Constants {
+public class Constant {
 
     public static final int DRAWER_ITEM_MAIN = 0;
     public static final int DRAWER_ITEM_LIFE_HACKS = 1;
@@ -16,4 +16,10 @@ public class Constants {
     public static final int NOTIFICATION_TOAST_ERROR = 101;
 
     public static final int NOTIFICATION_TOAST_SHOW_DELAY = 500;
+
+    public static final int CONNECTION_TIMEOUT = 15;
+
+    public static final int RETRY_DELAY_MILLIS = 1000;
+    public static final int MAX_RETRIES = 3;
+
 }

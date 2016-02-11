@@ -6,7 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import butterknife.Bind;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.exchange_rates.ExchangeRatesFragment;
-import md.fusionworks.lifehack.util.Constants;
+import md.fusionworks.lifehack.util.Constant;
 
 public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
@@ -29,6 +29,6 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
     @Override
     public int getSelfDrawerItem() {
-        return Constants.DRAWER_ITEM_EXCHANGE_RATES;
+        return Constant.DRAWER_ITEM_EXCHANGE_RATES;
     }
 }

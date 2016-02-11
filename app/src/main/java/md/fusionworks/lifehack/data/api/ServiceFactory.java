@@ -1,12 +1,13 @@
 package md.fusionworks.lifehack.data.api;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import md.fusionworks.lifehack.BuildConfig;
 import md.fusionworks.lifehack.data.api.interceptor.HeaderInterceptor;
+import md.fusionworks.lifehack.util.Constant;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
 
-    public static LifehackService makeLifehackService(Context context) {
+    public static LifehackService buildLifehackService() {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
@@ -24,6 +25,8 @@ public class ServiceFactory {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(new HeaderInterceptor())
+                .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder()
