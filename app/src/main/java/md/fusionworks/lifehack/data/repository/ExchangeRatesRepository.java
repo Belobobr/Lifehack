@@ -1,9 +1,6 @@
 package md.fusionworks.lifehack.data.repository;
 
-import android.content.Context;
-
 import java.util.List;
-
 import md.fusionworks.lifehack.data.api.LifehackService;
 import md.fusionworks.lifehack.data.api.ServiceFactory;
 import md.fusionworks.lifehack.data.api.model.mapper.BankDataMapper;
@@ -22,16 +19,13 @@ import rx.Observable;
  */
 public class ExchangeRatesRepository {
 
-  private Context context;
   private LifehackService lifehackService;
-
   private BankDataMapper bankDataMapper;
   private CurrencyDataMapper currencyDataMapper;
   private RateDataMapper rateDataMapper;
   private BranchDataMapper branchDataMapper;
 
-  public ExchangeRatesRepository(Context context) {
-    this.context = context;
+  public ExchangeRatesRepository() {
     lifehackService = ServiceFactory.buildLifehackService();
     bankDataMapper = new BankDataMapper();
     currencyDataMapper = new CurrencyDataMapper();

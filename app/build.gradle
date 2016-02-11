@@ -47,6 +47,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     testCompile "junit:junit:$rootProject.jUnitVersion"
+    compile "com.android.support:support-v4:$rootProject.appCompat_v7Version"
     compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
     compile "com.android.support:design:$rootProject.designSupportLibraryVersion"
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
@@ -65,11 +66,12 @@ dependencies {
     compile "com.trello:rxlifecycle:$rootProject.rxLifeCycleVersion"
     compile "com.trello:rxlifecycle-components:$rootProject.rxLifeCycleVersion"
     compile "com.github.castorflex.smoothprogressbar:library-circular:$rootProject.smoothProgressBarVersion"
+    compile "com.jakewharton.rxbinding:rxbinding:$rootProject.rxBindingVersion"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
 /*
     apt "com.google.dagger:dagger-compiler:2.0.2"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
     compile 'com.google.dagger:dagger:2.0.2'
     compile 'com.google.dagger:dagger:2.0.2'
     compile 'com.google.dagger:dagger-producers:2.0-beta'*/
-    compile 'com.android.support:support-v4:23.1.1'
 }

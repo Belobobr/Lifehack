@@ -97,7 +97,7 @@ public class ExchangeRatesFragment extends BaseFragment implements ExchangeRates
     super.onActivityCreated(savedInstanceState);
 
     userActionsListener =
-        new ExchangeRatesPresenter(this, new ExchangeRatesRepository(getActivity()));
+        new ExchangeRatesPresenter(this, new ExchangeRatesRepository());
     userActionsListener.loadInitialData();
     bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
     retryButton.setOnClickListener(v -> {

@@ -5,13 +5,13 @@ import java.util.List;
 /**
  * Created by ungvas on 2/10/16.
  */
-public class ExchangeRatesInitialData {
+public class InitialDataModel {
 
   private List<BankModel> bankModelList;
   private List<CurrencyModel> currencyModelList;
   private List<RateModel> rateModelList;
 
-  public ExchangeRatesInitialData(List<BankModel> bankModelList,
+  public InitialDataModel(List<BankModel> bankModelList,
       List<CurrencyModel> currencyModelList, List<RateModel> rateModelList) {
     this.bankModelList = bankModelList;
     this.currencyModelList = currencyModelList;

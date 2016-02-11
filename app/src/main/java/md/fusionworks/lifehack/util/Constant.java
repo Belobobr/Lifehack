@@ -21,4 +21,11 @@ public class Constant {
 
   public static final int RETRY_DELAY_MILLIS = 1000;
   public static final int MAX_RETRIES = 3;
+
+  public static final int DEFAULT_AMOUNT_IN_VALUE = 100;
+  public static final int DEFAULT_CURRENCY_IN_ID = 2;
+  public static final int DEFAULT_CURRENCY_OUT_ID = 1;
+  public static final int DEFAULT_BANK_ID = 2;
+  public static final String NO_EXCHANGE_RATES_OUT_VALUE = "-";
+  public static final int BEST_EXCHANGE_BANK_ID = 0;
 }

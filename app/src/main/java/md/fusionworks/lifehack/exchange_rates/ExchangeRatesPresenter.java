@@ -9,7 +9,7 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
-import md.fusionworks.lifehack.ui.model.exchange_rates.ExchangeRatesInitialData;
+import md.fusionworks.lifehack.ui.model.exchange_rates.InitialDataModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
@@ -62,18 +62,18 @@ public class ExchangeRatesPresenter implements ExchangeRatesContract.UserActions
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
 
     Observable.zip(bankObservable, currencyObservable, rateObservable,
-        (bankModels, currencyModels, rateModels) -> new ExchangeRatesInitialData(bankModels,
-            currencyModels, rateModels)).subscribe(new ObserverAdapter<ExchangeRatesInitialData>() {
-      @Override public void onNext(ExchangeRatesInitialData exchangeRatesInitialData) {
+        (bankModels, currencyModels, rateModels) -> new InitialDataModel(bankModels,
+            currencyModels, rateModels)).subscribe(new ObserverAdapter<InitialDataModel>() {
+      @Override public void onNext(InitialDataModel initialDataModel) {
 
-        bankList = exchangeRatesInitialData.getBankModelList();
+        bankList = initialDataModel.getBankModelList();
         exchangeRatesView.populateBankSpinner(bankList);
 
-        currencyList = exchangeRatesInitialData.getCurrencyModelList();
+        currencyList = initialDataModel.getCurrencyModelList();
         exchangeRatesView.populateCurrencyInGroup(currencyList);
         exchangeRatesView.populateCurrencyOutGroup(currencyList);
 
-        rateList = exchangeRatesInitialData.getRateModelList();
+        rateList = initialDataModel.getRateModelList();
 
         onInitialDataLoadedSuccess();
       }

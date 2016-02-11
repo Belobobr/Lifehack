@@ -12,11 +12,29 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import butterknife.Bind;
+import com.jakewharton.rxbinding.widget.RxAdapterView;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import java.util.Date;
+import java.util.List;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.InitialDataModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
+import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.Converter;
+import md.fusionworks.lifehack.util.DateUtils;
+import md.fusionworks.lifehack.util.ExchangeRatesUtils;
+import md.fusionworks.lifehack.util.rx.ObservableTransformation;
+import md.fusionworks.lifehack.util.rx.ObserverAdapter;
+import rx.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +54,20 @@ public class NewExchangeRatesFragment extends BaseFragment {
   @Bind(R.id.whereToBuyButton) TextView whereToBuyButton;
   @Bind(R.id.onlyActiveNowCheckBox) CheckBox onlyActiveNowCheckBox;
 
+  private List<RateModel> rateList;
+  private List<BankModel> bankList;
+  private List<CurrencyModel> currencyList;
+
+  private ExchangeRatesRepository exchangeRatesRepository;
+  private BankSpinnerAdapter bankSpinnerAdapter;
+
   public NewExchangeRatesFragment() {
-    // Required empty public constructor
+  }
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    exchangeRatesRepository = new ExchangeRatesRepository();
+    bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
   }
 
   public static NewExchangeRatesFragment newInstance() {
@@ -47,5 +77,297 @@ public class NewExchangeRatesFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     return inflateAndBindViews(inflater, R.layout.fragment_new_exchange_rates, container);
+  }
+
+  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    loadInitialData();
+  }
+
+  private void loadInitialData() {
+    showLoadingDialog();
+    Observable<List<BankModel>> bankObservable = exchangeRatesRepository.getBanks()
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+
+    Observable<List<CurrencyModel>> currencyObservable = exchangeRatesRepository.getCurrencies()
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+
+    String today = DateUtils.getRateDateFormat().format(new Date());
+    Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today)
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+
+    Observable.zip(bankObservable, currencyObservable, rateObservable,
+        (bankModels, currencyModels, rateModels) -> new InitialDataModel(bankModels, currencyModels,
+            rateModels))
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+        .compose(this.bindToLifecycle())
+        .subscribe(new ObserverAdapter<InitialDataModel>() {
+          @Override public void onNext(InitialDataModel initialDataModel) {
+            bankList = initialDataModel.getBankModelList();
+            currencyList = initialDataModel.getCurrencyModelList();
+            rateList = initialDataModel.getRateModelList();
+            onInitialDataLoadedSuccess();
+          }
+
+          @Override public void onError(Throwable e) {
+            onInitialDataLoadedError();
+          }
+        });
+  }
+
+  private void loadRates(String date) {
+    showLoadingDialog();
+    exchangeRatesRepository.getRates(date)
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+        .compose(this.bindToLifecycle())
+        .subscribe(new ObserverAdapter<List<RateModel>>() {
+          @Override public void onNext(List<RateModel> rateModels) {
+            rateList = rateModels;
+            hideLoadingDialog();
+            applyConversion();
+          }
+
+          @Override public void onError(Throwable e) {
+            hideLoadingDialog();
+            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                getString(R.string.field_something_gone_wrong));
+          }
+        });
+  }
+
+  private void onInitialDataLoadedSuccess() {
+    hideLoadingDialog();
+    hideRetryView();
+    showExchangeRatesView();
+    populateCurrencyInGroup(currencyList);
+    populateCurrencyOutGroup(currencyList);
+    populateBankSpinner(bankList);
+    setupUIWithDefaultValues();
+    initializeViewListeners();
+  }
+
+  private void onInitialDataLoadedError() {
+    hideLoadingDialog();
+    hideExchangeRatesView();
+    showRetryView();
+  }
+
+  private void showExchangeRatesView() {
+    exchangeRatesView.setVisibility(View.VISIBLE);
+  }
+
+  private void hideExchangeRatesView() {
+    exchangeRatesView.setVisibility(View.GONE);
+  }
+
+  private void showRetryView() {
+    retryView.setVisibility(View.VISIBLE);
+    retryButton.setOnClickListener(v -> loadInitialData());
+  }
+
+  private void hideRetryView() {
+    retryView.setVisibility(View.GONE);
+  }
+
+  private void populateCurrencyInGroup(List<CurrencyModel> currencyList) {
+    currenciesInGroup.addCurrencies(currencyList);
+  }
+
+  private void populateCurrencyOutGroup(List<CurrencyModel> currencyList) {
+    currenciesOutGroup.addCurrencies(currencyList);
+  }
+
+  private void populateBankSpinner(List<BankModel> bankList) {
+    bankSpinnerAdapter.clear();
+    bankSpinnerAdapter.addItem(getActivity().getString(R.string.spinner_option_best_exchange), 0);
+    bankSpinnerAdapter.addHeader(getActivity().getString(R.string.spinner_option_bank_list));
+    for (BankModel bank : bankList) {
+      bankSpinnerAdapter.addItem(bank.getName(), bank.getId());
+    }
+    bankSpinner.setAdapter(bankSpinnerAdapter);
+  }
+
+  private void setupUIWithDefaultValues() {
+    setAmountInText(String.valueOf(Constant.DEFAULT_AMOUNT_IN_VALUE));
+    setCurrencyInCheckedById(Constant.DEFAULT_CURRENCY_IN_ID);
+    setCurrencyOutCheckedById(Constant.DEFAULT_CURRENCY_OUT_ID);
+    setBankSelection(Constant.DEFAULT_BANK_ID);
+    initializeViewListeners();
+  }
+
+  private void setAmountInText(String text) {
+    amountInField.setText(text);
+  }
+
+  private String getAmountInText() {
+    return amountInField.getText().toString();
+  }
+
+  private void setAmountOutText(String text) {
+    amountOutField.setText(text);
+  }
+
+  private void setCurrencyInCheckedById(int currencyId) {
+    currenciesInGroup.setCurrencyCheckedById(currencyId);
+  }
+
+  private void setCurrencyOutCheckedById(int currencyId) {
+    currenciesOutGroup.setCurrencyCheckedById(currencyId);
+  }
+
+  private void setBankSelection(int position) {
+    bankSpinner.setSelection(position);
+  }
+
+  private void initializeViewListeners() {
+    RxTextView.textChanges(amountInField)
+        .compose(this.bindToLifecycle())
+        .subscribe(charSequence -> {
+          applyConversion();
+        });
+
+    RxAdapterView.itemSelections(bankSpinner)
+        .compose(this.bindToLifecycle())
+        .subscribe(position -> {
+          if (position != Constant.BEST_EXCHANGE_BANK_ID) setBestExchangeBankText("");
+          applyConversion();
+        });
+
+    ratesDateField.setOnDateChangedListener(date -> {
+      String dateText = DateUtils.getRateDateFormat().format(date);
+      loadRates(dateText);
+    });
+
+    currenciesInGroup.setOnCheckedChangeListener(
+        (group, checkedId) -> onCurrencyInChanged(checkedId));
+
+    currenciesOutGroup.setOnCheckedChangeListener(
+        (group, checkedId) -> onCurrencyOutChanged(checkedId));
+
+    whereToBuyButton.setOnClickListener(v -> {
+    });
+  }
+
+  private void onCurrencyInChanged(int checkedId) {
+    int currencyInId = checkedId;
+    int currencyOutId = getCheckedCurrencyOutId();
+    if (currencyInId == currencyOutId) {
+      currencyOutCheckNext(checkedId);
+    }
+    applyConversion();
+  }
+
+  private void onCurrencyOutChanged(int checkedId) {
+    int currencyOutId = checkedId;
+    int currencyInId = getCheckedCurrencyInId();
+    if (currencyInId == currencyOutId) {
+      currencyInCheckNext(checkedId);
+    }
+    applyConversion();
+  }
+
+  private int getCheckedCurrencyInId() {
+    return currenciesInGroup.getCheckedRadioButtonId();
+  }
+
+  private int getCheckedCurrencyOutId() {
+    return currenciesOutGroup.getCheckedRadioButtonId();
+  }
+
+  private void currencyInCheckNext(int checkedId) {
+    currenciesInGroup.checkNextCurrency(checkedId);
+  }
+
+  private void currencyOutCheckNext(int checkedId) {
+    currenciesOutGroup.checkNextCurrency(checkedId);
+  }
+
+  private void notifyNoExchangeRates() {
+    showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, getString(R.string.field_no_rate));
+    setAmountOutText(Constant.NO_EXCHANGE_RATES_OUT_VALUE);
+  }
+
+  private boolean validateConversionParams(List<RateModel> bankRateList, double currencyInRateValue,
+      double currencyOutRateValue) {
+    if (bankRateList.size() == 0 || currencyInRateValue == 0 || currencyOutRateValue == 0) {
+      notifyNoExchangeRates();
+      return false;
+    }
+    return true;
+  }
+
+  private BestExchangeModel convertBestExchange() {
+    List<RateModel> bankRateList;
+    double amountInValue;
+    double currencyInRateValue;
+    double currencyOutRateValue;
+    double amountOutValue = 0;
+
+    BestExchangeModel bestExchangeModel = new BestExchangeModel();
+    for (BankModel bank : bankList) {
+      if (bank.getId() != 1) {
+        bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
+        amountInValue = Converter.toDouble(getAmountInText());
+        currencyInRateValue =
+            ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
+        currencyOutRateValue =
+            ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
+        double bankAmountOutValue =
+            ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+        if (bankAmountOutValue > amountOutValue) {
+          amountOutValue = bankAmountOutValue;
+          bestExchangeModel = new BestExchangeModel(bank, amountOutValue);
+        }
+      }
+
+      setAmountOutText(String.format("%.2f", bestExchangeModel.getAmountOutvalue()));
+
+      String bestExchangeBankText =
+          (bestExchangeModel.getBank() != null) ? String.format("Используется курс банка %s",
+              bestExchangeModel.getBank().getName()) : "Не найден подходящий банк";
+      setBestExchangeBankText(bestExchangeBankText);
+    }
+
+    return bestExchangeModel;
+  }
+
+  private void applyConversion() {
+    int bankId = getSelectedBankId();
+    if (bankId == Constant.BEST_EXCHANGE_BANK_ID) {
+      convertBestExchange();
+    } else {
+      convertBank(bankId);
+    }
+  }
+
+  private void convertBank(int bankId) {
+
+    List<RateModel> bankRateList;
+    double amountInValue;
+    double currencyInRateValue;
+    double currencyOutRateValue;
+
+    bankRateList = ExchangeRatesUtils.getBankRates(rateList, bankId);
+    amountInValue = Converter.toDouble(getAmountInText());
+    currencyInRateValue =
+        ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
+    currencyOutRateValue =
+        ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
+
+    if (validateConversionParams(bankRateList, currencyInRateValue, currencyOutRateValue)) {
+      double amountOutValue =
+          ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+      setAmountOutText(String.format("%.2f", amountOutValue));
+    }
+  }
+
+  private void setBestExchangeBankText(String text) {
+    bestExchangeBankField.setText(text);
+  }
+
+  private int getSelectedBankId() {
+    BankSpinnerItemModel bankSpinnerItemModel =
+        (BankSpinnerItemModel) bankSpinner.getSelectedItem();
+    return bankSpinnerItemModel.getBankId();
   }
 }
