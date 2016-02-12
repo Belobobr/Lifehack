@@ -7,31 +7,38 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.navigator.Navigator;
 import md.fusionworks.lifehack.ui.widget.LoadingDialog;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.rx.RxBus;
 
 /**
  * Created by ungvas on 10/15/15.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends RxAppCompatActivity {
 
   @Nullable @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
 
+  private RxBus rxBus;
   private Navigator navigator;
   private LoadingDialog loadingDialog;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    rxBus = RxBus.getInstance();
     navigator = new Navigator();
     loadingDialog = new LoadingDialog(this);
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
+    listenForEvents();
   }
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
@@ -81,6 +88,10 @@ public class BaseActivity extends AppCompatActivity {
     }
   }
 
+  public RxBus getRxBus() {
+    return rxBus;
+  }
+
   public Navigator getNavigator() {
     return navigator;
   }
@@ -95,5 +106,8 @@ public class BaseActivity extends AppCompatActivity {
     if (this.loadingDialog != null) {
       this.loadingDialog.dismiss();
     }
+  }
+
+  protected void listenForEvents() {
   }
 }

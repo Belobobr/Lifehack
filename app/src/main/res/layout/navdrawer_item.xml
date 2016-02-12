@@ -20,7 +20,7 @@
     android:layout_height="48dp"
     android:background="?android:selectableItemBackground"
     android:clickable="true"
-    android:gravity="center|center_vertical"
+    android:gravity="start|center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"

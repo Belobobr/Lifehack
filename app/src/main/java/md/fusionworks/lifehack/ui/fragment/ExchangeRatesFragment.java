@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,7 +44,9 @@ import java.util.List;
 import java.util.Map;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
+import md.fusionworks.lifehack.ui.event.ScrollToEvent;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
@@ -68,7 +71,7 @@ import rx.Observable;
  */
 public class ExchangeRatesFragment extends BaseFragment {
 
-  @Bind(R.id.scrollView) ScrollView scrollView;
+  @Bind(R.id.scrollView) NestedScrollView scrollView;
   @Bind(R.id.amountInField) EditText amountInField;
   @Bind(R.id.amountOutField) EditText amountOutField;
   @Bind(R.id.bankSpinner) Spinner bankSpinner;
@@ -280,7 +283,7 @@ public class ExchangeRatesFragment extends BaseFragment {
           @Override public void onNext(List<BranchModel> branchModels) {
             hideLoadingDialog();
             showBranchesLayout();
-             populateBranchesMap(branchModels);
+            populateBranchesMap(branchModels);
             scrollView.smoothScrollTo(0, mapView.getBottom());
             populateBranchesList(branchModels);
           }
@@ -565,7 +568,7 @@ public class ExchangeRatesFragment extends BaseFragment {
       scheduleField.setText(BranchUtil.getBranchScheduleBreak(branch));
 
       nameField.setOnClickListener(v1 -> {
-        scrollView.smoothScrollTo(0, mapView.getBottom());
+        getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
       /*  mapView.postDelayed(() -> showInfoWindow(branch), 100);
         mapView.postDelayed(
             () -> MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),

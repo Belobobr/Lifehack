@@ -10,6 +10,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 import md.fusionworks.lifehack.ui.activity.BaseActivity;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.navigator.Navigator;
+import md.fusionworks.lifehack.util.rx.RxBus;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -54,6 +55,10 @@ public class BaseFragment extends RxFragment {
   protected void showNotificationToast(int type, String message,
       NotificationToastActionListener notificationToastActionListener) {
     baseActivity.showNotificationToast(type, message, notificationToastActionListener);
+  }
+
+  protected RxBus getRxBus() {
+    return baseActivity.getRxBus();
   }
 
   protected Navigator getNavigator() {

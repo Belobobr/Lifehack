@@ -7,6 +7,18 @@ import rx.subjects.Subject;
 
 public class RxBus {
 
+  private static RxBus instance;
+
+  private RxBus() {
+  }
+
+  public static RxBus getInstance() {
+    if (null == instance) {
+      instance = new RxBus();
+    }
+    return instance;
+  }
+
   private final Subject<Object, Object> bus = new SerializedSubject<>(PublishSubject.create());
 
   public void post(Object event) {
