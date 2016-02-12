@@ -5,7 +5,7 @@ import android.support.design.widget.CoordinatorLayout;
 
 import butterknife.Bind;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.fragment.NewExchangeRatesFragment;
+import md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment;
 import md.fusionworks.lifehack.util.Constant;
 
 public class ExchangeRatesActivity extends NavigationDrawerActivity {
@@ -16,7 +16,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_exchange_rates);
 
-    addFragment(R.id.currencyConverterFragment, NewExchangeRatesFragment.newInstance());
+    addFragment(R.id.currencyConverterFragment, ExchangeRatesFragment.newInstance());
   }
 
   @Override public void onPostCreate(Bundle savedInstanceState) {

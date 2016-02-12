@@ -13,6 +13,7 @@
       layout="@layout/retry_view"/>
 
   <ScrollView
+      android:id="@+id/scrollView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
@@ -23,6 +24,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
+        android:visibility="gone"
         tools:context=".exchange_rates.ExchangeRatesFragment"
         >
 
@@ -146,7 +148,6 @@
           android:textSize="@dimen/text_size_medium"
           view:typeface="font/Roboto-Regular.ttf"
           />
-
       <LinearLayout
           android:id="@+id/branchesLayout"
           android:layout_width="match_parent"
@@ -156,13 +157,23 @@
           android:visibility="gone"
           >
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map"
+        <md.fusionworks.lifehack.ui.widget.SquareFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            />
-
+            >
+          <com.google.android.gms.maps.MapView
+              android:id="@+id/map"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              />
+          <ImageView
+              android:id="@+id/imageOverMap"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:src="@android:color/transparent"
+              />
+        </md.fusionworks.lifehack.ui.widget.SquareFrameLayout>
         <include layout="@layout/branches_list_header"/>
 
         <LinearLayout

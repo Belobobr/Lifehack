@@ -1,37 +1,64 @@
 package md.fusionworks.lifehack.ui.fragment;
 
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
+import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.InitialDataModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
+import md.fusionworks.lifehack.util.BranchUtil;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtils;
 import md.fusionworks.lifehack.util.ExchangeRatesUtils;
+import md.fusionworks.lifehack.util.MapUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
 import rx.Observable;
@@ -39,8 +66,9 @@ import rx.Observable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewExchangeRatesFragment extends BaseFragment {
+public class ExchangeRatesFragment extends BaseFragment {
 
+  @Bind(R.id.scrollView) ScrollView scrollView;
   @Bind(R.id.amountInField) EditText amountInField;
   @Bind(R.id.amountOutField) EditText amountOutField;
   @Bind(R.id.bankSpinner) Spinner bankSpinner;
@@ -53,6 +81,10 @@ public class NewExchangeRatesFragment extends BaseFragment {
   @Bind(R.id.retryButton) Button retryButton;
   @Bind(R.id.whereToBuyButton) TextView whereToBuyButton;
   @Bind(R.id.onlyActiveNowCheckBox) CheckBox onlyActiveNowCheckBox;
+  @Bind(R.id.branchesLayout) LinearLayout branchesLayout;
+  @Bind(R.id.branchesListLayout) LinearLayout branchesListLayout;
+  @Bind(R.id.map) MapView mapView;
+  @Bind(R.id.imageOverMap) ImageView imageOverMap;
 
   private List<RateModel> rateList;
   private List<BankModel> bankList;
@@ -60,28 +92,132 @@ public class NewExchangeRatesFragment extends BaseFragment {
 
   private ExchangeRatesRepository exchangeRatesRepository;
   private BankSpinnerAdapter bankSpinnerAdapter;
+  private GoogleMap map;
+  private Map<Marker, BranchModel> branchMap = new HashMap<>();
+  private GoogleApiClient googleApiClient;
+  private Location myLastLocation;
+  private ArrayList<Polyline> polylines;
 
-  public NewExchangeRatesFragment() {
+  public ExchangeRatesFragment() {
+  }
+
+  public static ExchangeRatesFragment newInstance() {
+    return new ExchangeRatesFragment();
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     exchangeRatesRepository = new ExchangeRatesRepository();
     bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
+    polylines = new ArrayList<>();
+    buildGoogleApiClient();
   }
 
-  public static NewExchangeRatesFragment newInstance() {
-    return new NewExchangeRatesFragment();
+  @Override public void onStart() {
+    super.onStart();
+    googleApiClient.connect();
+  }
+
+  @Override public void onStop() {
+    super.onStop();
+    if (googleApiClient.isConnected()) {
+      googleApiClient.disconnect();
+    }
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mapView.onResume();
+  }
+
+  @Override public void onDestroy() {
+    mapView.onDestroy();
+    super.onDestroy();
+  }
+
+  @Override public void onLowMemory() {
+    super.onLowMemory();
+    mapView.onLowMemory();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return inflateAndBindViews(inflater, R.layout.fragment_new_exchange_rates, container);
+    View view = inflateAndBindViews(inflater, R.layout.fragment_exchange_rates, container);
+    initializeMap(savedInstanceState);
+    return view;
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     loadInitialData();
+  }
+
+  private void initializeMap(Bundle savedInstanceState) {
+    mapView.onCreate(savedInstanceState);
+    enableMapGestures();
+    mapView.getMapAsync(googleMap -> {
+      map = googleMap;
+      map.getUiSettings().setMyLocationButtonEnabled(false);
+      map.setMyLocationEnabled(true);
+      MapsInitializer.initialize(getActivity());
+
+      map.setOnMarkerClickListener(marker -> {
+        if (branchMap.get(marker) != null) {
+          showInfoWindow(branchMap.get(marker));
+        }
+        return true;
+      });
+    });
+  }
+
+  private void pinHomeMarker(Location location) {
+    if (location != null) {
+      MapUtil.createMarker(map, location.getLatitude(), location.getLongitude(),
+          R.drawable.home_pin_icon);
+      MapUtil.goToPosition(map, location.getLatitude(), location.getLongitude(), false,
+          Constant.CAMERA_ZOOM);
+    }
+  }
+
+  private void showInfoWindow(BranchModel branch) {
+    MaterialDialog dialog = new MaterialDialog.Builder(getActivity()).title(branch.getName())
+        .customView(R.layout.info_window_view, true)
+        .positiveText("Закрыть")
+        .build();
+
+    TextView addressField = (TextView) dialog.getCustomView().findViewById(R.id.addressField);
+    addressField.setText(BranchUtil.getBranchAddress(branch));
+
+    dialog.show();
+  }
+
+  private void enableMapGestures() {
+    imageOverMap.setOnTouchListener((v, event) -> {
+      int action = event.getAction();
+      switch (action) {
+        case MotionEvent.ACTION_DOWN:
+          scrollView.requestDisallowInterceptTouchEvent(true);
+          return false;
+        case MotionEvent.ACTION_UP:
+          scrollView.requestDisallowInterceptTouchEvent(false);
+          return true;
+        case MotionEvent.ACTION_MOVE:
+          scrollView.requestDisallowInterceptTouchEvent(true);
+          return false;
+        default:
+          return true;
+      }
+    });
+  }
+
+  private void populateBranchesMap(List<BranchModel> branchList) {
+    map.clear();
+    pinHomeMarker(myLastLocation);
+    for (BranchModel branch : branchList) {
+      Marker marker = MapUtil.createMarker(map, branch.getAddress().getLocation().getLat(),
+          branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
+      branchMap.put(marker, branch);
+    }
   }
 
   private void loadInitialData() {
@@ -125,6 +261,28 @@ public class NewExchangeRatesFragment extends BaseFragment {
             rateList = rateModels;
             hideLoadingDialog();
             applyConversion();
+          }
+
+          @Override public void onError(Throwable e) {
+            hideLoadingDialog();
+            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                getString(R.string.field_something_gone_wrong));
+          }
+        });
+  }
+
+  private void loadBankBranches(int bankId, boolean active) {
+    showLoadingDialog();
+    exchangeRatesRepository.getBranches(bankId, active)
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+        .compose(this.bindToLifecycle())
+        .subscribe(new ObserverAdapter<List<BranchModel>>() {
+          @Override public void onNext(List<BranchModel> branchModels) {
+            hideLoadingDialog();
+            showBranchesLayout();
+             populateBranchesMap(branchModels);
+            scrollView.smoothScrollTo(0, mapView.getBottom());
+            populateBranchesList(branchModels);
           }
 
           @Override public void onError(Throwable e) {
@@ -226,12 +384,10 @@ public class NewExchangeRatesFragment extends BaseFragment {
           applyConversion();
         });
 
-    RxAdapterView.itemSelections(bankSpinner)
-        .compose(this.bindToLifecycle())
-        .subscribe(position -> {
-          if (position != Constant.BEST_EXCHANGE_BANK_ID) setBestExchangeBankText("");
-          applyConversion();
-        });
+    getCompositeSubscription().add(RxAdapterView.itemSelections(bankSpinner).subscribe(position -> {
+      if (position != Constant.BEST_EXCHANGE_BANK_ID) setBestExchangeBankText("");
+      applyConversion();
+    }));
 
     ratesDateField.setOnDateChangedListener(date -> {
       String dateText = DateUtils.getRateDateFormat().format(date);
@@ -244,8 +400,7 @@ public class NewExchangeRatesFragment extends BaseFragment {
     currenciesOutGroup.setOnCheckedChangeListener(
         (group, checkedId) -> onCurrencyOutChanged(checkedId));
 
-    whereToBuyButton.setOnClickListener(v -> {
-    });
+    whereToBuyButton.setOnClickListener(v -> onWhereToBuyAction());
   }
 
   private void onCurrencyInChanged(int checkedId) {
@@ -369,5 +524,125 @@ public class NewExchangeRatesFragment extends BaseFragment {
     BankSpinnerItemModel bankSpinnerItemModel =
         (BankSpinnerItemModel) bankSpinner.getSelectedItem();
     return bankSpinnerItemModel.getBankId();
+  }
+
+  private void onWhereToBuyAction() {
+    showLoadingDialog();
+    int bankId = getSelectedBankId();
+    if (bankId == 1) {
+      setBankSelection(Constant.BEST_EXCHANGE_BANK_ID);
+      bankId = Constant.BEST_EXCHANGE_BANK_ID;
+    }
+    if (bankId == Constant.BEST_EXCHANGE_BANK_ID) {
+      BestExchangeModel bestExchangeModel = convertBestExchange();
+      bankId = bestExchangeModel.getBank().getId();
+    }
+
+    boolean onlyActive = onlyActiveNow();
+    loadBankBranches(bankId, onlyActive);
+  }
+
+  private boolean onlyActiveNow() {
+    return onlyActiveNowCheckBox.isChecked();
+  }
+
+  private void showBranchesLayout() {
+    branchesLayout.setVisibility(View.VISIBLE);
+  }
+
+  private void populateBranchesList(List<BranchModel> branchList) {
+    LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+    branchesListLayout.removeAllViews();
+
+    for (BranchModel branch : branchList) {
+      View v = layoutInflater.inflate(R.layout.branches_list_item, null, false);
+      TextView nameField = (TextView) v.findViewById(R.id.nameField);
+      TextView addressField = (TextView) v.findViewById(R.id.addressField);
+      TextView scheduleField = (TextView) v.findViewById(R.id.scheduleField);
+
+      nameField.setText(branch.getName());
+      addressField.setText(BranchUtil.getBranchAddress(branch));
+      scheduleField.setText(BranchUtil.getBranchScheduleBreak(branch));
+
+      nameField.setOnClickListener(v1 -> {
+        scrollView.smoothScrollTo(0, mapView.getBottom());
+      /*  mapView.postDelayed(() -> showInfoWindow(branch), 100);
+        mapView.postDelayed(
+            () -> MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
+                branch.getAddress().getLocation().getLng(), false), 200);*/
+
+        showRouteOnMap(branch);
+      });
+      branchesListLayout.addView(v);
+    }
+  }
+
+  protected synchronized void buildGoogleApiClient() {
+    googleApiClient = new GoogleApiClient.Builder(getActivity()).addConnectionCallbacks(
+        new GoogleApiClient.ConnectionCallbacks() {
+          @Override public void onConnected(@Nullable Bundle bundle) {
+            myLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            pinHomeMarker(myLastLocation);
+          }
+
+          @Override public void onConnectionSuspended(int i) {
+            googleApiClient.connect();
+          }
+        }).addOnConnectionFailedListener(connectionResult -> {
+
+    }).addApi(LocationServices.API).build();
+  }
+
+  private void showRouteOnMap(BranchModel branch) {
+    if (myLastLocation != null) {
+      showLoadingDialog();
+      Routing routing = new Routing.Builder().travelMode(AbstractRouting.TravelMode.DRIVING)
+          .withListener(new RoutingListener() {
+            @Override public void onRoutingFailure(RouteException e) {
+              hideLoadingDialog();
+              showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                  getString(R.string.field_something_gone_wrong));
+            }
+
+            @Override public void onRoutingStart() {
+
+            }
+
+            @Override public void onRoutingSuccess(ArrayList<Route> arrayList, int j) {
+              hideLoadingDialog();
+              MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
+                  branch.getAddress().getLocation().getLng(), false);
+
+              if (polylines.size() > 0) {
+                for (Polyline poly : polylines) {
+                  poly.remove();
+                }
+              }
+              polylines = new ArrayList<>(arrayList.size());
+
+              for (int i = 0; i < arrayList.size(); i++) {
+                PolylineOptions polyOptions = new PolylineOptions();
+                polyOptions.color(Color.BLUE);
+                polyOptions.width(10 + i * 3);
+                polyOptions.addAll(arrayList.get(i).getPoints());
+                Polyline polyline = map.addPolyline(polyOptions);
+                polylines.add(polyline);
+              }
+            }
+
+            @Override public void onRoutingCancelled() {
+
+            }
+          })
+          .alternativeRoutes(false)
+          .waypoints(new LatLng(myLastLocation.getLatitude(), myLastLocation.getLongitude()),
+              new LatLng(branch.getAddress().getLocation().getLat(),
+                  branch.getAddress().getLocation().getLng()))
+          .build();
+      routing.execute();
+    } else {
+      showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+          getString(R.string.field_something_gone_wrong));
+    }
   }
 }

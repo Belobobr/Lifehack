@@ -5,13 +5,12 @@ import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.trello.rxlifecycle.components.support.RxFragment;
-
 import butterknife.ButterKnife;
+import com.trello.rxlifecycle.components.support.RxFragment;
 import md.fusionworks.lifehack.ui.activity.BaseActivity;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.navigator.Navigator;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by ungvas on 10/22/15.
@@ -19,20 +18,23 @@ import md.fusionworks.lifehack.ui.navigator.Navigator;
 public class BaseFragment extends RxFragment {
 
   private BaseActivity baseActivity;
+  private CompositeSubscription compositeSubscription;
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);
     try {
       baseActivity = (BaseActivity) context;
       onFragmentAttached(context);
+      compositeSubscription = new CompositeSubscription();
     } catch (ClassCastException e) {
       throw new ClassCastException(context.toString() + " must implement BaseActivity");
     }
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
+  @Override public void onDestroy() {
+    super.onDestroy();
     ButterKnife.unbind(this);
+    compositeSubscription.unsubscribe();
   }
 
   protected View inflateAndBindViews(LayoutInflater inflater, @LayoutRes int layoutResId,
@@ -56,6 +58,10 @@ public class BaseFragment extends RxFragment {
 
   protected Navigator getNavigator() {
     return baseActivity.getNavigator();
+  }
+
+  protected CompositeSubscription getCompositeSubscription() {
+    return compositeSubscription;
   }
 
   protected void showLoadingDialog() {

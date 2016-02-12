@@ -4,74 +4,76 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
 
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/NOTICE.txt'
+  }
+
+  compileSdkVersion rootProject.ext.androidCompileSdkVersion
+  buildToolsVersion rootProject.ext.androidBuildToolsVersion
+
+  defaultConfig {
+
+    multiDexEnabled true
+
+    minSdkVersion rootProject.ext.androidMinSdkVersion
+    targetSdkVersion rootProject.ext.androidTargetSdkVersion
+
+    applicationId rootProject.ext.androidApplicationId
+    versionCode rootProject.ext.androidVersionCode
+    versionName rootProject.ext.androidVersionName
+  }
+  buildTypes {
+    release {
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
 
-    compileSdkVersion rootProject.ext.androidCompileSdkVersion
-    buildToolsVersion rootProject.ext.androidBuildToolsVersion
-
-    defaultConfig {
-
-        multiDexEnabled true
-
-        minSdkVersion rootProject.ext.androidMinSdkVersion
-        targetSdkVersion rootProject.ext.androidTargetSdkVersion
-
-        applicationId rootProject.ext.androidApplicationId
-        versionCode rootProject.ext.androidVersionCode
-        versionName rootProject.ext.androidVersionName
-    }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 repositories {
-    maven { url "https://jitpack.io" }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+  maven { url "https://jitpack.io" }
+  maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 dependencies {
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile "junit:junit:$rootProject.jUnitVersion"
-    compile "com.android.support:support-v4:$rootProject.appCompat_v7Version"
-    compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
-    compile "com.android.support:design:$rootProject.designSupportLibraryVersion"
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
-    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
-    compile("com.github.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion") {
-        transitive = true
-    }
-    compile "com.wdullaer:materialdatetimepicker:$rootProject.materialDateTimePickerVersion"
-    compile "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
-    compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
-    compile "io.reactivex:rxandroid:$rootProject.rxJavaVersion"
-    compile "com.trello:rxlifecycle:$rootProject.rxLifeCycleVersion"
-    compile "com.trello:rxlifecycle-components:$rootProject.rxLifeCycleVersion"
-    compile "com.github.castorflex.smoothprogressbar:library-circular:$rootProject.smoothProgressBarVersion"
-    compile "com.jakewharton.rxbinding:rxbinding:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
-/*
-    apt "com.google.dagger:dagger-compiler:2.0.2"
-    provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'com.google.dagger:dagger-producers:2.0-beta'*/
+  testCompile "junit:junit:$rootProject.jUnitVersion"
+  compile "com.android.support:support-v4:$rootProject.appCompat_v7Version"
+  compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
+  compile "com.android.support:design:$rootProject.designSupportLibraryVersion"
+  compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+  compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+  compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+  compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+  compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+  compile("com.github.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion") {
+    transitive = true
+  }
+  compile "com.wdullaer:materialdatetimepicker:$rootProject.materialDateTimePickerVersion"
+  compile "com.google.android.gms:play-services-maps:$rootProject.playServicesVersion"
+  compile "com.google.android.gms:play-services-location:$rootProject.playServicesVersion"
+  compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+  compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
+  compile "io.reactivex:rxandroid:$rootProject.rxJavaVersion"
+  compile "com.trello:rxlifecycle:$rootProject.rxLifeCycleVersion"
+  compile "com.trello:rxlifecycle-components:$rootProject.rxLifeCycleVersion"
+  compile "com.github.castorflex.smoothprogressbar:library-circular:$rootProject.smoothProgressBarVersion"
+  compile "com.jakewharton.rxbinding:rxbinding:$rootProject.rxBindingVersion"
+  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
+  compile "com.github.jd-alexander:library:$rootProject.googleDirectionsVersion"
+  /*
+      apt "com.google.dagger:dagger-compiler:2.0.2"
+      provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+      compile 'com.google.dagger:dagger:2.0.2'
+      compile 'com.google.dagger:dagger:2.0.2'
+      compile 'com.google.dagger:dagger-producers:2.0-beta'*/
 }

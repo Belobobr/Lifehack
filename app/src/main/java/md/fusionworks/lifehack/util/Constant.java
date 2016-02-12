@@ -28,4 +28,6 @@ public class Constant {
   public static final int DEFAULT_BANK_ID = 2;
   public static final String NO_EXCHANGE_RATES_OUT_VALUE = "-";
   public static final int BEST_EXCHANGE_BANK_ID = 0;
+
+  public static final float CAMERA_ZOOM = 12f;
 }

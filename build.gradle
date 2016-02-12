@@ -18,7 +18,6 @@ allprojects {
     }
 
     ext {
-
         androidApplicationId = 'md.fusionworks.lifehack'
         androidVersionCode = 1
         androidVersionName = "1.0"
@@ -44,6 +43,7 @@ allprojects {
         rxLifeCycleVersion = '0.4.0'
         smoothProgressBarVersion = '1.2.0'
         rxBindingVersion='0.3.0'
+        googleDirectionsVersion='1.1.0'
 
         jUnitVersion = '4.12'
     }
