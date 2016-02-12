@@ -33,16 +33,18 @@ public class NavigationDrawerActivity extends BaseActivity {
   private static final int[] DRAWER_TITLE_RES_ID = new int[] {
       R.string.drawer_item_main, R.string.drawer_item_life_hacks,
       R.string.drawer_item_exchange_rates, R.string.drawer_item_prices, R.string.drawer_item_sales,
-      R.string.drawer_item_settings
+     // R.string.drawer_item_settings
   };
 
   private static final int[] DRAWER_ICON_RES_ID = new int[] {
       R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
-      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
+      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
+      //R.drawable.ic_lens_black_24dp,
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      false, false, true, false, false, false
+      false, false, true, false, false,
+      //false
   };
 
   @Bind(R.id.toolbar) Toolbar toolbar;
@@ -101,7 +103,7 @@ public class NavigationDrawerActivity extends BaseActivity {
     drawerItems.add(Constant.DRAWER_ITEM_EXCHANGE_RATES);
     drawerItems.add(Constant.DRAWER_ITEM_PRICES);
     drawerItems.add(Constant.DRAWER_ITEM_SALES);
-    drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
+   // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
     createDrawerItems();
   }

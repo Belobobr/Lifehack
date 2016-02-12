@@ -284,7 +284,7 @@ public class ExchangeRatesFragment extends BaseFragment {
             hideLoadingDialog();
             showBranchesLayout();
             populateBranchesMap(branchModels);
-            scrollView.smoothScrollTo(0, mapView.getBottom());
+            getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
             populateBranchesList(branchModels);
           }
 
