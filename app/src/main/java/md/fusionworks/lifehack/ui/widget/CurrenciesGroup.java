@@ -2,6 +2,7 @@ package md.fusionworks.lifehack.ui.widget;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -46,11 +47,11 @@ public class CurrenciesGroup extends RadioGroup {
     radioButton.setLayoutParams(layoutParams);
     radioButton.setGravity(Gravity.CENTER);
     radioButton.setId(currency.getId());
-    radioButton.setPadding(padding, padding, padding, padding);
     radioButton.setText(currency.getName());
     radioButton.setButtonDrawable(android.R.color.transparent);
-    radioButton.setTextColor(getResources().getColor(R.color.white));
+    radioButton.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
     radioButton.setBackgroundResource(R.drawable.bg_currency_radio_button);
+    radioButton.setPadding(padding, padding, padding, padding);
     Typeface font = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Bold.ttf");
     radioButton.setTypeface(font);
 

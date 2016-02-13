@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -160,7 +161,9 @@ public class ExchangeRatesFragment extends BaseFragment {
     enableMapGesturesInScrollView();
     mapView.getMapAsync(googleMap -> {
       map = googleMap;
-      map.getUiSettings().setMyLocationButtonEnabled(false);
+      map.getUiSettings().setMyLocationButtonEnabled(true);
+      map.getUiSettings().setZoomControlsEnabled(true);
+      map.getUiSettings().setCompassEnabled(true);
       map.setMyLocationEnabled(true);
       MapsInitializer.initialize(getActivity());
 
@@ -570,8 +573,8 @@ public class ExchangeRatesFragment extends BaseFragment {
 
       nameField.setOnClickListener(v1 -> {
         scrollToMap();
-        smoothShowInfoWindow(branch);
-        //  showRouteOnMap(branch);
+        // smoothShowInfoWindow(branch);
+        showRouteOnMap(branch);
       });
       branchesListLayout.addView(v);
     }
@@ -622,7 +625,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
               for (int i = 0; i < arrayList.size(); i++) {
                 PolylineOptions polyOptions = new PolylineOptions();
-                polyOptions.color(Color.BLUE);
+                polyOptions.color(ContextCompat.getColor(getActivity(), R.color.mainColorBlue));
                 polyOptions.width(10 + i * 3);
                 polyOptions.addAll(arrayList.get(i).getPoints());
                 Polyline polyline = map.addPolyline(polyOptions);
