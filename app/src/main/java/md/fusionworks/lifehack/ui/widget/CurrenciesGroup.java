@@ -51,7 +51,7 @@ public class CurrenciesGroup extends RadioGroup {
     radioButton.setButtonDrawable(android.R.color.transparent);
     radioButton.setTextColor(getResources().getColor(R.color.white));
     radioButton.setBackgroundResource(R.drawable.bg_currency_radio_button);
-    Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Roboto-Bold.ttf");
+    Typeface font = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Bold.ttf");
     radioButton.setTypeface(font);
 
     addView(radioButton);

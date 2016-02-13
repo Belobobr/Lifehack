@@ -8,7 +8,7 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 /**
  * Created by ungvas on 10/30/15.
  */
-public class ExchangeRatesUtils {
+public class ExchangeRatesUtil {
 
   public static List<RateModel> getBankRates(List<RateModel> rateList, int bankId) {
 

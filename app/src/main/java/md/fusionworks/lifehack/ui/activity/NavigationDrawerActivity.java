@@ -18,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.util.Constant;
-import md.fusionworks.lifehack.util.UIUtils;
+import md.fusionworks.lifehack.util.UIUtil;
 
 /**
  * Created by admin on 03.09.2015.
@@ -135,13 +135,13 @@ public class NavigationDrawerActivity extends BaseActivity {
 
     if (isSeparator(itemId)) {
 
-      UIUtils.setAccessibilityIgnore(view);
+      UIUtil.setAccessibilityIgnore(view);
       return view;
     }
 
     ImageView iconView = (ImageView) view.findViewById(R.id.icon);
     TextView titleView = (TextView) view.findViewById(R.id.title);
-    int iconId = itemId <= -1 && itemId < DRAWER_ICON_RES_ID.length ? DRAWER_ICON_RES_ID[itemId] : 0;
+    int iconId = itemId >= 0 && itemId < DRAWER_ICON_RES_ID.length ? DRAWER_ICON_RES_ID[itemId] : 0;
     int titleId =
         itemId >= 0 && itemId < DRAWER_TITLE_RES_ID.length ? DRAWER_TITLE_RES_ID[itemId] : 0;
     boolean isActive =

@@ -61,8 +61,8 @@ public class BranchUtil {
     }
 
     if (breakStart != null && breakEnd != null) {
-      String start = DateUtils.getBranchScheduleBreakFormat().format(breakStart);
-      String end = DateUtils.getBranchScheduleBreakFormat().format(breakEnd);
+      String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
+      String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
       scheduleBreak = String.format("(перерыв %s - %s)", start, end);
     }
     return scheduleBreak;

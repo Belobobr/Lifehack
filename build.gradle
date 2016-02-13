@@ -1,54 +1,55 @@
 buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.0.0-beta4'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.3'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-    }
+  repositories {
+    jcenter()
+  }
 
-    ext {
-        androidApplicationId = 'md.fusionworks.lifehack'
-        androidVersionCode = 1
-        androidVersionName = "1.0"
+  ext {
+    androidApplicationId = 'md.fusionworks.lifehack'
+    androidVersionCode = 1
+    androidVersionName = "1.0"
 
-        androidBuildToolsVersion = "23.0.1"
-        androidMinSdkVersion = 16
-        androidTargetSdkVersion = 23
-        androidCompileSdkVersion = 23
+    androidBuildToolsVersion = "23.0.1"
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 23
+    androidCompileSdkVersion = 23
 
-        def supportVersion = '23.1.1'
+    def supportVersion = '23.1.1'
 
-        butterKnifeVersion = '7.0.1'
-        appCompat_v7Version = supportVersion
-        designSupportLibraryVersion = supportVersion
-        daggerVersion = '2.0'
-        retrofitVersion = '2.0.0-SNAPSHOT'
-        gsonVersion = '2.3'
-        materialDialogsVersion = '0.8.4.2@aar'
-        materialDateTimePickerVersion = '1.5.4'
-        playServicesVersion = '8.4.0'
-        okHttpVersion = '3.1.1'
-        rxJavaVersion = '1.1.0'
-        rxLifeCycleVersion = '0.4.0'
-        smoothProgressBarVersion = '1.2.0'
-        rxBindingVersion='0.3.0'
-        googleDirectionsVersion='1.1.0'
+    butterKnifeVersion = '7.0.1'
+    appCompat_v7Version = supportVersion
+    designSupportLibraryVersion = supportVersion
+    daggerVersion = '2.0'
+    retrofitVersion = '2.0.0-SNAPSHOT'
+    gsonVersion = '2.3'
+    materialDialogsVersion = '0.8.4.2@aar'
+    materialDateTimePickerVersion = '1.5.4'
+    playServicesVersion = '8.4.0'
+    okHttpVersion = '3.1.1'
+    rxJavaVersion = '1.1.0'
+    rxLifeCycleVersion = '0.4.0'
+    smoothProgressBarVersion = '1.2.0'
+    rxBindingVersion = '0.3.0'
+    googleDirectionsVersion = '1.1.0'
+    weakHandlerVersion = '1.1';
 
-        jUnitVersion = '4.12'
-    }
+    jUnitVersion = '4.12'
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }

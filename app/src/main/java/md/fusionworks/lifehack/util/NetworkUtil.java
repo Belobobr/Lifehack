@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 /**
  * Created by ungvas on 11/3/15.
  */
-public class NetworkUtils {
+public class NetworkUtil {
 
   public static boolean isThereInternetConnection(Context context) {
     boolean isConnected;

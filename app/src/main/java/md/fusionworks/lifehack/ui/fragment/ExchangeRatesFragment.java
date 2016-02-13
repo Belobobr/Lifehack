@@ -5,7 +5,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,11 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.badoo.mobile.util.WeakHandler;
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
@@ -44,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
-import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
 import md.fusionworks.lifehack.ui.event.ScrollToEvent;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
@@ -59,8 +57,8 @@ import md.fusionworks.lifehack.ui.widget.DateView;
 import md.fusionworks.lifehack.util.BranchUtil;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
-import md.fusionworks.lifehack.util.DateUtils;
-import md.fusionworks.lifehack.util.ExchangeRatesUtils;
+import md.fusionworks.lifehack.util.DateUtil;
+import md.fusionworks.lifehack.util.ExchangeRatesUtil;
 import md.fusionworks.lifehack.util.MapUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
@@ -71,7 +69,6 @@ import rx.Observable;
  */
 public class ExchangeRatesFragment extends BaseFragment {
 
-  @Bind(R.id.scrollView) NestedScrollView scrollView;
   @Bind(R.id.amountInField) EditText amountInField;
   @Bind(R.id.amountOutField) EditText amountOutField;
   @Bind(R.id.bankSpinner) Spinner bankSpinner;
@@ -99,7 +96,8 @@ public class ExchangeRatesFragment extends BaseFragment {
   private Map<Marker, BranchModel> branchMap = new HashMap<>();
   private GoogleApiClient googleApiClient;
   private Location myLastLocation;
-  private ArrayList<Polyline> polylines;
+  private ArrayList<Polyline> routePolylines;
+  private WeakHandler weakHandler;
 
   public ExchangeRatesFragment() {
   }
@@ -112,7 +110,8 @@ public class ExchangeRatesFragment extends BaseFragment {
     super.onCreate(savedInstanceState);
     exchangeRatesRepository = new ExchangeRatesRepository();
     bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
-    polylines = new ArrayList<>();
+    routePolylines = new ArrayList<>();
+    weakHandler = new WeakHandler();
     buildGoogleApiClient();
   }
 
@@ -134,6 +133,7 @@ public class ExchangeRatesFragment extends BaseFragment {
   }
 
   @Override public void onDestroy() {
+    weakHandler.removeCallbacksAndMessages(null);
     mapView.onDestroy();
     super.onDestroy();
   }
@@ -157,7 +157,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private void initializeMap(Bundle savedInstanceState) {
     mapView.onCreate(savedInstanceState);
-    enableMapGestures();
+    enableMapGesturesInScrollView();
     mapView.getMapAsync(googleMap -> {
       map = googleMap;
       map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -166,7 +166,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
       map.setOnMarkerClickListener(marker -> {
         if (branchMap.get(marker) != null) {
-          showInfoWindow(branchMap.get(marker));
+          smoothShowInfoWindow(branchMap.get(marker));
         }
         return true;
       });
@@ -194,18 +194,18 @@ public class ExchangeRatesFragment extends BaseFragment {
     dialog.show();
   }
 
-  private void enableMapGestures() {
+  private void enableMapGesturesInScrollView() {
     imageOverMap.setOnTouchListener((v, event) -> {
       int action = event.getAction();
       switch (action) {
         case MotionEvent.ACTION_DOWN:
-          scrollView.requestDisallowInterceptTouchEvent(true);
+          exchangeRatesView.requestDisallowInterceptTouchEvent(true);
           return false;
         case MotionEvent.ACTION_UP:
-          scrollView.requestDisallowInterceptTouchEvent(false);
+          exchangeRatesView.requestDisallowInterceptTouchEvent(false);
           return true;
         case MotionEvent.ACTION_MOVE:
-          scrollView.requestDisallowInterceptTouchEvent(true);
+          exchangeRatesView.requestDisallowInterceptTouchEvent(true);
           return false;
         default:
           return true;
@@ -231,7 +231,7 @@ public class ExchangeRatesFragment extends BaseFragment {
     Observable<List<CurrencyModel>> currencyObservable = exchangeRatesRepository.getCurrencies()
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
 
-    String today = DateUtils.getRateDateFormat().format(new Date());
+    String today = DateUtil.getRateDateFormat().format(new Date());
     Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today)
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
 
@@ -284,8 +284,10 @@ public class ExchangeRatesFragment extends BaseFragment {
             hideLoadingDialog();
             showBranchesLayout();
             populateBranchesMap(branchModels);
-            getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
             populateBranchesList(branchModels);
+            weakHandler.postDelayed(() -> {
+              scrollToMap();
+            }, 500);
           }
 
           @Override public void onError(Throwable e) {
@@ -381,11 +383,9 @@ public class ExchangeRatesFragment extends BaseFragment {
   }
 
   private void initializeViewListeners() {
-    RxTextView.textChanges(amountInField)
-        .compose(this.bindToLifecycle())
-        .subscribe(charSequence -> {
-          applyConversion();
-        });
+    getCompositeSubscription().add(RxTextView.textChanges(amountInField).subscribe(charSequence -> {
+      applyConversion();
+    }));
 
     getCompositeSubscription().add(RxAdapterView.itemSelections(bankSpinner).subscribe(position -> {
       if (position != Constant.BEST_EXCHANGE_BANK_ID) setBestExchangeBankText("");
@@ -393,7 +393,7 @@ public class ExchangeRatesFragment extends BaseFragment {
     }));
 
     ratesDateField.setOnDateChangedListener(date -> {
-      String dateText = DateUtils.getRateDateFormat().format(date);
+      String dateText = DateUtil.getRateDateFormat().format(date);
       loadRates(dateText);
     });
 
@@ -464,14 +464,14 @@ public class ExchangeRatesFragment extends BaseFragment {
     BestExchangeModel bestExchangeModel = new BestExchangeModel();
     for (BankModel bank : bankList) {
       if (bank.getId() != 1) {
-        bankRateList = ExchangeRatesUtils.getBankRates(rateList, bank.getId());
+        bankRateList = ExchangeRatesUtil.getBankRates(rateList, bank.getId());
         amountInValue = Converter.toDouble(getAmountInText());
         currencyInRateValue =
-            ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
+            ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
         currencyOutRateValue =
-            ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
+            ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
         double bankAmountOutValue =
-            ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+            ExchangeRatesUtil.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
         if (bankAmountOutValue > amountOutValue) {
           amountOutValue = bankAmountOutValue;
           bestExchangeModel = new BestExchangeModel(bank, amountOutValue);
@@ -505,21 +505,22 @@ public class ExchangeRatesFragment extends BaseFragment {
     double currencyInRateValue;
     double currencyOutRateValue;
 
-    bankRateList = ExchangeRatesUtils.getBankRates(rateList, bankId);
+    bankRateList = ExchangeRatesUtil.getBankRates(rateList, bankId);
     amountInValue = Converter.toDouble(getAmountInText());
     currencyInRateValue =
-        ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
+        ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
     currencyOutRateValue =
-        ExchangeRatesUtils.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
+        ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyOutId());
 
     if (validateConversionParams(bankRateList, currencyInRateValue, currencyOutRateValue)) {
       double amountOutValue =
-          ExchangeRatesUtils.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
+          ExchangeRatesUtil.convert(amountInValue, currencyInRateValue, currencyOutRateValue);
       setAmountOutText(String.format("%.2f", amountOutValue));
     }
   }
 
   private void setBestExchangeBankText(String text) {
+    bestExchangeBankField.setVisibility((text.length() > 0) ? View.VISIBLE : View.GONE);
     bestExchangeBankField.setText(text);
   }
 
@@ -532,7 +533,7 @@ public class ExchangeRatesFragment extends BaseFragment {
   private void onWhereToBuyAction() {
     showLoadingDialog();
     int bankId = getSelectedBankId();
-    if (bankId == 1) {
+    if (bankId == Constant.BNM_BANK_ID) {
       setBankSelection(Constant.BEST_EXCHANGE_BANK_ID);
       bankId = Constant.BEST_EXCHANGE_BANK_ID;
     }
@@ -568,13 +569,9 @@ public class ExchangeRatesFragment extends BaseFragment {
       scheduleField.setText(BranchUtil.getBranchScheduleBreak(branch));
 
       nameField.setOnClickListener(v1 -> {
-        getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
-      /*  mapView.postDelayed(() -> showInfoWindow(branch), 100);
-        mapView.postDelayed(
-            () -> MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
-                branch.getAddress().getLocation().getLng(), false), 200);*/
-
-        showRouteOnMap(branch);
+        scrollToMap();
+        smoothShowInfoWindow(branch);
+        //  showRouteOnMap(branch);
       });
       branchesListLayout.addView(v);
     }
@@ -616,12 +613,12 @@ public class ExchangeRatesFragment extends BaseFragment {
               MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
                   branch.getAddress().getLocation().getLng(), false);
 
-              if (polylines.size() > 0) {
-                for (Polyline poly : polylines) {
+              if (routePolylines.size() > 0) {
+                for (Polyline poly : routePolylines) {
                   poly.remove();
                 }
               }
-              polylines = new ArrayList<>(arrayList.size());
+              routePolylines = new ArrayList<>(arrayList.size());
 
               for (int i = 0; i < arrayList.size(); i++) {
                 PolylineOptions polyOptions = new PolylineOptions();
@@ -629,7 +626,7 @@ public class ExchangeRatesFragment extends BaseFragment {
                 polyOptions.width(10 + i * 3);
                 polyOptions.addAll(arrayList.get(i).getPoints());
                 Polyline polyline = map.addPolyline(polyOptions);
-                polylines.add(polyline);
+                routePolylines.add(polyline);
               }
             }
 
@@ -647,5 +644,16 @@ public class ExchangeRatesFragment extends BaseFragment {
       showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
           getString(R.string.field_something_gone_wrong));
     }
+  }
+
+  private void scrollToMap() {
+    getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
+  }
+
+  private void smoothShowInfoWindow(BranchModel branch) {
+    weakHandler.postDelayed(() -> showInfoWindow(branch), 100);
+    weakHandler.postDelayed(
+        () -> MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
+            branch.getAddress().getLocation().getLng(), false), 200);
   }
 }

@@ -22,7 +22,7 @@ import android.view.View;
 /**
  * An assortment of UI helpers.
  */
-public class UIUtils {
+public class UIUtil {
 
   public static void setAccessibilityIgnore(View view) {
     view.setClickable(false);

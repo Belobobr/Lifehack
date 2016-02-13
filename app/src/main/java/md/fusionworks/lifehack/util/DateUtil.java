@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by ungvas on 10/29/15.
  */
-public class DateUtils {
+public class DateUtil {
 
   private static SimpleDateFormat rateDateFormat;
   private static SimpleDateFormat dateViewFormat;

@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.util.DateUtils;
+import md.fusionworks.lifehack.util.DateUtil;
 
 /**
  * Created by ungvas on 10/30/15.
@@ -51,7 +51,7 @@ public class DateView extends TextView
 
   private void setDateText(Date date) {
 
-    setText(DateUtils.getDateViewFormat().format(date));
+    setText(DateUtil.getDateViewFormat().format(date));
     setTag(date);
   }
 
@@ -68,7 +68,7 @@ public class DateView extends TextView
   @Override
   public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-    Date selectedDate = DateUtils.createDate(year, monthOfYear, dayOfMonth);
+    Date selectedDate = DateUtil.createDate(year, monthOfYear, dayOfMonth);
     setDateText(selectedDate);
 
     if (onDateChangedListener != null) onDateChangedListener.onDateChanged(selectedDate);
