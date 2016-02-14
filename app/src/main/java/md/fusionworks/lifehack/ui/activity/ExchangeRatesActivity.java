@@ -3,6 +3,7 @@ package md.fusionworks.lifehack.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.widget.ScrollView;
 import butterknife.Bind;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.event.ScrollToEvent;
@@ -12,7 +13,7 @@ import md.fusionworks.lifehack.util.Constant;
 public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
   @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
-  @Bind(R.id.container) NestedScrollView container;
+  @Bind(R.id.container) ScrollView container;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
