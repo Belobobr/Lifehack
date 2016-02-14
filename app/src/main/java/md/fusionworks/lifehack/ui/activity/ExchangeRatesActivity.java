@@ -13,7 +13,7 @@ import md.fusionworks.lifehack.util.Constant;
 public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
   @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
-  @Bind(R.id.container) ScrollView container;
+  @Bind(R.id.container) NestedScrollView container;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
