@@ -1,6 +1,5 @@
 package md.fusionworks.lifehack.ui.fragment;
 
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -540,6 +539,10 @@ public class ExchangeRatesFragment extends BaseFragment {
     }
     if (bankId == Constant.BEST_EXCHANGE_BANK_ID) {
       BestExchangeModel bestExchangeModel = convertBestExchange();
+      if (bestExchangeModel.getBank() == null) {
+        hideLoadingDialog();
+        return;
+      }
       bankId = bestExchangeModel.getBank().getId();
     }
 
@@ -564,14 +567,23 @@ public class ExchangeRatesFragment extends BaseFragment {
       TextView nameField = (TextView) v.findViewById(R.id.nameField);
       TextView addressField = (TextView) v.findViewById(R.id.addressField);
       TextView scheduleField = (TextView) v.findViewById(R.id.scheduleField);
+      TextView workField = (TextView) v.findViewById(R.id.workField);
 
       nameField.setText(branch.getName());
       addressField.setText(BranchUtil.getBranchAddress(branch));
-      scheduleField.setText(BranchUtil.getBranchScheduleBreak(branch));
+      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch)
+          .concat(BranchUtil.getBranchMondayFridayScheduleBreak(branch))
+          .concat(BranchUtil.getBranchSaturdayHours(branch))
+          .concat(BranchUtil.getBranchSaturdayScheduleBreak(branch));
+      scheduleField.setText(sheduleText);
+      workField.setText(BranchUtil.getClosingTime(branch));
 
       nameField.setOnClickListener(v1 -> {
         scrollToMap();
-        // smoothShowInfoWindow(branch);
+        smoothShowInfoWindow(branch);
+      });
+      workField.setOnClickListener(v1 -> {
+        scrollToMap();
         showRouteOnMap(branch);
       });
       branchesListLayout.addView(v);

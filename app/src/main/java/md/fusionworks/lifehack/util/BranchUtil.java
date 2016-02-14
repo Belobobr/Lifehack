@@ -1,6 +1,7 @@
 package md.fusionworks.lifehack.util;
 
 import android.text.TextUtils;
+import java.util.Calendar;
 import java.util.Date;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 
@@ -32,7 +33,7 @@ public class BranchUtil {
     return false;
   }
 
-  public static String getBranchScheduleBreak(BranchModel branch) {
+  public static String getBranchMondayFridayScheduleBreak(BranchModel branch) {
     String scheduleBreak = "";
     Date breakStart = null;
     Date breakEnd = null;
@@ -63,8 +64,155 @@ public class BranchUtil {
     if (breakStart != null && breakEnd != null) {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
-      scheduleBreak = String.format("(перерыв %s - %s)", start, end);
+      scheduleBreak = String.format("\n(перерыв %s - %s)", start, end);
     }
     return scheduleBreak;
+  }
+
+  public static String getBranchSaturdayScheduleBreak(BranchModel branch) {
+    String scheduleBreak = "";
+    Date breakStart = null;
+    Date breakEnd = null;
+
+    if (branch.getSchedule().getSaturday().getBreakStart() != null) {
+      breakStart = branch.getSchedule().getSaturday().getBreakStart();
+      breakEnd = branch.getSchedule().getSaturday().getBreakEnd();
+    }
+
+    if (breakStart != null && breakEnd != null) {
+      String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
+      String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
+      scheduleBreak = String.format("\n(перерыв %s - %s)", start, end);
+    }
+    return scheduleBreak;
+  }
+
+  public static String getBranchMondayFridayHours(BranchModel branch) {
+    String mondayFridayHours = "";
+    Date start = null;
+    Date end = null;
+
+    if (branch.getSchedule().getMonday().getStart() != null) {
+      start = branch.getSchedule().getMonday().getStart();
+      end = branch.getSchedule().getMonday().getEnd();
+    } else if (branch.getSchedule().getTuesday().getStart() != null) {
+      start = branch.getSchedule().getTuesday().getStart();
+      end = branch.getSchedule().getTuesday().getEnd();
+    } else if (branch.getSchedule().getThursday().getStart() != null) {
+      start = branch.getSchedule().getThursday().getStart();
+      end = branch.getSchedule().getThursday().getEnd();
+    } else if (branch.getSchedule().getWednesday().getStart() != null) {
+      start = branch.getSchedule().getWednesday().getStart();
+      end = branch.getSchedule().getWednesday().getEnd();
+    } else if (branch.getSchedule().getFriday().getStart() != null) {
+      start = branch.getSchedule().getFriday().getStart();
+      end = branch.getSchedule().getFriday().getEnd();
+    }
+
+    if (start != null && end != null) {
+      String startStr = DateUtil.getBranchScheduleBreakFormat().format(start);
+      String endStr = DateUtil.getBranchScheduleBreakFormat().format(end);
+      mondayFridayHours = String.format("(Пн - Пт: %s - %s)", startStr, endStr);
+    }
+    return mondayFridayHours;
+  }
+
+  public static String getBranchSaturdayHours(BranchModel branch) {
+    String saturdayHours = "";
+    Date start = null;
+    Date end = null;
+
+    if (branch.getSchedule().getSaturday().getStart() != null) {
+      start = branch.getSchedule().getSaturday().getStart();
+      end = branch.getSchedule().getSaturday().getEnd();
+    }
+
+    if (start != null && end != null) {
+      String startStr = DateUtil.getBranchScheduleBreakFormat().format(start);
+      String endStr = DateUtil.getBranchScheduleBreakFormat().format(end);
+      saturdayHours = String.format("\n(Сб: %s - %s)", startStr, endStr);
+    }
+    return saturdayHours;
+  }
+
+  public static String getClosingTime(BranchModel branch) {
+    Date scheduleDateEnd = null;
+    Date scheduleDateStart = null;
+    Date currentDate;
+    Calendar calendar = Calendar.getInstance();
+    currentDate = calendar.getTime();
+    int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+    switch (currentDay) {
+      case Calendar.MONDAY:
+        if (branch.getSchedule().getMonday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getMonday().getEnd();
+        }
+        if (branch.getSchedule().getMonday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getMonday().getStart();
+        }
+        break;
+      case Calendar.TUESDAY:
+        if (branch.getSchedule().getTuesday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getTuesday().getEnd();
+        }
+        if (branch.getSchedule().getTuesday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getTuesday().getStart();
+        }
+        break;
+      case Calendar.THURSDAY:
+        if (branch.getSchedule().getThursday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getThursday().getEnd();
+        }
+        if (branch.getSchedule().getThursday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getThursday().getStart();
+        }
+        break;
+      case Calendar.WEDNESDAY:
+        if (branch.getSchedule().getWednesday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getWednesday().getEnd();
+        }
+        if (branch.getSchedule().getWednesday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getWednesday().getStart();
+        }
+        break;
+      case Calendar.FRIDAY:
+        if (branch.getSchedule().getFriday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getFriday().getEnd();
+        }
+        if (branch.getSchedule().getFriday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getFriday().getStart();
+        }
+        break;
+      case Calendar.SATURDAY:
+        if (branch.getSchedule().getSaturday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getSaturday().getEnd();
+        }
+        if (branch.getSchedule().getSaturday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getSaturday().getStart();
+        }
+        break;
+      case Calendar.SUNDAY:
+        if (branch.getSchedule().getSunday().getEnd() != null) {
+          scheduleDateEnd = branch.getSchedule().getSunday().getEnd();
+        }
+        if (branch.getSchedule().getSunday().getStart() != null) {
+          scheduleDateStart = branch.getSchedule().getSunday().getStart();
+        }
+        break;
+    }
+    if (scheduleDateEnd == null || scheduleDateStart == null) return "сейчас закрыто";
+    if (scheduleDateEnd.before(currentDate) || scheduleDateStart.after(currentDate)) {
+      return "сейчас закрыто";
+    }
+
+    long secs = (scheduleDateEnd.getTime() - currentDate.getTime()) / 1000;
+    long hours = secs / 3600;
+    secs = secs % 3600;
+    long mins = secs / 60;
+    secs = secs % 60;
+
+    if (hours + mins == 0) return "сейчас закрыто";
+
+    return String.format("%d ч. %d минут", hours, mins);
   }
 }

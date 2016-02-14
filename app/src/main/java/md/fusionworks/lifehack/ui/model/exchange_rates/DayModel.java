@@ -16,10 +16,12 @@ public class DayModel {
   @SerializedName("break_end") private Date breakEnd;
   @SerializedName("day_off") private boolean dayOff;
 
-  public DayModel(int id, Date start, Date end, boolean dayOff) {
+  public DayModel(int id, Date start, Date end, Date breakStart, Date breakEnd, boolean dayOff) {
     this.id = id;
     this.start = start;
     this.end = end;
+    this.breakStart = breakStart;
+    this.breakEnd = breakEnd;
     this.dayOff = dayOff;
   }
 

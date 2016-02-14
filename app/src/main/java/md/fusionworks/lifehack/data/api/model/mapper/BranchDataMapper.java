@@ -2,7 +2,6 @@ package md.fusionworks.lifehack.data.api.model.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch;
 import md.fusionworks.lifehack.ui.model.exchange_rates.AddressModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
@@ -34,25 +33,39 @@ public class BranchDataMapper {
 
     DayModel dayModelMonday = new DayModel(branch.getSchedule().getMonday().getId(),
         branch.getSchedule().getMonday().getStart(), branch.getSchedule().getMonday().getEnd(),
+        branch.getSchedule().getMonday().getBreakStart(),
+        branch.getSchedule().getMonday().getBreakEnd(),
         branch.getSchedule().getMonday().isDayOff());
     DayModel dayModelTuesday = new DayModel(branch.getSchedule().getTuesday().getId(),
         branch.getSchedule().getTuesday().getStart(), branch.getSchedule().getTuesday().getEnd(),
+        branch.getSchedule().getTuesday().getBreakStart(),
+        branch.getSchedule().getTuesday().getBreakEnd(),
         branch.getSchedule().getTuesday().isDayOff());
     DayModel dayModelWednesday = new DayModel(branch.getSchedule().getWednesday().getId(),
         branch.getSchedule().getWednesday().getStart(),
         branch.getSchedule().getWednesday().getEnd(),
+        branch.getSchedule().getWednesday().getBreakStart(),
+        branch.getSchedule().getWednesday().getBreakEnd(),
         branch.getSchedule().getWednesday().isDayOff());
     DayModel dayModelThursday = new DayModel(branch.getSchedule().getThursday().getId(),
         branch.getSchedule().getThursday().getStart(), branch.getSchedule().getThursday().getEnd(),
+        branch.getSchedule().getThursday().getBreakStart(),
+        branch.getSchedule().getThursday().getBreakEnd(),
         branch.getSchedule().getThursday().isDayOff());
     DayModel dayModelFriday = new DayModel(branch.getSchedule().getFriday().getId(),
         branch.getSchedule().getFriday().getStart(), branch.getSchedule().getFriday().getEnd(),
+        branch.getSchedule().getFriday().getBreakStart(),
+        branch.getSchedule().getFriday().getBreakEnd(),
         branch.getSchedule().getFriday().isDayOff());
     DayModel dayModelSaturday = new DayModel(branch.getSchedule().getSaturday().getId(),
         branch.getSchedule().getSaturday().getStart(), branch.getSchedule().getSaturday().getEnd(),
+        branch.getSchedule().getSaturday().getBreakStart(),
+        branch.getSchedule().getSaturday().getBreakEnd(),
         branch.getSchedule().getSaturday().isDayOff());
     DayModel dayModelSunday = new DayModel(branch.getSchedule().getSunday().getId(),
         branch.getSchedule().getSunday().getStart(), branch.getSchedule().getSunday().getEnd(),
+        branch.getSchedule().getSunday().getBreakStart(),
+        branch.getSchedule().getSunday().getBreakEnd(),
         branch.getSchedule().getSunday().isDayOff());
 
     ScheduleModel scheduleModel =
