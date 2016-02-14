@@ -288,9 +288,7 @@ public class ExchangeRatesFragment extends BaseFragment {
             showBranchesLayout();
             populateBranchesMap(branchModels);
             populateBranchesList(branchModels);
-            weakHandler.postDelayed(() -> {
-              scrollToMap();
-            }, 500);
+            weakHandler.postDelayed(() -> scrollToMap(), 500);
           }
 
           @Override public void onError(Throwable e) {
