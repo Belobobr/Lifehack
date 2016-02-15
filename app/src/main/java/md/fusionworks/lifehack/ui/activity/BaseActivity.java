@@ -53,13 +53,6 @@ public class BaseActivity extends RxAppCompatActivity {
     fragmentTransaction.commit();
   }
 
-  protected void replaceFragment(int containerViewId, Fragment fragment) {
-    android.support.v4.app.FragmentTransaction fragmentTransaction =
-        this.getSupportFragmentManager().beginTransaction();
-    fragmentTransaction.replace(containerViewId, fragment, null);
-    fragmentTransaction.commit();
-  }
-
   public void showNotificationToast(int type, String message) {
     if (coordinatorLayout != null) {
       coordinatorLayout.postDelayed(() -> {

@@ -38,6 +38,11 @@ public class BaseFragment extends RxFragment {
     compositeSubscription.unsubscribe();
   }
 
+  @Override public void onResume() {
+    super.onResume();
+    listenForEvents();
+  }
+
   protected View inflateAndBindViews(LayoutInflater inflater, @LayoutRes int layoutResId,
       ViewGroup container) {
     View view = inflater.inflate(layoutResId, container, false);
@@ -75,5 +80,8 @@ public class BaseFragment extends RxFragment {
 
   protected void hideLoadingDialog() {
     baseActivity.hideLoadingDialog();
+  }
+
+  protected void listenForEvents() {
   }
 }

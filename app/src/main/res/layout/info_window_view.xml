@@ -16,7 +16,7 @@
       android:layout_gravity="start|center_vertical"
       android:gravity="start|center_vertical"
       android:textColor="#666"
-      android:textSize="@dimen/text_size_small"
+      android:textSize="14sp"
       view:typeface="font/Roboto-Regular.ttf"
       />
   <md.fusionworks.lifehack.ui.widget.TypefaceTextView
@@ -27,7 +27,7 @@
       android:gravity="start|center_vertical"
       android:textColor="#666"
       android:layout_marginTop="8dp"
-      android:textSize="@dimen/text_size_small"
+      android:textSize="14sp"
       android:visibility="gone"
       view:typeface="font/Roboto-Regular.ttf"
       />
@@ -38,7 +38,7 @@
       android:layout_gravity="start|center_vertical"
       android:gravity="start|center_vertical"
       android:textColor="#666"
-      android:textSize="@dimen/text_size_small"
+      android:textSize="14sp"
       android:layout_marginTop="8dp"
       android:visibility="gone"
       view:typeface="font/Roboto-Regular.ttf"

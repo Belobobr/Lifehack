@@ -31,4 +31,6 @@ public class Constant {
   public static final int BNM_BANK_ID = 1;
 
   public static final float CAMERA_ZOOM = 12f;
+
+  public static final String EXTRA_PARAM_BRANCH_LIST = "EXTRA_PARAM_BRANCH_LIST";
 }

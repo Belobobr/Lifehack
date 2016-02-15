@@ -1,50 +1,27 @@
 package md.fusionworks.lifehack.ui.fragment;
 
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.badoo.mobile.util.WeakHandler;
-import com.directions.route.AbstractRouting;
-import com.directions.route.Route;
-import com.directions.route.RouteException;
-import com.directions.route.Routing;
-import com.directions.route.RoutingListener;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
 import md.fusionworks.lifehack.ui.adapter.BankSpinnerAdapter;
-import md.fusionworks.lifehack.ui.event.ScrollToEvent;
+import md.fusionworks.lifehack.ui.event.WhereToBuyEvent;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BankSpinnerItemModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BestExchangeModel;
@@ -54,12 +31,10 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.InitialDataModel;
 import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
-import md.fusionworks.lifehack.util.BranchUtil;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtil;
 import md.fusionworks.lifehack.util.ExchangeRatesUtil;
-import md.fusionworks.lifehack.util.MapUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
 import rx.Observable;
@@ -67,7 +42,7 @@ import rx.Observable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExchangeRatesFragment extends BaseFragment {
+public class NewExchangeRatesFragment extends BaseFragment {
 
   @Bind(R.id.amountInField) EditText amountInField;
   @Bind(R.id.amountOutField) EditText amountOutField;
@@ -81,10 +56,6 @@ public class ExchangeRatesFragment extends BaseFragment {
   @Bind(R.id.retryButton) Button retryButton;
   @Bind(R.id.whereToBuyButton) TextView whereToBuyButton;
   @Bind(R.id.onlyActiveNowCheckBox) CheckBox onlyActiveNowCheckBox;
-  @Bind(R.id.branchesLayout) LinearLayout branchesLayout;
-  @Bind(R.id.branchesListLayout) LinearLayout branchesListLayout;
-  @Bind(R.id.map) MapView mapView;
-  @Bind(R.id.imageOverMap) ImageView imageOverMap;
 
   private List<RateModel> rateList;
   private List<BankModel> bankList;
@@ -92,164 +63,35 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private ExchangeRatesRepository exchangeRatesRepository;
   private BankSpinnerAdapter bankSpinnerAdapter;
-  private GoogleMap map;
-  private Map<Marker, BranchModel> branchMap = new HashMap<>();
-  private GoogleApiClient googleApiClient;
-  private Location myLastLocation;
-  private ArrayList<Polyline> routePolylines;
   private WeakHandler weakHandler;
 
-  public ExchangeRatesFragment() {
+  public NewExchangeRatesFragment() {
   }
 
-  public static ExchangeRatesFragment newInstance() {
-    return new ExchangeRatesFragment();
+  public static NewExchangeRatesFragment newInstance() {
+    return new NewExchangeRatesFragment();
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     exchangeRatesRepository = new ExchangeRatesRepository();
     bankSpinnerAdapter = new BankSpinnerAdapter(getActivity());
-    routePolylines = new ArrayList<>();
     weakHandler = new WeakHandler();
-    buildGoogleApiClient();
-  }
-
-  @Override public void onStart() {
-    super.onStart();
-    googleApiClient.connect();
-  }
-
-  @Override public void onStop() {
-    super.onStop();
-    if (googleApiClient.isConnected()) {
-      googleApiClient.disconnect();
-    }
-  }
-
-  @Override public void onResume() {
-    super.onResume();
-    mapView.onResume();
   }
 
   @Override public void onDestroy() {
     weakHandler.removeCallbacksAndMessages(null);
-    mapView.onDestroy();
     super.onDestroy();
-  }
-
-  @Override public void onLowMemory() {
-    super.onLowMemory();
-    mapView.onLowMemory();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflateAndBindViews(inflater, R.layout.fragment_exchange_rates, container);
-    initializeMap(savedInstanceState);
-    return view;
+    return inflateAndBindViews(inflater, R.layout.fragment_new_exchange_rates, container);
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     loadInitialData();
-  }
-
-  private void initializeMap(Bundle savedInstanceState) {
-    mapView.onCreate(savedInstanceState);
-    enableMapGesturesInScrollView();
-    mapView.getMapAsync(googleMap -> {
-      map = googleMap;
-      map.getUiSettings().setMyLocationButtonEnabled(true);
-      map.getUiSettings().setZoomControlsEnabled(true);
-      map.getUiSettings().setCompassEnabled(true);
-      map.setMyLocationEnabled(true);
-      MapsInitializer.initialize(getActivity());
-
-      map.setOnMarkerClickListener(marker -> {
-        if (branchMap.get(marker) != null) {
-          smoothShowInfoWindow(branchMap.get(marker));
-        }
-        return true;
-      });
-    });
-  }
-
-  private void pinHomeMarker(Location location) {
-    if (location != null) {
-      MapUtil.createMarker(map, location.getLatitude(), location.getLongitude(),
-          R.drawable.home_pin_icon);
-      MapUtil.goToPosition(map, location.getLatitude(), location.getLongitude(), false,
-          Constant.CAMERA_ZOOM);
-    }
-  }
-
-  private void showInfoWindow(BranchModel branch) {
-    MaterialDialog dialog = new MaterialDialog.Builder(getActivity()).title(branch.getName())
-        .customView(R.layout.info_window_view, true)
-        .positiveText("Закрыть")
-        .build();
-
-    TextView addressField = (TextView) dialog.getCustomView().findViewById(R.id.addressField);
-    TextView scheduleField = (TextView) dialog.getCustomView().findViewById(R.id.scheduleField);
-    TextView phoneField = (TextView) dialog.getCustomView().findViewById(R.id.phoneField);
-
-    addressField.setText(BranchUtil.getBranchAddress(branch));
-
-    String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "Пн - Пт: %s - %s");
-    String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
-    String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "Сб: %s - %s");
-    String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
-    if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
-      sheduleText += " " + mondayFridayscheduleBreak;
-    }
-    if (!BranchUtil.isBranchDetailEmpty(saturdayHours)) {
-      sheduleText += "\n" + saturdayHours;
-    }
-    if (!BranchUtil.isBranchDetailEmpty(saturdayScheduleBreak)) {
-      sheduleText += " " + saturdayScheduleBreak;
-    }
-    if (!BranchUtil.isBranchDetailEmpty(sheduleText)) {
-      scheduleField.setVisibility(View.VISIBLE);
-      scheduleField.setText(sheduleText);
-    }
-
-    String phone = branch.getAddress().getPhone();
-    if (!BranchUtil.isBranchDetailEmpty(phone)) {
-      phoneField.setVisibility(View.VISIBLE);
-      phoneField.setText(String.format("Тел.: %s", phone));
-    }
-
-    dialog.show();
-  }
-
-  private void enableMapGesturesInScrollView() {
-    imageOverMap.setOnTouchListener((v, event) -> {
-      int action = event.getAction();
-      switch (action) {
-        case MotionEvent.ACTION_DOWN:
-          exchangeRatesView.requestDisallowInterceptTouchEvent(true);
-          return false;
-        case MotionEvent.ACTION_UP:
-          exchangeRatesView.requestDisallowInterceptTouchEvent(false);
-          return true;
-        case MotionEvent.ACTION_MOVE:
-          exchangeRatesView.requestDisallowInterceptTouchEvent(true);
-          return false;
-        default:
-          return true;
-      }
-    });
-  }
-
-  private void populateBranchesMap(List<BranchModel> branchList) {
-    map.clear();
-    pinHomeMarker(myLastLocation);
-    for (BranchModel branch : branchList) {
-      Marker marker = MapUtil.createMarker(map, branch.getAddress().getLocation().getLat(),
-          branch.getAddress().getLocation().getLng(), R.drawable.exchange_pin_icon);
-      branchMap.put(marker, branch);
-    }
   }
 
   private void loadInitialData() {
@@ -293,28 +135,6 @@ public class ExchangeRatesFragment extends BaseFragment {
             rateList = rateModels;
             hideLoadingDialog();
             applyConversion();
-          }
-
-          @Override public void onError(Throwable e) {
-            hideLoadingDialog();
-            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.field_something_gone_wrong));
-          }
-        });
-  }
-
-  private void loadBankBranches(int bankId, boolean active) {
-    showLoadingDialog();
-    exchangeRatesRepository.getBranches(bankId, active)
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-        .compose(this.bindToLifecycle())
-        .subscribe(new ObserverAdapter<List<BranchModel>>() {
-          @Override public void onNext(List<BranchModel> branchModels) {
-            hideLoadingDialog();
-            showBranchesLayout();
-            populateBranchesMap(branchModels);
-            populateBranchesList(branchModels);
-            weakHandler.postDelayed(() -> scrollToMap(), 500);
           }
 
           @Override public void onError(Throwable e) {
@@ -430,7 +250,9 @@ public class ExchangeRatesFragment extends BaseFragment {
     currenciesOutGroup.setOnCheckedChangeListener(
         (group, checkedId) -> onCurrencyOutChanged(checkedId));
 
-    whereToBuyButton.setOnClickListener(v -> onWhereToBuyAction());
+    whereToBuyButton.setOnClickListener(v -> {
+      onWhereToBuyAction();
+    });
   }
 
   private void onCurrencyInChanged(int checkedId) {
@@ -581,134 +403,22 @@ public class ExchangeRatesFragment extends BaseFragment {
     return onlyActiveNowCheckBox.isChecked();
   }
 
-  private void showBranchesLayout() {
-    branchesLayout.setVisibility(View.VISIBLE);
-  }
-
-  private void populateBranchesList(List<BranchModel> branchList) {
-    LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-    branchesListLayout.removeAllViews();
-
-    for (BranchModel branch : branchList) {
-      View v = layoutInflater.inflate(R.layout.branches_list_item, null, false);
-      TextView nameField = (TextView) v.findViewById(R.id.nameField);
-      TextView addressField = (TextView) v.findViewById(R.id.addressField);
-      TextView scheduleField = (TextView) v.findViewById(R.id.scheduleField);
-      TextView workField = (TextView) v.findViewById(R.id.workField);
-
-      nameField.setText(branch.getName());
-
-      String address = BranchUtil.getBranchAddress(branch);
-      String phone = branch.getAddress().getPhone();
-      if (!BranchUtil.isBranchDetailEmpty(phone)) address += "\n" + phone;
-      addressField.setText(address);
-
-      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "(Пн - Пт: %s - %s)");
-      String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
-      String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "(Сб: %s - %s)");
-      String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
-      if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
-        sheduleText += "\n" + mondayFridayscheduleBreak;
-      }
-      if (!BranchUtil.isBranchDetailEmpty(saturdayHours)) {
-        sheduleText += "\n" + saturdayHours;
-      }
-      if (!BranchUtil.isBranchDetailEmpty(saturdayScheduleBreak)) {
-        sheduleText += "\n" + saturdayScheduleBreak;
-      }
-      scheduleField.setText(sheduleText);
-
-      workField.setText(BranchUtil.getClosingTime(branch));
-
-      nameField.setOnClickListener(v1 -> {
-        scrollToMap();
-        smoothShowInfoWindow(branch);
-      });
-      workField.setOnClickListener(v1 -> {
-        scrollToMap();
-        showRouteOnMap(branch);
-      });
-      branchesListLayout.addView(v);
-    }
-  }
-
-  protected synchronized void buildGoogleApiClient() {
-    googleApiClient = new GoogleApiClient.Builder(getActivity()).addConnectionCallbacks(
-        new GoogleApiClient.ConnectionCallbacks() {
-          @Override public void onConnected(@Nullable Bundle bundle) {
-            myLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            pinHomeMarker(myLastLocation);
+  private void loadBankBranches(int bankId, boolean active) {
+    showLoadingDialog();
+    exchangeRatesRepository.getBranches(bankId, active)
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+        .compose(this.bindToLifecycle())
+        .subscribe(new ObserverAdapter<List<BranchModel>>() {
+          @Override public void onNext(List<BranchModel> branchModels) {
+            hideLoadingDialog();
+            getRxBus().post(new WhereToBuyEvent(branchModels));
           }
 
-          @Override public void onConnectionSuspended(int i) {
-            googleApiClient.connect();
+          @Override public void onError(Throwable e) {
+            hideLoadingDialog();
+            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                getString(R.string.field_something_gone_wrong));
           }
-        }).addOnConnectionFailedListener(connectionResult -> {
-
-    }).addApi(LocationServices.API).build();
-  }
-
-  private void showRouteOnMap(BranchModel branch) {
-    if (myLastLocation != null) {
-      showLoadingDialog();
-      Routing routing = new Routing.Builder().travelMode(AbstractRouting.TravelMode.DRIVING)
-          .withListener(new RoutingListener() {
-            @Override public void onRoutingFailure(RouteException e) {
-              hideLoadingDialog();
-              showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                  getString(R.string.field_something_gone_wrong));
-            }
-
-            @Override public void onRoutingStart() {
-
-            }
-
-            @Override public void onRoutingSuccess(ArrayList<Route> arrayList, int j) {
-              hideLoadingDialog();
-              MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
-                  branch.getAddress().getLocation().getLng(), false);
-
-              if (routePolylines.size() > 0) {
-                for (Polyline poly : routePolylines) {
-                  poly.remove();
-                }
-              }
-              routePolylines = new ArrayList<>(arrayList.size());
-
-              for (int i = 0; i < arrayList.size(); i++) {
-                PolylineOptions polyOptions = new PolylineOptions();
-                polyOptions.color(ContextCompat.getColor(getActivity(), R.color.mainColorBlue));
-                polyOptions.width(10 + i * 3);
-                polyOptions.addAll(arrayList.get(i).getPoints());
-                Polyline polyline = map.addPolyline(polyOptions);
-                routePolylines.add(polyline);
-              }
-            }
-
-            @Override public void onRoutingCancelled() {
-
-            }
-          })
-          .alternativeRoutes(false)
-          .waypoints(new LatLng(myLastLocation.getLatitude(), myLastLocation.getLongitude()),
-              new LatLng(branch.getAddress().getLocation().getLat(),
-                  branch.getAddress().getLocation().getLng()))
-          .build();
-      routing.execute();
-    } else {
-      showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-          getString(R.string.field_something_gone_wrong));
-    }
-  }
-
-  private void scrollToMap() {
-    getRxBus().post(new ScrollToEvent(0, mapView.getBottom()));
-  }
-
-  private void smoothShowInfoWindow(BranchModel branch) {
-    weakHandler.postDelayed(() -> showInfoWindow(branch), 100);
-    weakHandler.postDelayed(
-        () -> MapUtil.goToPosition(map, branch.getAddress().getLocation().getLat(),
-            branch.getAddress().getLocation().getLng(), false), 200);
+        });
   }
 }
