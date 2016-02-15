@@ -191,7 +191,34 @@ public class ExchangeRatesFragment extends BaseFragment {
         .build();
 
     TextView addressField = (TextView) dialog.getCustomView().findViewById(R.id.addressField);
+    TextView scheduleField = (TextView) dialog.getCustomView().findViewById(R.id.scheduleField);
+    TextView phoneField = (TextView) dialog.getCustomView().findViewById(R.id.phoneField);
+
     addressField.setText(BranchUtil.getBranchAddress(branch));
+
+    String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "Пн - Пт: %s - %s");
+    String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
+    String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "Сб: %s - %s");
+    String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
+    if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
+      sheduleText += " " + mondayFridayscheduleBreak;
+    }
+    if (!BranchUtil.isBranchDetailEmpty(saturdayHours)) {
+      sheduleText += "\n" + saturdayHours;
+    }
+    if (!BranchUtil.isBranchDetailEmpty(saturdayScheduleBreak)) {
+      sheduleText += " " + saturdayScheduleBreak;
+    }
+    if (!BranchUtil.isBranchDetailEmpty(sheduleText)) {
+      scheduleField.setVisibility(View.VISIBLE);
+      scheduleField.setText(sheduleText);
+    }
+
+    String phone = branch.getAddress().getPhone();
+    if (!BranchUtil.isBranchDetailEmpty(phone)) {
+      phoneField.setVisibility(View.VISIBLE);
+      phoneField.setText(String.format("Тел.: %s", phone));
+    }
 
     dialog.show();
   }
@@ -570,12 +597,27 @@ public class ExchangeRatesFragment extends BaseFragment {
       TextView workField = (TextView) v.findViewById(R.id.workField);
 
       nameField.setText(branch.getName());
-      addressField.setText(BranchUtil.getBranchAddress(branch));
-      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch)
-          .concat(BranchUtil.getBranchMondayFridayScheduleBreak(branch))
-          .concat(BranchUtil.getBranchSaturdayHours(branch))
-          .concat(BranchUtil.getBranchSaturdayScheduleBreak(branch));
+
+      String address = BranchUtil.getBranchAddress(branch);
+      String phone = branch.getAddress().getPhone();
+      if (!BranchUtil.isBranchDetailEmpty(phone)) address += "\n" + phone;
+      addressField.setText(address);
+
+      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "(Пн - Пт: %s - %s)");
+      String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
+      String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "(Сб: %s - %s)");
+      String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
+      if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
+        sheduleText += "\n" + mondayFridayscheduleBreak;
+      }
+      if (!BranchUtil.isBranchDetailEmpty(saturdayHours)) {
+        sheduleText += "\n" + saturdayHours;
+      }
+      if (!BranchUtil.isBranchDetailEmpty(saturdayScheduleBreak)) {
+        sheduleText += "\n" + saturdayScheduleBreak;
+      }
       scheduleField.setText(sheduleText);
+
       workField.setText(BranchUtil.getClosingTime(branch));
 
       nameField.setOnClickListener(v1 -> {

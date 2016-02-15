@@ -16,15 +16,12 @@ public class BranchUtil {
     String district = branch.getAddress().getDistrict().getName();
     String street = branch.getAddress().getStreet();
     String house = branch.getAddress().getHouse();
-    String phone = branch.getAddress().getPhone();
 
     if (!isBranchDetailEmpty(locality)) address += locality;
     if (!isBranchDetailEmpty(district)) address += " ," + district;
     if (!isBranchDetailEmpty(street) || !isBranchDetailEmpty(house)) {
       address += " ," + street + " " + house;
     }
-    if (!isBranchDetailEmpty(phone)) address += "\n" + phone;
-
     return address;
   }
 
@@ -64,7 +61,7 @@ public class BranchUtil {
     if (breakStart != null && breakEnd != null) {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
-      scheduleBreak = String.format("\n(перерыв %s - %s)", start, end);
+      scheduleBreak = String.format("(перерыв %s - %s)", start, end);
     }
     return scheduleBreak;
   }
@@ -82,12 +79,12 @@ public class BranchUtil {
     if (breakStart != null && breakEnd != null) {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
-      scheduleBreak = String.format("\n(перерыв %s - %s)", start, end);
+      scheduleBreak = String.format("(перерыв %s - %s)", start, end);
     }
     return scheduleBreak;
   }
 
-  public static String getBranchMondayFridayHours(BranchModel branch) {
+  public static String getBranchMondayFridayHours(BranchModel branch, String format ) {
     String mondayFridayHours = "";
     Date start = null;
     Date end = null;
@@ -112,12 +109,12 @@ public class BranchUtil {
     if (start != null && end != null) {
       String startStr = DateUtil.getBranchScheduleBreakFormat().format(start);
       String endStr = DateUtil.getBranchScheduleBreakFormat().format(end);
-      mondayFridayHours = String.format("(Пн - Пт: %s - %s)", startStr, endStr);
+      mondayFridayHours = String.format(format, startStr, endStr);
     }
     return mondayFridayHours;
   }
 
-  public static String getBranchSaturdayHours(BranchModel branch) {
+  public static String getBranchSaturdayHours(BranchModel branch,String format) {
     String saturdayHours = "";
     Date start = null;
     Date end = null;
@@ -130,7 +127,7 @@ public class BranchUtil {
     if (start != null && end != null) {
       String startStr = DateUtil.getBranchScheduleBreakFormat().format(start);
       String endStr = DateUtil.getBranchScheduleBreakFormat().format(end);
-      saturdayHours = String.format("\n(Сб: %s - %s)", startStr, endStr);
+      saturdayHours = String.format(format, startStr, endStr);
     }
     return saturdayHours;
   }
