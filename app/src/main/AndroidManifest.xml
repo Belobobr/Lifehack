@@ -40,7 +40,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.activity.NewExchangeRatesActivity"
+        android:name=".ui.activity.ExchangeRatesActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.ExchangeRates"
         android:windowSoftInputMode="adjustNothing"></activity>

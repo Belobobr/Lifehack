@@ -42,7 +42,7 @@ import rx.Observable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewExchangeRatesFragment extends BaseFragment {
+public class ExchangeRatesFragment extends BaseFragment {
 
   @Bind(R.id.amountInField) EditText amountInField;
   @Bind(R.id.amountOutField) EditText amountOutField;
@@ -65,11 +65,11 @@ public class NewExchangeRatesFragment extends BaseFragment {
   private BankSpinnerAdapter bankSpinnerAdapter;
   private WeakHandler weakHandler;
 
-  public NewExchangeRatesFragment() {
+  public ExchangeRatesFragment() {
   }
 
-  public static NewExchangeRatesFragment newInstance() {
-    return new NewExchangeRatesFragment();
+  public static ExchangeRatesFragment newInstance() {
+    return new ExchangeRatesFragment();
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class NewExchangeRatesFragment extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return inflateAndBindViews(inflater, R.layout.fragment_new_exchange_rates, container);
+    return inflateAndBindViews(inflater, R.layout.fragment_exchange_rates, container);
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {

@@ -6,15 +6,14 @@ import android.support.v4.widget.NestedScrollView;
 import android.widget.FrameLayout;
 import butterknife.Bind;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.event.ScrollToEvent;
 import md.fusionworks.lifehack.ui.event.ScrollToMapEvent;
 import md.fusionworks.lifehack.ui.event.WhereToBuyEvent;
 import md.fusionworks.lifehack.ui.fragment.BranchListFragment;
 import md.fusionworks.lifehack.ui.fragment.BranchMapFragment;
-import md.fusionworks.lifehack.ui.fragment.NewExchangeRatesFragment;
+import md.fusionworks.lifehack.ui.fragment.ExchangeRatesFragment;
 import md.fusionworks.lifehack.util.Constant;
 
-public class NewExchangeRatesActivity extends NavigationDrawerActivity {
+public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
   @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
   @Bind(R.id.container) NestedScrollView container;
@@ -24,7 +23,7 @@ public class NewExchangeRatesActivity extends NavigationDrawerActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_exchange_rates);
 
-    addFragment(R.id.exchangeRatesContainer, NewExchangeRatesFragment.newInstance());
+    addFragment(R.id.exchangeRatesContainer, ExchangeRatesFragment.newInstance());
   }
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
@@ -47,11 +46,10 @@ public class NewExchangeRatesActivity extends NavigationDrawerActivity {
               BranchListFragment.newInstance(whereToBuyEvent.getBranchModelList()));
         });
 
-    getRxBus().event(ScrollToEvent.class)
+    getRxBus().event(ScrollToMapEvent.class)
         .compose(this.bindToLifecycle())
-        .subscribe(scrollToEvent -> {
-          container.smoothScrollTo(scrollToEvent.getX(), scrollToEvent.getY());
+        .subscribe(scrollToMapEvent -> {
+          container.smoothScrollTo(0, branchMapContainer.getTop());
         });
-
   }
 }
