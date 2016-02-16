@@ -43,7 +43,7 @@ public class BranchListFragment extends BaseFragment {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    branchModelList = getArguments().getParcelable(Constant.EXTRA_PARAM_BRANCH_LIST);
+    branchModelList = getArguments().getParcelableArrayList(Constant.EXTRA_PARAM_BRANCH_LIST);
     weakHandler = new WeakHandler();
   }
 

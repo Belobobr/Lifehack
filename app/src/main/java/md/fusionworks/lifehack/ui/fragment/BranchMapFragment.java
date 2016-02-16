@@ -71,7 +71,7 @@ public class BranchMapFragment extends BaseFragment {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    branchModelList = getArguments().getParcelable(Constant.EXTRA_PARAM_BRANCH_LIST);
+    branchModelList = getArguments().getParcelableArrayList(Constant.EXTRA_PARAM_BRANCH_LIST);
     routePolylines = new ArrayList<>();
     weakHandler = new WeakHandler();
     buildGoogleApiClient();
