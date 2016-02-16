@@ -1,5 +1,7 @@
 package md.fusionworks.lifehack.ui.model.exchange_rates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 /**
  * Created by ungvas on 11/6/15.
  */
-public class DayModel {
+public class DayModel implements Parcelable {
 
   private int id;
   private Date start;
@@ -72,4 +74,40 @@ public class DayModel {
   public void setDayOff(boolean dayOff) {
     this.dayOff = dayOff;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.id);
+    dest.writeLong(start != null ? start.getTime() : -1);
+    dest.writeLong(end != null ? end.getTime() : -1);
+    dest.writeLong(breakStart != null ? breakStart.getTime() : -1);
+    dest.writeLong(breakEnd != null ? breakEnd.getTime() : -1);
+    dest.writeByte(dayOff ? (byte) 1 : (byte) 0);
+  }
+
+  private DayModel(Parcel in) {
+    this.id = in.readInt();
+    long tmpStart = in.readLong();
+    this.start = tmpStart == -1 ? null : new Date(tmpStart);
+    long tmpEnd = in.readLong();
+    this.end = tmpEnd == -1 ? null : new Date(tmpEnd);
+    long tmpBreakStart = in.readLong();
+    this.breakStart = tmpBreakStart == -1 ? null : new Date(tmpBreakStart);
+    long tmpBreakEnd = in.readLong();
+    this.breakEnd = tmpBreakEnd == -1 ? null : new Date(tmpBreakEnd);
+    this.dayOff = in.readByte() != 0;
+  }
+
+  public static final Parcelable.Creator<DayModel> CREATOR = new Parcelable.Creator<DayModel>() {
+    public DayModel createFromParcel(Parcel source) {
+      return new DayModel(source);
+    }
+
+    public DayModel[] newArray(int size) {
+      return new DayModel[size];
+    }
+  };
 }

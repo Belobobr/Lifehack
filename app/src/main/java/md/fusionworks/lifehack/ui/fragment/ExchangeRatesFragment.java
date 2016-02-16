@@ -172,7 +172,10 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private void showRetryView() {
     retryView.setVisibility(View.VISIBLE);
-    retryButton.setOnClickListener(v -> loadInitialData());
+    retryButton.setOnClickListener(v -> {
+      hideRetryView();
+      loadInitialData();
+    });
   }
 
   private void hideRetryView() {

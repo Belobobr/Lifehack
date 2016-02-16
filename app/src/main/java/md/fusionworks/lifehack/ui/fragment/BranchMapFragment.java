@@ -62,16 +62,16 @@ public class BranchMapFragment extends BaseFragment {
 
   public static BranchMapFragment newInstance(List<BranchModel> branchModelList) {
     BranchMapFragment branchMapFragment = new BranchMapFragment();
-    branchMapFragment.setBranchModelList(branchModelList);
+    Bundle bundle = new Bundle();
+    bundle.putParcelableArrayList(Constant.EXTRA_PARAM_BRANCH_LIST,
+        new ArrayList<>(branchModelList));
+    branchMapFragment.setArguments(bundle);
     return branchMapFragment;
-  }
-
-  private void setBranchModelList(List<BranchModel> branchModelList) {
-    this.branchModelList = branchModelList;
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    branchModelList = getArguments().getParcelable(Constant.EXTRA_PARAM_BRANCH_LIST);
     routePolylines = new ArrayList<>();
     weakHandler = new WeakHandler();
     buildGoogleApiClient();

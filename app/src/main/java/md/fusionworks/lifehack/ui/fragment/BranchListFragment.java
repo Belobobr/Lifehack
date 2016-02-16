@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.badoo.mobile.util.WeakHandler;
+import java.util.ArrayList;
 import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.event.ScrollToMapEvent;
@@ -16,6 +17,7 @@ import md.fusionworks.lifehack.ui.event.ShowBranchMapInfoWindowEvent;
 import md.fusionworks.lifehack.ui.event.ShowRouteOnMapEvent;
 import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
 import md.fusionworks.lifehack.util.BranchUtil;
+import md.fusionworks.lifehack.util.Constant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,16 +34,16 @@ public class BranchListFragment extends BaseFragment {
 
   public static BranchListFragment newInstance(List<BranchModel> branchModelList) {
     BranchListFragment branchListFragment = new BranchListFragment();
-    branchListFragment.setBranchModelList(branchModelList);
+    Bundle bundle = new Bundle();
+    bundle.putParcelableArrayList(Constant.EXTRA_PARAM_BRANCH_LIST,
+        new ArrayList<>(branchModelList));
+    branchListFragment.setArguments(bundle);
     return branchListFragment;
-  }
-
-  private void setBranchModelList(List<BranchModel> branchModelList) {
-    this.branchModelList = branchModelList;
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    branchModelList = getArguments().getParcelable(Constant.EXTRA_PARAM_BRANCH_LIST);
     weakHandler = new WeakHandler();
   }
 

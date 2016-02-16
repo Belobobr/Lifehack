@@ -1,9 +1,12 @@
 package md.fusionworks.lifehack.ui.model.exchange_rates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by ungvas on 11/6/15.
  */
-public class AddressModel {
+public class AddressModel implements Parcelable {
 
   private LocationModel location;
   private int id;
@@ -89,4 +92,41 @@ public class AddressModel {
   public void setRaw(String raw) {
     this.raw = raw;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeParcelable(this.location, flags);
+    dest.writeInt(this.id);
+    dest.writeParcelable(this.district, flags);
+    dest.writeString(this.street);
+    dest.writeString(this.house);
+    dest.writeString(this.office);
+    dest.writeString(this.phone);
+    dest.writeString(this.raw);
+  }
+
+  private AddressModel(Parcel in) {
+    this.location = in.readParcelable(LocationModel.class.getClassLoader());
+    this.id = in.readInt();
+    this.district = in.readParcelable(DistrictModel.class.getClassLoader());
+    this.street = in.readString();
+    this.house = in.readString();
+    this.office = in.readString();
+    this.phone = in.readString();
+    this.raw = in.readString();
+  }
+
+  public static final Parcelable.Creator<AddressModel> CREATOR =
+      new Parcelable.Creator<AddressModel>() {
+        public AddressModel createFromParcel(Parcel source) {
+          return new AddressModel(source);
+        }
+
+        public AddressModel[] newArray(int size) {
+          return new AddressModel[size];
+        }
+      };
 }

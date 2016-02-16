@@ -1,9 +1,12 @@
 package md.fusionworks.lifehack.ui.model.exchange_rates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by ungvas on 11/6/15.
  */
-public class DistrictModel {
+public class DistrictModel implements Parcelable {
 
   private String id;
   private String name;
@@ -38,4 +41,31 @@ public class DistrictModel {
   public void setLocality(LocalityModel locality) {
     this.locality = locality;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeString(this.name);
+    dest.writeParcelable(this.locality, flags);
+  }
+
+  private DistrictModel(Parcel in) {
+    this.id = in.readString();
+    this.name = in.readString();
+    this.locality = in.readParcelable(LocalityModel.class.getClassLoader());
+  }
+
+  public static final Parcelable.Creator<DistrictModel> CREATOR =
+      new Parcelable.Creator<DistrictModel>() {
+        public DistrictModel createFromParcel(Parcel source) {
+          return new DistrictModel(source);
+        }
+
+        public DistrictModel[] newArray(int size) {
+          return new DistrictModel[size];
+        }
+      };
 }

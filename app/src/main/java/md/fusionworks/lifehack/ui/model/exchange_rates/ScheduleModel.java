@@ -1,9 +1,12 @@
 package md.fusionworks.lifehack.ui.model.exchange_rates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by ungvas on 11/6/15.
  */
-public class ScheduleModel {
+public class ScheduleModel implements Parcelable {
 
   private int id;
   private DayModel monday;
@@ -99,4 +102,43 @@ public class ScheduleModel {
   public void setRaw(String raw) {
     this.raw = raw;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.id);
+    dest.writeParcelable(this.monday, flags);
+    dest.writeParcelable(this.tuesday, flags);
+    dest.writeParcelable(this.wednesday, flags);
+    dest.writeParcelable(this.thursday, flags);
+    dest.writeParcelable(this.friday, flags);
+    dest.writeParcelable(this.saturday, flags);
+    dest.writeParcelable(this.sunday, flags);
+    dest.writeString(this.raw);
+  }
+
+  private ScheduleModel(Parcel in) {
+    this.id = in.readInt();
+    this.monday = in.readParcelable(DayModel.class.getClassLoader());
+    this.tuesday = in.readParcelable(DayModel.class.getClassLoader());
+    this.wednesday = in.readParcelable(DayModel.class.getClassLoader());
+    this.thursday = in.readParcelable(DayModel.class.getClassLoader());
+    this.friday = in.readParcelable(DayModel.class.getClassLoader());
+    this.saturday = in.readParcelable(DayModel.class.getClassLoader());
+    this.sunday = in.readParcelable(DayModel.class.getClassLoader());
+    this.raw = in.readString();
+  }
+
+  public static final Parcelable.Creator<ScheduleModel> CREATOR =
+      new Parcelable.Creator<ScheduleModel>() {
+        public ScheduleModel createFromParcel(Parcel source) {
+          return new ScheduleModel(source);
+        }
+
+        public ScheduleModel[] newArray(int size) {
+          return new ScheduleModel[size];
+        }
+      };
 }
