@@ -72,6 +72,9 @@ dependencies {
   compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
   compile "com.github.jd-alexander:library:$rootProject.googleDirectionsVersion"
   compile "com.badoo.mobile:android-weak-handler:$rootProject.weakHandlerVersion"
+  debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+  releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
+  testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
   /*
       apt "com.google.dagger:dagger-compiler:2.0.2"
       provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
