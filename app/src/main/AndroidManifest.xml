@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="md.fusionworks.lifehack">
 
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,8 +18,8 @@
   <permission
       android:name="com.example.permission.MAPS_RECEIVE"
       android:protectionLevel="signature"/>
-  <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
+  <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
   <application
       android:name=".LifehackApplication"
@@ -43,19 +42,23 @@
         android:name=".ui.activity.ExchangeRatesActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.ExchangeRates"
-        android:windowSoftInputMode="adjustNothing"></activity>
+        android:windowSoftInputMode="adjustNothing"/>
 
     <meta-data
         android:name="com.google.android.maps.v2.API_KEY"
         android:value="AIzaSyBl8ejq4XhR2JioM12LgcdhBpSyIp9MQr0"/>
-
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
+    <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="333e35f2086d9f5efcdf889bb7a629e52c529a9b"/>
 
-      <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="333e35f2086d9f5efcdf889bb7a629e52c529a9b" />
-    </application>
+    <activity android:name=".ui.activity.TaxiActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.Lifehack.Taxi"
+        >
+    </activity>
+  </application>
 
 </manifest>

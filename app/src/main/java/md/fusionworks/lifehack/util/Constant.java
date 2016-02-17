@@ -8,9 +8,12 @@ public class Constant {
   public static final int DRAWER_ITEM_MAIN = 0;
   public static final int DRAWER_ITEM_LIFE_HACKS = 1;
   public static final int DRAWER_ITEM_EXCHANGE_RATES = 2;
-  public static final int DRAWER_ITEM_PRICES = 3;
-  public static final int DRAWER_ITEM_SALES = 4;
- // public static final int DRAWER_ITEM_SETTINGS = 5;
+  public static final int DRAWER_ITEM_MOVIES = 3;
+  public static final int DRAWER_ITEM_TAXI = 4;
+  public static final int DRAWER_ITEM_SALES = 5;
+  public static final int DRAWER_ITEM_PRICES = 6;
+  public static final int DRAWER_ITEM_POSTER = 7;
+  // public static final int DRAWER_ITEM_SETTINGS = 7;
 
   public static final int NOTIFICATION_TOAST_INFO = 100;
   public static final int NOTIFICATION_TOAST_ERROR = 101;

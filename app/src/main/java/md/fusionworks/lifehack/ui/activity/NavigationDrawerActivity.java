@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import java.util.ArrayList;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.UIUtil;
@@ -32,18 +30,21 @@ public class NavigationDrawerActivity extends BaseActivity {
 
   private static final int[] DRAWER_TITLE_RES_ID = new int[] {
       R.string.drawer_item_main, R.string.drawer_item_life_hacks,
-      R.string.drawer_item_exchange_rates, R.string.drawer_item_prices, R.string.drawer_item_sales,
-     // R.string.drawer_item_settings
+      R.string.drawer_item_exchange_rates, R.string.drawer_item_life_movies,
+      R.string.drawer_item_life_taxi, R.string.drawer_item_prices, R.string.drawer_item_sales,
+      R.string.drawer_item_life_poster
+      // R.string.drawer_item_settings
   };
 
   private static final int[] DRAWER_ICON_RES_ID = new int[] {
+      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
       R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
       R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
       //R.drawable.ic_lens_black_24dp,
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      false, false, true, false, false,
+      false, false, true, false, true, false, false, false,
       //false
   };
 
@@ -101,9 +102,12 @@ public class NavigationDrawerActivity extends BaseActivity {
     drawerItems.add(Constant.DRAWER_ITEM_MAIN);
     drawerItems.add(Constant.DRAWER_ITEM_LIFE_HACKS);
     drawerItems.add(Constant.DRAWER_ITEM_EXCHANGE_RATES);
+    drawerItems.add(Constant.DRAWER_ITEM_MOVIES);
+    drawerItems.add(Constant.DRAWER_ITEM_TAXI);
     drawerItems.add(Constant.DRAWER_ITEM_PRICES);
     drawerItems.add(Constant.DRAWER_ITEM_SALES);
-   // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
+    drawerItems.add(Constant.DRAWER_ITEM_POSTER);
+    // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
     createDrawerItems();
   }
@@ -240,8 +244,12 @@ public class NavigationDrawerActivity extends BaseActivity {
     switch (item) {
 
       case Constant.DRAWER_ITEM_EXCHANGE_RATES:
-
         getNavigator().navigateToExchangeRatesActivity(this);
+        finish();
+        break;
+      case Constant.DRAWER_ITEM_TAXI:
+        getNavigator().navigateToTaxiActivity(this);
+        finish();
         break;
     }
   }

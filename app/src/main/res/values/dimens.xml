@@ -27,4 +27,5 @@
   <dimen name="drawer_elevation">16dp</dimen>
   <dimen name="status_bar_height">25dp</dimen>
   <dimen name="drawer_items_container_margin_top">33dp</dimen>
+  <dimen name="taxi_phone_number_list_divider_size">0.5dp</dimen>
 </resources>

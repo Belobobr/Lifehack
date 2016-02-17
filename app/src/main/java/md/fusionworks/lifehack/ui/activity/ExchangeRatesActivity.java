@@ -22,7 +22,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_new_exchange_rates);
+    setContentView(R.layout.activity_exchange_rates);
 
     addFragment(R.id.exchangeRatesContainer, ExchangeRatesFragment.newInstance());
   }

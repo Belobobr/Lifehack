@@ -18,9 +18,9 @@ public class BranchUtil {
     String house = branch.getAddress().getHouse();
 
     if (!isBranchDetailEmpty(locality)) address += locality;
-    if (!isBranchDetailEmpty(district)) address += " ," + district;
+    if (!isBranchDetailEmpty(district)) address += ", " + district;
     if (!isBranchDetailEmpty(street) || !isBranchDetailEmpty(house)) {
-      address += " ," + street + " " + house;
+      address += ", " + street + " " + house;
     }
     return address;
   }
