@@ -9,9 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.crashlytics.android.Crashlytics;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import io.fabric.sdk.android.Fabric;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.navigator.Navigator;
@@ -32,7 +30,6 @@ public class BaseActivity extends RxAppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Fabric.with(this, new Crashlytics());
     rxBus = RxBus.getInstance();
     navigator = new Navigator();
     loadingDialog = new LoadingDialog(this);
