@@ -19,7 +19,9 @@
   <View
       android:layout_width="32dp"
       android:layout_height="match_parent"
-      android:background="#B3ffffff"
+      android:layout_margin="12dp"
+      android:background="@drawable/bg_map_scroll_bar"
       android:clickable="true"
+      style="@style/MapScrollBarStyle"
       />
 </md.fusionworks.lifehack.ui.widget.SquareFrameLayout>

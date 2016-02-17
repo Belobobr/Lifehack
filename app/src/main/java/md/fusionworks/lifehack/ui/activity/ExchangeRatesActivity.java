@@ -18,6 +18,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
   @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
   @Bind(R.id.container) NestedScrollView container;
   @Bind(R.id.branchMapContainer) FrameLayout branchMapContainer;
+  @Bind(R.id.exchangeRatesContainer) FrameLayout exchangeRatesContainer;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
     getRxBus().event(ScrollToMapEvent.class)
         .compose(this.bindToLifecycle())
         .subscribe(scrollToMapEvent -> {
-          container.smoothScrollTo(0, branchMapContainer.getTop());
+          container.smoothScrollTo(0, exchangeRatesContainer.getBottom());
         });
   }
 }

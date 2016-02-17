@@ -81,4 +81,9 @@
     <item name="android:background">@android:color/transparent</item>
   </style>
 
+  <style name="MapScrollBarStyle">
+    <item name="android:background">@drawable/bg_map_scroll_bar</item>
+    <item name="android:clipToPadding">false</item>
+  </style>
+
 </resources>

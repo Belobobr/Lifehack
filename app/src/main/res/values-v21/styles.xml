@@ -10,4 +10,5 @@
   <style name="Theme.Lifehack.TranslucentStatus" parent="Theme.Lifehack">
     <item name="android:windowTranslucentStatus">true</item>
   </style>
+
 </resources>
