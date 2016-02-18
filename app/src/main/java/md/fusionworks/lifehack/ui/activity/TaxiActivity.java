@@ -3,28 +3,51 @@ package md.fusionworks.lifehack.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.Bind;
+import io.realm.Realm;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.data.persistence.TaxiDataStore;
+import md.fusionworks.lifehack.data.repository.TaxiRepository;
 import md.fusionworks.lifehack.ui.adapter.TaxiPhoneNumberAdapter;
+import md.fusionworks.lifehack.ui.event.TaxiPhoneNumberClickEvent;
+import md.fusionworks.lifehack.ui.model.taxi.TaxiPhoneNumberModel;
+import md.fusionworks.lifehack.ui.widget.SquareFrameLayout;
 import md.fusionworks.lifehack.util.Constant;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class TaxiActivity extends NavigationDrawerActivity {
 
-  private static final int TAXI_PHONE_NUMBER_LIST[] = {
-      14002, 14022, 14111, 14428, 14004, 14040, 14120, 14433, 14006, 14090, 14222, 14442, 14007,
-      14098, 14333, 14448, 14008, 14099, 14400, 14474, 14009, 14100, 14415, 14477, 14499, 14555,
-      14747, 14911, 14545, 14700, 14777, 14999, 14101, 14000, 14066, 14110, 14112, 14250, 14441,
-      14444, 14005, 14554, 14800, 14001
-  };
+  @Bind(R.id.taxiPhoneNumberList) RecyclerView taxiPhoneNumberList;
+  @Bind(R.id.lastUsedPhoneNumberList) LinearLayout lastUsedPhoneNumberList;
 
- // @Bind(R.id.taxiPhoneNumberList) RecyclerView taxiPhoneNumberList;
-
+  private TaxiRepository taxiRepository;
   private TaxiPhoneNumberAdapter taxiPhoneNumberAdapter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_taxi);
-    initializeTaxiPhoneNumberList();
+    taxiRepository = new TaxiRepository(Realm.getDefaultInstance(),
+        new TaxiDataStore(Realm.getDefaultInstance()));
+    getAllPhoneNumbers();
+  }
+
+  @Override protected void listenForEvents() {
+    super.listenForEvents();
+    getRxBus().event(TaxiPhoneNumberClickEvent.class)
+        .compose(bindToLifecycle())
+        .subscribe(taxiPhoneNumberClickEvent -> {
+          taxiRepository.updateLastUsedDate(
+              taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
+        });
   }
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
@@ -36,9 +59,56 @@ public class TaxiActivity extends NavigationDrawerActivity {
     return Constant.DRAWER_ITEM_TAXI;
   }
 
-  private void initializeTaxiPhoneNumberList() {
-  //  taxiPhoneNumberList.setLayoutManager(new GridLayoutManager(this, 4));
- //   taxiPhoneNumberAdapter = new TaxiPhoneNumberAdapter(TAXI_PHONE_NUMBER_LIST);
-  //  taxiPhoneNumberList.setAdapter(taxiPhoneNumberAdapter);
+  private void initializeTaxiPhoneNumberList(List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
+    taxiPhoneNumberList.setLayoutManager(new GridLayoutManager(this, 4));
+    taxiPhoneNumberAdapter = new TaxiPhoneNumberAdapter(taxiPhoneNumberModelList);
+    taxiPhoneNumberList.setAdapter(taxiPhoneNumberAdapter);
+
+    getLastUsedPhoneNumbers(Observable.just(taxiPhoneNumberModelList));
+  }
+
+  private void populateLastUsedPhoneNumberList(
+      List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
+    hideLastUsedPhoneNumberList();
+    for (int i = 0; i < taxiPhoneNumberModelList.size(); i++) {
+      SquareFrameLayout squareFrameLayoutChild =
+          (SquareFrameLayout) lastUsedPhoneNumberList.getChildAt(i);
+      TextView textViewChild = (TextView) squareFrameLayoutChild.getChildAt(0);
+      squareFrameLayoutChild.setVisibility(View.VISIBLE);
+      textViewChild.setText(String.valueOf(taxiPhoneNumberModelList.get(i).getPhoneNumber()));
+    }
+  }
+
+  private void hideLastUsedPhoneNumberList() {
+    for (int i = 0; i < 4; i++) {
+      SquareFrameLayout squareFrameLayoutChild =
+          (SquareFrameLayout) lastUsedPhoneNumberList.getChildAt(i);
+      squareFrameLayoutChild.setVisibility(View.GONE);
+    }
+  }
+
+  private void getAllPhoneNumbers() {
+    taxiRepository.getAllPhoneNumbers()
+        .observeOn(AndroidSchedulers.mainThread())
+        .compose(this.bindToLifecycle())
+        .subscribe(this::initializeTaxiPhoneNumberList);
+  }
+
+  private void getLastUsedPhoneNumbers(Observable<List<TaxiPhoneNumberModel>> observable) {
+    observable.observeOn(AndroidSchedulers.mainThread())
+        .compose(this.bindToLifecycle())
+        .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
+        .filter(taxiPhoneNumberModel -> taxiPhoneNumberModel.getLastCallDate() != null)
+        .take(4)
+        .toList()
+        .map(this::sortLastUsedPhoneNumberListByDate)
+        .subscribe(this::populateLastUsedPhoneNumberList);
+  }
+
+  private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByDate(
+      List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
+    Collections.sort(taxiPhoneNumberModelList,
+        (lhs, rhs) -> rhs.getLastCallDate().compareTo(lhs.getLastCallDate()));
+    return taxiPhoneNumberModelList;
   }
 }
