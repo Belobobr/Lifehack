@@ -39,7 +39,11 @@ public class TaxiPhoneNumberAdapter
         String.valueOf(taxiPhoneNumberList.get(position).getPhoneNumber()));
     if (TaxiUtil.wasUsedRecently(taxiPhoneNumberList.get(position).getLastCallDate())) {
       holder.phoneNumberField.setTextColor(
-          ContextCompat.getColor(holder.phoneNumberField.getContext(), R.color.colorPrimary));
+          ContextCompat.getColor(holder.phoneNumberField.getContext(),
+              R.color.common_google_signin_btn_text_light));
+    } else {
+      holder.phoneNumberField.setTextColor(
+          ContextCompat.getColor(holder.phoneNumberField.getContext(), R.color.white));
     }
   }
 

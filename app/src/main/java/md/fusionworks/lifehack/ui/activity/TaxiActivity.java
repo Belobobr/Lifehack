@@ -100,6 +100,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
     taxiRepository.getAllPhoneNumbers()
         .observeOn(AndroidSchedulers.mainThread())
         .compose(this.bindToLifecycle())
+        .map(this::sortLastUsedPhoneNumberListByPhoneNUmber)
         .subscribe(this::initializeTaxiPhoneNumberList);
   }
 
@@ -109,17 +110,24 @@ public class TaxiActivity extends NavigationDrawerActivity {
         .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
         .filter(taxiPhoneNumberModel -> taxiPhoneNumberModel.getLastCallDate() != null)
         .toList()
-        .map(this::sortLastUsedPhoneNumberListByDate)
+        .map(this::sortLastUsedPhoneNumberListByDateDesc)
         .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
         .take(4)
         .toList()
         .subscribe(this::populateLastUsedPhoneNumberList);
   }
 
-  private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByDate(
+  private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByDateDesc(
       List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
     Collections.sort(taxiPhoneNumberModelList,
         (lhs, rhs) -> rhs.getLastCallDate().compareTo(lhs.getLastCallDate()));
+    return taxiPhoneNumberModelList;
+  }
+
+  private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByPhoneNUmber(
+      List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
+    Collections.sort(taxiPhoneNumberModelList,
+        (lhs, rhs) -> lhs.getPhoneNumber() - rhs.getPhoneNumber());
     return taxiPhoneNumberModelList;
   }
 

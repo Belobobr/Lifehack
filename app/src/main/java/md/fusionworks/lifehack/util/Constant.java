@@ -37,5 +37,5 @@ public class Constant {
 
   public static final String EXTRA_PARAM_BRANCH_LIST = "EXTRA_PARAM_BRANCH_LIST";
 
-  public static final int TAXI_PHONE_NUMBER_RECENTLY_USED_TIME = 1800;//seconds
+  public static final int TAXI_PHONE_NUMBER_RECENTLY_USED_TIME = 30;//minutes
 }
