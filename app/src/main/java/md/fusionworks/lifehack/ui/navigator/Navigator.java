@@ -2,6 +2,7 @@ package md.fusionworks.lifehack.ui.navigator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.activity.TaxiActivity;
 
@@ -21,6 +22,12 @@ public class Navigator {
 
   public void navigateToTaxiActivity(Context context) {
     Intent intentToLaunch = new Intent(context, TaxiActivity.class);
+    context.startActivity(intentToLaunch);
+  }
+
+  public void navigateToCallActivity(Context context, int phoneNumber) {
+    Intent intentToLaunch = new Intent(Intent.ACTION_DIAL);
+    intentToLaunch.setData(Uri.parse(String.format("tel:%d", phoneNumber)));
     context.startActivity(intentToLaunch);
   }
 }

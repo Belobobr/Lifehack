@@ -3,7 +3,6 @@ package md.fusionworks.lifehack.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import butterknife.Bind;
 import io.realm.Realm;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.persistence.TaxiDataStore;
@@ -46,6 +44,8 @@ public class TaxiActivity extends NavigationDrawerActivity {
         .compose(bindToLifecycle())
         .subscribe(taxiPhoneNumberClickEvent -> {
           taxiRepository.updateLastUsedDate(
+              taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
+          getNavigator().navigateToCallActivity(this,
               taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
         });
   }
@@ -99,9 +99,11 @@ public class TaxiActivity extends NavigationDrawerActivity {
         .compose(this.bindToLifecycle())
         .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
         .filter(taxiPhoneNumberModel -> taxiPhoneNumberModel.getLastCallDate() != null)
-        .take(4)
         .toList()
         .map(this::sortLastUsedPhoneNumberListByDate)
+        .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
+        .take(4)
+        .toList()
         .subscribe(this::populateLastUsedPhoneNumberList);
   }
 
