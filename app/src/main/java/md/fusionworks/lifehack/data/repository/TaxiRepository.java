@@ -38,6 +38,8 @@ public class TaxiRepository {
     return realm.where(TaxiPhoneNumber.class)
         .findAllAsync()
         .asObservable()
+        .filter(taxiPhoneNumbers -> taxiPhoneNumbers.isLoaded())
+        .first()
         .map(taxiPhoneNumberDataMapper::transform);
   }
 

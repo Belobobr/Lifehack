@@ -29,7 +29,7 @@ public class TaxiDataStore {
     realm.executeTransaction(realm -> {
       TaxiPhoneNumber taxiPhoneNumber =
           realm.where(TaxiPhoneNumber.class).equalTo("phoneNumber", phoneNumber).findFirst();
-      if (taxiPhoneNumber.isValid()) taxiPhoneNumber.setLastCallDate(new Date());
+      if (taxiPhoneNumber.isLoaded()) taxiPhoneNumber.setLastCallDate(new Date());
     });
   }
 }

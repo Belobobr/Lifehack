@@ -1,6 +1,7 @@
 package md.fusionworks.lifehack.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,6 +20,7 @@ import md.fusionworks.lifehack.ui.event.TaxiPhoneNumberClickEvent;
 import md.fusionworks.lifehack.ui.model.taxi.TaxiPhoneNumberModel;
 import md.fusionworks.lifehack.ui.widget.SquareFrameLayout;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.TaxiUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -35,6 +37,10 @@ public class TaxiActivity extends NavigationDrawerActivity {
     setContentView(R.layout.activity_taxi);
     taxiRepository = new TaxiRepository(Realm.getDefaultInstance(),
         new TaxiDataStore(Realm.getDefaultInstance()));
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
     getAllPhoneNumbers();
   }
 
@@ -43,10 +49,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
     getRxBus().event(TaxiPhoneNumberClickEvent.class)
         .compose(bindToLifecycle())
         .subscribe(taxiPhoneNumberClickEvent -> {
-          taxiRepository.updateLastUsedDate(
-              taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
-          getNavigator().navigateToCallActivity(this,
-              taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
+          onPhoneNumberClick(taxiPhoneNumberClickEvent.getTaxiPhoneNumberModel().getPhoneNumber());
         });
   }
 
@@ -75,7 +78,13 @@ public class TaxiActivity extends NavigationDrawerActivity {
           (SquareFrameLayout) lastUsedPhoneNumberList.getChildAt(i);
       TextView textViewChild = (TextView) squareFrameLayoutChild.getChildAt(0);
       squareFrameLayoutChild.setVisibility(View.VISIBLE);
+      int currentPosition = i;
+      squareFrameLayoutChild.setOnClickListener(
+          v -> onPhoneNumberClick(taxiPhoneNumberModelList.get(currentPosition).getPhoneNumber()));
       textViewChild.setText(String.valueOf(taxiPhoneNumberModelList.get(i).getPhoneNumber()));
+      if (TaxiUtil.wasUsedRecently(taxiPhoneNumberModelList.get(i).getLastCallDate())) {
+        textViewChild.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+      }
     }
   }
 
@@ -112,5 +121,10 @@ public class TaxiActivity extends NavigationDrawerActivity {
     Collections.sort(taxiPhoneNumberModelList,
         (lhs, rhs) -> rhs.getLastCallDate().compareTo(lhs.getLastCallDate()));
     return taxiPhoneNumberModelList;
+  }
+
+  private void onPhoneNumberClick(int phoneNumber) {
+    taxiRepository.updateLastUsedDate(phoneNumber);
+    getNavigator().navigateToCallActivity(this, phoneNumber);
   }
 }
