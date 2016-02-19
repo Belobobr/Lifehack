@@ -38,13 +38,13 @@ public class NavigationDrawerActivity extends BaseActivity {
 
   private static final int[] DRAWER_ICON_RES_ID = new int[] {
       R.drawable.ic_home, R.drawable.ic_newspaper, R.drawable.ic_currency_exchange,
-      R.drawable.ic_movie, R.drawable.ic_taxi, R.drawable.ic_price_tag,
-      R.drawable.ic_sale, R.drawable.ic_advertising,
+      R.drawable.ic_movie, R.drawable.ic_taxi, R.drawable.ic_price_tag, R.drawable.ic_sale,
+      R.drawable.ic_advertising,
       //R.drawable.ic_lens_black_24dp,
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      false, false, true, false, true, false, false, false,
+      false, true, true, false, true, false, false, false,
       //false
   };
 
@@ -249,6 +249,10 @@ public class NavigationDrawerActivity extends BaseActivity {
         break;
       case Constant.DRAWER_ITEM_TAXI:
         getNavigator().navigateToTaxiActivity(this);
+        finish();
+        break;
+      case Constant.DRAWER_ITEM_LIFE_HACKS:
+        getNavigator().navigateToLifeHacksActivity(this);
         finish();
         break;
     }

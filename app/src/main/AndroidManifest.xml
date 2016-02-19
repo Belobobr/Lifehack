@@ -40,10 +40,9 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.activity.ExchangeRatesActivity"
+        android:name=".ui.activity.LifeHacksActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.Lifehack.ExchangeRates"
-        android:windowSoftInputMode="adjustNothing"/>
+        android:theme="@style/Theme.Lifehack.ExchangeRates"/>
 
     <meta-data
         android:name="com.google.android.maps.v2.API_KEY"
@@ -58,8 +57,13 @@
     <activity
         android:name=".ui.activity.TaxiActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.Lifehack.Taxi"
-        >
+        android:theme="@style/Theme.Lifehack.Taxi">
+    </activity>
+    <activity
+        android:name=".ui.activity.ExchangeRatesActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.Lifehack.ExchangeRates"
+        android:windowSoftInputMode="adjustNothing">
     </activity>
   </application>
 
