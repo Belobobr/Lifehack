@@ -90,4 +90,9 @@
     <item name="android:clipToPadding">false</item>
   </style>
 
+  <style name="TaxiPhoneNumberStyle">
+    <item name="android:background">?android:selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+  </style>
+
 </resources>

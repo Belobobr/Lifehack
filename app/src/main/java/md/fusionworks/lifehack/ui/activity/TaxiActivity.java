@@ -100,7 +100,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
     taxiRepository.getAllPhoneNumbers()
         .observeOn(AndroidSchedulers.mainThread())
         .compose(this.bindToLifecycle())
-        .map(this::sortLastUsedPhoneNumberListByPhoneNUmber)
+        .map(this::sortPhoneNumberListByPhoneNUmber)
         .subscribe(this::initializeTaxiPhoneNumberList);
   }
 
@@ -124,7 +124,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
     return taxiPhoneNumberModelList;
   }
 
-  private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByPhoneNUmber(
+  private List<TaxiPhoneNumberModel> sortPhoneNumberListByPhoneNUmber(
       List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
     Collections.sort(taxiPhoneNumberModelList,
         (lhs, rhs) -> lhs.getPhoneNumber() - rhs.getPhoneNumber());

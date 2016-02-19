@@ -33,12 +33,11 @@
         <include layout="@layout/item_taxi_last_used_phone_number"/>
         <include layout="@layout/item_taxi_last_used_phone_number"/>
       </LinearLayout>
-      <md.fusionworks.lifehack.ui.widget.GridRecyclerView
+      <android.support.v7.widget.RecyclerView
           android:id="@+id/taxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#333"
-          android:layoutAnimation="@anim/grid_layout_animation"
           />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout

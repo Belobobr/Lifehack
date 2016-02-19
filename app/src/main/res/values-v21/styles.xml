@@ -11,4 +11,8 @@
     <item name="android:windowTranslucentStatus">true</item>
   </style>
 
+  <style name="TaxiPhoneNumberStyle">
+    <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+    <item name="android:clickable">true</item>
+  </style>
 </resources>
