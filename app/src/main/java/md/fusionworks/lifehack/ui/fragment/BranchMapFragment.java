@@ -97,6 +97,10 @@ public class BranchMapFragment extends BaseFragment {
   @Override public void onDestroy() {
     weakHandler.removeCallbacksAndMessages(null);
     mapView.onDestroy();
+    if (map != null) {
+      map.setMyLocationEnabled(false);
+      map.clear();
+    }
     super.onDestroy();
   }
 
