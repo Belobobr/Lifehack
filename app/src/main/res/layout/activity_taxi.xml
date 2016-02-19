@@ -24,8 +24,11 @@
           android:id="@+id/lastUsedPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="#555"
+          android:background="#636363"
+          android:clipToPadding="false"
           android:orientation="horizontal"
+          android:outlineProvider="bounds"
+          android:elevation="2dp"
           android:weightSum="100"
           >
         <include layout="@layout/item_taxi_last_used_phone_number"/>
@@ -37,7 +40,7 @@
           android:id="@+id/taxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="#333"
+          android:background="#434343"
           />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout

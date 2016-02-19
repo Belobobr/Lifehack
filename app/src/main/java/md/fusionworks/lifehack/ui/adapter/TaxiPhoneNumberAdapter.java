@@ -1,6 +1,5 @@
 package md.fusionworks.lifehack.ui.adapter;
 
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.event.TaxiPhoneNumberClickEvent;
 import md.fusionworks.lifehack.ui.model.taxi.TaxiPhoneNumberModel;
-import md.fusionworks.lifehack.util.TaxiUtil;
 import md.fusionworks.lifehack.util.rx.RxBus;
 
 /**
@@ -37,14 +35,6 @@ public class TaxiPhoneNumberAdapter
   @Override public void onBindViewHolder(TaxiPhoneNumberViewHolder holder, int position) {
     holder.phoneNumberField.setText(
         String.valueOf(taxiPhoneNumberList.get(position).getPhoneNumber()));
-    if (TaxiUtil.wasUsedRecently(taxiPhoneNumberList.get(position).getLastCallDate())) {
-      holder.phoneNumberField.setTextColor(
-          ContextCompat.getColor(holder.phoneNumberField.getContext(),
-              R.color.common_google_signin_btn_text_light));
-    } else {
-      holder.phoneNumberField.setTextColor(
-          ContextCompat.getColor(holder.phoneNumberField.getContext(), R.color.white));
-    }
   }
 
   @Override public int getItemCount() {

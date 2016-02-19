@@ -1,7 +1,6 @@
 package md.fusionworks.lifehack.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,7 +19,6 @@ import md.fusionworks.lifehack.ui.event.TaxiPhoneNumberClickEvent;
 import md.fusionworks.lifehack.ui.model.taxi.TaxiPhoneNumberModel;
 import md.fusionworks.lifehack.ui.widget.SquareFrameLayout;
 import md.fusionworks.lifehack.util.Constant;
-import md.fusionworks.lifehack.util.TaxiUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -82,9 +80,6 @@ public class TaxiActivity extends NavigationDrawerActivity {
       squareFrameLayoutChild.setOnClickListener(
           v -> onPhoneNumberClick(taxiPhoneNumberModelList.get(currentPosition).getPhoneNumber()));
       textViewChild.setText(String.valueOf(taxiPhoneNumberModelList.get(i).getPhoneNumber()));
-      if (TaxiUtil.wasUsedRecently(taxiPhoneNumberModelList.get(i).getLastCallDate())) {
-        textViewChild.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-      }
     }
   }
 
