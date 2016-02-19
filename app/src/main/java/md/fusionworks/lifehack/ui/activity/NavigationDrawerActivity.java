@@ -37,9 +37,9 @@ public class NavigationDrawerActivity extends BaseActivity {
   };
 
   private static final int[] DRAWER_ICON_RES_ID = new int[] {
-      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
-      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
-      R.drawable.ic_lens_black_24dp, R.drawable.ic_lens_black_24dp,
+      R.drawable.ic_home, R.drawable.ic_newspaper, R.drawable.ic_currency_exchange,
+      R.drawable.ic_movie, R.drawable.ic_taxi, R.drawable.ic_price_tag,
+      R.drawable.ic_sale, R.drawable.ic_advertising,
       //R.drawable.ic_lens_black_24dp,
   };
 

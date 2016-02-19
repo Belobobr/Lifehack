@@ -9,7 +9,7 @@
   <color name="navdrawer_text_color">@color/white</color>
   <color name="navdrawer_text_color_inactive">@color/navdrawer_icon_tint</color>
   <color name="navdrawer_text_color_selected">@color/white</color>
-  <color name="navdrawer_icon_tint">#666666</color>
+  <color name="navdrawer_icon_tint">#636363</color>
   <color name="navdrawer_icon_tint_inactive">@color/navdrawer_icon_tint</color>
   <color name="navdrawer_icon_tint_selected">@color/white</color>
   <color name="divider">#DDDDDD</color>

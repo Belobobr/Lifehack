@@ -10,8 +10,8 @@ public class Constant {
   public static final int DRAWER_ITEM_EXCHANGE_RATES = 2;
   public static final int DRAWER_ITEM_MOVIES = 3;
   public static final int DRAWER_ITEM_TAXI = 4;
-  public static final int DRAWER_ITEM_SALES = 5;
-  public static final int DRAWER_ITEM_PRICES = 6;
+  public static final int DRAWER_ITEM_PRICES = 5;
+  public static final int DRAWER_ITEM_SALES = 6;
   public static final int DRAWER_ITEM_POSTER = 7;
   // public static final int DRAWER_ITEM_SETTINGS = 7;
 
