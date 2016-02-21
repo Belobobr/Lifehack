@@ -254,11 +254,25 @@ public class ExchangeRatesFragment extends BaseFragment {
         (group, checkedId) -> onCurrencyOutChanged(checkedId));
 
     whereToBuyButton.setOnClickListener(v -> {
+      amountInField.clearFocus();
       onWhereToBuyAction();
+    });
+
+    onlyActiveNowCheckBox.setOnClickListener(v -> amountInField.clearFocus());
+
+    bankSpinner.setOnTouchListener((v, event) -> {
+      amountInField.clearFocus();
+      return false;
+    });
+
+    ratesDateField.setOnTouchListener((v, event) -> {
+      amountInField.clearFocus();
+      return false;
     });
   }
 
   private void onCurrencyInChanged(int checkedId) {
+    amountInField.clearFocus();
     int currencyInId = checkedId;
     int currencyOutId = getCheckedCurrencyOutId();
     if (currencyInId == currencyOutId) {
@@ -268,6 +282,7 @@ public class ExchangeRatesFragment extends BaseFragment {
   }
 
   private void onCurrencyOutChanged(int checkedId) {
+    amountInField.clearFocus();
     int currencyOutId = checkedId;
     int currencyInId = getCheckedCurrencyInId();
     if (currencyInId == currencyOutId) {
