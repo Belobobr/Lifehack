@@ -12,7 +12,7 @@ import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
 public class BankDataMapper {
 
   public BankModel transform(Bank bank) {
-    return new BankModel(bank.getId(), bank.getName());
+    return new BankModel(bank.id, bank.name);
   }
 
   public List<BankModel> transform(List<Bank> bankList) {

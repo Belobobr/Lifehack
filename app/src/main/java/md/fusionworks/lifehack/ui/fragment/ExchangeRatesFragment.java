@@ -195,7 +195,7 @@ public class ExchangeRatesFragment extends BaseFragment {
     bankSpinnerAdapter.addItem(getActivity().getString(R.string.spinner_option_best_exchange), 0);
     bankSpinnerAdapter.addHeader(getActivity().getString(R.string.spinner_option_bank_list));
     for (BankModel bank : bankList) {
-      bankSpinnerAdapter.addItem(bank.getName(), bank.getId());
+      bankSpinnerAdapter.addItem(bank.name, bank.id);
     }
     bankSpinner.setAdapter(bankSpinnerAdapter);
   }
@@ -330,8 +330,8 @@ public class ExchangeRatesFragment extends BaseFragment {
 
     BestExchangeModel bestExchangeModel = new BestExchangeModel();
     for (BankModel bank : bankList) {
-      if (bank.getId() != 1) {
-        bankRateList = ExchangeRatesUtil.getBankRates(rateList, bank.getId());
+      if (bank.id != 1) {
+        bankRateList = ExchangeRatesUtil.getBankRates(rateList, bank.id);
         amountInValue = Converter.toDouble(getAmountInText());
         currencyInRateValue =
             ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
@@ -349,7 +349,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
       String bestExchangeBankText =
           (bestExchangeModel.getBank() != null) ? String.format("Используется курс банка %s",
-              bestExchangeModel.getBank().getName()) : "Не найден подходящий банк";
+              bestExchangeModel.getBank().name) : "Не найден подходящий банк";
       setBestExchangeBankText(bestExchangeBankText);
     }
 
@@ -410,7 +410,7 @@ public class ExchangeRatesFragment extends BaseFragment {
         hideLoadingDialog();
         return;
       }
-      bankId = bestExchangeModel.getBank().getId();
+      bankId = bestExchangeModel.getBank().id;
     }
 
     boolean onlyActive = onlyActiveNow();
