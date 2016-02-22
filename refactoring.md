@@ -1,0 +1,1 @@
+- [] Remove getters and setters in all models
