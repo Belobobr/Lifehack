@@ -44,7 +44,7 @@ public class NavigationDrawerActivity extends BaseActivity {
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      false, true, true, false, true, false, false, false,
+      true, true, true, false, true, false, false, false,
       //false
   };
 
@@ -102,10 +102,10 @@ public class NavigationDrawerActivity extends BaseActivity {
     drawerItems.add(Constant.DRAWER_ITEM_MAIN);
     drawerItems.add(Constant.DRAWER_ITEM_LIFE_HACKS);
     drawerItems.add(Constant.DRAWER_ITEM_EXCHANGE_RATES);
-    drawerItems.add(Constant.DRAWER_ITEM_MOVIES);
+    drawerItems.add(Constant.DRAWER_ITEM_SALES);
     drawerItems.add(Constant.DRAWER_ITEM_TAXI);
     drawerItems.add(Constant.DRAWER_ITEM_PRICES);
-    drawerItems.add(Constant.DRAWER_ITEM_SALES);
+    drawerItems.add(Constant.DRAWER_ITEM_MOVIES);
     drawerItems.add(Constant.DRAWER_ITEM_POSTER);
     // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
@@ -242,7 +242,10 @@ public class NavigationDrawerActivity extends BaseActivity {
 
   public void goToDrawerItem(int item) {
     switch (item) {
-
+      case Constant.DRAWER_ITEM_MAIN:
+        getNavigator().navigateToMainActivity(this);
+        finish();
+        break;
       case Constant.DRAWER_ITEM_EXCHANGE_RATES:
         getNavigator().navigateToExchangeRatesActivity(this);
         finish();

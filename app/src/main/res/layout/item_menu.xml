@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<md.fusionworks.lifehack.ui.widget.SquareLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menuLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_menu_item"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:weightSum="100"
+    >
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="50"
+      >
+
+    <LinearLayout
+        android:id="@+id/logoImageLayout"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center|bottom"
+        android:gravity="center"
+        >
+
+      <ImageView
+          android:id="@+id/logoImage"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center|top"
+          android:tint="@color/navdrawer_icon_tint"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="50"
+      >
+
+    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        android:id="@+id/titleField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logoImageLayout"
+        android:layout_gravity="center|top"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="16sp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textColor="@color/navdrawer_icon_tint"
+        android:textSize="18sp"
+        view:typeface="font/Roboto-Regular.ttf"
+        />
+  </FrameLayout>
+</md.fusionworks.lifehack.ui.widget.SquareLinearLayout>

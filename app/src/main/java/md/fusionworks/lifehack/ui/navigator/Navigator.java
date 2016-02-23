@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import md.fusionworks.lifehack.ui.activity.ExchangeRatesActivity;
 import md.fusionworks.lifehack.ui.activity.LifeHacksActivity;
+import md.fusionworks.lifehack.ui.activity.MainActivity;
 import md.fusionworks.lifehack.ui.activity.TaxiActivity;
 
 /**
@@ -14,6 +15,11 @@ import md.fusionworks.lifehack.ui.activity.TaxiActivity;
 public class Navigator {
 
   public Navigator() {
+  }
+
+  public void navigateToMainActivity(Context context) {
+    Intent intentToLaunch = new Intent(context, MainActivity.class);
+    context.startActivity(intentToLaunch);
   }
 
   public void navigateToLifeHacksActivity(Context context) {

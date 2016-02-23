@@ -1,1 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z" /></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ic_newspaper.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="744"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="3.4766083"
+     inkscape:cx="22.215369"
+     inkscape:cy="56.542373"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     d="M 88.601343,44.653492 H 11.622371 V 28.94954 h 76.978972 m 0,36.642555 h -33.6783 V 55.122794 h 33.6783 m 0,31.407904 h -33.6783 V 76.061397 h 33.6783 M 45.300671,86.530698 h -33.6783 V 55.122794 h 33.6783 M 90.189034,11.518153 82.202466,2.776286 74.167785,11.518153 66.133105,2.776286 58.146537,11.518153 50.111857,2.776286 42.077177,11.518153 34.090609,2.776286 26.055928,11.518153 18.021248,2.776286 10.03468,11.518153 2,2.776286 V 86.530698 A 9.6223714,10.469302 0 0 0 11.622371,97 H 88.601343 A 9.6223714,10.469302 0 0 0 98.223714,86.530698 V 2.776286 l -8.03468,8.741867 z"
+     id="path4"
+     inkscape:connector-curvature="0" />
+</svg>
