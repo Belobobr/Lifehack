@@ -15,7 +15,7 @@ import rx.Observable;
 /**
  * Created by ungvas on 10/28/15.
  */
-public interface LifehackService {
+public interface BanksService {
 
   String ENDPOINT = "http://banks.digest.md/";
 

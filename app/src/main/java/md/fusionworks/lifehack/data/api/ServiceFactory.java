@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
 
-  public static LifehackService buildLifehackService() {
+  public static BanksService buildBanksService() {
 
     HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
     httpLoggingInterceptor.setLevel(
@@ -30,12 +30,35 @@ public class ServiceFactory {
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(LifehackService.ENDPOINT)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(BanksService.ENDPOINT)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
-    return retrofit.create(LifehackService.class);
+    return retrofit.create(BanksService.class);
+  }
+
+  public static PricesService buildPricesService() {
+
+    HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+    httpLoggingInterceptor.setLevel(
+        BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+
+    OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(new HeaderInterceptor())
+        .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .build();
+
+    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(PricesService.ENDPOINT)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
+
+    return retrofit.create(PricesService.class);
   }
 }

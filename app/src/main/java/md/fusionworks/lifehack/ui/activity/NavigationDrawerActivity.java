@@ -44,7 +44,7 @@ public class NavigationDrawerActivity extends BaseActivity {
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      true, true, true, false, true, false, false, false,
+      true, true, true, false, true, false, true, false,
       //false
   };
 
@@ -256,6 +256,10 @@ public class NavigationDrawerActivity extends BaseActivity {
         break;
       case Constant.DRAWER_ITEM_LIFE_HACKS:
         getNavigator().navigateToLifeHacksActivity(this);
+        finish();
+        break;
+      case Constant.DRAWER_ITEM_SALES:
+        getNavigator().navigateToSalesActivity(this);
         finish();
         break;
     }

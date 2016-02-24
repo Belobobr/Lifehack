@@ -1,9 +1,9 @@
-package md.fusionworks.lifehack.data.persistence.model.mapper;
+package md.fusionworks.lifehack.data.api.model.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import md.fusionworks.lifehack.data.persistence.model.SaleCategory;
-import md.fusionworks.lifehack.ui.model.SaleCategoryModel;
+import md.fusionworks.lifehack.data.api.model.sales.SaleCategory;
+import md.fusionworks.lifehack.ui.model.sales.SaleCategoryModel;
 
 /**
  * Created by ungvas on 2/18/16.
@@ -11,7 +11,7 @@ import md.fusionworks.lifehack.ui.model.SaleCategoryModel;
 public class SaleCategoryDataMapper {
 
   public SaleCategoryModel transform(SaleCategory saleCategory) {
-    return new SaleCategoryModel(saleCategory.getId(), saleCategory.getName());
+    return new SaleCategoryModel(saleCategory.id, saleCategory.nameRu, saleCategory.nameRo);
   }
 
   public List<SaleCategoryModel> transform(List<SaleCategory> saleCategoryList) {

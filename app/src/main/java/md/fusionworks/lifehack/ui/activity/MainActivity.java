@@ -60,6 +60,10 @@ public class MainActivity extends NavigationDrawerActivity {
         getNavigator().navigateToLifeHacksActivity(this);
         finish();
         break;
+      case Constant.DRAWER_ITEM_SALES:
+        getNavigator().navigateToSalesActivity(this);
+        finish();
+        break;
     }
   }
 }
