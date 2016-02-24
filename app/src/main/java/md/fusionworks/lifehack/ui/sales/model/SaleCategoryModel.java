@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.ui.sales;
+package md.fusionworks.lifehack.ui.sales.model;
 
 /**
  * Created by ungvas on 2/24/16.

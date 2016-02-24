@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.sales.SaleCategoryModel;
+import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
 
 /**
  * Created by ungvas on 10/30/15.

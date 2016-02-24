@@ -23,7 +23,7 @@ public class ServiceFactory {
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor)
-        .addInterceptor(new HeaderInterceptor())
+        .addInterceptor(new HeaderInterceptor("cb5fa2d6b00257fd769d2c68bf32c1a42ea0fd7c"))
         .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .build();
@@ -46,7 +46,7 @@ public class ServiceFactory {
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor)
-        .addInterceptor(new HeaderInterceptor())
+        .addInterceptor(new HeaderInterceptor("zEjoa61qZS"))
         .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .build();

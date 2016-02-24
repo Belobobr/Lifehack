@@ -7,6 +7,8 @@ import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.SalesRepository;
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity;
+import md.fusionworks.lifehack.ui.sales.model.ProductModel;
+import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
@@ -50,6 +52,25 @@ public class SalesActivity extends NavigationDrawerActivity {
           @Override public void onNext(List<SaleCategoryModel> categoryModelList) {
             hideLoadingDialog();
             initializeSaleCategorySpinner(categoryModelList);
+            getProducts();
+          }
+
+          @Override public void onError(Throwable e) {
+            hideLoadingDialog();
+            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                getString(R.string.field_something_gone_wrong));
+          }
+        });
+  }
+
+  private void getProducts() {
+    showLoadingDialog();
+    salesRepository.getProducts()
+        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+        .compose(this.bindToLifecycle())
+        .subscribe(new ObserverAdapter<List<ProductModel>>() {
+          @Override public void onNext(List<ProductModel> categoryModelList) {
+            hideLoadingDialog();
           }
 
           @Override public void onError(Throwable e) {

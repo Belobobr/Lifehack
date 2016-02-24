@@ -2,7 +2,7 @@ package md.fusionworks.lifehack.data.api.model.sales;
 
 import java.util.ArrayList;
 import java.util.List;
-import md.fusionworks.lifehack.ui.sales.SaleCategoryModel;
+import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
 
 /**
  * Created by ungvas on 2/18/16.
