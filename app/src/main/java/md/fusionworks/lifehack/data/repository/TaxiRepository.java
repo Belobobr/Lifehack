@@ -3,10 +3,10 @@ package md.fusionworks.lifehack.data.repository;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.List;
-import md.fusionworks.lifehack.data.persistence.TaxiDataStore;
-import md.fusionworks.lifehack.data.persistence.model.TaxiPhoneNumber;
-import md.fusionworks.lifehack.data.persistence.model.mapper.TaxiPhoneNumberDataMapper;
-import md.fusionworks.lifehack.ui.model.taxi.TaxiPhoneNumberModel;
+import md.fusionworks.lifehack.data.persistence.taxi.TaxiDataStore;
+import md.fusionworks.lifehack.data.persistence.taxi.TaxiPhoneNumber;
+import md.fusionworks.lifehack.data.persistence.taxi.TaxiPhoneNumberDataMapper;
+import md.fusionworks.lifehack.ui.taxi.TaxiPhoneNumberModel;
 import rx.Observable;
 
 /**

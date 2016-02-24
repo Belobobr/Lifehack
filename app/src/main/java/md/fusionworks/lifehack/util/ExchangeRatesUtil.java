@@ -3,7 +3,7 @@ package md.fusionworks.lifehack.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
+import md.fusionworks.lifehack.ui.exchange_rates.model.RateModel;
 
 /**
  * Created by ungvas on 10/30/15.

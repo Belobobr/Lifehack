@@ -3,16 +3,8 @@ package md.fusionworks.lifehack.data.repository;
 import java.util.List;
 import md.fusionworks.lifehack.data.api.PricesService;
 import md.fusionworks.lifehack.data.api.ServiceFactory;
-import md.fusionworks.lifehack.data.api.model.mapper.BankDataMapper;
-import md.fusionworks.lifehack.data.api.model.mapper.BranchDataMapper;
-import md.fusionworks.lifehack.data.api.model.mapper.CurrencyDataMapper;
-import md.fusionworks.lifehack.data.api.model.mapper.RateDataMapper;
-import md.fusionworks.lifehack.data.api.model.mapper.SaleCategoryDataMapper;
-import md.fusionworks.lifehack.ui.model.exchange_rates.BankModel;
-import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
-import md.fusionworks.lifehack.ui.model.exchange_rates.CurrencyModel;
-import md.fusionworks.lifehack.ui.model.exchange_rates.RateModel;
-import md.fusionworks.lifehack.ui.model.sales.SaleCategoryModel;
+import md.fusionworks.lifehack.data.api.model.sales.SaleCategoryDataMapper;
+import md.fusionworks.lifehack.ui.sales.SaleCategoryModel;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import rx.Observable;
 

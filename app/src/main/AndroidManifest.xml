@@ -30,7 +30,7 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.AppCompat">
     <activity
-        android:name=".ui.activity.LaunchActivity"
+        android:name=".ui.LaunchActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.Launch">
       <intent-filter>
@@ -40,7 +40,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.activity.LifeHacksActivity"
+        android:name=".ui.LifeHacksActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.ExchangeRates"/>
 
@@ -55,23 +55,23 @@
         android:value="333e35f2086d9f5efcdf889bb7a629e52c529a9b"/>
 
     <activity
-        android:name=".ui.activity.TaxiActivity"
+        android:name=".ui.taxi.TaxiActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.Taxi">
     </activity>
     <activity
-        android:name=".ui.activity.ExchangeRatesActivity"
+        android:name=".ui.exchange_rates.ExchangeRatesActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.ExchangeRates"
         android:windowSoftInputMode="adjustNothing">
     </activity>
     <activity
-        android:name=".ui.activity.MainActivity"
+        android:name=".ui.main.MainActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.Main">
     </activity>
     <activity
-        android:name=".ui.activity.SalesActivity"
+        android:name=".ui.sales.SalesActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.TranslucentStatus">
     </activity>

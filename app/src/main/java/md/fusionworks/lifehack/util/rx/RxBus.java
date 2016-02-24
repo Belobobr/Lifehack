@@ -21,6 +21,10 @@ public class RxBus {
 
   private final Subject<Object, Object> bus = new SerializedSubject<>(PublishSubject.create());
 
+  public void postIfHasObservers(Object event) {
+    if (hasObservers()) bus.onNext(event);
+  }
+
   public void post(Object event) {
     bus.onNext(event);
   }

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.model.exchange_rates.BranchModel;
+import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel;
 
 /**
  * Created by ungvas on 2/15/16.

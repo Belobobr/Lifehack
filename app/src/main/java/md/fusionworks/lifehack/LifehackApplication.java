@@ -6,8 +6,8 @@ import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import md.fusionworks.lifehack.data.persistence.TaxiData;
-import md.fusionworks.lifehack.data.persistence.TaxiDataStore;
+import md.fusionworks.lifehack.data.persistence.taxi.TaxiData;
+import md.fusionworks.lifehack.data.persistence.taxi.TaxiDataStore;
 import md.fusionworks.lifehack.data.repository.TaxiRepository;
 
 /**
