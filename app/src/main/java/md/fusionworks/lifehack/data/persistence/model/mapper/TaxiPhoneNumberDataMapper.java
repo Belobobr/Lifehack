@@ -19,8 +19,8 @@ public class TaxiPhoneNumberDataMapper {
     List<TaxiPhoneNumberModel> taxiPhoneNumberModelList =
         new ArrayList<>(taxiPhoneNumberList.size());
     TaxiPhoneNumberModel taxiPhoneNumberModel;
-    for (TaxiPhoneNumber bank : taxiPhoneNumberList) {
-      taxiPhoneNumberModel = transform(bank);
+    for (TaxiPhoneNumber taxiPhoneNumber : taxiPhoneNumberList) {
+      taxiPhoneNumberModel = transform(taxiPhoneNumber);
       if (taxiPhoneNumberModel != null) {
         taxiPhoneNumberModelList.add(taxiPhoneNumberModel);
       }
