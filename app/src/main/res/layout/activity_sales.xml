@@ -24,7 +24,12 @@
           android:id="@+id/saleCategorySpinner"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          ></android.support.v7.widget.AppCompatSpinner>
+          />
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/productList"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"

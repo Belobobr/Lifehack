@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:paynetApplication="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    >
+
+  <fr.castorflex.android.circularprogressbar.CircularProgressBar
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginBottom="12dp"
+      android:layout_marginTop="12dp"
+      android:indeterminate="true"
+      paynetApplication:cpb_color="@color/colorPrimary"
+      paynetApplication:cpb_max_sweep_angle="300"
+      paynetApplication:cpb_min_sweep_angle="10"
+      paynetApplication:cpb_rotation_speed="1.0"
+      paynetApplication:cpb_stroke_width="2dp"
+      paynetApplication:cpb_sweep_speed="1.0"
+      />
+
+  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+      android:id="@+id/messageField"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8dp"
+      android:gravity="center"
+      android:text="Загружаю больше..."
+      android:textColor="#555"
+      />
+</LinearLayout>

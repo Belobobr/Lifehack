@@ -1,6 +1,8 @@
 package md.fusionworks.lifehack.data.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import md.fusionworks.lifehack.data.api.PricesService;
 import md.fusionworks.lifehack.data.api.ServiceFactory;
 import md.fusionworks.lifehack.data.api.model.sales.ProductDataMapper;
@@ -25,14 +27,26 @@ public class SalesRepository {
     productDataMapper = new ProductDataMapper();
   }
 
-  public Observable<List<SaleCategoryModel>> getCategories() {
-    return pricesService.getCategories()
+  public Observable<List<SaleCategoryModel>> getSaleCategories() {
+    return pricesService.getSaleCategories()
         .compose(ObservableTransformation.applyApiRequestConfiguration())
-        .map(categories -> saleCategoryDataMapper.transform(categories));
+        .map(saleCategories -> saleCategoryDataMapper.transform(saleCategories));
   }
 
-  public Observable<List<ProductModel>> getProducts() {
-    return pricesService.getProducts("2016-02-24", 1, 100, "ru", "ASC", 30, 0, 94, "zEjoa61qZS")
+  public Observable<List<ProductModel>> getSaleProducts(String dateTo, int minRange, int maxRange,
+      String lang, String sort, int limit, int offset, int categoryId, String apiKey) {
+    Map<String, String> params = new HashMap<>();
+    params.put("dateTo", dateTo);
+    params.put("minRange", String.valueOf(minRange));
+    params.put("maxRange", String.valueOf(maxRange));
+    params.put("lang", lang);
+    params.put("sort", sort);
+    params.put("limit", String.valueOf(limit));
+    params.put("offset", String.valueOf(offset));
+    if (categoryId != 0) params.put("categories[]", String.valueOf(categoryId));
+    params.put("apikey", apiKey);
+
+    return pricesService.getSaleProducts(params)
         .compose(ObservableTransformation.applyApiRequestConfiguration())
         .map(products -> productDataMapper.transform(products));
   }

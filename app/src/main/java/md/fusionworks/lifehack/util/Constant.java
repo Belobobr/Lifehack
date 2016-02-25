@@ -38,4 +38,12 @@ public class Constant {
   public static final String EXTRA_PARAM_BRANCH_LIST = "EXTRA_PARAM_BRANCH_LIST";
 
   public static final int TAXI_PHONE_NUMBER_RECENTLY_USED_TIME = 30;//minutes
+
+  //Sales
+  public static final int MIN_RANGE = 1;
+  public static final int MAX_RANGE = 100;
+  public static final String LANG = "ru";
+  public static final String SORT = "DESC";
+  public static final int LIMIT = 30;
+  public static final String PRICES_API_KEY = "zEjoa61qZS";
 }

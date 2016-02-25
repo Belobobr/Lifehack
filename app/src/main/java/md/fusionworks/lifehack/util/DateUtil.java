@@ -13,6 +13,7 @@ public class DateUtil {
   private static SimpleDateFormat rateDateFormat;
   private static SimpleDateFormat dateViewFormat;
   private static SimpleDateFormat branchScheduleBreakFormat;
+  private static SimpleDateFormat saleDateToFormat;
 
   public static SimpleDateFormat getRateDateFormat() {
     if (rateDateFormat == null) {
@@ -33,6 +34,11 @@ public class DateUtil {
       branchScheduleBreakFormat = new SimpleDateFormat("HH:mm", Locale.US);
     }
     return branchScheduleBreakFormat;
+  }
+
+  public static SimpleDateFormat getSaleDateToFormat() {
+    if (saleDateToFormat == null) saleDateToFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    return saleDateToFormat;
   }
 
   public static Date createDate(int year, int monthOfYear, int dayOfMonth) {

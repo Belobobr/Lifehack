@@ -1,11 +1,12 @@
 package md.fusionworks.lifehack.data.api;
 
 import java.util.List;
+import java.util.Map;
 import md.fusionworks.lifehack.data.api.model.sales.Product;
 import md.fusionworks.lifehack.data.api.model.sales.SaleCategory;
 import retrofit2.Response;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -15,13 +16,11 @@ public interface PricesService {
 
   String ENDPOINT = "http://prices.digest.md/";
 
-  String CATEGORIES = "api/categories?_format=json";
-  String PRODUCTS = "api/result?_format=json";
+  String SALE_CATEGORIES = "api/categories?_format=json";
+  String SALE_PRODUCTS = "api/result?_format=json";
 
-  @GET(CATEGORIES) Observable<Response<List<SaleCategory>>> getCategories();
+  @GET(SALE_CATEGORIES) Observable<Response<List<SaleCategory>>> getSaleCategories();
 
-  @GET(PRODUCTS) Observable<Response<List<Product>>> getProducts(@Query("dateTo") String dateTo,
-      @Query("minRange") int minRange, @Query("maxRange") int maxRange, @Query("lang") String lang,
-      @Query("sort") String sort, @Query("limit") int limit, @Query("offset") int offset,
-      @Query("categories") int categoryId, @Query("apiKey") String apiKey);
+  @GET(SALE_PRODUCTS) Observable<Response<List<Product>>> getSaleProducts(
+      @QueryMap Map<String, String> params);
 }

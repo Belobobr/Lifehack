@@ -3,7 +3,7 @@
   <string name="drawer_item_exchange_rates">Обмен валют</string>
   <string name="drawer_item_main">Главная</string>
   <string name="drawer_item_prices">Цены</string>
-  <string name="drawer_item_sales">Скидки</string>
+  <string name="drawer_item_sales">Скидки дня</string>
   <string name="drawer_item_settings">Настройки</string>
   <string name="drawer_item_life_hacks">Лайфхаки</string>
   <string name="drawer_item_life_movies">Кино</string>
