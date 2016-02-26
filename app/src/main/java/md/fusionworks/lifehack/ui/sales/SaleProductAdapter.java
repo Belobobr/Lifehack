@@ -1,6 +1,8 @@
 package md.fusionworks.lifehack.ui.sales;
 
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,9 +53,14 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
       SaleProductItemViewHolder saleProductItemViewHolder = ((SaleProductItemViewHolder) holder);
       ProductModel productModel = getItemList().get(position);
 
+      Drawable drawable =
+          saleProductItemViewHolder.thumbnail.getContext().getDrawable(R.drawable.ic_no);
+      drawable.setTint(Color.parseColor("#dddddd"));
+
       Glide.with(saleProductItemViewHolder.thumbnail.getContext())
           .load(productModel.productImage + "_160.jpg")
           .crossFade()
+          .error(drawable)
           .into(saleProductItemViewHolder.thumbnail);
 
       saleProductItemViewHolder.nameField.setText(productModel.productName);

@@ -18,13 +18,14 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         />
-    <TextView
+    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:background="#ff00"
         android:text="-30 %"
         android:textColor="@color/white"
+        view:typeface="font/Roboto-Regular.ttf"
         />
   </FrameLayout>
   <LinearLayout
@@ -92,14 +93,14 @@
 
   </LinearLayout>
   <LinearLayout
-      android:layout_width="80dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:orientation="vertical"
       >
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/whereToBuyButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-6dp"
         android:layout_marginLeft="-4dp"
@@ -111,7 +112,7 @@
         />
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/retryButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="?android:selectableItemBackground"
