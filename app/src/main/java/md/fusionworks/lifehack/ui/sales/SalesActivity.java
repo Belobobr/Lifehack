@@ -47,7 +47,12 @@ public class SalesActivity extends NavigationDrawerActivity {
   }
 
   private void initializeSaleCategorySpinner(List<SaleCategoryModel> saleCategoryModelList) {
-    saleCategorySpinnerAdapter = new SaleCategorySpinnerAdapter(this, saleCategoryModelList);
+    saleCategorySpinnerAdapter = new SaleCategorySpinnerAdapter(this);
+    saleCategorySpinnerAdapter.addItem(
+        new SaleCategoryModel(0, "Все категории", "Toate categoriile"));
+    saleCategorySpinnerAdapter.addHeader("Список категорий");
+    saleCategorySpinnerAdapter.addItems(saleCategoryModelList);
+
     saleCategorySpinner.setAdapter(saleCategorySpinnerAdapter);
     saleCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
@@ -83,7 +88,7 @@ public class SalesActivity extends NavigationDrawerActivity {
     salesRepository.getSaleCategories()
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(bindToLifecycle())
-        .map(this::addAllCategoriesItem)
+        //.map(this::addAllCategoriesItem)
         .subscribe(new ObserverAdapter<List<SaleCategoryModel>>() {
           @Override public void onNext(List<SaleCategoryModel> categoryModelList) {
             hideLoadingDialog();

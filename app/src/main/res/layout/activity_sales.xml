@@ -20,11 +20,28 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
-      <android.support.v7.widget.AppCompatSpinner
-          android:id="@+id/saleCategorySpinner"
+      <LinearLayout
+          android:id="@+id/lastUsedPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          />
+          android:background="#fff"
+          android:clipToPadding="false"
+          android:elevation="2dp"
+          android:orientation="horizontal"
+          android:outlineProvider="bounds"
+          android:weightSum="100"
+          >
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/saleCategorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_bank_spinner"
+            android:paddingBottom="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            />
+      </LinearLayout>
       <android.support.v7.widget.RecyclerView
           android:id="@+id/productList"
           android:layout_width="match_parent"

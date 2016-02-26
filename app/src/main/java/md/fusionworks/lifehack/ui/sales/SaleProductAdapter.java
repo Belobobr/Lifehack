@@ -1,10 +1,15 @@
 package md.fusionworks.lifehack.ui.sales;
 
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import butterknife.Bind;
+import com.bumptech.glide.Glide;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.BaseViewHolder;
 import md.fusionworks.lifehack.ui.LoadMoreAdapter;
@@ -43,10 +48,34 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
     if (holder.getItemViewType() == VIEW_TYPE_ITEM) {
+      SaleProductItemViewHolder saleProductItemViewHolder = ((SaleProductItemViewHolder) holder);
+      ProductModel productModel = getItemList().get(position);
+
+      Glide.with(saleProductItemViewHolder.thumbnail.getContext())
+          .load(productModel.productImage + "_160.jpg")
+          .crossFade()
+          .into(saleProductItemViewHolder.thumbnail);
+
+      saleProductItemViewHolder.nameField.setText(productModel.productName);
+      saleProductItemViewHolder.categoryField.setText(productModel.categoryNameRu);
+
+      saleProductItemViewHolder.prevPriceField.setText(
+          String.valueOf(productModel.productPrevPriceForGraph) + " MDL");
+      saleProductItemViewHolder.prevPriceField.setPaintFlags(
+          saleProductItemViewHolder.prevPriceField.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+      saleProductItemViewHolder.minPriceField.setText(
+          String.valueOf(productModel.productMinPriceForGraph) + " MDL");
     }
   }
 
   public class SaleProductItemViewHolder extends BaseViewHolder {
+
+    @Bind(R.id.thumbnail) ImageView thumbnail;
+    @Bind(R.id.nameField) TextView nameField;
+    @Bind(R.id.categoryField) TextView categoryField;
+    @Bind(R.id.prevPriceField) TextView prevPriceField;
+    @Bind(R.id.minPriceField) TextView minPriceField;
 
     public SaleProductItemViewHolder(@NonNull View view) {
       super(view);

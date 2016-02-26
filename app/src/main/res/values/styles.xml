@@ -99,4 +99,11 @@
     <item name="android:clickable">true</item>
   </style>
 
+  <style name="SpecialButton" parent="BaseButton">
+    <item name="colorButtonNormal">@color/colorPrimary</item>
+  </style>
+
+  <style name="BaseButton" parent="Widget.AppCompat.Button">
+  </style>
+
 </resources>
