@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -20,9 +19,9 @@ import java.util.Date;
 import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
+import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.BankSpinnerAdapter;
 import md.fusionworks.lifehack.ui.exchange_rates.event.WhereToBuyEvent;
-import md.fusionworks.lifehack.ui.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BankModel;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BankSpinnerItemModel;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BestExchangeModel;
@@ -32,6 +31,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.model.InitialDataModel;
 import md.fusionworks.lifehack.ui.exchange_rates.model.RateModel;
 import md.fusionworks.lifehack.ui.widget.CurrenciesGroup;
 import md.fusionworks.lifehack.ui.widget.DateView;
+import md.fusionworks.lifehack.ui.widget.RetryView;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.Converter;
 import md.fusionworks.lifehack.util.DateUtil;
@@ -53,7 +53,7 @@ public class ExchangeRatesFragment extends BaseFragment {
   @Bind(R.id.currencyInRadioGroup) CurrenciesGroup currenciesInGroup;
   @Bind(R.id.currencyOutRadioGroup) CurrenciesGroup currenciesOutGroup;
   @Bind(R.id.exchangeRatesView) LinearLayout exchangeRatesView;
-  @Bind(R.id.retryView) RelativeLayout retryView;
+  @Bind(R.id.retryView) RetryView retryView;
   @Bind(R.id.retryButton) Button retryButton;
   @Bind(R.id.whereToBuyButton) TextView whereToBuyButton;
   @Bind(R.id.onlyActiveNowCheckBox) CheckBox onlyActiveNowCheckBox;
@@ -97,15 +97,12 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private void loadInitialData() {
     showLoadingDialog();
-    Observable<List<BankModel>> bankObservable = exchangeRatesRepository.getBanks()
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+    Observable<List<BankModel>> bankObservable = exchangeRatesRepository.getBanks();
 
-    Observable<List<CurrencyModel>> currencyObservable = exchangeRatesRepository.getCurrencies()
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+    Observable<List<CurrencyModel>> currencyObservable = exchangeRatesRepository.getCurrencies();
 
     String today = DateUtil.getRateDateFormat().format(new Date());
-    Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today)
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers());
+    Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today);
 
     Observable.zip(bankObservable, currencyObservable, rateObservable,
         (bankModels, currencyModels, rateModels) -> new InitialDataModel(bankModels, currencyModels,
@@ -172,15 +169,15 @@ public class ExchangeRatesFragment extends BaseFragment {
   }
 
   private void showRetryView() {
-    retryView.setVisibility(View.VISIBLE);
-    retryButton.setOnClickListener(v -> {
-      hideRetryView();
+    retryView.show();
+    retryView.setOnRetryActionListener(() -> {
+      retryView.hide();
       loadInitialData();
     });
   }
 
   private void hideRetryView() {
-    retryView.setVisibility(View.GONE);
+    retryView.hide();
   }
 
   private void populateCurrencyInGroup(List<CurrencyModel> currencyList) {

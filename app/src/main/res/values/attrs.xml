@@ -10,4 +10,8 @@
   <declare-styleable name="BranchListItem">
     <attr format="reference" name="branchListItemStyle"/>
   </declare-styleable>
+  <declare-styleable name="RetryView">
+    <attr format="string" name="message"/>
+    <attr format="reference" name="retryViewStyle"/>
+  </declare-styleable>
 </resources>

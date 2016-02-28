@@ -14,6 +14,7 @@ import md.fusionworks.lifehack.data.repository.SalesRepository;
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
+import md.fusionworks.lifehack.ui.widget.RetryView;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.DateUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
@@ -23,6 +24,8 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   @Bind(R.id.saleCategorySpinner) AppCompatSpinner saleCategorySpinner;
   @Bind(R.id.productList) RecyclerView productList;
+  @Bind(R.id.retryView) RetryView retryView;
+  @Bind(R.id.todaySalesView) View todaySalesView;
 
   private SalesRepository salesRepository;
   private SaleCategorySpinnerAdapter saleCategorySpinnerAdapter;
@@ -47,12 +50,7 @@ public class SalesActivity extends NavigationDrawerActivity {
   }
 
   private void initializeSaleCategorySpinner(List<SaleCategoryModel> saleCategoryModelList) {
-    saleCategorySpinnerAdapter = new SaleCategorySpinnerAdapter(this);
-    saleCategorySpinnerAdapter.addItem(
-        new SaleCategoryModel(0, "Все категории", "Toate categoriile"));
-    saleCategorySpinnerAdapter.addHeader("Список категорий");
-    saleCategorySpinnerAdapter.addItems(saleCategoryModelList);
-
+    saleCategorySpinnerAdapter = new SaleCategorySpinnerAdapter(this, saleCategoryModelList);
     saleCategorySpinner.setAdapter(saleCategorySpinnerAdapter);
     saleCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
@@ -88,18 +86,20 @@ public class SalesActivity extends NavigationDrawerActivity {
     salesRepository.getSaleCategories()
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(bindToLifecycle())
-        //.map(this::addAllCategoriesItem)
+        .map(this::addAllCategoriesItem)
         .subscribe(new ObserverAdapter<List<SaleCategoryModel>>() {
           @Override public void onNext(List<SaleCategoryModel> categoryModelList) {
             hideLoadingDialog();
+            hideRetryView();
+            showTodaySalesView();
             initializeSaleCategorySpinner(categoryModelList);
             initializeProductList();
           }
 
           @Override public void onError(Throwable e) {
             hideLoadingDialog();
-            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.field_something_gone_wrong), () -> getSaleCategories());
+            hideTodaySalesView();
+            showRetryView();
           }
         });
   }
@@ -132,5 +132,25 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   private String getTodayDateString() {
     return DateUtil.getSaleDateToFormat().format(new Date());
+  }
+
+  private void showRetryView() {
+    retryView.show();
+    retryView.setOnRetryActionListener(() -> {
+      retryView.hide();
+      getSaleCategories();
+    });
+  }
+
+  private void hideRetryView() {
+    retryView.hide();
+  }
+
+  private void showTodaySalesView() {
+    todaySalesView.setVisibility(View.VISIBLE);
+  }
+
+  private void hideTodaySalesView() {
+    todaySalesView.setVisibility(View.GONE);
   }
 }

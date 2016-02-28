@@ -11,6 +11,7 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="dateViewStyle">@style/DateViewStyle</item>
+    <item name="retryViewStyle">@style/RetryViewStyle</item>
     <item name="branchListItemStyle">@style/BranchListItemStyle</item>
     <item name="colorButtonNormal">@color/mainColorBlue</item>
     <item name="android:popupMenuStyle">@style/Widget.Lifehack.PopupMenu</item>
@@ -63,6 +64,9 @@
     <item name="android:textColor">#ff333333</item>
   </style>
 
+  <style name="RetryViewStyle">
+    <item name="android:padding">16dp</item>
+  </style>
 
   <style name="Theme.Lifehack.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
