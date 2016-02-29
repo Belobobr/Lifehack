@@ -28,7 +28,7 @@ public abstract class LoadMoreAdapter<T> extends ItemListAdapter<T> {
 
         if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
           if (onLoadMoreItemsListener != null) {
-            addLoadMoreViewItem();
+            recyclerView.post(() -> addLoadMoreViewItem());
             onLoadMoreItemsListener.onLoadMoreItems();
           }
           isLoading = true;

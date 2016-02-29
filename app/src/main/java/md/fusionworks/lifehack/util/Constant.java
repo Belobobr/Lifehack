@@ -46,4 +46,5 @@ public class Constant {
   public static final String SORT = "DESC";
   public static final int LIMIT = 20;
   public static final String PRICES_API_KEY = "zEjoa61qZS";
+  public static final int SALE_PRODUCT_THUMBNAIL_IMAGE_SIZE = 160;
 }

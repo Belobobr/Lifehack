@@ -35,7 +35,6 @@ public class RxBus {
   }
 
   public <T> Observable<T> event(Class<T> type) {
-
     return asObservable().ofType(type);
   }
 

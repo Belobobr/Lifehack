@@ -14,17 +14,20 @@
       android:layout_height="wrap_content"
       >
     <ImageView
-        android:id="@+id/thumbnail"
+        android:id="@+id/thumbnailImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         />
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        android:id="@+id/salePercentField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:background="#ff00"
-        android:text="-30 %"
+        android:background="@drawable/bg_sale_percent"
+        android:padding="1dp"
+        android:text="-0 %"
         android:textColor="@color/white"
+        android:textSize="11sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
   </FrameLayout>
@@ -40,57 +43,43 @@
         android:id="@+id/nameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoImageLayout"
-        android:layout_gravity="center|top"
-        android:layout_marginLeft="16sp"
-        android:layout_marginRight="16sp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/navdrawer_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/categoryField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoImageLayout"
-        android:layout_gravity="center|top"
-        android:layout_marginLeft="16sp"
-        android:layout_marginRight="16sp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/text_disabled"
-        android:textSize="12sp"
+        android:textSize="13sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
-
-
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/prevPriceField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoImageLayout"
-        android:layout_gravity="center|top"
-        android:layout_marginLeft="16sp"
-        android:layout_marginRight="16sp"
-        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:textColor="@color/text_disabled"
-        android:textSize="14sp"
+        android:textSize="13sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
         android:id="@+id/minPriceField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoImageLayout"
-        android:layout_gravity="center|top"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="16sp"
         view:typeface="font/Roboto-Regular.ttf"
         />
-
-
   </LinearLayout>
   <LinearLayout
       android:layout_width="wrap_content"
@@ -99,27 +88,21 @@
       android:orientation="vertical"
       >
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/whereToBuyButton"
+        android:id="@+id/buyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-6dp"
-        android:layout_marginLeft="-4dp"
-        android:layout_marginRight="-4dp"
-        android:layout_marginTop="-6dp"
         android:text="Купить"
         android:textColor="@color/white"
-        style="@style/SpecialButton"
+        android:theme="@style/SpecialButton"
         />
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/retryButton"
+        android:id="@+id/allPricesButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="25dp"
         android:background="?android:selectableItemBackground"
         android:text="Все цены"
         android:textColor="@color/mainColorBlue"
         android:textSize="13sp"
-        style="@style/SpecialButton"
         />
   </LinearLayout>
 </LinearLayout>

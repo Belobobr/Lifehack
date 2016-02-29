@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.BaseViewHolder;
 import md.fusionworks.lifehack.ui.LoadMoreAdapter;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
+import md.fusionworks.lifehack.util.Constant;
 
 /**
  * Created by ungvas on 12/30/15.
@@ -34,7 +37,6 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
     if (viewType == VIEW_TYPE_ITEM) {
       View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.item_sale_product, parent, false);
@@ -48,41 +50,47 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
     if (holder.getItemViewType() == VIEW_TYPE_ITEM) {
       SaleProductItemViewHolder saleProductItemViewHolder = ((SaleProductItemViewHolder) holder);
       ProductModel productModel = getItemList().get(position);
 
-      Drawable drawable =
-          saleProductItemViewHolder.thumbnail.getContext().getDrawable(R.drawable.ic_no);
-      drawable.setTint(Color.parseColor("#dddddd"));
-
-      Glide.with(saleProductItemViewHolder.thumbnail.getContext())
-          .load(productModel.productImage + "_160.jpg")
-          .crossFade()
-          .error(drawable)
-          .into(saleProductItemViewHolder.thumbnail);
-
+      initializeThumbnailImage(saleProductItemViewHolder.thumbnail, productModel.productImage);
       saleProductItemViewHolder.nameField.setText(productModel.productName);
       saleProductItemViewHolder.categoryField.setText(productModel.categoryNameRu);
-
-      saleProductItemViewHolder.prevPriceField.setText(
-          String.valueOf(productModel.productPrevPriceForGraph) + " MDL");
-      saleProductItemViewHolder.prevPriceField.setPaintFlags(
-          saleProductItemViewHolder.prevPriceField.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
+      initializePrevPriceField(saleProductItemViewHolder.prevPriceField,
+          productModel.productPrevPriceForGraph);
       saleProductItemViewHolder.minPriceField.setText(
-          String.valueOf(productModel.productMinPriceForGraph) + " MDL");
+          String.format("%d MDL", Math.round(productModel.productMinPriceForGraph)));
+      saleProductItemViewHolder.percentSaleField.setText(Math.round(productModel.percent) + " %");
     }
+  }
+
+  private void initializeThumbnailImage(ImageView thumbnailImage, String url) {
+    Drawable noPhotoDrawable =
+        ContextCompat.getDrawable(thumbnailImage.getContext(), R.drawable.ic_no);
+    DrawableCompat.setTint(noPhotoDrawable,
+        ContextCompat.getColor(thumbnailImage.getContext(), R.color.text_disabled));
+
+    Glide.with(thumbnailImage.getContext())
+        .load(String.format("%s_%d.jpg", url, Constant.SALE_PRODUCT_THUMBNAIL_IMAGE_SIZE))
+        .crossFade()
+        .error(noPhotoDrawable)
+        .into(thumbnailImage);
+  }
+
+  private void initializePrevPriceField(TextView prevPriceField, double value) {
+    prevPriceField.setText(String.format("%d MDL", Math.round(value)));
+    prevPriceField.setPaintFlags(prevPriceField.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
   }
 
   public class SaleProductItemViewHolder extends BaseViewHolder {
 
-    @Bind(R.id.thumbnail) ImageView thumbnail;
+    @Bind(R.id.thumbnailImage) ImageView thumbnail;
     @Bind(R.id.nameField) TextView nameField;
     @Bind(R.id.categoryField) TextView categoryField;
     @Bind(R.id.prevPriceField) TextView prevPriceField;
     @Bind(R.id.minPriceField) TextView minPriceField;
+    @Bind(R.id.salePercentField) TextView percentSaleField;
 
     public SaleProductItemViewHolder(@NonNull View view) {
       super(view);
