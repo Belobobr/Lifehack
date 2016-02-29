@@ -1,6 +1,5 @@
 package md.fusionworks.lifehack.ui.sales;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -10,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -19,6 +19,7 @@ import md.fusionworks.lifehack.ui.BaseViewHolder;
 import md.fusionworks.lifehack.ui.LoadMoreAdapter;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.rx.RxBus;
 
 /**
  * Created by ungvas on 12/30/15.
@@ -28,8 +29,11 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
   private final int VIEW_TYPE_ITEM = 0;
   private final int VIEW_TYPE_LOADING = 1;
 
+  private RxBus rxBus;
+
   public SaleProductAdapter(RecyclerView recyclerView) {
     super(recyclerView);
+    rxBus = RxBus.getInstance();
   }
 
   @Override public int getItemViewType(int position) {
@@ -91,9 +95,15 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
     @Bind(R.id.prevPriceField) TextView prevPriceField;
     @Bind(R.id.minPriceField) TextView minPriceField;
     @Bind(R.id.salePercentField) TextView percentSaleField;
+    @Bind(R.id.buyButton) Button buyButton;
+    @Bind(R.id.allPricesButton) Button allPricesButton;
 
     public SaleProductItemViewHolder(@NonNull View view) {
       super(view);
+      buyButton.setOnClickListener(v -> rxBus.postIfHasObservers(
+          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).storeProductUrl)));
+      allPricesButton.setOnClickListener(v -> rxBus.postIfHasObservers(
+          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).jbUrl)));
     }
   }
 

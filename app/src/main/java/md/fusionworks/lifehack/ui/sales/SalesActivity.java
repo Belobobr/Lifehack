@@ -1,5 +1,7 @@
 package md.fusionworks.lifehack.ui.sales;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import md.fusionworks.lifehack.ui.NavigationDrawerActivity;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
 import md.fusionworks.lifehack.ui.widget.RetryView;
+import md.fusionworks.lifehack.util.AndroidUtil;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.DateUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
@@ -43,6 +46,24 @@ public class SalesActivity extends NavigationDrawerActivity {
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
     setTitle("Скидки дня");
+  }
+
+  @Override protected void listenForEvents() {
+    super.listenForEvents();
+    getRxBus().event(NavigateToUrlEvent.class)
+        .compose(bindToLifecycle())
+        .subscribe(navigateToUrlEvent -> {
+          Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(navigateToUrlEvent.url));
+          boolean isChromeInstalled =
+              AndroidUtil.isPackageInstalled(Constant.APP_CHROME, SalesActivity.this);
+          if (isChromeInstalled) {
+            browserIntent.setPackage(Constant.APP_CHROME);
+            startActivity(browserIntent);
+          } else {
+            Intent chooserIntent = Intent.createChooser(browserIntent, "Выберите приложение");
+            startActivity(chooserIntent);
+          }
+        });
   }
 
   @Override public int getSelfDrawerItem() {
