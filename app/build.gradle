@@ -110,15 +110,15 @@ dependencies {
   debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
   testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
-  compile 'io.realm:realm-android:0.87.4'
-  compile 'com.github.bumptech.glide:glide:3.7.0'
+  compile "io.realm:realm-android:$rootProject.realmVersion"
+  compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
   /*
       apt "com.google.dagger:dagger-compiler:2.0.2"
       provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
       compile 'com.google.dagger:dagger:2.0.2'
       compile 'com.google.dagger:dagger:2.0.2'
       compile 'com.google.dagger:dagger-producers:2.0-beta'*/
-  compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+  compile("com.crashlytics.sdk.android:crashlytics:$rootProject.crashlyticsVersion") {
     transitive = true;
   }
 }
