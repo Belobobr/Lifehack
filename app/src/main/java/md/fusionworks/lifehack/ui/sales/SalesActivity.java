@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import butterknife.Bind;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import md.fusionworks.lifehack.R;
@@ -22,6 +23,8 @@ import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.DateUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
+import rx.Observable;
+import rx.functions.Func1;
 
 public class SalesActivity extends NavigationDrawerActivity {
 
@@ -130,6 +133,12 @@ public class SalesActivity extends NavigationDrawerActivity {
         Constant.LANG, Constant.SORT, Constant.LIMIT, offset, categoryId, Constant.PRICES_API_KEY)
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(bindToLifecycle())
+        .flatMap(productModelList -> Observable.from(new ArrayList<>(productModelList)))
+        .map(productModel -> {
+          productModel.categoryId = categoryId;
+          return productModel;
+        })
+        .toList()
         .subscribe(new ObserverAdapter<List<ProductModel>>() {
           @Override public void onNext(List<ProductModel> productModelList) {
             if (swap) {

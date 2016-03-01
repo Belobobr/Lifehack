@@ -6,103 +6,121 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_item_sale_product"
     android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp"
     >
-  <FrameLayout
+  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+      android:id="@+id/categoryField"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      >
-    <ImageView
-        android:id="@+id/thumbnailImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        />
-    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-        android:id="@+id/salePercentField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:background="@drawable/bg_sale_percent"
-        android:padding="1dp"
-        android:text="-0 %"
-        android:textColor="@color/white"
-        android:textSize="11sp"
-        view:typeface="font/Roboto-Regular.ttf"
-        />
-  </FrameLayout>
+      android:layout_gravity="left"
+      android:layout_marginLeft="68dp"
+      android:gravity="left"
+      android:textColor="@color/text_disabled"
+      android:textSize="13sp"
+      view:typeface="font/Roboto-Regular.ttf"
+      />
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
-      android:layout_weight="1"
-      android:orientation="vertical"
+      android:layout_marginTop="8dp"
+      android:gravity="top"
+      android:orientation="horizontal"
       >
-    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-        android:id="@+id/nameField"
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/navdrawer_background"
-        android:textSize="16sp"
-        view:typeface="font/Roboto-Regular.ttf"
-        />
-    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-        android:id="@+id/categoryField"
+        >
+      <ImageView
+          android:id="@+id/thumbnailImage"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          />
+      <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+          android:id="@+id/salePercentField"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|right"
+          android:background="@drawable/bg_sale_percent"
+          android:padding="2dp"
+          android:text="-0%"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          view:typeface="font/Roboto-Regular.ttf"
+          />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+      <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+          android:id="@+id/nameField"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          android:layout_marginTop="-5dp"
+          android:gravity="left"
+          android:textColor="@color/navdrawer_background"
+          android:textSize="16sp"
+          view:typeface="font/Roboto-Regular.ttf"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center|left"
+          android:orientation="horizontal"
+          >
+        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+            android:id="@+id/prevPriceField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_disabled"
+            android:textSize="13sp"
+            view:typeface="font/Roboto-Regular.ttf"
+            />
+
+        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+            android:id="@+id/minPriceField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            view:typeface="font/Roboto-Regular.ttf"
+            />
+      </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/text_disabled"
-        android:textSize="13sp"
-        view:typeface="font/Roboto-Regular.ttf"
-        />
-    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-        android:id="@+id/prevPriceField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:textColor="@color/text_disabled"
-        android:textSize="13sp"
-        view:typeface="font/Roboto-Regular.ttf"
-        />
-    <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-        android:id="@+id/minPriceField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        view:typeface="font/Roboto-Regular.ttf"
-        />
-  </LinearLayout>
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="vertical"
-      >
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/buyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Купить"
-        android:textColor="@color/white"
-        android:theme="@style/SpecialButton"
-        />
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/allPricesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:background="?android:selectableItemBackground"
-        android:text="Все цены"
-        android:textColor="@color/mainColorBlue"
-        android:textSize="13sp"
-        />
+        android:gravity="top"
+        android:orientation="vertical"
+        >
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/buyButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="-6dp"
+          android:text="Купить"
+          android:textColor="@color/white"
+          android:theme="@style/SpecialButton"
+          />
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/allPricesButton"
+          android:layout_width="wrap_content"
+          android:layout_height="25dp"
+          android:background="?android:selectableItemBackground"
+          android:text="Все цены"
+          android:textColor="@color/mainColorBlue"
+          android:textSize="13sp"
+          />
+    </LinearLayout>
   </LinearLayout>
 </LinearLayout>

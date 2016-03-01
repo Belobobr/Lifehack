@@ -59,13 +59,19 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
       ProductModel productModel = getItemList().get(position);
 
       initializeThumbnailImage(saleProductItemViewHolder.thumbnail, productModel.productImage);
+      if (productModel.categoryId == 0) {
+        saleProductItemViewHolder.categoryField.setVisibility(View.VISIBLE);
+        saleProductItemViewHolder.categoryField.setText(productModel.categoryNameRu);
+      } else {
+        saleProductItemViewHolder.categoryField.setVisibility(View.GONE);
+      }
       saleProductItemViewHolder.nameField.setText(productModel.productName);
-      saleProductItemViewHolder.categoryField.setText(productModel.categoryNameRu);
       initializePrevPriceField(saleProductItemViewHolder.prevPriceField,
           productModel.productPrevPriceForGraph);
       saleProductItemViewHolder.minPriceField.setText(
           String.format("%d MDL", Math.round(productModel.productMinPriceForGraph)));
-      saleProductItemViewHolder.percentSaleField.setText(Math.round(productModel.percent) + " %");
+      saleProductItemViewHolder.percentSaleField.setText(
+          "-" + Math.round(productModel.percent) + "%");
     }
   }
 
