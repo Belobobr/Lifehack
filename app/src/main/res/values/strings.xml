@@ -10,9 +10,6 @@
   <string name="drawer_item_life_taxi">Такси</string>
   <string name="drawer_item_life_poster">Афиша</string>
   <string name="module_title_exchange_rates">Обмен валют</string>
-
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="field_loading_rates_">Загрузка курса...</string>
   <string name="field_find_branches_">Поиск филиалов...</string>
   <string name="spinner_option_best_exchange">Лучший курс</string>
@@ -26,4 +23,13 @@
   <string name="field_no_rate">Нету курса</string>
   <string name="action_retry">Retry</string>
   <string name="empty"></string>
+  <string name="field_branch">Филиал</string>
+  <string name="field_address">Адрес</string>
+  <string name="field_schedule">График работы</string>
+  <string name="field_closing_time">Время до закрытия</string>
+  <string name="field_where_to_change">Где поменять</string>
+  <string name="field_only_opened_now">Только открытые сейчас</string>
+  <string name="field_buy">Купить</string>
+  <string name="field_all_prices">Все цены</string>
+  <string name="field_loading_more_">Загружаю больше...</string>
 </resources>

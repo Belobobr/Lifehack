@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/retryView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:visibility="gone"
     >
 
   <LinearLayout
@@ -18,11 +16,11 @@
       >
 
     <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        android:id="@+id/messageField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:singleLine="false"
-        android:text="@string/field_title_load_rates_error"
         android:textColor="@color/navdrawer_background"
         android:textSize="@dimen/text_size_large"
         view:typeface="font/Roboto-Bold.ttf"
@@ -53,4 +51,4 @@
         android:textSize="@dimen/text_size_medium"
         />
   </LinearLayout>
-</RelativeLayout>
+</merge>

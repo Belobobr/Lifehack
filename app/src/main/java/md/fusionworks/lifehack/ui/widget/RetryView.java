@@ -27,7 +27,7 @@ public class RetryView extends RelativeLayout {
   public RetryView(Context context, AttributeSet attrs) {
     super(context, attrs, R.attr.retryViewStyle);
 
-    inflate(context, R.layout.new_retry_view, this);
+    inflate(context, R.layout.retry_view, this);
     ButterKnife.bind(this);
 
     TypedArray ta =

@@ -110,7 +110,7 @@
             android:layout_marginLeft="-4dp"
             android:layout_marginRight="-4dp"
             android:layout_marginTop="-6dp"
-            android:text="Где поменять"
+            android:text="@string/field_where_to_change"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_large"
             view:typeface="font/Roboto-Regular.ttf"
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="-6dp"
             android:layout_marginTop="8dp"
-            android:text="Только открытые сейчас"
+            android:text="@string/field_only_opened_now"
             android:textSize="@dimen/text_size_medium"
             />
 

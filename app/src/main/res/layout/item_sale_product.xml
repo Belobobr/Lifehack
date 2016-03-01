@@ -108,7 +108,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="-6dp"
-          android:text="Купить"
+          android:text="@string/field_buy"
           android:textColor="@color/white"
           android:theme="@style/SpecialButton"
           />
@@ -117,7 +117,7 @@
           android:layout_width="wrap_content"
           android:layout_height="25dp"
           android:background="?android:selectableItemBackground"
-          android:text="Все цены"
+          android:text="@string/field_all_prices"
           android:textColor="@color/mainColorBlue"
           android:textSize="13sp"
           />
