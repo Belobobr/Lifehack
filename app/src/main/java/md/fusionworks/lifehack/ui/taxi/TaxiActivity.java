@@ -51,7 +51,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle("Такси");
+    setTitle(getString(R.string.module_taxi));
   }
 
   @Override public int getSelfDrawerItem() {

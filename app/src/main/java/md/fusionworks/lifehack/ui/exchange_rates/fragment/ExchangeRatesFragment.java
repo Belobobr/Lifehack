@@ -345,9 +345,9 @@ public class ExchangeRatesFragment extends BaseFragment {
 
       setAmountOutText(String.format("%.2f", bestExchangeModel.getAmountOutvalue()));
 
-      String bestExchangeBankText =
-          (bestExchangeModel.getBank() != null) ? String.format("Используется курс банка %s",
-              bestExchangeModel.getBank().name) : "Не найден подходящий банк";
+      String bestExchangeBankText = (bestExchangeModel.getBank() != null) ? String.format(
+          getActivity().getString(R.string.field_best_bank), bestExchangeModel.getBank().name)
+          : getActivity().getString(R.string.field_bank_not_found);
       setBestExchangeBankText(bestExchangeBankText);
     }
 

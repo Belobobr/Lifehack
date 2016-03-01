@@ -15,7 +15,7 @@ public class DialogUtil {
   public static void showBranchMapInfoWindow(Context context, BranchModel branch) {
     MaterialDialog dialog = new MaterialDialog.Builder(context).title(branch.getName())
         .customView(R.layout.info_window_view, true)
-        .positiveText("Закрыть")
+        .positiveText(R.string.field_close)
         .build();
 
     TextView addressField = (TextView) dialog.getCustomView().findViewById(R.id.addressField);
@@ -24,10 +24,13 @@ public class DialogUtil {
 
     addressField.setText(BranchUtil.getBranchAddress(branch));
 
-    String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "Пн - Пт: %s - %s");
-    String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
-    String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "Сб: %s - %s");
-    String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
+    String sheduleText = BranchUtil.getBranchMondayFridayHours(branch,
+        context.getString(R.string.field_monday_friday_hours));
+    String mondayFridayscheduleBreak =
+        BranchUtil.getBranchMondayFridayScheduleBreak(context, branch);
+    String saturdayHours =
+        BranchUtil.getBranchSaturdayHours(branch, context.getString(R.string.field_saturday_hours));
+    String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(context, branch);
     if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
       sheduleText += " " + mondayFridayscheduleBreak;
     }
@@ -45,7 +48,7 @@ public class DialogUtil {
     String phone = branch.getAddress().getPhone();
     if (!BranchUtil.isBranchDetailEmpty(phone)) {
       phoneField.setVisibility(View.VISIBLE);
-      phoneField.setText(String.format("Тел.: %s", phone));
+      phoneField.setText(String.format(context.getString(R.string.field_branch_phone), phone));
     }
 
     dialog.show();

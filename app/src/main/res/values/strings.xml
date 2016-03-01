@@ -32,4 +32,21 @@
   <string name="field_buy">Купить</string>
   <string name="field_all_prices">Все цены</string>
   <string name="field_loading_more_">Загружаю больше...</string>
+  <string name="field_close">Закрыть</string>
+  <string name="field_branch_phone">Тел.: %s</string>
+  <string formatted="false" name="field_monday_friday_hours">Пн - Пт: %s - %s</string>
+  <string formatted="false" name="field_saturday_hours">Сб: %s - %s</string>
+  <string formatted="false" name="field_branch_schedule_break">(перерыв %s - %s)</string>
+  <string name="field_now_is_closed">сейчас закрыто</string>
+  <string formatted="false" name="field_close_until">%d ч. %d минут</string>
+  <string name="module_lifehacks">Лайфхаки</string>
+  <string name="module_taxi">Такси</string>
+  <string name="module_today_sales">Скидки дня</string>
+  <string name="field_choose_app">Выберите приложение</string>
+  <string name="field_sale_category_all">Все категории</string>
+  <string name="module_main">Главная</string>
+  <string formatted="false" name="field_branch_mon_frid_hours">(Пн - Пт: %s - %s)</string>
+  <string formatted="false" name="field_sat_hours">(Сб: %s - %s)</string>
+  <string name="field_best_bank">Используется курс банка %s</string>
+  <string name="field_bank_not_found">Не найден подходящий банк</string>
 </resources>

@@ -55,7 +55,7 @@ public class LifeHacksActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle("Лайфхаки");
+    setTitle(getString(R.string.module_lifehacks));
   }
 
   @Override public int getSelfDrawerItem() {

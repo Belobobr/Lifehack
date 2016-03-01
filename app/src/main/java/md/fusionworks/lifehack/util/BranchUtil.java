@@ -1,8 +1,10 @@
 package md.fusionworks.lifehack.util;
 
+import android.content.Context;
 import android.text.TextUtils;
 import java.util.Calendar;
 import java.util.Date;
+import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel;
 
 /**
@@ -30,7 +32,7 @@ public class BranchUtil {
     return false;
   }
 
-  public static String getBranchMondayFridayScheduleBreak(BranchModel branch) {
+  public static String getBranchMondayFridayScheduleBreak(Context context, BranchModel branch) {
     String scheduleBreak = "";
     Date breakStart = null;
     Date breakEnd = null;
@@ -61,12 +63,13 @@ public class BranchUtil {
     if (breakStart != null && breakEnd != null) {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
-      scheduleBreak = String.format("(перерыв %s - %s)", start, end);
+      scheduleBreak =
+          String.format(context.getString(R.string.field_branch_schedule_break), start, end);
     }
     return scheduleBreak;
   }
 
-  public static String getBranchSaturdayScheduleBreak(BranchModel branch) {
+  public static String getBranchSaturdayScheduleBreak(Context context, BranchModel branch) {
     String scheduleBreak = "";
     Date breakStart = null;
     Date breakEnd = null;
@@ -79,12 +82,13 @@ public class BranchUtil {
     if (breakStart != null && breakEnd != null) {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
-      scheduleBreak = String.format("(перерыв %s - %s)", start, end);
+      scheduleBreak =
+          String.format(context.getString(R.string.field_branch_schedule_break), start, end);
     }
     return scheduleBreak;
   }
 
-  public static String getBranchMondayFridayHours(BranchModel branch, String format ) {
+  public static String getBranchMondayFridayHours(BranchModel branch, String format) {
     String mondayFridayHours = "";
     Date start = null;
     Date end = null;
@@ -114,7 +118,7 @@ public class BranchUtil {
     return mondayFridayHours;
   }
 
-  public static String getBranchSaturdayHours(BranchModel branch,String format) {
+  public static String getBranchSaturdayHours(BranchModel branch, String format) {
     String saturdayHours = "";
     Date start = null;
     Date end = null;
@@ -132,7 +136,7 @@ public class BranchUtil {
     return saturdayHours;
   }
 
-  public static String getClosingTime(BranchModel branch) {
+  public static String getClosingTime(Context context, BranchModel branch) {
     Date scheduleDateEnd = null;
     Date scheduleDateStart = null;
     Date currentDate;
@@ -197,9 +201,11 @@ public class BranchUtil {
         }
         break;
     }
-    if (scheduleDateEnd == null || scheduleDateStart == null) return "сейчас закрыто";
+    if (scheduleDateEnd == null || scheduleDateStart == null) {
+      return context.getString(R.string.field_now_is_closed);
+    }
     if (scheduleDateEnd.before(currentDate) || scheduleDateStart.after(currentDate)) {
-      return "сейчас закрыто";
+      return context.getString(R.string.field_now_is_closed);
     }
 
     long secs = (scheduleDateEnd.getTime() - currentDate.getTime()) / 1000;
@@ -208,8 +214,8 @@ public class BranchUtil {
     long mins = secs / 60;
     secs = secs % 60;
 
-    if (hours + mins == 0) return "сейчас закрыто";
+    if (hours + mins == 0) return context.getString(R.string.field_now_is_closed);
 
-    return String.format("%d ч. %d минут", hours, mins);
+    return String.format(context.getString(R.string.field_close_until), hours, mins);
   }
 }

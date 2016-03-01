@@ -48,7 +48,7 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle("Скидки дня");
+    setTitle(getString(R.string.module_today_sales));
   }
 
   @Override protected void listenForEvents() {
@@ -63,7 +63,8 @@ public class SalesActivity extends NavigationDrawerActivity {
             browserIntent.setPackage(Constant.APP_CHROME);
             startActivity(browserIntent);
           } else {
-            Intent chooserIntent = Intent.createChooser(browserIntent, "Выберите приложение");
+            Intent chooserIntent =
+                Intent.createChooser(browserIntent, getString(R.string.field_choose_app));
             startActivity(chooserIntent);
           }
         });
@@ -159,7 +160,8 @@ public class SalesActivity extends NavigationDrawerActivity {
   }
 
   private List<SaleCategoryModel> addAllCategoriesItem(List<SaleCategoryModel> categoryModelList) {
-    categoryModelList.add(0, new SaleCategoryModel(0, "Все категории", "Toate categoriile"));
+    categoryModelList.add(0, new SaleCategoryModel(0, getString(R.string.field_sale_category_all),
+        getString(R.string.field_sale_category_all)));
     return categoryModelList;
   }
 

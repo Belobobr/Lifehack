@@ -24,7 +24,7 @@ public class MainActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle("Главная");
+    setTitle(getString(R.string.module_main));
   }
 
   @Override public int getSelfDrawerItem() {

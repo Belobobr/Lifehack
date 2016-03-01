@@ -81,10 +81,14 @@ public class BranchListFragment extends BaseFragment {
       if (!BranchUtil.isBranchDetailEmpty(phone)) address += "\n" + phone;
       addressField.setText(address);
 
-      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch, "(Пн - Пт: %s - %s)");
-      String mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(branch);
-      String saturdayHours = BranchUtil.getBranchSaturdayHours(branch, "(Сб: %s - %s)");
-      String saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(branch);
+      String sheduleText = BranchUtil.getBranchMondayFridayHours(branch,
+          getActivity().getString(R.string.field_branch_mon_frid_hours));
+      String mondayFridayscheduleBreak =
+          BranchUtil.getBranchMondayFridayScheduleBreak(getActivity(), branch);
+      String saturdayHours = BranchUtil.getBranchSaturdayHours(branch,
+          getActivity().getString(R.string.field_sat_hours));
+      String saturdayScheduleBreak =
+          BranchUtil.getBranchSaturdayScheduleBreak(getActivity(), branch);
       if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
         sheduleText += "\n" + mondayFridayscheduleBreak;
       }
@@ -96,7 +100,7 @@ public class BranchListFragment extends BaseFragment {
       }
       scheduleField.setText(sheduleText);
 
-      workField.setText(BranchUtil.getClosingTime(branch));
+      workField.setText(BranchUtil.getClosingTime(getActivity(), branch));
 
       nameField.setOnClickListener(v1 -> {
         getRxBus().postIfHasObservers(new ScrollToMapEvent());
