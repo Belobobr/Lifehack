@@ -129,6 +129,7 @@ public class SalesActivity extends NavigationDrawerActivity {
   }
 
   private void getSaleProducts(int categoryId, int offset, boolean swap) {
+    if (swap) showLoadingDialog();
     salesRepository.getSaleProducts(getTodayDateString(), Constant.MIN_RANGE, Constant.MAX_RANGE,
         Constant.LANG, Constant.SORT, Constant.LIMIT, offset, categoryId, Constant.PRICES_API_KEY)
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
@@ -142,6 +143,7 @@ public class SalesActivity extends NavigationDrawerActivity {
         .subscribe(new ObserverAdapter<List<ProductModel>>() {
           @Override public void onNext(List<ProductModel> productModelList) {
             if (swap) {
+              hideLoadingDialog();
               saleProductAdapter.swap(productModelList);
             } else {
               saleProductAdapter.addItems(productModelList);
@@ -149,6 +151,7 @@ public class SalesActivity extends NavigationDrawerActivity {
           }
 
           @Override public void onError(Throwable e) {
+            if (swap) hideLoadingDialog();
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
                 getString(R.string.field_something_gone_wrong));
           }
