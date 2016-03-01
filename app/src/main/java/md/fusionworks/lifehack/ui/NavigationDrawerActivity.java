@@ -30,9 +30,9 @@ public class NavigationDrawerActivity extends BaseActivity {
 
   private static final int[] DRAWER_TITLE_RES_ID = new int[] {
       R.string.drawer_item_main, R.string.drawer_item_life_hacks,
-      R.string.drawer_item_exchange_rates, R.string.drawer_item_life_movies,
-      R.string.drawer_item_life_taxi, R.string.drawer_item_prices, R.string.drawer_item_sales,
-      R.string.drawer_item_life_poster
+      R.string.drawer_item_exchange_rates, R.string.drawer_item_movies,
+      R.string.drawer_item_taxi, R.string.drawer_item_prices, R.string.drawer_item_sales,
+      R.string.drawer_item_poster
       // R.string.drawer_item_settings
   };
 

@@ -29,7 +29,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="8dp"
       android:gravity="center"
-      android:text="@string/field_loading_more_"
+      android:text="@string/loading_more"
       android:textColor="#555"
       />
 </LinearLayout>

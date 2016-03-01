@@ -24,7 +24,7 @@
           android:id="@+id/retryView"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          app:message="@string/field_title_load_today_sales_error"
+          app:message="@string/error_load_today_sales"
           />
       <LinearLayout
           android:id="@+id/todaySalesView"

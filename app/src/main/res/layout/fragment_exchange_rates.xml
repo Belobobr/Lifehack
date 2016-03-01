@@ -13,7 +13,7 @@
       android:id="@+id/retryView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      view:message="@string/field_title_load_rates_error"
+      view:message="@string/error_load_rates"
       />
 
   <LinearLayout
@@ -110,7 +110,7 @@
             android:layout_marginLeft="-4dp"
             android:layout_marginRight="-4dp"
             android:layout_marginTop="-6dp"
-            android:text="@string/field_where_to_change"
+            android:text="@string/where_to_change"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_large"
             view:typeface="font/Roboto-Regular.ttf"
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="-6dp"
             android:layout_marginTop="8dp"
-            android:text="@string/field_only_opened_now"
+            android:text="@string/only_opened_now"
             android:textSize="@dimen/text_size_medium"
             />
 

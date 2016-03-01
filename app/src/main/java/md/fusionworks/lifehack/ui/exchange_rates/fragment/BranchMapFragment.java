@@ -220,7 +220,7 @@ public class BranchMapFragment extends BaseFragment {
             @Override public void onRoutingFailure(RouteException e) {
               hideLoadingDialog();
               showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                  getString(R.string.field_something_gone_wrong));
+                  getString(R.string.error_something_gone_wrong));
             }
 
             @Override public void onRoutingStart() {
@@ -261,7 +261,7 @@ public class BranchMapFragment extends BaseFragment {
       routing.execute();
     } else {
       showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-          getString(R.string.field_something_gone_wrong));
+          getString(R.string.error_something_gone_wrong));
     }
   }
 }

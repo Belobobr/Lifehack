@@ -29,7 +29,7 @@ public class LifeHacksActivity extends NavigationDrawerActivity {
       @Override public void onReceivedError(WebView view, WebResourceRequest request,
           WebResourceError error) {
         showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-            getString(R.string.field_something_gone_wrong));
+            getString(R.string.error_something_gone_wrong));
       }
     });
     showLoadingDialog();
@@ -55,7 +55,7 @@ public class LifeHacksActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle(getString(R.string.module_lifehacks));
+    setTitle(getString(R.string.title_life_hacks));
   }
 
   @Override public int getSelfDrawerItem() {

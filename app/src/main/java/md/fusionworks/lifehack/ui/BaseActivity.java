@@ -70,7 +70,7 @@ public class BaseActivity extends RxAppCompatActivity {
         if (type == Constant.NOTIFICATION_TOAST_ERROR) {
           snackbar.getView().setBackgroundColor(Color.RED);
         }
-        snackbar.setAction(R.string.action_retry, v -> {
+        snackbar.setAction(R.string.retry, v -> {
           if (notificationToastActionListener != null) notificationToastActionListener.onClick();
         });
         snackbar.show();

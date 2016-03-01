@@ -53,7 +53,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         break;
       case Constant.DRAWER_ITEM_TAXI:
         holder.titleField.setText(
-            holder.titleField.getContext().getString(R.string.drawer_item_life_taxi));
+            holder.titleField.getContext().getString(R.string.drawer_item_taxi));
         holder.logoImage.setImageResource(R.drawable.ic_taxi);
         break;
     }

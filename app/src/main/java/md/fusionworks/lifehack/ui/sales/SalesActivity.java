@@ -24,7 +24,6 @@ import md.fusionworks.lifehack.util.DateUtil;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
 import rx.Observable;
-import rx.functions.Func1;
 
 public class SalesActivity extends NavigationDrawerActivity {
 
@@ -48,7 +47,7 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle(getString(R.string.module_today_sales));
+    setTitle(getString(R.string.title_today_sales));
   }
 
   @Override protected void listenForEvents() {
@@ -64,7 +63,7 @@ public class SalesActivity extends NavigationDrawerActivity {
             startActivity(browserIntent);
           } else {
             Intent chooserIntent =
-                Intent.createChooser(browserIntent, getString(R.string.field_choose_app));
+                Intent.createChooser(browserIntent, getString(R.string.choose_app));
             startActivity(chooserIntent);
           }
         });
@@ -154,14 +153,14 @@ public class SalesActivity extends NavigationDrawerActivity {
           @Override public void onError(Throwable e) {
             if (swap) hideLoadingDialog();
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.field_something_gone_wrong));
+                getString(R.string.error_something_gone_wrong));
           }
         });
   }
 
   private List<SaleCategoryModel> addAllCategoriesItem(List<SaleCategoryModel> categoryModelList) {
-    categoryModelList.add(0, new SaleCategoryModel(0, getString(R.string.field_sale_category_all),
-        getString(R.string.field_sale_category_all)));
+    categoryModelList.add(0, new SaleCategoryModel(0, getString(R.string.all_categories),
+        getString(R.string.all_categories)));
     return categoryModelList;
   }
 

@@ -30,7 +30,7 @@ public class ExchangeRatesActivity extends NavigationDrawerActivity {
 
   @Override public void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    setTitle(getString(R.string.module_title_exchange_rates));
+    setTitle(getString(R.string.title_exchange_rates));
   }
 
   @Override public int getSelfDrawerItem() {

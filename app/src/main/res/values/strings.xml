@@ -6,47 +6,45 @@
   <string name="drawer_item_sales">Скидки дня</string>
   <string name="drawer_item_settings">Настройки</string>
   <string name="drawer_item_life_hacks">Лайфхаки</string>
-  <string name="drawer_item_life_movies">Кино</string>
-  <string name="drawer_item_life_taxi">Такси</string>
-  <string name="drawer_item_life_poster">Афиша</string>
-  <string name="module_title_exchange_rates">Обмен валют</string>
-  <string name="field_loading_rates_">Загрузка курса...</string>
-  <string name="field_find_branches_">Поиск филиалов...</string>
-  <string name="spinner_option_best_exchange">Лучший курс</string>
-  <string name="spinner_option_bank_list">Список банков</string>
-  <string name="field_title_load_rates_error">Не удалось загрузить курс.</string>
-  <string name="field_title_load_today_sales_error">Не удалось загрузить скидки дня.</string>
-  <string name="field_message_load_rates_error">Проверьте интернет соединение \nи пробуйте снова.</string>
-  <string name="field_try_again">Попробовать снова</string>
-  <string name="field_cancel">Отменить</string>
-  <string name="field_something_gone_wrong">Что-то пошло не так.</string>
-  <string name="field_no_rate">Нету курса</string>
-  <string name="action_retry">Retry</string>
+  <string name="drawer_item_movies">Кино</string>
+  <string name="drawer_item_taxi">Такси</string>
+  <string name="drawer_item_poster">Афиша</string>
+  <string name="title_exchange_rates">Обмен валют</string>
+  <string name="best_exchange">Лучший курс</string>
+  <string name="bank_list">Список банков</string>
+  <string name="error_load_rates">Не удалось загрузить курс.</string>
+  <string name="error_load_today_sales">Не удалось загрузить скидки дня.</string>
+  <string name="check_internet_connection">Проверьте интернет соединение \nи пробуйте снова.</string>
+  <string name="try_again">Попробовать снова</string>
+  <string name="cancel">Отменить</string>
+  <string name="error_something_gone_wrong">Что-то пошло не так.</string>
+  <string name="no_rate">Нету курса</string>
+  <string name="retry">Попробоать снова</string>
   <string name="empty"></string>
-  <string name="field_branch">Филиал</string>
-  <string name="field_address">Адрес</string>
-  <string name="field_schedule">График работы</string>
-  <string name="field_closing_time">Время до закрытия</string>
-  <string name="field_where_to_change">Где поменять</string>
-  <string name="field_only_opened_now">Только открытые сейчас</string>
-  <string name="field_buy">Купить</string>
-  <string name="field_all_prices">Все цены</string>
-  <string name="field_loading_more_">Загружаю больше...</string>
-  <string name="field_close">Закрыть</string>
-  <string name="field_branch_phone">Тел.: %s</string>
-  <string formatted="false" name="field_monday_friday_hours">Пн - Пт: %s - %s</string>
-  <string formatted="false" name="field_saturday_hours">Сб: %s - %s</string>
-  <string formatted="false" name="field_branch_schedule_break">(перерыв %s - %s)</string>
-  <string name="field_now_is_closed">сейчас закрыто</string>
-  <string formatted="false" name="field_close_until">%d ч. %d минут</string>
-  <string name="module_lifehacks">Лайфхаки</string>
-  <string name="module_taxi">Такси</string>
-  <string name="module_today_sales">Скидки дня</string>
-  <string name="field_choose_app">Выберите приложение</string>
-  <string name="field_sale_category_all">Все категории</string>
-  <string name="module_main">Главная</string>
-  <string formatted="false" name="field_branch_mon_frid_hours">(Пн - Пт: %s - %s)</string>
-  <string formatted="false" name="field_sat_hours">(Сб: %s - %s)</string>
-  <string name="field_best_bank">Используется курс банка %s</string>
-  <string name="field_bank_not_found">Не найден подходящий банк</string>
+  <string name="branch">Филиал</string>
+  <string name="address">Адрес</string>
+  <string name="work_schedule">График работы</string>
+  <string name="time_until_closing">Время до закрытия</string>
+  <string name="where_to_change">Где поменять</string>
+  <string name="only_opened_now">Только открытые сейчас</string>
+  <string name="buy">Купить</string>
+  <string name="all_prices">Все цены</string>
+  <string name="loading_more">Загружаю больше...</string>
+  <string name="close">Закрыть</string>
+  <string name="format_branch_phone">Тел.: %s</string>
+  <string formatted="false" name="format_branch_monday_friday_hours">Пн - Пт: %s - %s</string>
+  <string formatted="false" name="format_branch_saturday_hours">Сб: %s - %s</string>
+  <string formatted="false" name="format_branch_schedule_break">(перерыв %s - %s)</string>
+  <string name="is_closed">сейчас закрыто</string>
+  <string formatted="false" name="format_branch_close_until">%d ч. %d минут</string>
+  <string name="title_life_hacks">Лайфхаки</string>
+  <string name="title_taxi">Такси</string>
+  <string name="title_today_sales">Скидки дня</string>
+  <string name="choose_app">Выберите приложение</string>
+  <string name="all_categories">Все категории</string>
+  <string name="title_main">Главная</string>
+  <string formatted="false" name="format_branch_monday_friday_hours_2">(Пн - Пт: %s - %s)</string>
+  <string formatted="false" name="format_branch_sat_hours_2">(Сб: %s - %s)</string>
+  <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>
+  <string name="bank_not_found">Не найден подходящий банк</string>
 </resources>

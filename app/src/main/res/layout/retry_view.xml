@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:singleLine="false"
-        android:text="@string/field_message_load_rates_error"
+        android:text="@string/check_internet_connection"
         android:textColor="@color/navdrawer_background"
         android:textSize="@dimen/text_size_medium"
         view:typeface="font/Roboto-Light.ttf"
@@ -46,7 +46,7 @@
         android:background="?android:selectableItemBackground"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:text="@string/field_try_again"
+        android:text="@string/try_again"
         android:textColor="@color/mainColorBlue"
         android:textSize="@dimen/text_size_medium"
         />

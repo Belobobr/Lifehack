@@ -138,7 +138,7 @@ public class ExchangeRatesFragment extends BaseFragment {
           @Override public void onError(Throwable e) {
             hideLoadingDialog();
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.field_something_gone_wrong));
+                getString(R.string.error_something_gone_wrong));
           }
         });
   }
@@ -190,8 +190,8 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private void populateBankSpinner(List<BankModel> bankList) {
     bankSpinnerAdapter.clear();
-    bankSpinnerAdapter.addItem(getActivity().getString(R.string.spinner_option_best_exchange), 0);
-    bankSpinnerAdapter.addHeader(getActivity().getString(R.string.spinner_option_bank_list));
+    bankSpinnerAdapter.addItem(getActivity().getString(R.string.best_exchange), 0);
+    bankSpinnerAdapter.addHeader(getActivity().getString(R.string.bank_list));
     for (BankModel bank : bankList) {
       bankSpinnerAdapter.addItem(bank.name, bank.id);
     }
@@ -306,7 +306,7 @@ public class ExchangeRatesFragment extends BaseFragment {
   }
 
   private void notifyNoExchangeRates() {
-    showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, getString(R.string.field_no_rate));
+    showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR, getString(R.string.no_rate));
     setAmountOutText(Constant.NO_EXCHANGE_RATES_OUT_VALUE);
   }
 
@@ -346,8 +346,8 @@ public class ExchangeRatesFragment extends BaseFragment {
       setAmountOutText(String.format("%.2f", bestExchangeModel.getAmountOutvalue()));
 
       String bestExchangeBankText = (bestExchangeModel.getBank() != null) ? String.format(
-          getActivity().getString(R.string.field_best_bank), bestExchangeModel.getBank().name)
-          : getActivity().getString(R.string.field_bank_not_found);
+          getActivity().getString(R.string.format_exchange_rates_best_bank), bestExchangeModel.getBank().name)
+          : getActivity().getString(R.string.bank_not_found);
       setBestExchangeBankText(bestExchangeBankText);
     }
 
@@ -433,7 +433,7 @@ public class ExchangeRatesFragment extends BaseFragment {
           @Override public void onError(Throwable e) {
             hideLoadingDialog();
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.field_something_gone_wrong));
+                getString(R.string.error_something_gone_wrong));
           }
         });
   }

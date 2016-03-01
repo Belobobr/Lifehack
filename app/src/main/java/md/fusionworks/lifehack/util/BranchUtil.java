@@ -64,7 +64,7 @@ public class BranchUtil {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
       scheduleBreak =
-          String.format(context.getString(R.string.field_branch_schedule_break), start, end);
+          String.format(context.getString(R.string.format_branch_schedule_break), start, end);
     }
     return scheduleBreak;
   }
@@ -83,7 +83,7 @@ public class BranchUtil {
       String start = DateUtil.getBranchScheduleBreakFormat().format(breakStart);
       String end = DateUtil.getBranchScheduleBreakFormat().format(breakEnd);
       scheduleBreak =
-          String.format(context.getString(R.string.field_branch_schedule_break), start, end);
+          String.format(context.getString(R.string.format_branch_schedule_break), start, end);
     }
     return scheduleBreak;
   }
@@ -202,10 +202,10 @@ public class BranchUtil {
         break;
     }
     if (scheduleDateEnd == null || scheduleDateStart == null) {
-      return context.getString(R.string.field_now_is_closed);
+      return context.getString(R.string.is_closed);
     }
     if (scheduleDateEnd.before(currentDate) || scheduleDateStart.after(currentDate)) {
-      return context.getString(R.string.field_now_is_closed);
+      return context.getString(R.string.is_closed);
     }
 
     long secs = (scheduleDateEnd.getTime() - currentDate.getTime()) / 1000;
@@ -214,8 +214,8 @@ public class BranchUtil {
     long mins = secs / 60;
     secs = secs % 60;
 
-    if (hours + mins == 0) return context.getString(R.string.field_now_is_closed);
+    if (hours + mins == 0) return context.getString(R.string.is_closed);
 
-    return String.format(context.getString(R.string.field_close_until), hours, mins);
+    return String.format(context.getString(R.string.format_branch_close_until), hours, mins);
   }
 }

@@ -82,11 +82,11 @@ public class BranchListFragment extends BaseFragment {
       addressField.setText(address);
 
       String sheduleText = BranchUtil.getBranchMondayFridayHours(branch,
-          getActivity().getString(R.string.field_branch_mon_frid_hours));
+          getActivity().getString(R.string.format_branch_monday_friday_hours_2));
       String mondayFridayscheduleBreak =
           BranchUtil.getBranchMondayFridayScheduleBreak(getActivity(), branch);
       String saturdayHours = BranchUtil.getBranchSaturdayHours(branch,
-          getActivity().getString(R.string.field_sat_hours));
+          getActivity().getString(R.string.format_branch_sat_hours_2));
       String saturdayScheduleBreak =
           BranchUtil.getBranchSaturdayScheduleBreak(getActivity(), branch);
       if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
