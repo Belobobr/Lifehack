@@ -21,6 +21,7 @@ import md.fusionworks.lifehack.ui.widget.RetryView;
 import md.fusionworks.lifehack.util.AndroidUtil;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.DateUtil;
+import md.fusionworks.lifehack.util.LocaleHelper;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import md.fusionworks.lifehack.util.rx.ObserverAdapter;
 import rx.Observable;
@@ -95,7 +96,7 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   private void initializeProductList() {
     productList.setLayoutManager(new LinearLayoutManager(this));
-    saleProductAdapter = new SaleProductAdapter(productList);
+    saleProductAdapter = new SaleProductAdapter(productList, LocaleHelper.getLanguage(this));
     productList.setAdapter(saleProductAdapter);
 
     saleProductAdapter.setOnLoadMoreItemsListener(() -> {

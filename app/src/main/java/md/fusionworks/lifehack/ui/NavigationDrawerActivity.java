@@ -1,5 +1,6 @@
 package md.fusionworks.lifehack.ui;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import java.util.ArrayList;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.base.view.BaseActivity;
+import md.fusionworks.lifehack.ui.main.MainActivity;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.LocaleHelper;
 import md.fusionworks.lifehack.util.UIUtil;
 
 /**
@@ -31,9 +35,8 @@ public class NavigationDrawerActivity extends BaseActivity {
 
   private static final int[] DRAWER_TITLE_RES_ID = new int[] {
       R.string.drawer_item_main, R.string.drawer_item_life_hacks,
-      R.string.drawer_item_exchange_rates, R.string.drawer_item_movies,
-      R.string.drawer_item_taxi, R.string.drawer_item_prices, R.string.drawer_item_sales,
-      R.string.drawer_item_poster
+      R.string.drawer_item_exchange_rates, R.string.drawer_item_movies, R.string.drawer_item_taxi,
+      R.string.drawer_item_prices, R.string.drawer_item_sales, R.string.drawer_item_poster
       // R.string.drawer_item_settings
   };
 
@@ -59,6 +62,7 @@ public class NavigationDrawerActivity extends BaseActivity {
   private Handler handler;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
+    LocaleHelper.onCreate(this);
     super.onCreate(savedInstanceState);
     handler = new Handler();
   }
@@ -264,5 +268,15 @@ public class NavigationDrawerActivity extends BaseActivity {
         finish();
         break;
     }
+  }
+
+  @OnClick(R.id.languageButton) public void languageButtonClick() {
+    String currentLanguage = LocaleHelper.getLanguage(this);
+    String toggleLanguage =
+        currentLanguage.equals(Constant.LANG_RU) ? Constant.LANG_RO : Constant.LANG_RU;
+    LocaleHelper.setLocale(this, toggleLanguage);
+
+    drawerLayout.closeDrawer(GravityCompat.START);
+    handler.postDelayed(() -> recreate(), DRAWER_LAUNCH_DELAY);
   }
 }

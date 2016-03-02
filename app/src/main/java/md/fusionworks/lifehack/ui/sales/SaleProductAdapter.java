@@ -19,6 +19,7 @@ import md.fusionworks.lifehack.ui.base.view.BaseViewHolder;
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.LocaleHelper;
 import md.fusionworks.lifehack.util.rx.RxBus;
 
 /**
@@ -30,9 +31,11 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
   private final int VIEW_TYPE_LOADING = 1;
 
   private RxBus rxBus;
+  private String language;
 
-  public SaleProductAdapter(RecyclerView recyclerView) {
+  public SaleProductAdapter(RecyclerView recyclerView, String language) {
     super(recyclerView);
+    this.language = language;
     rxBus = RxBus.getInstance();
   }
 
@@ -61,7 +64,9 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
       initializeThumbnailImage(saleProductItemViewHolder.thumbnail, productModel.productImage);
       if (productModel.categoryId == 0) {
         saleProductItemViewHolder.categoryField.setVisibility(View.VISIBLE);
-        saleProductItemViewHolder.categoryField.setText(productModel.categoryNameRu);
+        String productName = (language.equals(Constant.LANG_RU)) ? productModel.categoryNameRu
+            : productModel.categoryNameRo;
+        saleProductItemViewHolder.categoryField.setText(productName);
       } else {
         saleProductItemViewHolder.categoryField.setVisibility(View.GONE);
       }

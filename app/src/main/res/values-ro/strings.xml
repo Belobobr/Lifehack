@@ -47,4 +47,5 @@
   <string formatted="false" name="format_branch_sat_hours_2">(S: %s - %s)</string>
   <string name="format_exchange_rates_best_bank">Se folosește cursul băncii %s</string>
   <string name="bank_not_found">Nu a fost gasită banca potrivită</string>
+  <string name="language">Русский язык</string>
 </resources>

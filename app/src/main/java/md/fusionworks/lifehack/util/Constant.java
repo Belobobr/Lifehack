@@ -47,4 +47,8 @@ public class Constant {
   public static final String PRICES_API_KEY = "zEjoa61qZS";
   public static final int SALE_PRODUCT_THUMBNAIL_IMAGE_SIZE = 160;
   public static final String APP_CHROME = "com.android.chrome";
+
+  public static final String LANG_RU = "ru";
+  public static final String LANG_RO = "ro";
+  public static final String LANG_EN = "en";
 }

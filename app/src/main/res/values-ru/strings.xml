@@ -47,4 +47,5 @@
   <string formatted="false" name="format_branch_sat_hours_2">(Сб: %s - %s)</string>
   <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>
   <string name="bank_not_found">Не найден подходящий банк</string>
+  <string name="language">Limba romînă</string>
 </resources>
