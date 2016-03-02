@@ -5,7 +5,7 @@
   <string name="drawer_item_prices">Prețuri</string>
   <string name="drawer_item_sales">Reducerile zilei</string>
   <string name="drawer_item_settings">Setări</string>
-  <string name="drawer_item_life_hacks">Lifehacks</string>
+  <string name="drawer_item_life_hacks">Lifehack-uri</string>
   <string name="drawer_item_movies">Cinema</string>
   <string name="drawer_item_taxi">Taxi</string>
   <string name="drawer_item_poster">Afișa</string>
@@ -15,7 +15,7 @@
   <string name="error_load_rates">Preluarea cursurilor a eșuat.</string>
   <string name="error_load_today_sales">Preluarea reducerilor zilei a eșuat.</string>
   <string name="check_internet_connection">Verificați conexiunea la internet \nși încercați din nou.</string>
-  <string name="try_again">Încercați din nou</string>
+  <string name="try_again">Încearcă din nou</string>
   <string name="cancel">Amînează</string>
   <string name="error_something_gone_wrong">Ceva a mers prost.</string>
   <string name="no_rate">Lipsește cursul</string>
@@ -26,7 +26,7 @@
   <string name="work_schedule">Program</string>
   <string name="time_until_closing">Timpul pînă la închidere</string>
   <string name="where_to_change">Unde de schimbat</string>
-  <string name="only_opened_now">Doar deschise acum</string>
+  <string name="only_opened_now">deschise acum</string>
   <string name="buy">Cumpără</string>
   <string name="all_prices">Toate prețurile</string>
   <string name="loading_more">Încarc mai multe...</string>
@@ -37,7 +37,7 @@
   <string formatted="false" name="format_branch_schedule_break">(pauză %s - %s)</string>
   <string name="is_closed">acum este închis</string>
   <string formatted="false" name="format_branch_close_until">%d o. %d minute</string>
-  <string name="title_life_hacks">Lifehacks</string>
+  <string name="title_life_hacks">Lifehack-uri</string>
   <string name="title_taxi">Taxi</string>
   <string name="title_today_sales">Reducerile zilei</string>
   <string name="choose_app">Selectează o aplicație</string>
