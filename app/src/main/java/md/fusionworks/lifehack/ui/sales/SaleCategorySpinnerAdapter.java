@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel;
+import md.fusionworks.lifehack.util.Constant;
 
 /**
  * Created by ungvas on 10/30/15.
@@ -18,10 +19,13 @@ public class SaleCategorySpinnerAdapter extends BaseAdapter {
 
   private Context context;
   private List<SaleCategoryModel> items = new ArrayList<>();
+  private String language;
 
-  public SaleCategorySpinnerAdapter(Context context, List<SaleCategoryModel> items) {
+  public SaleCategorySpinnerAdapter(Context context, List<SaleCategoryModel> items,
+      String language) {
     this.context = context;
     this.items = items;
+    this.language = language;
   }
 
   @Override public int getCount() {
@@ -37,7 +41,8 @@ public class SaleCategorySpinnerAdapter extends BaseAdapter {
   }
 
   private String getTitle(int position) {
-    return position >= 0 && position < items.size() ? items.get(position).nameRu : "";
+    return position >= 0 && position < items.size() ? (language.equals(Constant.LANG_RU))
+        ? items.get(position).nameRu : items.get(position).nameRo : "";
   }
 
   @Override public View getDropDownView(int position, View view, ViewGroup parent) {

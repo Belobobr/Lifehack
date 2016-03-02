@@ -75,7 +75,8 @@ public class SalesActivity extends NavigationDrawerActivity {
   }
 
   private void initializeSaleCategorySpinner(List<SaleCategoryModel> saleCategoryModelList) {
-    saleCategorySpinnerAdapter = new SaleCategorySpinnerAdapter(this, saleCategoryModelList);
+    saleCategorySpinnerAdapter =
+        new SaleCategorySpinnerAdapter(this, saleCategoryModelList, LocaleHelper.getLanguage(this));
     saleCategorySpinner.setAdapter(saleCategorySpinnerAdapter);
     saleCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
