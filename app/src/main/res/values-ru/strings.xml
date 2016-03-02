@@ -1,0 +1,50 @@
+<resources>
+  <string name="app_name">Lifehack</string>
+  <string name="drawer_item_exchange_rates">Обмен валют</string>
+  <string name="drawer_item_main">Главная</string>
+  <string name="drawer_item_prices">Цены</string>
+  <string name="drawer_item_sales">Скидки дня</string>
+  <string name="drawer_item_settings">Настройки</string>
+  <string name="drawer_item_life_hacks">Лайфхаки</string>
+  <string name="drawer_item_movies">Кино</string>
+  <string name="drawer_item_taxi">Такси</string>
+  <string name="drawer_item_poster">Афиша</string>
+  <string name="title_exchange_rates">Обмен валют</string>
+  <string name="best_exchange">Лучший курс</string>
+  <string name="bank_list">Список банков</string>
+  <string name="error_load_rates">Не удалось загрузить курс.</string>
+  <string name="error_load_today_sales">Не удалось загрузить скидки дня.</string>
+  <string name="check_internet_connection">Проверьте интернет соединение \nи пробуйте снова.</string>
+  <string name="try_again">Попробовать снова</string>
+  <string name="cancel">Отменить</string>
+  <string name="error_something_gone_wrong">Что-то пошло не так.</string>
+  <string name="no_rate">Нету курса</string>
+  <string name="retry">Попробоать снова</string>
+  <string name="empty"></string>
+  <string name="branch">Филиал</string>
+  <string name="address">Адрес</string>
+  <string name="work_schedule">График работы</string>
+  <string name="time_until_closing">Время до закрытия</string>
+  <string name="where_to_change">Где поменять</string>
+  <string name="only_opened_now">Только открытые сейчас</string>
+  <string name="buy">Купить</string>
+  <string name="all_prices">Все цены</string>
+  <string name="loading_more">Загружаю больше...</string>
+  <string name="close">Закрыть</string>
+  <string name="format_branch_phone">Тел.: %s</string>
+  <string formatted="false" name="format_branch_monday_friday_hours">Пн - Пт: %s - %s</string>
+  <string formatted="false" name="format_branch_saturday_hours">Сб: %s - %s</string>
+  <string formatted="false" name="format_branch_schedule_break">(перерыв %s - %s)</string>
+  <string name="is_closed">сейчас закрыто</string>
+  <string formatted="false" name="format_branch_close_until">%d ч. %d минут</string>
+  <string name="title_life_hacks">Лайфхаки</string>
+  <string name="title_taxi">Такси</string>
+  <string name="title_today_sales">Скидки дня</string>
+  <string name="choose_app">Выберите приложение</string>
+  <string name="all_categories">Все категории</string>
+  <string name="title_main">Главная</string>
+  <string formatted="false" name="format_branch_monday_friday_hours_2">(Пн - Пт: %s - %s)</string>
+  <string formatted="false" name="format_branch_sat_hours_2">(Сб: %s - %s)</string>
+  <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>
+  <string name="bank_not_found">Не найден подходящий банк</string>
+</resources>
