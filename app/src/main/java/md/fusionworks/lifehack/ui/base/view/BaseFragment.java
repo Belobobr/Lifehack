@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.ui;
+package md.fusionworks.lifehack.ui.base.view;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.trello.rxlifecycle.components.support.RxFragment;
+import md.fusionworks.lifehack.ui.Navigator;
+import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.util.rx.RxBus;
 import rx.subscriptions.CompositeSubscription;
 

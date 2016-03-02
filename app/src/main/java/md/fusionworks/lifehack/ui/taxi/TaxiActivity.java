@@ -17,6 +17,7 @@ import md.fusionworks.lifehack.data.repository.TaxiRepository;
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity;
 import md.fusionworks.lifehack.ui.widget.SquareFrameLayout;
 import md.fusionworks.lifehack.util.Constant;
+import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -98,7 +99,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
   }
 
   private void getLastUsedPhoneNumbers(Observable<List<TaxiPhoneNumberModel>> observable) {
-    observable.observeOn(AndroidSchedulers.mainThread())
+    observable.compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(this.bindToLifecycle())
         .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
         .filter(taxiPhoneNumberModel -> taxiPhoneNumberModel.getLastCallDate() != null)

@@ -1,8 +1,9 @@
-package md.fusionworks.lifehack.ui;
+package md.fusionworks.lifehack.ui.base.view;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import java.util.List;
+import md.fusionworks.lifehack.ui.listener.OnLoadMoreItemsListener;
 
 /**
  * Created by ungvas on 12/30/15.

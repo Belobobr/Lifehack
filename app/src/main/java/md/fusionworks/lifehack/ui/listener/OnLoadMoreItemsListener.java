@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.ui;
+package md.fusionworks.lifehack.ui.listener;
 
 /**
  * Created by tuanhai on 11/3/15.

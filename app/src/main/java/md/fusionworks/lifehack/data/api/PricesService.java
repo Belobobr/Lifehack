@@ -13,9 +13,7 @@ import rx.Observable;
  * Created by ungvas on 10/28/15.
  */
 public interface PricesService {
-
   String ENDPOINT = "http://prices.digest.md/";
-
   String SALE_CATEGORIES = "api/categories?_format=json";
   String SALE_PRODUCTS = "api/result?_format=json";
 

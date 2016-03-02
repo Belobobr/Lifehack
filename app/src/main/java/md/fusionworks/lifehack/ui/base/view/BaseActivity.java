@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.ui;
+package md.fusionworks.lifehack.ui.base.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.ui.Navigator;
+import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.widget.LoadingDialog;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.rx.RxBus;

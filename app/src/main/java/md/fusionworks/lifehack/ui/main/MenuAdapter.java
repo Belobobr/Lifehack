@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.BaseViewHolder;
+import md.fusionworks.lifehack.ui.base.view.BaseViewHolder;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.rx.RxBus;
 

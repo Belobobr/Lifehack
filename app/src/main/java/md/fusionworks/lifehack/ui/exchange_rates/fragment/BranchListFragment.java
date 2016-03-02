@@ -15,7 +15,7 @@ import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ShowBranchMapInfoWindowEvent;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ShowRouteOnMapEvent;
-import md.fusionworks.lifehack.ui.BaseFragment;
+import md.fusionworks.lifehack.ui.base.view.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel;
 import md.fusionworks.lifehack.util.BranchUtil;
 import md.fusionworks.lifehack.util.Constant;

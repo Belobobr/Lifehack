@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.repository.ExchangeRatesRepository;
-import md.fusionworks.lifehack.ui.BaseFragment;
+import md.fusionworks.lifehack.ui.base.view.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.BankSpinnerAdapter;
 import md.fusionworks.lifehack.ui.exchange_rates.event.WhereToBuyEvent;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BankModel;
