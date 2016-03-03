@@ -104,28 +104,29 @@ public class ExchangeRatesFragment extends BaseFragment {
     String today = DateUtil.getRateDateFormat().format(new Date());
     Observable<List<RateModel>> rateObservable = exchangeRatesRepository.getRates(today);
 
-    Observable.zip(bankObservable, currencyObservable, rateObservable,
-        (bankModels, currencyModels, rateModels) -> new InitialDataModel(bankModels, currencyModels,
-            rateModels))
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-        .compose(this.bindToLifecycle())
-        .subscribe(new ObserverAdapter<InitialDataModel>() {
-          @Override public void onNext(InitialDataModel initialDataModel) {
-            bankList = initialDataModel.getBankModelList();
-            currencyList = initialDataModel.getCurrencyModelList();
-            rateList = initialDataModel.getRateModelList();
-            onInitialDataLoadedSuccess();
-          }
+    loadingDialogCancelSubscription.add(
+        Observable.zip(bankObservable, currencyObservable, rateObservable,
+            (bankModels, currencyModels, rateModels) -> new InitialDataModel(bankModels,
+                currencyModels, rateModels))
+            .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+            .compose(this.bindToLifecycle())
+            .subscribe(new ObserverAdapter<InitialDataModel>() {
+              @Override public void onNext(InitialDataModel initialDataModel) {
+                bankList = initialDataModel.getBankModelList();
+                currencyList = initialDataModel.getCurrencyModelList();
+                rateList = initialDataModel.getRateModelList();
+                onInitialDataLoadedSuccess();
+              }
 
-          @Override public void onError(Throwable e) {
-            onInitialDataLoadedError();
-          }
-        });
+              @Override public void onError(Throwable e) {
+                onInitialDataLoadedError();
+              }
+            }));
   }
 
   private void loadRates(String date) {
     showLoadingDialog();
-    exchangeRatesRepository.getRates(date)
+    loadingDialogCancelSubscription.add(exchangeRatesRepository.getRates(date)
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(this.bindToLifecycle())
         .subscribe(new ObserverAdapter<List<RateModel>>() {
@@ -140,7 +141,7 @@ public class ExchangeRatesFragment extends BaseFragment {
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
                 getString(R.string.error_something_gone_wrong));
           }
-        });
+        }));
   }
 
   private void onInitialDataLoadedSuccess() {
@@ -346,8 +347,8 @@ public class ExchangeRatesFragment extends BaseFragment {
       setAmountOutText(String.format("%.2f", bestExchangeModel.getAmountOutvalue()));
 
       String bestExchangeBankText = (bestExchangeModel.getBank() != null) ? String.format(
-          getActivity().getString(R.string.format_exchange_rates_best_bank), bestExchangeModel.getBank().name)
-          : getActivity().getString(R.string.bank_not_found);
+          getActivity().getString(R.string.format_exchange_rates_best_bank),
+          bestExchangeModel.getBank().name) : getActivity().getString(R.string.bank_not_found);
       setBestExchangeBankText(bestExchangeBankText);
     }
 
@@ -421,7 +422,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
   private void loadBankBranches(int bankId, boolean active) {
     showLoadingDialog();
-    exchangeRatesRepository.getBranches(bankId, active)
+    loadingDialogCancelSubscription.add(exchangeRatesRepository.getBranches(bankId, active)
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(this.bindToLifecycle())
         .subscribe(new ObserverAdapter<List<BranchModel>>() {
@@ -435,6 +436,6 @@ public class ExchangeRatesFragment extends BaseFragment {
             showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
                 getString(R.string.error_something_gone_wrong));
           }
-        });
+        }));
   }
 }

@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.trello.rxlifecycle.components.support.RxFragment;
+import md.fusionworks.lifehack.ui.LoadingDialogCancelEvent;
 import md.fusionworks.lifehack.ui.Navigator;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
+import md.fusionworks.lifehack.ui.widget.LoadingDialog;
 import md.fusionworks.lifehack.util.rx.RxBus;
 import rx.subscriptions.CompositeSubscription;
 
@@ -19,6 +21,8 @@ public class BaseFragment extends RxFragment {
 
   private BaseActivity baseActivity;
   private CompositeSubscription compositeSubscription;
+  private LoadingDialog loadingDialog;
+  protected CompositeSubscription loadingDialogCancelSubscription;
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);
@@ -26,6 +30,8 @@ public class BaseFragment extends RxFragment {
       baseActivity = (BaseActivity) context;
       onFragmentAttached(context);
       compositeSubscription = new CompositeSubscription();
+      loadingDialog = new LoadingDialog(context);
+      loadingDialogCancelSubscription = new CompositeSubscription();
     } catch (ClassCastException e) {
       throw new ClassCastException(context.toString() + " must implement BaseActivity");
     }
@@ -73,14 +79,25 @@ public class BaseFragment extends RxFragment {
     return compositeSubscription;
   }
 
-  protected void showLoadingDialog() {
-    baseActivity.showLoadingDialog();
+  public void showLoadingDialog() {
+    if (this.loadingDialog != null) {
+      this.loadingDialog.show();
+    }
   }
 
-  protected void hideLoadingDialog() {
-    baseActivity.hideLoadingDialog();
+  public void hideLoadingDialog() {
+    if (this.loadingDialog != null) {
+      this.loadingDialog.dismiss();
+    }
   }
 
   protected void listenForEvents() {
+    getRxBus().event(LoadingDialogCancelEvent.class)
+        .compose(bindToLifecycle())
+        .subscribe(loadingDialogCancelEvent -> loadingDialogCancelSubscription.clear());
+    onLoadingDialogCanceled();
+  }
+
+  protected void onLoadingDialogCanceled() {
   }
 }

@@ -11,11 +11,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.ui.LoadingDialogCancelEvent;
 import md.fusionworks.lifehack.ui.Navigator;
 import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.widget.LoadingDialog;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.rx.RxBus;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by ungvas on 10/15/15.
@@ -27,12 +29,14 @@ public class BaseActivity extends RxAppCompatActivity {
   private RxBus rxBus;
   private Navigator navigator;
   private LoadingDialog loadingDialog;
+  protected CompositeSubscription loadingDialogCancelSubscription;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     rxBus = RxBus.getInstance();
     navigator = new Navigator();
     loadingDialog = new LoadingDialog(this);
+    loadingDialogCancelSubscription = new CompositeSubscription();
   }
 
   @Override protected void onResume() {
@@ -101,5 +105,12 @@ public class BaseActivity extends RxAppCompatActivity {
   }
 
   protected void listenForEvents() {
+    getRxBus().event(LoadingDialogCancelEvent.class)
+        .compose(bindToLifecycle())
+        .subscribe(loadingDialogCancelEvent -> loadingDialogCancelSubscription.clear());
+    onLoadingDialogCanceled();
+  }
+
+  protected void onLoadingDialogCanceled() {
   }
 }

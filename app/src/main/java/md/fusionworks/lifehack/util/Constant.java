@@ -19,7 +19,7 @@ public class Constant {
 
   public static final int NOTIFICATION_TOAST_SHOW_DELAY = 500;
 
-  public static final int CONNECTION_TIMEOUT = 15;
+  public static final int CONNECTION_TIMEOUT = 5;
 
   public static final int RETRY_DELAY_MILLIS = 1000;
   public static final int MAX_RETRIES = 3;
@@ -35,8 +35,6 @@ public class Constant {
   public static final float CAMERA_ZOOM = 12f;
 
   public static final String EXTRA_PARAM_BRANCH_LIST = "EXTRA_PARAM_BRANCH_LIST";
-
-  public static final int TAXI_PHONE_NUMBER_RECENTLY_USED_TIME = 30;//minutes
 
   //Sales
   public static final int MIN_RANGE = 1;

@@ -109,7 +109,7 @@ public class SalesActivity extends NavigationDrawerActivity {
 
   private void getSaleCategories() {
     showLoadingDialog();
-    salesRepository.getSaleCategories()
+    loadingDialogCancelSubscription.add(salesRepository.getSaleCategories()
         .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
         .compose(bindToLifecycle())
         .map(this::addAllCategoriesItem)
@@ -127,37 +127,39 @@ public class SalesActivity extends NavigationDrawerActivity {
             hideTodaySalesView();
             showRetryView();
           }
-        });
+        }));
   }
 
   private void getSaleProducts(int categoryId, int offset, boolean swap) {
     if (swap) showLoadingDialog();
-    salesRepository.getSaleProducts(getTodayDateString(), Constant.MIN_RANGE, Constant.MAX_RANGE,
-        Constant.LANG, Constant.SORT, Constant.LIMIT, offset, categoryId, Constant.PRICES_API_KEY)
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
-        .compose(bindToLifecycle())
-        .flatMap(productModelList -> Observable.from(new ArrayList<>(productModelList)))
-        .map(productModel -> {
-          productModel.categoryId = categoryId;
-          return productModel;
-        })
-        .toList()
-        .subscribe(new ObserverAdapter<List<ProductModel>>() {
-          @Override public void onNext(List<ProductModel> productModelList) {
-            if (swap) {
-              hideLoadingDialog();
-              saleProductAdapter.swap(productModelList);
-            } else {
-              saleProductAdapter.addItems(productModelList);
-            }
-          }
+    loadingDialogCancelSubscription.add(
+        salesRepository.getSaleProducts(getTodayDateString(), Constant.MIN_RANGE,
+            Constant.MAX_RANGE, Constant.LANG, Constant.SORT, Constant.LIMIT, offset, categoryId,
+            Constant.PRICES_API_KEY)
+            .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+            .compose(bindToLifecycle())
+            .flatMap(productModelList -> Observable.from(new ArrayList<>(productModelList)))
+            .map(productModel -> {
+              productModel.categoryId = categoryId;
+              return productModel;
+            })
+            .toList()
+            .subscribe(new ObserverAdapter<List<ProductModel>>() {
+              @Override public void onNext(List<ProductModel> productModelList) {
+                if (swap) {
+                  hideLoadingDialog();
+                  saleProductAdapter.swap(productModelList);
+                } else {
+                  saleProductAdapter.addItems(productModelList);
+                }
+              }
 
-          @Override public void onError(Throwable e) {
-            if (swap) hideLoadingDialog();
-            showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
-                getString(R.string.error_something_gone_wrong));
-          }
-        });
+              @Override public void onError(Throwable e) {
+                if (swap) hideLoadingDialog();
+                showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+                    getString(R.string.error_something_gone_wrong));
+              }
+            }));
   }
 
   private List<SaleCategoryModel> addAllCategoriesItem(List<SaleCategoryModel> categoryModelList) {
