@@ -3,9 +3,6 @@ package md.fusionworks.lifehack.ui.taxi;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import butterknife.Bind;
 import io.realm.Realm;
 import java.util.ArrayList;
@@ -15,7 +12,6 @@ import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.data.persistence.taxi.TaxiDataStore;
 import md.fusionworks.lifehack.data.repository.TaxiRepository;
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity;
-import md.fusionworks.lifehack.ui.widget.SquareFrameLayout;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.rx.ObservableTransformation;
 import rx.Observable;
@@ -24,10 +20,11 @@ import rx.android.schedulers.AndroidSchedulers;
 public class TaxiActivity extends NavigationDrawerActivity {
 
   @Bind(R.id.taxiPhoneNumberList) RecyclerView taxiPhoneNumberList;
-  @Bind(R.id.lastUsedPhoneNumberList) LinearLayout lastUsedPhoneNumberList;
+  @Bind(R.id.lastUsedTaxiPhoneNumberList) RecyclerView lastUsedTaxiPhoneNumberList;
 
   private TaxiRepository taxiRepository;
   private TaxiPhoneNumberAdapter taxiPhoneNumberAdapter;
+  private TaxiPhoneNumberAdapter lastUsedTaxiPhoneNumberAdapter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,27 +64,11 @@ public class TaxiActivity extends NavigationDrawerActivity {
     getLastUsedPhoneNumbers(Observable.just(taxiPhoneNumberModelList));
   }
 
-  private void populateLastUsedPhoneNumberList(
+  private void initializeLastUsedTaxiPhoneNumberList(
       List<TaxiPhoneNumberModel> taxiPhoneNumberModelList) {
-    hideLastUsedPhoneNumberList();
-    for (int i = 0; i < taxiPhoneNumberModelList.size(); i++) {
-      SquareFrameLayout squareFrameLayoutChild =
-          (SquareFrameLayout) lastUsedPhoneNumberList.getChildAt(i);
-      TextView textViewChild = (TextView) squareFrameLayoutChild.getChildAt(0);
-      squareFrameLayoutChild.setVisibility(View.VISIBLE);
-      int currentPosition = i;
-      squareFrameLayoutChild.setOnClickListener(
-          v -> onPhoneNumberClick(taxiPhoneNumberModelList.get(currentPosition).getPhoneNumber()));
-      textViewChild.setText(String.valueOf(taxiPhoneNumberModelList.get(i).getPhoneNumber()));
-    }
-  }
-
-  private void hideLastUsedPhoneNumberList() {
-    for (int i = 0; i < 4; i++) {
-      SquareFrameLayout squareFrameLayoutChild =
-          (SquareFrameLayout) lastUsedPhoneNumberList.getChildAt(i);
-      squareFrameLayoutChild.setVisibility(View.GONE);
-    }
+    lastUsedTaxiPhoneNumberList.setLayoutManager(new GridLayoutManager(this, 4));
+    lastUsedTaxiPhoneNumberAdapter = new TaxiPhoneNumberAdapter(taxiPhoneNumberModelList);
+    lastUsedTaxiPhoneNumberList.setAdapter(lastUsedTaxiPhoneNumberAdapter);
   }
 
   private void getAllPhoneNumbers() {
@@ -108,7 +89,7 @@ public class TaxiActivity extends NavigationDrawerActivity {
         .flatMap(taxiPhoneNumberModels -> Observable.from(new ArrayList<>(taxiPhoneNumberModels)))
         .take(4)
         .toList()
-        .subscribe(this::populateLastUsedPhoneNumberList);
+        .subscribe(this::initializeLastUsedTaxiPhoneNumberList);
   }
 
   private List<TaxiPhoneNumberModel> sortLastUsedPhoneNumberListByDateDesc(

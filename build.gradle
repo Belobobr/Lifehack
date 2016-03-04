@@ -33,7 +33,7 @@ allprojects {
     appCompat_v7Version = supportVersion
     designSupportLibraryVersion = supportVersion
     daggerVersion = '2.0'
-    retrofitVersion = '2.0.0-SNAPSHOT'
+    retrofitVersion = '2.0.0-beta4'
     gsonVersion = '2.3'
     materialDialogsVersion = '0.8.5.6@aar'
     materialDateTimePickerVersion = '1.5.4'
@@ -47,9 +47,10 @@ allprojects {
     weakHandlerVersion = '1.1';
     leakCanaryVersion = '1.3.1'
     jUnitVersion = '4.12'
-    realmVersion='0.87.4'
-    glideVersion='3.7.0';
-    crashlyticsVersion='2.5.5@aar';
+    realmVersion = '0.87.4'
+    glideVersion = '3.7.0';
+    crashlyticsVersion = '2.5.5@aar';
+    stethoVersion = '1.3.1';
   }
 }
 

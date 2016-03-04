@@ -2,6 +2,7 @@ package md.fusionworks.lifehack;
 
 import android.app.Application;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
@@ -27,5 +28,7 @@ public class LifehackApplication extends Application {
 
     RealmConfiguration config = new RealmConfiguration.Builder(this).build();
     Realm.setDefaultConfiguration(config);
+
+    Stetho.initializeWithDefaults(this);
   }
 }

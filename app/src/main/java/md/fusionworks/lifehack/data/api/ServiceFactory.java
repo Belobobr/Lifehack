@@ -1,10 +1,9 @@
 package md.fusionworks.lifehack.data.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.concurrent.TimeUnit;
-
 import md.fusionworks.lifehack.BuildConfig;
 import md.fusionworks.lifehack.data.api.interceptor.HeaderInterceptor;
 import md.fusionworks.lifehack.util.Constant;
@@ -24,6 +23,7 @@ public class ServiceFactory {
         .addInterceptor(new HeaderInterceptor("cb5fa2d6b00257fd769d2c68bf32c1a42ea0fd7c"))
         .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .addNetworkInterceptor(new StethoInterceptor())
         .build();
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
@@ -46,6 +46,7 @@ public class ServiceFactory {
         .addInterceptor(new HeaderInterceptor("zEjoa61qZS"))
         .connectTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(Constant.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        .addNetworkInterceptor(new StethoInterceptor())
         .build();
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();

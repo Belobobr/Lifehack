@@ -20,22 +20,15 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
-      <LinearLayout
-          android:id="@+id/lastUsedPhoneNumberList"
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/lastUsedTaxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#636363"
           android:clipToPadding="false"
-          android:orientation="horizontal"
-          android:outlineProvider="bounds"
           android:elevation="2dp"
-          android:weightSum="100"
-          >
-        <include layout="@layout/item_taxi_last_used_phone_number"/>
-        <include layout="@layout/item_taxi_last_used_phone_number"/>
-        <include layout="@layout/item_taxi_last_used_phone_number"/>
-        <include layout="@layout/item_taxi_last_used_phone_number"/>
-      </LinearLayout>
+          android:outlineProvider="bounds"
+          />
       <android.support.v7.widget.RecyclerView
           android:id="@+id/taxiPhoneNumberList"
           android:layout_width="match_parent"

@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.trello.rxlifecycle.components.support.RxFragment;
-import md.fusionworks.lifehack.ui.LoadingDialogCancelEvent;
 import md.fusionworks.lifehack.ui.Navigator;
-import md.fusionworks.lifehack.ui.listener.NotificationToastActionListener;
 import md.fusionworks.lifehack.ui.widget.LoadingDialog;
 import md.fusionworks.lifehack.util.rx.RxBus;
 import rx.subscriptions.CompositeSubscription;
@@ -17,7 +15,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by ungvas on 10/22/15.
  */
-public class BaseFragment extends RxFragment {
+public class BaseFragment extends RxFragment implements LoadingDialog.OnCancelListener {
 
   private BaseActivity baseActivity;
   private CompositeSubscription compositeSubscription;
@@ -30,7 +28,7 @@ public class BaseFragment extends RxFragment {
       baseActivity = (BaseActivity) context;
       onFragmentAttached(context);
       compositeSubscription = new CompositeSubscription();
-      loadingDialog = new LoadingDialog(context);
+      loadingDialog = new LoadingDialog(context, this);
       loadingDialogCancelSubscription = new CompositeSubscription();
     } catch (ClassCastException e) {
       throw new ClassCastException(context.toString() + " must implement BaseActivity");
@@ -63,7 +61,7 @@ public class BaseFragment extends RxFragment {
   }
 
   protected void showNotificationToast(int type, String message,
-      NotificationToastActionListener notificationToastActionListener) {
+      BaseActivity.NotificationToastActionListener notificationToastActionListener) {
     baseActivity.showNotificationToast(type, message, notificationToastActionListener);
   }
 
@@ -92,9 +90,10 @@ public class BaseFragment extends RxFragment {
   }
 
   protected void listenForEvents() {
-    getRxBus().event(LoadingDialogCancelEvent.class)
-        .compose(bindToLifecycle())
-        .subscribe(loadingDialogCancelEvent -> loadingDialogCancelSubscription.clear());
+  }
+
+  @Override public void onCancel() {
+    loadingDialogCancelSubscription.clear();
     onLoadingDialogCanceled();
   }
 

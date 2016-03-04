@@ -112,6 +112,8 @@ dependencies {
   testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
   compile "io.realm:realm-android:$rootProject.realmVersion"
   compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+  compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+  compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
   /*
       apt "com.google.dagger:dagger-compiler:2.0.2"
       provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
