@@ -2,5 +2,5 @@
 - [ ] Add cache
 - [ ] Improve UI for different screen sizes
 - [ ] Add swipe to refresh
-- [ ] Taxi last used change to recyclerview
+- [ ] Rewrite app to kotlin
 

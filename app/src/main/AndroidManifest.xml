@@ -40,7 +40,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.LifeHacksActivity"
+        android:name=".ui.LifehacksActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.ExchangeRates"/>
 

@@ -1,6 +1,5 @@
 package md.fusionworks.lifehack.ui;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +17,6 @@ import butterknife.OnClick;
 import java.util.ArrayList;
 import md.fusionworks.lifehack.R;
 import md.fusionworks.lifehack.ui.base.view.BaseActivity;
-import md.fusionworks.lifehack.ui.main.MainActivity;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.LocaleHelper;
 import md.fusionworks.lifehack.util.UIUtil;
