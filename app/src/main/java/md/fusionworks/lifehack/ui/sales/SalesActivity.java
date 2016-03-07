@@ -56,7 +56,8 @@ public class SalesActivity extends NavigationDrawerActivity {
     getRxBus().event(NavigateToUrlEvent.class)
         .compose(bindToLifecycle())
         .subscribe(navigateToUrlEvent -> {
-          Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(navigateToUrlEvent.url));
+          Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+              navigateToUrlEvent.getUrl()));
           boolean isChromeInstalled =
               AndroidUtil.isPackageInstalled(Constant.APP_CHROME, SalesActivity.this);
           if (isChromeInstalled) {
@@ -84,7 +85,7 @@ public class SalesActivity extends NavigationDrawerActivity {
 
         if (view != null) {
           productListOffset = 0;
-          getSaleProducts(((SaleCategoryModel) saleCategorySpinner.getSelectedItem()).id,
+          getSaleProducts(((SaleCategoryModel) saleCategorySpinner.getSelectedItem()).getId(),
               productListOffset, true);
         }
       }
@@ -101,7 +102,7 @@ public class SalesActivity extends NavigationDrawerActivity {
     productList.setAdapter(saleProductAdapter);
 
     saleProductAdapter.setOnLoadMoreItemsListener(() -> {
-      getSaleProducts(((SaleCategoryModel) saleCategorySpinner.getSelectedItem()).id,
+      getSaleProducts(((SaleCategoryModel) saleCategorySpinner.getSelectedItem()).getId(),
           productListOffset, false);
       productListOffset += Constant.LIMIT;
     });
@@ -140,7 +141,7 @@ public class SalesActivity extends NavigationDrawerActivity {
             .compose(bindToLifecycle())
             .flatMap(productModelList -> Observable.from(new ArrayList<>(productModelList)))
             .map(productModel -> {
-              productModel.categoryId = categoryId;
+              productModel.setCategoryId(categoryId);
               return productModel;
             })
             .toList()

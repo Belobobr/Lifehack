@@ -61,22 +61,22 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
       SaleProductItemViewHolder saleProductItemViewHolder = ((SaleProductItemViewHolder) holder);
       ProductModel productModel = getItemList().get(position);
 
-      initializeThumbnailImage(saleProductItemViewHolder.thumbnail, productModel.productImage);
-      if (productModel.categoryId == 0) {
+      initializeThumbnailImage(saleProductItemViewHolder.thumbnail, productModel.getProductImage());
+      if (productModel.getCategoryId() == 0) {
         saleProductItemViewHolder.categoryField.setVisibility(View.VISIBLE);
-        String productName = (language.equals(Constant.LANG_RU)) ? productModel.categoryNameRu
-            : productModel.categoryNameRo;
+        String productName = (language.equals(Constant.LANG_RU)) ? productModel.getCategoryNameRu()
+            : productModel.getCategoryNameRo();
         saleProductItemViewHolder.categoryField.setText(productName);
       } else {
         saleProductItemViewHolder.categoryField.setVisibility(View.GONE);
       }
-      saleProductItemViewHolder.nameField.setText(productModel.productName);
+      saleProductItemViewHolder.nameField.setText(productModel.getProductName());
       initializePrevPriceField(saleProductItemViewHolder.prevPriceField,
-          productModel.productPrevPriceForGraph);
+          productModel.getProductPrevPriceForGraph());
       saleProductItemViewHolder.minPriceField.setText(
-          String.format("%d MDL", Math.round(productModel.productMinPriceForGraph)));
+          String.format("%d MDL", Math.round(productModel.getProductMinPriceForGraph())));
       saleProductItemViewHolder.percentSaleField.setText(
-          "-" + Math.round(productModel.percent) + "%");
+          "-" + Math.round(productModel.getPercent()) + "%");
     }
   }
 
@@ -112,9 +112,9 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
     public SaleProductItemViewHolder(@NonNull View view) {
       super(view);
       buyButton.setOnClickListener(v -> rxBus.postIfHasObservers(
-          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).storeProductUrl)));
+          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).getStoreProductUrl())));
       allPricesButton.setOnClickListener(v -> rxBus.postIfHasObservers(
-          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).jbUrl)));
+          new NavigateToUrlEvent(getItemList().get(getAdapterPosition()).getJbUrl())));
     }
   }
 
