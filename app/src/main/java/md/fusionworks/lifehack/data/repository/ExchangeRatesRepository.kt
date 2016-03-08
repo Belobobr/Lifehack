@@ -33,12 +33,12 @@ class ExchangeRatesRepository {
   }
 
   val banks: Observable<List<BankModel>>
-    get() = banksService.banks.compose(
+    get() = banksService.banks().compose(
         ObservableTransformation.applyApiRequestConfiguration())
         .map { banks -> bankDataMapper.transform(banks) }
 
   val currencies: Observable<List<CurrencyModel>>
-    get() = banksService.currencies.compose(
+    get() = banksService.currencies().compose(
         ObservableTransformation.applyApiRequestConfiguration())
         .map { currencies -> currencyDataMapper.transform(currencies) }
 

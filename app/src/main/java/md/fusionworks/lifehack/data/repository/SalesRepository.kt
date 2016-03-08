@@ -26,7 +26,7 @@ class SalesRepository {
   }
 
   val saleCategories: Observable<List<SaleCategoryModel>>
-    get() = pricesService.saleCategories.compose(
+    get() = pricesService.saleCategories().compose(
         ObservableTransformation.applyApiRequestConfiguration())
         .map({ saleCategoryDataMapper.transform(it) })
 
