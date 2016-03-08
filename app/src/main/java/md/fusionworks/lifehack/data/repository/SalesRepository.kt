@@ -20,7 +20,7 @@ class SalesRepository {
   private val productDataMapper: ProductDataMapper
 
   init {
-    pricesService = ServiceFactory.buildPricesService()
+    pricesService = ServiceFactory().buildPricesService()
     saleCategoryDataMapper = SaleCategoryDataMapper()
     productDataMapper = ProductDataMapper()
   }

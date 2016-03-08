@@ -85,7 +85,8 @@ class TaxiActivity : NavigationDrawerActivity() {
         .map { sortLastUsedPhoneNumberListByDateDesc(it) }
         .take(4)
         .toList()
-        .subscribe { initializeLastUsedTaxiPhoneNumberList(it[0]) }
+        .map { it[0] }
+        .subscribe { initializeLastUsedTaxiPhoneNumberList(it) }
   }
 
   private fun sortLastUsedPhoneNumberListByDateDesc(
