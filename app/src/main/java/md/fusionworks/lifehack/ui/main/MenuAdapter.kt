@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.ui.base.view.BaseViewHolder
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.rx.RxBus
 import org.jetbrains.anko.find
@@ -59,7 +58,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
     return itemList.size
   }
 
-  inner class MenuViewHolder(itemView: View) : BaseViewHolder(itemView) {
+  inner class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var menuLayout: LinearLayout
     var titleField: TextView

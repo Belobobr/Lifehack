@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_sales.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.data.repository.SalesRepository
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity
+import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel
 import md.fusionworks.lifehack.util.AndroidUtil
@@ -88,17 +89,22 @@ class SalesActivity : NavigationDrawerActivity() {
     saleProductAdapter = SaleProductAdapter(productList, LocaleHelper.getLanguage(this))
     productList.adapter = saleProductAdapter
 
-    saleProductAdapter!!.setOnLoadMoreItemsListener {
-      getSaleProducts((saleCategorySpinner.selectedItem as SaleCategoryModel).id,
-          productListOffset, false)
-      productListOffset += Constant.LIMIT
-    }
+    saleProductAdapter!!.setOnLoadMoreItemsListener(
+        object : LoadMoreAdapter.OnLoadMoreItemsListener {
+          override fun onLoadMoreItems() {
+            getSaleProducts((saleCategorySpinner.selectedItem as SaleCategoryModel).id,
+                productListOffset, false)
+            productListOffset += Constant.LIMIT
+
+          }
+        })
   }
 
   private fun getSaleCategories() {
     showLoadingDialog()
     loadingDialogCancelSubscription.add(salesRepository!!.saleCategories
-        .compose(ObservableTransformation.applyIOToMainThreadSchedulers<List<SaleCategoryModel>>())
+        .compose(
+            ObservableTransformation.applyIOToMainThreadSchedulers<List<SaleCategoryModel>>())
         .compose(bindToLifecycle<List<SaleCategoryModel>>())
         .map { addAllCategoriesItem(it.toMutableList()) }
         .subscribe(object : ObserverAdapter<List<SaleCategoryModel>>() {

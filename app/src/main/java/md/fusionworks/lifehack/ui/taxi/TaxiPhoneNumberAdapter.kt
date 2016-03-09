@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import butterknife.Bind
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.ui.base.view.BaseViewHolder
 import md.fusionworks.lifehack.util.rx.RxBus
 import org.jetbrains.anko.find
 
@@ -33,7 +31,7 @@ class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumb
 
   override fun getItemCount() = taxiPhoneNumberList.size
 
-  inner class TaxiPhoneNumberViewHolder(itemView: View) : BaseViewHolder(itemView) {
+  inner class TaxiPhoneNumberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val phoneNumberField: TextView
 

@@ -19,7 +19,6 @@ import md.fusionworks.lifehack.ui.base.view.BaseViewHolder;
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 import md.fusionworks.lifehack.util.Constant;
-import md.fusionworks.lifehack.util.LocaleHelper;
 import md.fusionworks.lifehack.util.rx.RxBus;
 
 /**
@@ -118,7 +117,7 @@ public class SaleProductAdapter extends LoadMoreAdapter<ProductModel> {
     }
   }
 
-  public class LoadingMoreItemsViewHolder extends BaseViewHolder {
+  public class LoadingMoreItemsViewHolder extends RecyclerView.ViewHolder {
 
     public LoadingMoreItemsViewHolder(@NonNull View view) {
       super(view);
