@@ -194,7 +194,7 @@ public class ExchangeRatesFragment extends BaseFragment {
     bankSpinnerAdapter.addItem(getActivity().getString(R.string.best_exchange), 0);
     bankSpinnerAdapter.addHeader(getActivity().getString(R.string.bank_list));
     for (BankModel bank : bankList) {
-      bankSpinnerAdapter.addItem(bank.name, bank.id);
+      bankSpinnerAdapter.addItem(bank.getName(), bank.getId());
     }
     bankSpinner.setAdapter(bankSpinnerAdapter);
   }
@@ -329,8 +329,8 @@ public class ExchangeRatesFragment extends BaseFragment {
 
     BestExchangeModel bestExchangeModel = new BestExchangeModel();
     for (BankModel bank : bankList) {
-      if (bank.id != 1) {
-        bankRateList = ExchangeRatesUtil.getBankRates(rateList, bank.id);
+      if (bank.getId() != 1) {
+        bankRateList = ExchangeRatesUtil.getBankRates(rateList, bank.getId());
         amountInValue = Converter.toDouble(getAmountInText());
         currencyInRateValue =
             ExchangeRatesUtil.getCurrencyRateValue(bankRateList, getCheckedCurrencyInId());
@@ -348,7 +348,7 @@ public class ExchangeRatesFragment extends BaseFragment {
 
       String bestExchangeBankText = (bestExchangeModel.getBank() != null) ? String.format(
           getActivity().getString(R.string.format_exchange_rates_best_bank),
-          bestExchangeModel.getBank().name) : getActivity().getString(R.string.bank_not_found);
+          bestExchangeModel.getBank().getName()) : getActivity().getString(R.string.bank_not_found);
       setBestExchangeBankText(bestExchangeBankText);
     }
 
@@ -409,7 +409,7 @@ public class ExchangeRatesFragment extends BaseFragment {
         hideLoadingDialog();
         return;
       }
-      bankId = bestExchangeModel.getBank().id;
+      bankId = bestExchangeModel.getBank().getId();
     }
 
     boolean onlyActive = onlyActiveNow();

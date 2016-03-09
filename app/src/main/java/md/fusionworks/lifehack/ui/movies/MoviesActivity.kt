@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.ui.movie
+package md.fusionworks.lifehack.ui.movies
 
 import android.os.Bundle
 import md.fusionworks.lifehack.R

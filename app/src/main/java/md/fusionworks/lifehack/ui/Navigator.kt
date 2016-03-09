@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import md.fusionworks.lifehack.ui.exchange_rates.ExchangeRatesActivity
 import md.fusionworks.lifehack.ui.main.MainActivity
-import md.fusionworks.lifehack.ui.movie.MoviesActivity
+import md.fusionworks.lifehack.ui.movies.MoviesActivity
 import md.fusionworks.lifehack.ui.sales.SalesActivity
 import md.fusionworks.lifehack.ui.taxi.TaxiActivity
 import org.jetbrains.anko.startActivity

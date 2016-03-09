@@ -15,7 +15,7 @@ public class ExchangeRatesUtil {
     List<RateModel> bankRateList = new ArrayList<>();
     for (RateModel rate : rateList) {
 
-      if (rate.getBank().id== bankId) bankRateList.add(rate);
+      if (rate.getBank().getId() == bankId) bankRateList.add(rate);
     }
 
     return bankRateList;

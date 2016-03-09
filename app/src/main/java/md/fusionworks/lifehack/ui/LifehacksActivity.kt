@@ -37,6 +37,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
       }
       false
     }
+   // showLoadingDialog()
     lifeHacksWebView.loadUrl("http://lifehack.md")
   }
 
@@ -49,7 +50,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
 
   private class ChromeClient : WebChromeClient() {
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
-      if (newProgress >= 85) NavigationDrawerActivity().hideLoadingDialog()
+      if (newProgress >= 85) LifehacksActivity().hideLoadingDialog()
       super.onProgressChanged(view, newProgress)
     }
   }
@@ -57,7 +58,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
   private class WebViewClient : android.webkit.WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
       NavigationDrawerActivity().showLoadingDialog()
-      LifehacksActivity().lifeHacksWebView.loadUrl(url)
+      view?.loadUrl(url)
       return false
     }
 
