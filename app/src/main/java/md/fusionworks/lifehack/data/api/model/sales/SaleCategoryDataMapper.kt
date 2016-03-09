@@ -7,19 +7,8 @@ import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel
  */
 class SaleCategoryDataMapper {
 
-  fun transform(saleCategory: SaleCategory): SaleCategoryModel {
-    return SaleCategoryModel(saleCategory.id, saleCategory.nameRu, saleCategory.nameRo)
-  }
+  fun transform(saleCategory: SaleCategory) = SaleCategoryModel(saleCategory.id,
+      saleCategory.nameRu, saleCategory.nameRo)
 
-  fun transform(saleCategoryList: List<SaleCategory>): List<SaleCategoryModel> {
-    val saleCategoryModelList = arrayListOf<SaleCategoryModel>();
-    var saleCategoryModel: SaleCategoryModel?
-    for (saleCategory in saleCategoryList) {
-      saleCategoryModel = transform(saleCategory)
-      if (saleCategoryModel != null) {
-        saleCategoryModelList.add(saleCategoryModel)
-      }
-    }
-    return saleCategoryModelList
-  }
+  fun transform(saleCategoryList: List<SaleCategory>) = saleCategoryList.map { transform(it) }
 }

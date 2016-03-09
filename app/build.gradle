@@ -120,6 +120,8 @@ dependencies {
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
   testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
   compile "io.realm:realm-android:$rootProject.realmVersion"
+ // kapt "io.realm:realm-annotations:$rootProject.realmVersion"
+ // kapt "io.realm:realm-annotations-processor:$rootProject.realmVersion"
   compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
   compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
   compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
