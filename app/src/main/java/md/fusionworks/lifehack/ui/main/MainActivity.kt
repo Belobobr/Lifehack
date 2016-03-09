@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 
 class MainActivity : NavigationDrawerActivity() {
 
@@ -30,7 +31,7 @@ class MainActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    rxBus.event(MenuItemClickEvent::class.java).compose(
+    RxBusKotlin.event(MenuItemClickEvent::class.java).compose(
         bindToLifecycle<MenuItemClickEvent>()).subscribe { menuItemClickEvent ->
       onMenuItemClickEvent(menuItemClickEvent.itemId)
     }

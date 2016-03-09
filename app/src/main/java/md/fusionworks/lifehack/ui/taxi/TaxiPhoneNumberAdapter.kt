@@ -6,18 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 import org.jetbrains.anko.find
 
 /**
  * Created by ungvas on 2/17/16.
  */
 class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumberModel>) : RecyclerView.Adapter<TaxiPhoneNumberAdapter.TaxiPhoneNumberViewHolder>() {
-  private val rxBus: RxBus
-
-  init {
-    rxBus = RxBus.getInstance()
-  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaxiPhoneNumberViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_taxi_phone_number, parent,
@@ -38,7 +33,7 @@ class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumb
     init {
       phoneNumberField = itemView.find(R.id.phoneNumberField)
       itemView.setOnClickListener {
-        rxBus.postIfHasObservers(
+        RxBusKotlin.postIfHasObservers(
             TaxiPhoneNumberClickEvent(taxiPhoneNumberList[adapterPosition]))
       }
     }

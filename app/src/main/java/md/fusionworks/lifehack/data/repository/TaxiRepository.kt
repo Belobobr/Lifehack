@@ -17,14 +17,11 @@ class TaxiRepository(private val realm: Realm, private val taxiDataStore: TaxiDa
     taxiPhoneNumberDataMapper = TaxiPhoneNumberDataMapper()
   }
 
-  fun hasData(): Boolean {
-    val taxiPhoneNumberList = realm.where(TaxiPhoneNumber::class.java).findAll()
-    return taxiPhoneNumberList.size > 0
-  }
+  val hasData: Boolean
+    get() = realm.where(TaxiPhoneNumber::
+    class.java).findAll().size > 0
 
-  fun add(phoneNumberList: IntArray) {
-    taxiDataStore.add(phoneNumberList)
-  }
+  fun add(phoneNumberList: IntArray) = taxiDataStore.add(phoneNumberList)
 
   val allPhoneNumbers: Observable<List<TaxiPhoneNumberModel>>
     get() = realm.where(
@@ -35,7 +32,5 @@ class TaxiRepository(private val realm: Realm, private val taxiDataStore: TaxiDa
         .first()
         .map { taxiPhoneNumberDataMapper.transform(it) }
 
-  fun updateLastUsedDate(phoneNumber: Int) {
-    taxiDataStore.updateLastUsedDate(phoneNumber)
-  }
+  fun updateLastUsedDate(phoneNumber: Int) = taxiDataStore.updateLastUsedDate(phoneNumber)
 }

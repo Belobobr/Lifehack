@@ -42,15 +42,11 @@ class ExchangeRatesRepository {
         ObservableTransformation.applyApiRequestConfiguration())
         .map { currencies -> currencyDataMapper.transform(currencies) }
 
-  fun getRates(date: String): Observable<List<RateModel>> {
-    return banksService.getRates(date).compose(
-        ObservableTransformation.applyApiRequestConfiguration())
-        .map { rates -> rateDataMapper.transform(rates) }
-  }
+  fun getRates(date: String): Observable<List<RateModel>> = banksService.getRates(date).compose(
+      ObservableTransformation.applyApiRequestConfiguration())
+      .map { rates -> rateDataMapper.transform(rates) }
 
-  fun getBranches(bankId: Int, active: Boolean): Observable<List<BranchModel>> {
-    return banksService.getBankBranches(bankId, active).compose(
-        ObservableTransformation.applyApiRequestConfiguration())
-        .map { branches -> branchDataMapper.transform(branches) }
-  }
+  fun getBranches(bankId: Int, active: Boolean): Observable<List<BranchModel>> = banksService.getBankBranches(bankId, active).compose(
+      ObservableTransformation.applyApiRequestConfiguration())
+      .map { branches -> branchDataMapper.transform(branches) }
 }

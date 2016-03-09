@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 import org.jetbrains.anko.find
 
 /**
@@ -20,12 +20,6 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
   private val itemList = intArrayOf(Constant.DRAWER_ITEM_LIFE_HACKS,
       Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI,
       Constant.DRAWER_ITEM_MOVIES)
-
-  private val rxBus: RxBus
-
-  init {
-    rxBus = RxBus.getInstance()
-  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)
@@ -75,7 +69,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
       logoImage = itemView.find(R.id.logoImage)
 
       itemView.setOnClickListener { v ->
-        rxBus.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
+        RxBusKotlin.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
       }
     }
   }
