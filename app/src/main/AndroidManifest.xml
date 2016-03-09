@@ -75,6 +75,11 @@
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.TranslucentStatus">
     </activity>
+    <activity
+        android:name=".ui.movie.MoviesActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.Lifehack.TranslucentStatus">
+    </activity>
   </application>
 
 </manifest>

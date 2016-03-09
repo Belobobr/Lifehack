@@ -18,7 +18,8 @@ import org.jetbrains.anko.find
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
   private val itemList = intArrayOf(Constant.DRAWER_ITEM_LIFE_HACKS,
-      Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI)
+      Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI,
+      Constant.DRAWER_ITEM_MOVIES)
 
   private val rxBus: RxBus
 
@@ -50,6 +51,10 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
       Constant.DRAWER_ITEM_TAXI -> {
         holder.titleField.text = holder.titleField.context.getString(R.string.drawer_item_taxi)
         holder.logoImage.setImageResource(R.drawable.ic_taxi)
+      }
+      Constant.DRAWER_ITEM_MOVIES -> {
+        holder.titleField.text = holder.titleField.context.getString(R.string.drawer_item_movies)
+        holder.logoImage.setImageResource(R.drawable.ic_movie)
       }
     }
   }

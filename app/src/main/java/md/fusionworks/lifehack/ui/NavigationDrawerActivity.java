@@ -46,7 +46,7 @@ public class NavigationDrawerActivity extends BaseActivity {
   };
 
   private static final boolean[] DRAWER_ITEM_ACTIVE_STATE = new boolean[] {
-      true, true, true, false, true, false, true, false,
+      true, true, true, true, true, false, true, false,
       //false
   };
 
@@ -107,8 +107,8 @@ public class NavigationDrawerActivity extends BaseActivity {
     drawerItems.add(Constant.DRAWER_ITEM_EXCHANGE_RATES);
     drawerItems.add(Constant.DRAWER_ITEM_SALES);
     drawerItems.add(Constant.DRAWER_ITEM_TAXI);
-    drawerItems.add(Constant.DRAWER_ITEM_PRICES);
     drawerItems.add(Constant.DRAWER_ITEM_MOVIES);
+    drawerItems.add(Constant.DRAWER_ITEM_PRICES);
     drawerItems.add(Constant.DRAWER_ITEM_POSTER);
     // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
@@ -263,6 +263,10 @@ public class NavigationDrawerActivity extends BaseActivity {
         break;
       case Constant.DRAWER_ITEM_SALES:
         getNavigator().navigateToSalesActivity(this);
+        finish();
+        break;
+      case Constant.DRAWER_ITEM_MOVIES:
+        getNavigator().navigateToMoviesActivity(this);
         finish();
         break;
     }

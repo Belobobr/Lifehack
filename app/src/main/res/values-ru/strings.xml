@@ -43,6 +43,7 @@
   <string name="choose_app">Выберите приложение</string>
   <string name="all_categories">Все категории</string>
   <string name="title_main">Главная</string>
+  <string name="title_movie">Кино</string>
   <string formatted="false" name="format_branch_monday_friday_hours_2">(Пн - Пт: %s - %s)</string>
   <string formatted="false" name="format_branch_sat_hours_2">(Сб: %s - %s)</string>
   <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>

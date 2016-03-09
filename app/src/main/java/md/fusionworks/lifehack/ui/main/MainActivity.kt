@@ -60,6 +60,10 @@ class MainActivity : NavigationDrawerActivity() {
         navigator.navigateToSalesActivity(this)
         finish()
       }
+      Constant.DRAWER_ITEM_MOVIES -> {
+        navigator.navigateToMoviesActivity(this)
+        finish()
+      }
     }
   }
 }
