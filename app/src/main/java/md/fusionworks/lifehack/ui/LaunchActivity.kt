@@ -24,6 +24,6 @@ class LaunchActivity : BaseActivity() {
   }
 
   private fun saveTaxiPhoneNumbers() {
-    if (!taxiRepository.hasData()) taxiRepository.add(TaxiData.TAXI_PHONE_NUMBER_LIST)
+    if (!taxiRepository.hasData) taxiRepository.add(TaxiData.TAXI_PHONE_NUMBER_LIST)
   }
 }

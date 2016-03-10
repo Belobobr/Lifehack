@@ -1,10 +1,9 @@
 package md.fusionworks.lifehack.util.rx;
 
 import java.io.IOException;
-
+import md.fusionworks.lifehack.data.api.NotFoundException;
 import md.fusionworks.lifehack.data.api.ResponseCode;
-import md.fusionworks.lifehack.data.api.exception.NotFoundException;
-import md.fusionworks.lifehack.data.api.exception.UnknownException;
+import md.fusionworks.lifehack.data.api.UnknownException;
 import md.fusionworks.lifehack.util.Constant;
 import retrofit2.Response;
 import rx.Observable;
