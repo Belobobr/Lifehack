@@ -32,10 +32,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import md.fusionworks.lifehack.R;
+import md.fusionworks.lifehack.ui.base.view.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ShowBranchMapInfoWindowEvent;
 import md.fusionworks.lifehack.ui.exchange_rates.event.ShowRouteOnMapEvent;
-import md.fusionworks.lifehack.ui.base.view.BaseFragment;
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel;
 import md.fusionworks.lifehack.util.Constant;
 import md.fusionworks.lifehack.util.DialogUtil;
@@ -47,7 +47,7 @@ import md.fusionworks.lifehack.util.MapUtil;
 public class BranchMapFragment extends BaseFragment {
 
   @Bind(R.id.rootLayout) FrameLayout rootLayout;
-  @Bind(R.id.branchMap) MapView mapView;
+  @Bind(R.id.branchMapView) MapView mapView;
   @Bind(R.id.imageOverMap) ImageView imageOverMap;
 
   private GoogleMap map;

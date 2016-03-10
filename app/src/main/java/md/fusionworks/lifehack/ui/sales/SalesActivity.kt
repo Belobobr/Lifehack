@@ -13,6 +13,7 @@ import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel
+import md.fusionworks.lifehack.ui.widget.RetryView
 import md.fusionworks.lifehack.util.AndroidUtil
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.DateUtil
@@ -169,10 +170,12 @@ class SalesActivity : NavigationDrawerActivity() {
 
   private fun showRetryView() {
     retryView.show()
-    retryView.setOnRetryActionListener {
-      retryView.hide()
-      getSaleCategories()
-    }
+    retryView.setOnRetryActionListener(object : RetryView.OnRetryActionListener {
+      override fun onRetryAction() {
+        retryView.hide()
+        getSaleCategories()
+      }
+    })
   }
 
   private fun hideRetryView() {

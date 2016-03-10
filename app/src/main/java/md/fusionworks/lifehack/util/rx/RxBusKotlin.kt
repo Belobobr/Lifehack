@@ -12,20 +12,11 @@ object RxBusKotlin {
     if (hasObservers()) bus.onNext(event)
   }
 
-  fun post(event: Any) {
-    bus.onNext(event)
-  }
+  fun post(event: Any) = bus.onNext(event)
 
-  fun asObservable(): Observable<Any> {
+  fun asObservable(): Observable<Any> = bus.asObservable()
 
-    return bus.asObservable()
-  }
+  fun <T> event(type: Class<T>): Observable<T> = asObservable().ofType(type)
 
-  fun <T> event(type: Class<T>): Observable<T> {
-    return asObservable().ofType(type)
-  }
-
-  fun hasObservers(): Boolean {
-    return bus.hasObservers()
-  }
+  fun hasObservers(): Boolean = bus.hasObservers()
 }

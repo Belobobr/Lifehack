@@ -1,10 +1,6 @@
 package md.fusionworks.lifehack.ui.exchange_rates
 
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.widget.NestedScrollView
-import android.widget.FrameLayout
-import butterknife.Bind
 import kotlinx.android.synthetic.main.activity_exchange_rates.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity
@@ -12,6 +8,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent
 import md.fusionworks.lifehack.ui.exchange_rates.event.WhereToBuyEvent
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchListFragment
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchMapFragment
+import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchMapFragmentKotlin
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.ExchangeRatesFragment
 import md.fusionworks.lifehack.util.Constant
 
@@ -38,7 +35,7 @@ class ExchangeRatesActivity : NavigationDrawerActivity() {
     rxBus.event(WhereToBuyEvent::class.java).compose(
         this.bindToLifecycle<WhereToBuyEvent>()).subscribe { whereToBuyEvent ->
       addFragment(R.id.branchMapContainer,
-          BranchMapFragment.newInstance(whereToBuyEvent.branchModelList))
+          BranchMapFragmentKotlin.newInstance(whereToBuyEvent.branchModelList))
       addFragment(R.id.branchListContainer,
           BranchListFragment.newInstance(whereToBuyEvent.branchModelList!!))
     }

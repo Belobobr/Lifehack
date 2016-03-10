@@ -27,7 +27,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
         when (i) {
           KeyEvent.KEYCODE_BACK -> {
             if (webView.isFocusable && webView.canGoBack()) {
-              NavigationDrawerActivity().showLoadingDialog()
+              showLoadingDialog()
               webView.goBack()
               true
             }
@@ -64,7 +64,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
 
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?,
         error: WebResourceError?) {
-      NavigationDrawerActivity().showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
+      showNotificationToast(Constant.NOTIFICATION_TOAST_ERROR,
           LifehacksActivity().lifeHacksWebView.context.getString(
               R.string.error_something_gone_wrong))
     }

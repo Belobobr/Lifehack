@@ -4,13 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import kotlinx.android.synthetic.main.item_menu.view.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.rx.RxBusKotlin
-import org.jetbrains.anko.find
 
 /**
  * Created by ungvas on 2/17/16.
@@ -27,30 +24,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-    when (itemList[position]) {
-      Constant.DRAWER_ITEM_LIFE_HACKS -> {
-        holder.titleField.text = holder.titleField.context.getString(
-            R.string.drawer_item_life_hacks)
-        holder.logoImage.setImageResource(R.drawable.ic_newspaper)
-      }
-      Constant.DRAWER_ITEM_EXCHANGE_RATES -> {
-        holder.titleField.text = holder.titleField.context.getString(
-            R.string.drawer_item_exchange_rates)
-        holder.logoImage.setImageResource(R.drawable.ic_currency_exchange)
-      }
-      Constant.DRAWER_ITEM_SALES -> {
-        holder.titleField.text = holder.titleField.context.getString(R.string.drawer_item_sales)
-        holder.logoImage.setImageResource(R.drawable.ic_sale)
-      }
-      Constant.DRAWER_ITEM_TAXI -> {
-        holder.titleField.text = holder.titleField.context.getString(R.string.drawer_item_taxi)
-        holder.logoImage.setImageResource(R.drawable.ic_taxi)
-      }
-      Constant.DRAWER_ITEM_MOVIES -> {
-        holder.titleField.text = holder.titleField.context.getString(R.string.drawer_item_movies)
-        holder.logoImage.setImageResource(R.drawable.ic_movie)
-      }
-    }
+    holder.bindMenu(position);
   }
 
   override fun getItemCount(): Int {
@@ -59,14 +33,31 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
   inner class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var menuLayout: LinearLayout
-    var titleField: TextView
-    var logoImage: ImageView
-
-    init {
-      menuLayout = itemView.find(R.id.menuLayout)
-      titleField = itemView.find(R.id.titleField)
-      logoImage = itemView.find(R.id.logoImage)
+    fun bindMenu(position: Int) {
+      when (itemList[position]) {
+        Constant.DRAWER_ITEM_LIFE_HACKS -> {
+          itemView.titleField.text = itemView.context.getString(
+              R.string.drawer_item_life_hacks)
+          itemView.logoImage.setImageResource(R.drawable.ic_newspaper)
+        }
+        Constant.DRAWER_ITEM_EXCHANGE_RATES -> {
+          itemView.titleField.text = itemView.context.getString(
+              R.string.drawer_item_exchange_rates)
+          itemView.logoImage.setImageResource(R.drawable.ic_currency_exchange)
+        }
+        Constant.DRAWER_ITEM_SALES -> {
+          itemView.titleField.text = itemView.context.getString(R.string.drawer_item_sales)
+          itemView.logoImage.setImageResource(R.drawable.ic_sale)
+        }
+        Constant.DRAWER_ITEM_TAXI -> {
+          itemView.titleField.text = itemView.context.getString(R.string.drawer_item_taxi)
+          itemView.logoImage.setImageResource(R.drawable.ic_taxi)
+        }
+        Constant.DRAWER_ITEM_MOVIES -> {
+          itemView.titleField.text = itemView.context.getString(R.string.drawer_item_movies)
+          itemView.logoImage.setImageResource(R.drawable.ic_movie)
+        }
+      }
 
       itemView.setOnClickListener { v ->
         RxBusKotlin.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
