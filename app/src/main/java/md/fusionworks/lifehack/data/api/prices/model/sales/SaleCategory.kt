@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.data.api.model.sales
+package md.fusionworks.lifehack.data.api.prices.model.sales
 
 /**
  * Created by ungvas on 2/24/16.

@@ -1,7 +1,7 @@
-package md.fusionworks.lifehack.data.api.model.exchange_rates.mapper
+package md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper
 
 import java.util.ArrayList
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Branch
 import md.fusionworks.lifehack.ui.exchange_rates.model.AddressModel
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.ui.exchange_rates.model.DayModel

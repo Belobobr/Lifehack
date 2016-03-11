@@ -1,7 +1,7 @@
-package md.fusionworks.lifehack.data.api
+package md.fusionworks.lifehack.data.api.prices
 
-import md.fusionworks.lifehack.data.api.model.sales.Product
-import md.fusionworks.lifehack.data.api.model.sales.SaleCategory
+import md.fusionworks.lifehack.data.api.prices.model.sales.Product
+import md.fusionworks.lifehack.data.api.prices.model.sales.SaleCategory
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.QueryMap

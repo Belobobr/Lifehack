@@ -1,11 +1,11 @@
 package md.fusionworks.lifehack.data.repository
 
-import md.fusionworks.lifehack.data.api.BanksService
+import md.fusionworks.lifehack.data.api.banks.BanksService
 import md.fusionworks.lifehack.data.api.ServiceFactory
-import md.fusionworks.lifehack.data.api.model.exchange_rates.mapper.BankDataMapper
-import md.fusionworks.lifehack.data.api.model.exchange_rates.mapper.BranchDataMapper
-import md.fusionworks.lifehack.data.api.model.exchange_rates.mapper.CurrencyDataMapper
-import md.fusionworks.lifehack.data.api.model.exchange_rates.mapper.RateDataMapper
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper.BankDataMapper
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper.BranchDataMapper
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper.CurrencyDataMapper
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper.RateDataMapper
 import md.fusionworks.lifehack.ui.exchange_rates.model.BankModel
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.ui.exchange_rates.model.CurrencyModel

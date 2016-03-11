@@ -1,9 +1,9 @@
-package md.fusionworks.lifehack.data.api
+package md.fusionworks.lifehack.data.api.banks
 
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Bank
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Branch
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Currency
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Rate
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Bank
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Branch
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Currency
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Rate
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

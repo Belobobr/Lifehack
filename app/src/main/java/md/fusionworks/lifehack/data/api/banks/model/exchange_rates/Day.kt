@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.data.api.model.exchange_rates
+package md.fusionworks.lifehack.data.api.banks.model.exchange_rates
 
 import com.google.gson.annotations.SerializedName
 

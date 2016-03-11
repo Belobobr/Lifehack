@@ -1,10 +1,10 @@
 package md.fusionworks.lifehack.data.repository
 
 import java.util.HashMap
-import md.fusionworks.lifehack.data.api.PricesService
+import md.fusionworks.lifehack.data.api.prices.PricesService
 import md.fusionworks.lifehack.data.api.ServiceFactory
-import md.fusionworks.lifehack.data.api.model.sales.ProductDataMapper
-import md.fusionworks.lifehack.data.api.model.sales.SaleCategoryDataMapper
+import md.fusionworks.lifehack.data.api.prices.model.sales.ProductDataMapper
+import md.fusionworks.lifehack.data.api.prices.model.sales.SaleCategoryDataMapper
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel
 import md.fusionworks.lifehack.util.rx.ObservableTransformation

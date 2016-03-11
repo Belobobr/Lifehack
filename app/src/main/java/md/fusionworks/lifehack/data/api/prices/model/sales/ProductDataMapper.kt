@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.data.api.model.sales
+package md.fusionworks.lifehack.data.api.prices.model.sales
 
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 

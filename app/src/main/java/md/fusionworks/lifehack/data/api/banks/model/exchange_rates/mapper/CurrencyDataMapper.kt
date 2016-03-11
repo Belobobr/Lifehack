@@ -1,6 +1,6 @@
-package md.fusionworks.lifehack.data.api.model.exchange_rates.mapper
+package md.fusionworks.lifehack.data.api.banks.model.exchange_rates.mapper
 
-import md.fusionworks.lifehack.data.api.model.exchange_rates.Currency
+import md.fusionworks.lifehack.data.api.banks.model.exchange_rates.Currency
 import md.fusionworks.lifehack.ui.exchange_rates.model.CurrencyModel
 
 /**

@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.util.concurrent.TimeUnit
 import md.fusionworks.lifehack.BuildConfig
+import md.fusionworks.lifehack.data.api.banks.BanksService
+import md.fusionworks.lifehack.data.api.prices.PricesService
 import md.fusionworks.lifehack.util.Constant
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
