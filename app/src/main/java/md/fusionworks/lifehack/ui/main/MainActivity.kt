@@ -25,7 +25,7 @@ class MainActivity : NavigationDrawerActivity() {
     setTitle(getString(R.string.title_main))
   }
 
-  override fun getSelfDrawerItem(): Int = Constant.DRAWER_ITEM_MAIN
+  override fun getSelfDrawerItem() = Constant.DRAWER_ITEM_MAIN
 
   override fun listenForEvents() {
     super.listenForEvents()

@@ -20,14 +20,15 @@ import md.fusionworks.lifehack.util.DateUtil
 import md.fusionworks.lifehack.util.LocaleHelper
 import md.fusionworks.lifehack.util.rx.ObservableTransformation
 import md.fusionworks.lifehack.util.rx.ObserverAdapter
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 import rx.Observable
 import java.util.*
 
 class SalesActivity : NavigationDrawerActivity() {
 
-  private var salesRepository: SalesRepository? = null
-  private var saleCategorySpinnerAdapter: SaleCategorySpinnerAdapter? = null
-  private var saleProductAdapter: SaleProductAdapter? = null
+  private lateinit var salesRepository: SalesRepository
+  private lateinit var saleCategorySpinnerAdapter: SaleCategorySpinnerAdapter
+  private lateinit var saleProductAdapter: SaleProductAdapter
 
   private var productListOffset = 0
 
@@ -45,7 +46,7 @@ class SalesActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    rxBus.event(NavigateToUrlEvent::class.java).compose(
+    RxBusKotlin.event(NavigateToUrlEvent::class.java).compose(
         bindToLifecycle<NavigateToUrlEvent>()).subscribe { navigateToUrlEvent ->
       val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
           navigateToUrlEvent.url))
@@ -61,9 +62,7 @@ class SalesActivity : NavigationDrawerActivity() {
     }
   }
 
-  override fun getSelfDrawerItem(): Int {
-    return Constant.DRAWER_ITEM_SALES
-  }
+  override fun getSelfDrawerItem() = Constant.DRAWER_ITEM_SALES
 
   private fun initializeSaleCategorySpinner(saleCategoryModelList: List<SaleCategoryModel>) {
     saleCategorySpinnerAdapter = SaleCategorySpinnerAdapter(this, saleCategoryModelList,
@@ -90,20 +89,19 @@ class SalesActivity : NavigationDrawerActivity() {
     saleProductAdapter = SaleProductAdapter(productList, LocaleHelper.getLanguage(this))
     productList.adapter = saleProductAdapter
 
-    saleProductAdapter!!.setOnLoadMoreItemsListener(
+    saleProductAdapter.setOnLoadMoreItemsListener(
         object : LoadMoreAdapter.OnLoadMoreItemsListener {
           override fun onLoadMoreItems() {
             getSaleProducts((saleCategorySpinner.selectedItem as SaleCategoryModel).id,
                 productListOffset, false)
             productListOffset += Constant.LIMIT
-
           }
         })
   }
 
   private fun getSaleCategories() {
     showLoadingDialog()
-    loadingDialogCancelSubscription.add(salesRepository!!.saleCategories
+    loadingDialogCancelSubscription.add(salesRepository.saleCategories
         .compose(
             ObservableTransformation.applyIOToMainThreadSchedulers<List<SaleCategoryModel>>())
         .compose(bindToLifecycle<List<SaleCategoryModel>>())
@@ -128,7 +126,7 @@ class SalesActivity : NavigationDrawerActivity() {
   private fun getSaleProducts(categoryId: Int, offset: Int, swap: Boolean) {
     if (swap) showLoadingDialog()
     loadingDialogCancelSubscription.add(
-        salesRepository!!.getSaleProducts(todayDateString, Constant.MIN_RANGE,
+        salesRepository.getSaleProducts(todayDateString, Constant.MIN_RANGE,
             Constant.MAX_RANGE, Constant.LANG, Constant.SORT, Constant.LIMIT, offset, categoryId,
             Constant.PRICES_API_KEY)
             .compose(ObservableTransformation
@@ -144,9 +142,9 @@ class SalesActivity : NavigationDrawerActivity() {
               override fun onNext(productModelList: List<ProductModel>) {
                 if (swap) {
                   hideLoadingDialog()
-                  saleProductAdapter!!.swap(productModelList)
+                  saleProductAdapter.swap(productModelList)
                 } else {
-                  saleProductAdapter!!.addItems(productModelList)
+                  saleProductAdapter.addItems(productModelList)
                 }
               }
 

@@ -16,41 +16,34 @@ import md.fusionworks.lifehack.util.Constant
 class SaleCategorySpinnerAdapter(private val context: Context, private val itemList: List<SaleCategoryModel>,
     private val language: String) : BaseAdapter() {
 
-  override fun getCount(): Int {
-    return itemList.size
-  }
+  override fun getCount() = itemList.size
 
-  override fun getItem(position: Int): Any {
-    return itemList[position]
-  }
+  override fun getItem(position: Int) = itemList[position]
 
-  override fun getItemId(position: Int): Long {
-    return itemList[position].id.toLong()
-  }
+  override fun getItemId(position: Int) = itemList[position].id.toLong()
 
-  private fun getTitle(position: Int): String {
-    return if (position >= 0 && position < itemList.size) if (language == Constant.LANG_RU) itemList[position].nameRu
-    else itemList[position].nameRo
-    else ""
-  }
+  private fun getTitle(
+      position: Int) = if (position >= 0 && position < itemList.size) if (language == Constant.LANG_RU) itemList[position].nameRu
+  else itemList[position].nameRo
+  else ""
 
   override fun getDropDownView(position: Int, view: View?, parent: ViewGroup): View {
-    val  nview = (context as Activity).layoutInflater.inflate(
+    val view = (context as Activity).layoutInflater.inflate(
         android.R.layout.simple_spinner_dropdown_item, parent, false)
 
-    val normalTextView = nview.findViewById(android.R.id.text1) as TextView
+    val normalTextView = view.findViewById(android.R.id.text1) as TextView
     normalTextView.text = getTitle(position)
 
-    return nview
+    return view
   }
 
   override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-    val nview = (context as Activity).layoutInflater.inflate(
+    val view = (context as Activity).layoutInflater.inflate(
         android.R.layout.simple_spinner_item,
         parent, false)
 
-    val textView = nview.findViewById(android.R.id.text1) as TextView
+    val textView = view.findViewById(android.R.id.text1) as TextView
     textView.text = getTitle(position)
-    return nview
+    return view
   }
 }

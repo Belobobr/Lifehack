@@ -1,21 +1,22 @@
 package md.fusionworks.lifehack.ui.sales
 
 import android.graphics.Paint
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import color
 import com.bumptech.glide.Glide
+import drawable
 import kotlinx.android.synthetic.main.item_sale_product.view.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.tint
 
 /**
  * Created by ungvas on 12/30/15.
@@ -46,29 +47,27 @@ class SaleProductAdapter(recyclerView: RecyclerView, private val language: Strin
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     if (holder.itemViewType == VIEW_TYPE_ITEM) {
       val saleProductItemViewHolder = holder as SaleProductItemViewHolder
-      saleProductItemViewHolder.bind(getItemList()[position]!!)
+      saleProductItemViewHolder.bindProduct(getItemList()[position]!!)
     }
   }
 
   private fun initializeThumbnailImage(thumbnailImage: ImageView, url: String) {
-    val noPhotoDrawable = ContextCompat.getDrawable(thumbnailImage.context, R.drawable.ic_no)
-    DrawableCompat.setTint(noPhotoDrawable,
-        ContextCompat.getColor(thumbnailImage.context, R.color.text_disabled))
+    val noPhotoDrawable = thumbnailImage.context.drawable(R.drawable.ic_no)
+    noPhotoDrawable.tint(thumbnailImage.context.color(R.color.text_disabled))
 
-    Glide.with(thumbnailImage.context).load(String.format("%s_%d.jpg", url,
+    Glide.with(thumbnailImage.context).load("%s_%d.jpg".format(url,
         Constant.SALE_PRODUCT_THUMBNAIL_IMAGE_SIZE)).crossFade().error(noPhotoDrawable).into(
         thumbnailImage)
   }
 
   private fun initializePrevPriceField(prevPriceField: TextView, value: Double) {
-    prevPriceField.text = String.format("%d MDL", Math.round(value))
+    prevPriceField.text = "%d MDL".format(Math.round(value))
     prevPriceField.paintFlags = prevPriceField.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
   }
 
   inner class SaleProductItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(productModel: ProductModel) {
-
+    fun bindProduct(productModel: ProductModel) {
       initializeThumbnailImage(itemView.thumbnailImage, productModel.productImage)
       if (productModel.categoryId == 0) {
         itemView.categoryField.visibility = View.VISIBLE
@@ -81,10 +80,9 @@ class SaleProductAdapter(recyclerView: RecyclerView, private val language: Strin
       itemView.nameField.text = productModel.productName
       initializePrevPriceField(itemView.prevPriceField,
           productModel.productPrevPriceForGraph)
-      itemView.minPriceField.text = String.format("%d MDL",
+      itemView.minPriceField.text = "%d MDL".format(
           Math.round(productModel.productMinPriceForGraph))
       itemView.salePercentField.text = "-" + Math.round(productModel.percent) + "%"
-
 
       itemView.buyButton.setOnClickListener { v ->
         RxBusKotlin.postIfHasObservers(
