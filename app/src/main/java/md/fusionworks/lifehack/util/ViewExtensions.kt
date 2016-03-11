@@ -15,3 +15,11 @@ fun View.setAccessibilityIgnore() {
     importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
   }
 }
+
+fun View.toVisible() {
+  visibility = View.VISIBLE
+}
+
+fun View.toGone() {
+  visibility = View.GONE
+}

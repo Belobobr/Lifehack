@@ -1,8 +1,7 @@
 package md.fusionworks.lifehack.data.repository
 
-import java.util.HashMap
-import md.fusionworks.lifehack.data.api.prices.PricesService
 import md.fusionworks.lifehack.data.api.ServiceFactory
+import md.fusionworks.lifehack.data.api.prices.PricesService
 import md.fusionworks.lifehack.data.api.prices.model.sales.ProductDataMapper
 import md.fusionworks.lifehack.data.api.prices.model.sales.SaleCategoryDataMapper
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
@@ -33,16 +32,17 @@ class SalesRepository {
   fun getSaleProducts(dateTo: String, minRange: Int, maxRange: Int,
       lang: String, sort: String, limit: Int, offset: Int, categoryId: Int,
       apiKey: String): Observable<List<ProductModel>> {
-    val params = HashMap<String, String>()
-    params.put("dateTo", dateTo)
-    params.put("minRange", minRange.toString())
-    params.put("maxRange", maxRange.toString())
-    params.put("lang", lang)
-    params.put("sort", sort)
-    params.put("limit", limit.toString())
-    params.put("offset", offset.toString())
+
+    val params = hashMapOf("dateTo" to dateTo,
+        "minRange" to minRange.toString(),
+        "maxRange" to  maxRange.toString(),
+        "lang" to lang,
+        "sort" to sort,
+        "limit" to  limit.toString(),
+        "offset" to  offset.toString(),
+        "apikey" to  apiKey)
+
     if (categoryId != 0) params.put("categories[]", categoryId.toString())
-    params.put("apikey", apiKey)
 
     return pricesService.getSaleProducts(params).compose(
         ObservableTransformation.applyApiRequestConfiguration())

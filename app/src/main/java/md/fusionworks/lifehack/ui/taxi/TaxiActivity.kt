@@ -11,15 +11,16 @@ import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.rx.ObservableTransformation
 import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.toVisible
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 
 class TaxiActivity : NavigationDrawerActivity() {
 
-  private var taxiRepository: TaxiRepository? = null
-  private var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter? = null
-  private var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter? = null
+  private lateinit var taxiRepository: TaxiRepository
+  private lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  private lateinit var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -35,10 +36,11 @@ class TaxiActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBusKotlin.event(TaxiPhoneNumberClickEvent::class.java).compose(
-        bindToLifecycle<TaxiPhoneNumberClickEvent>()).subscribe { taxiPhoneNumberClickEvent ->
-      onPhoneNumberClick(taxiPhoneNumberClickEvent.taxiPhoneNumberModel!!.phoneNumber)
-    }
+    RxBusKotlin.event(TaxiPhoneNumberClickEvent::class.java)
+        .compose(bindToLifecycle<TaxiPhoneNumberClickEvent>())
+        .subscribe { taxiPhoneNumberClickEvent ->
+          onPhoneNumberClick(taxiPhoneNumberClickEvent.taxiPhoneNumberModel.phoneNumber)
+        }
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -46,9 +48,7 @@ class TaxiActivity : NavigationDrawerActivity() {
     setTitle(getString(R.string.title_taxi))
   }
 
-  override fun getSelfDrawerItem(): Int {
-    return Constant.DRAWER_ITEM_TAXI
-  }
+  override fun getSelfDrawerItem() = Constant.DRAWER_ITEM_TAXI
 
   private fun initializeTaxiPhoneNumberList(taxiPhoneNumberModelList: List<TaxiPhoneNumberModel>) {
     taxiPhoneNumberList.layoutManager = GridLayoutManager(this, 4)
@@ -60,13 +60,17 @@ class TaxiActivity : NavigationDrawerActivity() {
 
   private fun initializeLastUsedTaxiPhoneNumberList(
       taxiPhoneNumberModelList: List<TaxiPhoneNumberModel>) {
-    lastUsedTaxiPhoneNumberList.layoutManager = GridLayoutManager(this, 4)
+    if (taxiPhoneNumberModelList.size == 0) return
+
+    lastUsedTaxiPhoneNumberList.layoutManager = GridLayoutManager(
+        this, 4)
     lastUsedTaxiPhoneNumberAdapter = TaxiPhoneNumberAdapter(taxiPhoneNumberModelList)
     lastUsedTaxiPhoneNumberList.adapter = lastUsedTaxiPhoneNumberAdapter
+    lastUsedTaxiPhoneNumberList.toVisible()
   }
 
   private fun getAllPhoneNumbers() {
-    taxiRepository!!.allPhoneNumbers
+    taxiRepository.allPhoneNumbers
         .observeOn(AndroidSchedulers.mainThread())
         .compose(bindToLifecycle<List<TaxiPhoneNumberModel>>())
         .map { sortPhoneNumberListByPhoneNUmber(it) }
@@ -101,7 +105,7 @@ class TaxiActivity : NavigationDrawerActivity() {
   }
 
   private fun onPhoneNumberClick(phoneNumber: Int) {
-    taxiRepository!!.updateLastUsedDate(phoneNumber)
+    taxiRepository.updateLastUsedDate(phoneNumber)
     navigator.navigateToCallActivity(this, phoneNumber)
   }
 }

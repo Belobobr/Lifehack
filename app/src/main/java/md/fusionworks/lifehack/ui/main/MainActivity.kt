@@ -10,7 +10,7 @@ import md.fusionworks.lifehack.util.rx.RxBusKotlin
 
 class MainActivity : NavigationDrawerActivity() {
 
-  private var menuAdapter: MenuAdapter? = null
+  private lateinit var menuAdapter: MenuAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

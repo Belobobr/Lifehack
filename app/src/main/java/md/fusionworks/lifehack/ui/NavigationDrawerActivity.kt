@@ -12,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import color
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.base.view.BaseActivity
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.LocaleHelper
 import md.fusionworks.lifehack.util.setAccessibilityIgnore
 import org.jetbrains.anko.find
-import java.util.*
 
 /**
  * Created by admin on 03.09.2015.
@@ -30,10 +30,10 @@ open class NavigationDrawerActivity : BaseActivity() {
   private val drawerItemsListContainer by lazy { find<ViewGroup>(R.id.drawerItemsContainer) }
   private val languageButton by lazy { find<AppCompatButton>(R.id.languageButton) }
 
-  private val drawerItems = ArrayList<Int>()
+  private val drawerItems = arrayListOf<Int>()
   private lateinit var drawerItemViews: MutableList<View>
-  private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
-  private var handler: Handler? = null
+  private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+  private lateinit var handler: Handler
 
   override fun onCreate(savedInstanceState: Bundle?) {
     LocaleHelper.onCreate(this)
@@ -43,10 +43,8 @@ open class NavigationDrawerActivity : BaseActivity() {
 
   public override fun onPostCreate(savedInstanceState: Bundle?) {
     super.onPostCreate(savedInstanceState)
-
     setSupportActionBar(toolbar)
-    supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
     setupDrawerLayout()
 
     languageButton.setOnClickListener {
@@ -54,8 +52,8 @@ open class NavigationDrawerActivity : BaseActivity() {
       val toggleLanguage = if (currentLanguage == Constant.LANG_RU) Constant.LANG_RO else Constant.LANG_RU
       LocaleHelper.setLocale(this, toggleLanguage)
 
-      drawerLayout!!.closeDrawer(GravityCompat.START)
-      handler!!.postDelayed({ recreate() }, DRAWER_LAUNCH_DELAY.toLong())
+      drawerLayout.closeDrawer(GravityCompat.START)
+      handler.postDelayed({ recreate() }, DRAWER_LAUNCH_DELAY.toLong())
     }
   }
 
@@ -66,22 +64,22 @@ open class NavigationDrawerActivity : BaseActivity() {
 
     actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name,
         R.string.app_name)
-    actionBarDrawerToggle!!.isDrawerIndicatorEnabled = true
+    actionBarDrawerToggle.isDrawerIndicatorEnabled = true
 
-    drawerLayout!!.setDrawerListener(actionBarDrawerToggle)
-    toolbar.setNavigationOnClickListener { view -> drawerLayout!!.openDrawer(GravityCompat.START) }
-    actionBarDrawerToggle!!.syncState()
+    drawerLayout.addDrawerListener(actionBarDrawerToggle)
+    toolbar.setNavigationOnClickListener { view -> drawerLayout.openDrawer(GravityCompat.START) }
+    actionBarDrawerToggle.syncState()
 
     populateDrawerItems()
   }
 
   override fun onConfigurationChanged(newConfig: Configuration) {
     super.onConfigurationChanged(newConfig)
-    actionBarDrawerToggle!!.onConfigurationChanged(newConfig)
+    actionBarDrawerToggle.onConfigurationChanged(newConfig)
   }
 
   fun setTitle(title: String) {
-    supportActionBar!!.title = title
+    supportActionBar?.title = title
   }
 
   private fun populateDrawerItems() {
@@ -93,20 +91,18 @@ open class NavigationDrawerActivity : BaseActivity() {
     drawerItems.add(Constant.DRAWER_ITEM_MOVIES)
     drawerItems.add(Constant.DRAWER_ITEM_PRICES)
     drawerItems.add(Constant.DRAWER_ITEM_POSTER)
-    // drawerItems.add(Constant.DRAWER_ITEM_SETTINGS);
 
     createDrawerItems()
   }
 
   private fun createDrawerItems() {
-
     drawerItemsListContainer.let {
       drawerItemViews = arrayListOf<View>()
-      drawerItemsListContainer!!.removeAllViews()
+      drawerItemsListContainer.removeAllViews()
       var i = 0
       for (itemId in drawerItems) {
         drawerItemViews.add(makeDrawerItem(itemId, drawerItemsListContainer))
-        drawerItemsListContainer!!.addView(drawerItemViews!![i])
+        drawerItemsListContainer.addView(drawerItemViews[i])
         ++i
       }
     }
@@ -123,7 +119,6 @@ open class NavigationDrawerActivity : BaseActivity() {
     val view = layoutInflater.inflate(layoutToInflate, container, false)
 
     if (isSeparator(itemId)) {
-
       view.setAccessibilityIgnore()
       return view
     }
@@ -150,19 +145,12 @@ open class NavigationDrawerActivity : BaseActivity() {
 
   open fun getSelfDrawerItem() = DRAWER_ITEM_INVALID
 
-  private fun isSeparator(itemId: Int): Boolean {
-    return itemId == DRAWER_ITEM_SEPARATOR
-  }
+  private fun isSeparator(itemId: Int) = itemId == DRAWER_ITEM_SEPARATOR
 
-  private fun isSimpleActivity(itemId: Int): Boolean {
-    return itemId == DRAWER_ITEM_INVALID
-  }
+  private fun isSimpleActivity(itemId: Int) = itemId == DRAWER_ITEM_INVALID
 
   private fun formatDrawerItem(view: View, itemId: Int, selected: Boolean, isActive: Boolean) {
-    if (isSeparator(itemId)) {
-      // not applicable
-      return
-    }
+    if (isSeparator(itemId)) return
 
     val iconView = view.findViewById(R.id.icon) as ImageView
     val titleView = view.findViewById(R.id.title) as TextView
@@ -175,22 +163,20 @@ open class NavigationDrawerActivity : BaseActivity() {
     val iconColorRes: Int
 
     if (isActive) {
-
       titleColorRes = if (selected) R.color.navdrawer_text_color_selected else R.color.navdrawer_text_color
       iconColorRes = if (selected) R.color.navdrawer_icon_tint_selected else R.color.navdrawer_icon_tint
     } else {
-
       titleColorRes = R.color.navdrawer_text_color_inactive
       iconColorRes = R.color.navdrawer_icon_tint_inactive
     }
 
-    titleView.setTextColor(resources.getColor(titleColorRes))
-    iconView.setColorFilter(resources.getColor(iconColorRes))
+    titleView.setTextColor(color(titleColorRes))
+    iconView.setColorFilter(color(iconColorRes))
   }
 
   private fun onDrawerItemClicked(itemId: Int) {
     if (itemId == getSelfDrawerItem()) {
-      drawerLayout!!.closeDrawer(GravityCompat.START)
+      drawerLayout.closeDrawer(GravityCompat.START)
       return
     }
 
@@ -198,23 +184,23 @@ open class NavigationDrawerActivity : BaseActivity() {
       goToDrawerItem(itemId)
     } else {
 
-      handler!!.postDelayed({ goToDrawerItem(itemId) }, DRAWER_LAUNCH_DELAY.toLong())
+      handler.postDelayed({ goToDrawerItem(itemId) }, DRAWER_LAUNCH_DELAY.toLong())
 
       setSelectedDrawerItem(itemId)
     }
 
-    drawerLayout!!.closeDrawer(GravityCompat.START)
+    drawerLayout.closeDrawer(GravityCompat.START)
   }
 
   private fun setSelectedDrawerItem(itemId: Int) {
     if (drawerItemViews != null) {
-      for (i in drawerItemViews!!.indices) {
+      for (i in drawerItemViews.indices) {
         if (i < drawerItems.size) {
 
           val thisItemId = drawerItems[i]
           val isActive = if (itemId >= 0 && itemId < DRAWER_ITEM_ACTIVE_STATE.size) DRAWER_ITEM_ACTIVE_STATE[itemId]
           else false
-          formatDrawerItem(drawerItemViews!![i], thisItemId, itemId == thisItemId, isActive)
+          formatDrawerItem(drawerItemViews[i], thisItemId, itemId == thisItemId, isActive)
         }
       }
     }

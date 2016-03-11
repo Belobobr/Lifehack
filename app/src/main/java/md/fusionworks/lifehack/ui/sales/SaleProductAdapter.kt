@@ -12,7 +12,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_sale_product.view.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.ui.base.view.BaseViewHolder
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.util.Constant
@@ -66,7 +65,7 @@ class SaleProductAdapter(recyclerView: RecyclerView, private val language: Strin
     prevPriceField.paintFlags = prevPriceField.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
   }
 
-  inner class SaleProductItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
+  inner class SaleProductItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(productModel: ProductModel) {
 

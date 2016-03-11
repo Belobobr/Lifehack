@@ -14,8 +14,10 @@ class HeaderInterceptor(internal var apiKey: String) : Interceptor {
   @Throws(IOException::class)
   override fun intercept(chain: Interceptor.Chain): Response {
     val original = chain.request()
-    val request = original.newBuilder().header("Accept", "application/json").header("authorization",
-        apiKey).build()
+    val request = original.newBuilder()
+        .header("Accept", "application/json")
+        .header("authorization", apiKey)
+        .build()
     return chain.proceed(request)
   }
 }

@@ -24,17 +24,15 @@
           android:id="@+id/lastUsedTaxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="#636363"
           android:clipToPadding="false"
           android:elevation="2dp"
-          android:visibility="gone"
           android:outlineProvider="bounds"
+          android:visibility="gone"
           />
       <android.support.v7.widget.RecyclerView
           android:id="@+id/taxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="#fff"
           />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout

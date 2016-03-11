@@ -6,7 +6,7 @@
   <string name="drawer_item_sales">Reducerile zilei</string>
   <string name="drawer_item_settings">Setări</string>
   <string name="drawer_item_life_hacks">Lifehack-uri</string>
-  <string name="drawer_item_movies">Cinema</string>
+  <string name="drawer_item_movies">Filme</string>
   <string name="drawer_item_taxi">Taxi</string>
   <string name="drawer_item_poster">Afișa</string>
   <string name="title_exchange_rates">Schimb valutar</string>
@@ -40,7 +40,7 @@
   <string name="title_life_hacks">Lifehack-uri</string>
   <string name="title_taxi">Taxi</string>
   <string name="title_today_sales">Reducerile zilei</string>
-  <string name="title_movie">Cinema</string>
+  <string name="title_movie">Filme</string>
   <string name="choose_app">Selectează o aplicație</string>
   <string name="all_categories">Toate categoriile</string>
   <string name="title_main">Pagina principală</string>

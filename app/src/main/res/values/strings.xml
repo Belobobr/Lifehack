@@ -49,4 +49,11 @@
   <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>
   <string name="bank_not_found">Не найден подходящий банк</string>
   <string name="language">Limba romănă</string>
+
+  <string-array name="cinema_list">
+    <item>MULTIPLEX</item>
+    <item>RÎȘCANI</item>
+    <item>LOTEANU</item>
+    <item>BĂLȚI</item>
+  </string-array>
 </resources>

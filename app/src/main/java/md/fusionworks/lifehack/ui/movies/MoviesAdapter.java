@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.base.view.BaseViewHolder;
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter;
 import md.fusionworks.lifehack.ui.sales.model.ProductModel;
 
@@ -47,7 +46,7 @@ public class MoviesAdapter extends LoadMoreAdapter<ProductModel> {
 
   }
 
-  public class SaleProductItemViewHolder extends BaseViewHolder {
+  public class SaleProductItemViewHolder extends RecyclerView.ViewHolder {
 
     public SaleProductItemViewHolder(@NonNull View view) {
       super(view);

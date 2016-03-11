@@ -10,7 +10,6 @@ class TypefaceTextView @JvmOverloads constructor(context: Context, attrs: Attrib
     context, attrs, defStyle) {
 
   init {
-
     val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.TypefaceTextView, 0, 0)
     try {
       val font = ta.getString(R.styleable.TypefaceTextView_typeface)

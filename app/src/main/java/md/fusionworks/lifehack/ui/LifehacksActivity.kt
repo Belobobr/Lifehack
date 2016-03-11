@@ -20,23 +20,8 @@ class LifehacksActivity : NavigationDrawerActivity() {
     setContentView(R.layout.activity_lifehacks)
     lifeHacksWebView.setWebChromeClient(ChromeClient())
     lifeHacksWebView.setWebViewClient(WebViewClient())
-    lifeHacksWebView.settings.javaScriptEnabled = true;
-    lifeHacksWebView.setOnKeyListener { view, i, keyEvent ->
-      if (keyEvent.action == KeyEvent.ACTION_DOWN) {
-        val webView = view as WebView
-        when (i) {
-          KeyEvent.KEYCODE_BACK -> {
-            if (webView.isFocusable && webView.canGoBack()) {
-              showLoadingDialog()
-              webView.goBack()
-              true
-            }
-            false
-          }
-        }
-      }
-      false
-    }
+    lifeHacksWebView.settings.javaScriptEnabled = true
+
     showLoadingDialog()
     lifeHacksWebView.loadUrl("http://lifehack.md")
   }
@@ -58,7 +43,7 @@ class LifehacksActivity : NavigationDrawerActivity() {
   inner private class WebViewClient : android.webkit.WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
       showLoadingDialog()
-      view?.loadUrl(url)
+      lifeHacksWebView.loadUrl(url)
       return false
     }
 
@@ -68,5 +53,18 @@ class LifehacksActivity : NavigationDrawerActivity() {
           LifehacksActivity().lifeHacksWebView.context.getString(
               R.string.error_something_gone_wrong))
     }
+  }
+
+  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    if (event?.action == KeyEvent.ACTION_DOWN) {
+      when (keyCode) {
+        KeyEvent.KEYCODE_BACK -> {
+          if (lifeHacksWebView.canGoBack()) lifeHacksWebView.goBack()
+          else finish()
+        }
+      }
+      true
+    }
+    return super.onKeyDown(keyCode, event)
   }
 }

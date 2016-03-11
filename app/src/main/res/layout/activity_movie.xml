@@ -23,30 +23,50 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="#636363"
+          android:background="#fff"
           android:clipToPadding="false"
           android:elevation="2dp"
-          android:gravity="center"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
           android:outlineProvider="bounds"
+          android:paddingBottom="8dp"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          android:paddingTop="8dp"
+          android:weightSum="100"
           >
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_movie"
+            android:tint="@color/mainColorBlue"
+            />
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/cinemaSpinner"
+            android:layout_width="0dp"
+            android:layout_marginLeft="2dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="start|center_vertical"
-            android:padding="16dp"
-            android:text="10.04.2016"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_large"
-            app:typeface="font/Roboto-Bold.ttf"
+            android:layout_weight="50"
+            />
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/ic_calendar"
+            android:tint="@color/mainColorBlue"
+            />
+        <md.fusionworks.lifehack.ui.widget.DateView
+            android:id="@+id/ratesDateField"
+            android:layout_width="0dp"
+            android:layout_marginLeft="6dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
             />
       </LinearLayout>
       <android.support.v7.widget.RecyclerView
           android:id="@+id/movieList"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="#434343"
           />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout
