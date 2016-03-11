@@ -176,9 +176,7 @@ class SalesActivity : NavigationDrawerActivity() {
     })
   }
 
-  private fun hideRetryView() {
-    retryView.hide()
-  }
+  private fun hideRetryView() = retryView.hide()
 
   private fun showTodaySalesView() {
     todaySalesView.visibility = View.VISIBLE
