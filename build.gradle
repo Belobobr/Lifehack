@@ -27,7 +27,7 @@ allprojects {
     androidTargetSdkVersion = 23
     androidCompileSdkVersion = 23
 
-    def supportVersion = '23.2.0'
+    def supportVersion = '23.2.1'
 
     butterKnifeVersion = '7.0.1'
     appCompat_v7Version = supportVersion

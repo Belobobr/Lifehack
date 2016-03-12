@@ -49,7 +49,6 @@ public class BaseFragment extends RxFragment implements LoadingDialog.OnCancelLi
   protected View inflateAndBindViews(LayoutInflater inflater, @LayoutRes int layoutResId,
       ViewGroup container) {
     View view = inflater.inflate(layoutResId, container, false);
-    ButterKnife.bind(this, view);
     return view;
   }
 

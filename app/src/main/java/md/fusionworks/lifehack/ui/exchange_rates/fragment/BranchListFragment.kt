@@ -15,6 +15,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.event.ShowRouteOnMapEvent
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.util.BranchUtil
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 import java.util.*
 
 /**
@@ -23,7 +24,7 @@ import java.util.*
 class BranchListFragment : BaseFragment() {
 
   private lateinit var branchModelList: List<BranchModel>
-  private var weakHandler: WeakHandler? = null
+  private lateinit var weakHandler: WeakHandler
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -34,7 +35,7 @@ class BranchListFragment : BaseFragment() {
 
   override fun onDestroy() {
     super.onDestroy()
-    weakHandler!!.removeCallbacksAndMessages(null)
+    weakHandler.removeCallbacksAndMessages(null)
   }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -65,33 +66,33 @@ class BranchListFragment : BaseFragment() {
       if (!BranchUtil.isBranchDetailEmpty(phone)) address += "\n" + phone
       addressField.text = address
 
-      var sheduleText = BranchUtil.getBranchMondayFridayHours(branch,
+      var scheduleText = BranchUtil.getBranchMondayFridayHours(branch,
           activity.getString(R.string.format_branch_monday_friday_hours_2))
-      val mondayFridayscheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(activity,
+      val mondayFridayScheduleBreak = BranchUtil.getBranchMondayFridayScheduleBreak(activity,
           branch)
       val saturdayHours = BranchUtil.getBranchSaturdayHours(branch,
           activity.getString(R.string.format_branch_sat_hours_2))
       val saturdayScheduleBreak = BranchUtil.getBranchSaturdayScheduleBreak(activity, branch)
-      if (!BranchUtil.isBranchDetailEmpty(mondayFridayscheduleBreak)) {
-        sheduleText += "\n" + mondayFridayscheduleBreak
+      if (!BranchUtil.isBranchDetailEmpty(mondayFridayScheduleBreak)) {
+        scheduleText += "\n" + mondayFridayScheduleBreak
       }
       if (!BranchUtil.isBranchDetailEmpty(saturdayHours)) {
-        sheduleText += "\n" + saturdayHours
+        scheduleText += "\n" + saturdayHours
       }
       if (!BranchUtil.isBranchDetailEmpty(saturdayScheduleBreak)) {
-        sheduleText += "\n" + saturdayScheduleBreak
+        scheduleText += "\n" + saturdayScheduleBreak
       }
-      scheduleField.text = sheduleText
+      scheduleField.text = scheduleText
 
       workField.text = BranchUtil.getClosingTime(activity, branch)
 
-      nameField.setOnClickListener { v1 ->
-        rxBus.postIfHasObservers(ScrollToMapEvent())
-        rxBus.postIfHasObservers(ShowBranchMapInfoWindowEvent(branch))
+      nameField.setOnClickListener {
+        RxBusKotlin.postIfHasObservers(ScrollToMapEvent())
+        RxBusKotlin.postIfHasObservers(ShowBranchMapInfoWindowEvent(branch))
       }
-      workField.setOnClickListener { v1 ->
-        rxBus.postIfHasObservers(ScrollToMapEvent())
-        rxBus.postIfHasObservers(ShowRouteOnMapEvent(branch))
+      workField.setOnClickListener {
+        RxBusKotlin.postIfHasObservers(ScrollToMapEvent())
+        RxBusKotlin.postIfHasObservers(ShowRouteOnMapEvent(branch))
       }
       branchesListLayout.addView(v)
     }

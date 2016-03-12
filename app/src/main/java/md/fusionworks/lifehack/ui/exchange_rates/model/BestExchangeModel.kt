@@ -6,13 +6,13 @@ package md.fusionworks.lifehack.ui.exchange_rates.model
 class BestExchangeModel {
 
   var bank: BankModel? = null
-  var amountOutvalue: Double = 0.toDouble()
+  var amountOutValue: Double = 0.toDouble()
 
   constructor() {
   }
 
   constructor(bank: BankModel, amountOutvalue: Double) {
     this.bank = bank
-    this.amountOutvalue = amountOutvalue
+    this.amountOutValue = amountOutvalue
   }
 }

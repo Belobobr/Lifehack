@@ -1,14 +1,9 @@
 package md.fusionworks.lifehack.ui.widget
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Button
 import android.widget.RelativeLayout
-import android.widget.TextView
-import butterknife.Bind
-import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.retry_view.view.*
 import md.fusionworks.lifehack.R
 
@@ -17,7 +12,7 @@ import md.fusionworks.lifehack.R
  */
 class RetryView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs,
     R.attr.retryViewStyle) {
-  
+
   private var onRetryActionListener: OnRetryActionListener? = null
 
   fun setOnRetryActionListener(onRetryActionListener: OnRetryActionListener) {
@@ -27,7 +22,6 @@ class RetryView(context: Context, attrs: AttributeSet) : RelativeLayout(context,
   init {
 
     View.inflate(context, R.layout.retry_view, this)
-    ButterKnife.bind(this)
 
     val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.RetryView, 0, 0)
     try {

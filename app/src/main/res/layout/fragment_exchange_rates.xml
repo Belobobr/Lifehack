@@ -57,7 +57,7 @@
             />
 
         <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
-            android:id="@+id/currencyInRadioGroup"
+            android:id="@+id/currenciesInGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-4dp"
@@ -92,7 +92,7 @@
             />
 
         <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
-            android:id="@+id/currencyOutRadioGroup"
+            android:id="@+id/currenciesOutGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

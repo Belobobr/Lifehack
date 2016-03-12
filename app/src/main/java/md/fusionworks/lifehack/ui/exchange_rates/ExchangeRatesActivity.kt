@@ -7,10 +7,10 @@ import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent
 import md.fusionworks.lifehack.ui.exchange_rates.event.WhereToBuyEvent
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchListFragment
-import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchMapFragment
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchMapFragmentKotlin
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.ExchangeRatesFragment
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 
 class ExchangeRatesActivity : NavigationDrawerActivity() {
 
@@ -26,9 +26,7 @@ class ExchangeRatesActivity : NavigationDrawerActivity() {
     setTitle(getString(R.string.title_exchange_rates))
   }
 
-  override fun getSelfDrawerItem(): Int {
-    return Constant.DRAWER_ITEM_EXCHANGE_RATES
-  }
+  override fun getSelfDrawerItem() = Constant.DRAWER_ITEM_EXCHANGE_RATES
 
   override fun listenForEvents() {
     super.listenForEvents()
@@ -37,10 +35,10 @@ class ExchangeRatesActivity : NavigationDrawerActivity() {
       addFragment(R.id.branchMapContainer,
           BranchMapFragmentKotlin.newInstance(whereToBuyEvent.branchModelList))
       addFragment(R.id.branchListContainer,
-          BranchListFragment.newInstance(whereToBuyEvent.branchModelList!!))
+          BranchListFragment.newInstance(whereToBuyEvent.branchModelList))
     }
 
-    rxBus.event(ScrollToMapEvent::class.java).compose(
+    RxBusKotlin.event(ScrollToMapEvent::class.java).compose(
         this.bindToLifecycle<ScrollToMapEvent>()).subscribe { scrollToMapEvent ->
       container.smoothScrollTo(0, exchangeRatesContainer.bottom)
     }

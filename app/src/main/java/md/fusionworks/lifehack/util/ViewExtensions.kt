@@ -1,6 +1,8 @@
 package md.fusionworks.lifehack.util
 
 import android.os.Build
+import android.support.annotation.StringRes
+import android.support.v4.app.Fragment
 import android.view.View
 
 /**
@@ -22,4 +24,8 @@ fun View.toVisible() {
 
 fun View.toGone() {
   visibility = View.GONE
+}
+
+fun Fragment.getString(@StringRes res: Int) {
+  activity.getString(res)
 }

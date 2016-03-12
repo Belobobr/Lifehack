@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
-import kotlinx.android.synthetic.main.fragment_branch_map.*
+import kotlinx.android.synthetic.main.fragment_branch_map_k.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.base.view.BaseFragment
 import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent
@@ -38,28 +38,28 @@ class BranchMapFragmentKotlin : BaseFragment() {
   private val branchMap = HashMap<Marker, BranchModel>()
   private lateinit var googleApiClient: GoogleApiClient
   private var myLastLocation: Location? = null
-  private var routePolylines: ArrayList<Polyline>? = null
-  private var branchModelList: List<BranchModel>? = null
-  private var weakHandler: WeakHandler? = null
+  private lateinit var routePolylines: ArrayList<Polyline>
+  private lateinit var branchModelList: List<BranchModel>
+  private lateinit var weakHandler: WeakHandler
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     branchModelList = arguments.getParcelableArrayList<BranchModel>(
         Constant.EXTRA_PARAM_BRANCH_LIST)
-    routePolylines = ArrayList<Polyline>()
+    routePolylines = arrayListOf<Polyline>()
     weakHandler = WeakHandler()
     buildGoogleApiClient()
   }
 
   override fun onStart() {
     super.onStart()
-    googleApiClient!!.connect()
+    googleApiClient.connect()
   }
 
   override fun onStop() {
     super.onStop()
-    if (googleApiClient!!.isConnected) {
-      googleApiClient!!.disconnect()
+    if (googleApiClient.isConnected) {
+      googleApiClient.disconnect()
     }
   }
 
@@ -69,10 +69,10 @@ class BranchMapFragmentKotlin : BaseFragment() {
   }
 
   override fun onDestroy() {
-    weakHandler!!.removeCallbacksAndMessages(null)
+    weakHandler.removeCallbacksAndMessages(null)
     if (map != null) {
-      map!!.isMyLocationEnabled = false
-      map!!.clear()
+      map.isMyLocationEnabled = false
+      map.clear()
     }
     branchMapView.onDestroy()
     super.onDestroy()
@@ -85,7 +85,7 @@ class BranchMapFragmentKotlin : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    val view = inflateAndBindViews(inflater, R.layout.fragment_branch_map, container)
+    val view = inflater?.inflate(R.layout.fragment_branch_map_k, container, false)
     initializeMap(savedInstanceState)
     return view
   }
@@ -108,14 +108,14 @@ class BranchMapFragmentKotlin : BaseFragment() {
     enableMapGesturesInScrollView()
     branchMapView.getMapAsync { googleMap ->
       map = googleMap
-      map!!.uiSettings.isMyLocationButtonEnabled = true
-      map!!.uiSettings.isZoomControlsEnabled = true
-      map!!.uiSettings.isCompassEnabled = true
-      map!!.isMyLocationEnabled = true
+      map.uiSettings.isMyLocationButtonEnabled = true
+      map.uiSettings.isZoomControlsEnabled = true
+      map.uiSettings.isCompassEnabled = true
+      map.isMyLocationEnabled = true
       MapsInitializer.initialize(activity)
       populateBranchesMap(branchModelList)
-      weakHandler!!.postDelayed({ rxBus.postIfHasObservers(ScrollToMapEvent()) }, 500)
-      map!!.setOnMarkerClickListener { marker ->
+      weakHandler.postDelayed({ rxBus.postIfHasObservers(ScrollToMapEvent()) }, 500)
+      map.setOnMarkerClickListener { marker ->
         smoothShowInfoWindow(branchMap[marker])
         true
       }
@@ -153,7 +153,7 @@ class BranchMapFragmentKotlin : BaseFragment() {
   }
 
   private fun populateBranchesMap(branchList: List<BranchModel>?) {
-    map!!.clear()
+    map.clear()
     pinHomeMarker(myLastLocation)
     if (branchList != null) for (branch in branchList) {
       val marker = MapUtil.createMarker(map, branch.address.location.lat,
@@ -163,8 +163,8 @@ class BranchMapFragmentKotlin : BaseFragment() {
   }
 
   private fun smoothShowInfoWindow(branch: BranchModel?) {
-    weakHandler!!.postDelayed({ DialogUtil.showBranchMapInfoWindow(activity, branch) }, 100)
-    weakHandler!!.postDelayed(
+    weakHandler.postDelayed({ DialogUtil.showBranchMapInfoWindow(activity, branch) }, 100)
+    weakHandler.postDelayed(
         {
           MapUtil.goToPosition(map, branch?.address?.location?.lat,
               branch?.address?.location?.lng, false)
@@ -180,7 +180,7 @@ class BranchMapFragmentKotlin : BaseFragment() {
           }
 
           override fun onConnectionSuspended(i: Int) {
-            googleApiClient!!.connect()
+            googleApiClient.connect()
           }
         }).addOnConnectionFailedListener { connectionResult ->
 
@@ -207,8 +207,8 @@ class BranchMapFragmentKotlin : BaseFragment() {
               MapUtil.goToPosition(map, branch?.address?.location?.lat,
                   branch?.address?.location?.lng, false)
 
-              if (routePolylines!!.size > 0) {
-                for (poly in routePolylines!!) {
+              if (routePolylines.size > 0) {
+                for (poly in routePolylines) {
                   poly.remove()
                 }
               }
@@ -219,8 +219,8 @@ class BranchMapFragmentKotlin : BaseFragment() {
                 polyOptions.color(ContextCompat.getColor(activity, R.color.mainColorBlue))
                 polyOptions.width((10 + i * 3).toFloat())
                 polyOptions.addAll(arrayList[i].points)
-                val polyline = map!!.addPolyline(polyOptions)
-                routePolylines!!.add(polyline)
+                val polyline = map.addPolyline(polyOptions)
+                routePolylines.add(polyline)
               }
             }
 
