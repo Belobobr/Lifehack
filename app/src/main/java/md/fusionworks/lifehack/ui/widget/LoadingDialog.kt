@@ -4,17 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import md.fusionworks.lifehack.R
 
-class LoadingDialog(context: Context, onCancelListener: LoadingDialog.OnCancelListener) : Dialog(
+class LoadingDialog(context: Context, onCancel: () -> Unit) : Dialog(
     context, R.style.LoadingDialogStyle) {
 
   init {
     setTitle(null)
     setCancelable(true)
-    setOnCancelListener { dialog -> onCancelListener.onCancel() }
+    setOnCancelListener { dialog -> onCancel() }
     setContentView(R.layout.layout_loading_dialog)
-  }
-
-  interface OnCancelListener {
-    fun onCancel()
   }
 }

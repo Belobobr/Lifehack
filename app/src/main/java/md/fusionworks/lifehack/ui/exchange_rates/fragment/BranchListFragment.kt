@@ -15,7 +15,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.event.ShowRouteOnMapEvent
 import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.util.BranchUtil
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ class BranchListFragment : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    return inflateAndBindViews(inflater, R.layout.fragment_branch_list, container)
+    return inflater?.inflate(R.layout.fragment_branch_list, container, false)
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -87,12 +87,12 @@ class BranchListFragment : BaseFragment() {
       workField.text = BranchUtil.getClosingTime(activity, branch)
 
       nameField.setOnClickListener {
-        RxBusKotlin.postIfHasObservers(ScrollToMapEvent())
-        RxBusKotlin.postIfHasObservers(ShowBranchMapInfoWindowEvent(branch))
+        RxBus.postIfHasObservers(ScrollToMapEvent())
+        RxBus.postIfHasObservers(ShowBranchMapInfoWindowEvent(branch))
       }
       workField.setOnClickListener {
-        RxBusKotlin.postIfHasObservers(ScrollToMapEvent())
-        RxBusKotlin.postIfHasObservers(ShowRouteOnMapEvent(branch))
+        RxBus.postIfHasObservers(ScrollToMapEvent())
+        RxBus.postIfHasObservers(ShowRouteOnMapEvent(branch))
       }
       branchesListLayout.addView(v)
     }

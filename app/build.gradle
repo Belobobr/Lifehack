@@ -95,7 +95,6 @@ dependencies {
   compile "com.android.support:appcompat-v7:$rootProject.appCompat_v7Version"
   compile "com.android.support:design:$rootProject.designSupportLibraryVersion"
   compile "com.android.support:cardview-v7:$rootProject.designSupportLibraryVersion"
-  compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
   compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
   compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"

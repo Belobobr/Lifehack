@@ -4,7 +4,7 @@ import rx.Observable
 import rx.subjects.PublishSubject
 import rx.subjects.SerializedSubject
 
-object RxBusKotlin {
+object RxBus {
 
   private val bus = SerializedSubject(PublishSubject.create<Any>())
 

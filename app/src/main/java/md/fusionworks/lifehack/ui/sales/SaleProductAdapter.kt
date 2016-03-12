@@ -15,7 +15,7 @@ import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import md.fusionworks.lifehack.util.tint
 
 /**
@@ -85,11 +85,11 @@ class SaleProductAdapter(recyclerView: RecyclerView, private val language: Strin
       itemView.salePercentField.text = "-" + Math.round(productModel.percent) + "%"
 
       itemView.buyButton.setOnClickListener { v ->
-        RxBusKotlin.postIfHasObservers(
+        RxBus.postIfHasObservers(
             NavigateToUrlEvent(getItemList()[adapterPosition]!!.storeProductUrl))
       }
       itemView.allPricesButton.setOnClickListener { v ->
-        RxBusKotlin.postIfHasObservers(
+        RxBus.postIfHasObservers(
             NavigateToUrlEvent(getItemList()[adapterPosition]!!.jbUrl))
       }
     }

@@ -22,7 +22,7 @@ import md.fusionworks.lifehack.util.DateUtil
 import md.fusionworks.lifehack.util.ExchangeRatesUtil
 import md.fusionworks.lifehack.util.rx.ObservableTransformation
 import md.fusionworks.lifehack.util.rx.ObserverAdapter
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import rx.Observable
 import java.util.*
 
@@ -53,7 +53,7 @@ class ExchangeRatesFragment : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    return inflateAndBindViews(inflater, R.layout.fragment_exchange_rates, container)
+    return inflater?.inflate(R.layout.fragment_exchange_rates, container, false)
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -378,7 +378,7 @@ class ExchangeRatesFragment : BaseFragment() {
             object : ObserverAdapter<List<BranchModel>>() {
               override fun onNext(branchModels: List<BranchModel>) {
                 hideLoadingDialog()
-                RxBusKotlin.postIfHasObservers(WhereToBuyEvent(branchModels))
+                RxBus.postIfHasObservers(WhereToBuyEvent(branchModels))
               }
 
               override fun onError(e: Throwable) {

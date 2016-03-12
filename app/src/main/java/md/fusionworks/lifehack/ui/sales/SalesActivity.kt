@@ -20,7 +20,7 @@ import md.fusionworks.lifehack.util.DateUtil
 import md.fusionworks.lifehack.util.LocaleHelper
 import md.fusionworks.lifehack.util.rx.ObservableTransformation
 import md.fusionworks.lifehack.util.rx.ObserverAdapter
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import rx.Observable
 import java.util.*
 
@@ -46,7 +46,7 @@ class SalesActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBusKotlin.event(NavigateToUrlEvent::class.java).compose(
+    RxBus.event(NavigateToUrlEvent::class.java).compose(
         bindToLifecycle<NavigateToUrlEvent>()).subscribe { navigateToUrlEvent ->
       val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
           navigateToUrlEvent.url))

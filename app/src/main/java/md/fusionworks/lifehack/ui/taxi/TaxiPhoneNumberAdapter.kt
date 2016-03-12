@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import org.jetbrains.anko.find
 
 /**
@@ -33,7 +33,7 @@ class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumb
     init {
       phoneNumberField = itemView.find(R.id.phoneNumberField)
       itemView.setOnClickListener {
-        RxBusKotlin.postIfHasObservers(
+        RxBus.postIfHasObservers(
             TaxiPhoneNumberClickEvent(taxiPhoneNumberList[adapterPosition]))
       }
     }

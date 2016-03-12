@@ -9,7 +9,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.event.WhereToBuyEvent
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.BranchListFragment
 import md.fusionworks.lifehack.ui.exchange_rates.fragment.ExchangeRatesFragment
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 
 class ExchangeRatesActivity : NavigationDrawerActivity() {
 
@@ -29,7 +29,7 @@ class ExchangeRatesActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBusKotlin.event(WhereToBuyEvent::class.java).compose(
+    RxBus.event(WhereToBuyEvent::class.java).compose(
         this.bindToLifecycle<WhereToBuyEvent>()).subscribe { whereToBuyEvent ->
       //   addFragment(R.id.branchMapContainer,
       //    BranchMapFragmentKotlin.newInstance(whereToBuyEvent.branchModelList))
@@ -37,7 +37,7 @@ class ExchangeRatesActivity : NavigationDrawerActivity() {
           BranchListFragment.newInstance(whereToBuyEvent.branchModelList))
     }
 
-    RxBusKotlin.event(ScrollToMapEvent::class.java).compose(
+    RxBus.event(ScrollToMapEvent::class.java).compose(
         this.bindToLifecycle<ScrollToMapEvent>()).subscribe { scrollToMapEvent ->
       container.smoothScrollTo(0, exchangeRatesContainer.bottom)
     }

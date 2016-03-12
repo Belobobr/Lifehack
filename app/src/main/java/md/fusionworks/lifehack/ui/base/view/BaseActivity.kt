@@ -17,7 +17,7 @@ import rx.subscriptions.CompositeSubscription
 /**
  * Created by ungvas on 10/15/15.
  */
-open class BaseActivity : RxAppCompatActivity(), LoadingDialog.OnCancelListener {
+open class BaseActivity : RxAppCompatActivity() {
 
   val coordinatorLayout by lazy { find<CoordinatorLayout>(R.id.coordinatorLayout) }
 
@@ -28,17 +28,16 @@ open class BaseActivity : RxAppCompatActivity(), LoadingDialog.OnCancelListener 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     navigator = Navigator()
-    loadingDialog = LoadingDialog(this, this)
+    loadingDialog = LoadingDialog(this) {
+      loadingDialogCancelSubscription.clear()
+      onLoadingDialogCanceled()
+    }
     loadingDialogCancelSubscription = CompositeSubscription()
   }
 
   override fun onResume() {
     super.onResume()
     listenForEvents()
-  }
-
-  override fun setContentView(@LayoutRes layoutResID: Int) {
-    super.setContentView(layoutResID)
   }
 
   protected fun addFragment(containerViewId: Int, fragment: Fragment) {
@@ -59,15 +58,14 @@ open class BaseActivity : RxAppCompatActivity(), LoadingDialog.OnCancelListener 
     }
   }
 
-  fun showNotificationToast(type: Int, message: String,
-      notificationToastActionListener: NotificationToastActionListener?) {
+  fun showNotificationToast(type: Int, message: String, onRetry: () -> Unit) {
     if (coordinatorLayout != null) {
       coordinatorLayout.postDelayed({
         val snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
         if (type == Constant.NOTIFICATION_TOAST_ERROR) {
           snackbar.view.setBackgroundColor(Color.RED)
         }
-        snackbar.setAction(R.string.retry) { v -> notificationToastActionListener?.onClick() }
+        snackbar.setAction(R.string.retry) { v -> onRetry() }
         snackbar.show()
       }, Constant.NOTIFICATION_TOAST_SHOW_DELAY.toLong())
     }
@@ -88,15 +86,6 @@ open class BaseActivity : RxAppCompatActivity(), LoadingDialog.OnCancelListener 
   protected open fun listenForEvents() {
   }
 
-  override fun onCancel() {
-    loadingDialogCancelSubscription.clear()
-    onLoadingDialogCanceled()
-  }
-
   protected fun onLoadingDialogCanceled() {
-  }
-
-  interface NotificationToastActionListener {
-    fun onClick()
   }
 }

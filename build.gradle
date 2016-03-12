@@ -29,7 +29,6 @@ allprojects {
 
     def supportVersion = '23.2.1'
 
-    butterKnifeVersion = '7.0.1'
     appCompat_v7Version = supportVersion
     designSupportLibraryVersion = supportVersion
     daggerVersion = '2.0'

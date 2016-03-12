@@ -10,7 +10,7 @@ import md.fusionworks.lifehack.data.repository.TaxiRepository
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.rx.ObservableTransformation
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 import md.fusionworks.lifehack.util.toVisible
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -36,7 +36,7 @@ class TaxiActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBusKotlin.event(TaxiPhoneNumberClickEvent::class.java)
+    RxBus.event(TaxiPhoneNumberClickEvent::class.java)
         .compose(bindToLifecycle<TaxiPhoneNumberClickEvent>())
         .subscribe { taxiPhoneNumberClickEvent ->
           onPhoneNumberClick(taxiPhoneNumberClickEvent.taxiPhoneNumberModel.phoneNumber)

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_menu.view.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBusKotlin
+import md.fusionworks.lifehack.util.rx.RxBus
 
 /**
  * Created by ungvas on 2/17/16.
@@ -58,7 +58,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
       }
 
       itemView.setOnClickListener { v ->
-        RxBusKotlin.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
+        RxBus.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
       }
     }
   }
