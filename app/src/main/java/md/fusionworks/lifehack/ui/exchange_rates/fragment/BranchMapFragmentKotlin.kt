@@ -27,6 +27,7 @@ import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.DialogUtil
 import md.fusionworks.lifehack.util.MapUtil
+import md.fusionworks.lifehack.util.rx.RxBusKotlin
 import java.util.*
 
 /**
@@ -92,12 +93,12 @@ class BranchMapFragmentKotlin : BaseFragment() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    rxBus.event(ShowRouteOnMapEvent::class.java).compose(
+    RxBusKotlin.event(ShowRouteOnMapEvent::class.java).compose(
         this.bindToLifecycle<ShowRouteOnMapEvent>()).subscribe { showRouteOnMapEvent ->
       showRouteOnMap(showRouteOnMapEvent.branchModel)
     }
 
-    rxBus.event(ShowBranchMapInfoWindowEvent::class.java).compose(
+    RxBusKotlin.event(ShowBranchMapInfoWindowEvent::class.java).compose(
         this.bindToLifecycle<ShowBranchMapInfoWindowEvent>()).subscribe { showBranchMapInfoWindowEvent ->
       smoothShowInfoWindow(showBranchMapInfoWindowEvent.branchModel)
     }
@@ -114,7 +115,7 @@ class BranchMapFragmentKotlin : BaseFragment() {
       map.isMyLocationEnabled = true
       MapsInitializer.initialize(activity)
       populateBranchesMap(branchModelList)
-      weakHandler.postDelayed({ rxBus.postIfHasObservers(ScrollToMapEvent()) }, 500)
+      weakHandler.postDelayed({ RxBusKotlin.postIfHasObservers(ScrollToMapEvent()) }, 500)
       map.setOnMarkerClickListener { marker ->
         smoothShowInfoWindow(branchMap[marker])
         true
