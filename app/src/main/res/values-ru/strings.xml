@@ -9,6 +9,7 @@
   <string name="drawer_item_movies">Кино</string>
   <string name="drawer_item_taxi">Такси</string>
   <string name="drawer_item_poster">Афиша</string>
+  <string name="drawer_item_about">О приложении</string>
   <string name="title_exchange_rates">Обмен валют</string>
   <string name="best_exchange">Лучший курс</string>
   <string name="bank_list">Список банков</string>
@@ -44,9 +45,16 @@
   <string name="all_categories">Все категории</string>
   <string name="title_main">Главная</string>
   <string name="title_movie">Кино</string>
+  <string name="title_about">О приложении</string>
   <string formatted="false" name="format_branch_monday_friday_hours_2">(Пн - Пт: %s - %s)</string>
   <string formatted="false" name="format_branch_sat_hours_2">(Сб: %s - %s)</string>
   <string name="format_exchange_rates_best_bank">Используется курс банка %s</string>
   <string name="bank_not_found">Не найден подходящий банк</string>
   <string name="language">Limba romînă</string>
+  <string name="field_contact">Мы на связи:</string>
+  <string name="contact_email">info@fusionworks.md</string>
+  <string name="contact_url">http://www.lifehack.md</string>
+  <string name="contact_developer_url">http://www.fusionworks.md</string>
+  <string name="app_version">Версия: 1.0.0</string>
+  <string name="developed_">Разработанно:</string>
 </resources>

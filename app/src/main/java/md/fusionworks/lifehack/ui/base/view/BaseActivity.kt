@@ -2,17 +2,19 @@ package md.fusionworks.lifehack.ui.base.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import md.fusionworks.lifehack.LifehackApp
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.Navigator
 import md.fusionworks.lifehack.ui.widget.LoadingDialog
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.util.rx.RxBusDagger
 import org.jetbrains.anko.find
 import rx.subscriptions.CompositeSubscription
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 10/15/15.
@@ -25,14 +27,19 @@ open class BaseActivity : RxAppCompatActivity() {
   private lateinit var loadingDialog: LoadingDialog
   protected lateinit var loadingDialogCancelSubscription: CompositeSubscription
 
+  @Inject lateinit var rxBus: RxBusDagger
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    LifehackApp.component.inject(this)
     navigator = Navigator()
     loadingDialog = LoadingDialog(this) {
       loadingDialogCancelSubscription.clear()
       onLoadingDialogCanceled()
     }
     loadingDialogCancelSubscription = CompositeSubscription()
+
+    rxBus.hasObservers()
   }
 
   override fun onResume() {

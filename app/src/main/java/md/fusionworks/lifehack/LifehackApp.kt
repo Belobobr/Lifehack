@@ -7,16 +7,26 @@ import com.squareup.leakcanary.LeakCanary
 import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import md.fusionworks.AppComponent
+import md.fusionworks.AppModule
+import md.fusionworks.DaggerAppComponent
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.LocaleHelper
 
 /**
  * Created by ungvas on 10/20/15.
  */
-class LifehackApplication : Application() {
+class LifehackApp : Application() {
+
+  companion object {
+    lateinit var component: AppComponent
+  }
 
   override fun onCreate() {
     super.onCreate()
+
+    component = createAppComponent()
+
     val currentLanguage = LocaleHelper.getLanguage(this)
     if (currentLanguage == Constant.LANG_EN) LocaleHelper.onCreate(this, Constant.LANG_RU)
 
@@ -31,4 +41,7 @@ class LifehackApplication : Application() {
 
     Stetho.initializeWithDefaults(this)
   }
+
+  fun createAppComponent(): AppComponent = DaggerAppComponent.builder().appModule(
+      AppModule(this)).build()
 }

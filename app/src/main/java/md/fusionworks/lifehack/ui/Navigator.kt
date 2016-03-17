@@ -3,11 +3,15 @@ package md.fusionworks.lifehack.ui
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.exchange_rates.ExchangeRatesActivity
 import md.fusionworks.lifehack.ui.main.MainActivity
+import md.fusionworks.lifehack.ui.movies.MovieDetailActivity
 import md.fusionworks.lifehack.ui.movies.MoviesActivity
 import md.fusionworks.lifehack.ui.sales.SalesActivity
 import md.fusionworks.lifehack.ui.taxi.TaxiActivity
+import md.fusionworks.lifehack.util.AndroidUtil
+import md.fusionworks.lifehack.util.Constant
 import org.jetbrains.anko.startActivity
 
 /**
@@ -33,5 +37,31 @@ class Navigator {
     val intentToLaunch = Intent(Intent.ACTION_DIAL)
     intentToLaunch.data = Uri.parse("tel:%d".format(phoneNumber))
     context.startActivity(intentToLaunch)
+  }
+
+  fun navigateToMovieDetailActivity(context: Context) = context.startActivity<MovieDetailActivity>()
+
+  fun navigateToAboutActivity(context: Context) = context.startActivity<AboutActivity>()
+
+  fun navigateToMail(context: Context, email: String) {
+    val intentToLaunch = Intent(Intent.ACTION_SENDTO,
+        Uri.fromParts("mailto", email, null))
+    context.startActivity(Intent.createChooser(intentToLaunch, null))
+  }
+
+  fun navigateToUrl(context: Context, url: String) {
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
+        url))
+    val isChromeInstalled = AndroidUtil.isPackageInstalled(Constant.APP_CHROME,
+        context)
+    if (isChromeInstalled) {
+      browserIntent.`package` = Constant.APP_CHROME
+      context.startActivity(browserIntent)
+    } else {
+      val chooserIntent = Intent.createChooser(browserIntent,
+          context.getString(R.string.choose_app))
+      context.startActivity(chooserIntent)
+    }
+
   }
 }

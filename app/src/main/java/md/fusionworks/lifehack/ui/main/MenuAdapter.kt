@@ -16,7 +16,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
   private val itemList = intArrayOf(Constant.DRAWER_ITEM_LIFE_HACKS,
       Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI,
-      Constant.DRAWER_ITEM_MOVIES)
+      Constant.DRAWER_ITEM_MOVIES, Constant.DRAWER_ITEM_ABOUT)
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)
@@ -54,6 +54,10 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
         Constant.DRAWER_ITEM_MOVIES -> {
           itemView.titleField.text = itemView.context.getString(R.string.drawer_item_movies)
           itemView.logoImage.setImageResource(R.drawable.ic_movie)
+        }
+        Constant.DRAWER_ITEM_ABOUT -> {
+          itemView.titleField.text = itemView.context.getString(R.string.drawer_item_about)
+          itemView.logoImage.setImageResource(R.drawable.ic_information)
         }
       }
 

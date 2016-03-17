@@ -25,8 +25,8 @@ class SalesRepository {
   }
 
   val saleCategories: Observable<List<SaleCategoryModel>>
-    get() = pricesService.saleCategories().compose(
-        ObservableTransformation.applyApiRequestConfiguration())
+    get() = pricesService.saleCategories()
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
         .map({ saleCategoryDataMapper.transform(it) })
 
   fun getSaleProducts(dateTo: String, minRange: Int, maxRange: Int,
@@ -44,8 +44,8 @@ class SalesRepository {
 
     if (categoryId != 0) params.put("categories[]", categoryId.toString())
 
-    return pricesService.getSaleProducts(params).compose(
-        ObservableTransformation.applyApiRequestConfiguration())
+    return pricesService.getSaleProducts(params)
+        .compose(ObservableTransformation.applyApiRequestConfiguration())
         .map { productDataMapper.transform(it) }
   }
 }

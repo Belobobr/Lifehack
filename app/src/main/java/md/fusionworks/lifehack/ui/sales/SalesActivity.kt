@@ -1,7 +1,5 @@
 package md.fusionworks.lifehack.ui.sales
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -14,7 +12,6 @@ import md.fusionworks.lifehack.ui.base.view.LoadMoreAdapter
 import md.fusionworks.lifehack.ui.sales.model.ProductModel
 import md.fusionworks.lifehack.ui.sales.model.SaleCategoryModel
 import md.fusionworks.lifehack.ui.widget.RetryView
-import md.fusionworks.lifehack.util.AndroidUtil
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.DateUtil
 import md.fusionworks.lifehack.util.LocaleHelper
@@ -48,17 +45,7 @@ class SalesActivity : NavigationDrawerActivity() {
     super.listenForEvents()
     RxBus.event(NavigateToUrlEvent::class.java).compose(
         bindToLifecycle<NavigateToUrlEvent>()).subscribe { navigateToUrlEvent ->
-      val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
-          navigateToUrlEvent.url))
-      val isChromeInstalled = AndroidUtil.isPackageInstalled(Constant.APP_CHROME,
-          saleCategorySpinner.context)
-      if (isChromeInstalled) {
-        browserIntent.`package` = Constant.APP_CHROME
-        startActivity(browserIntent)
-      } else {
-        val chooserIntent = Intent.createChooser(browserIntent, getString(R.string.choose_app))
-        startActivity(chooserIntent)
-      }
+      navigator.navigateToUrl(this, navigateToUrlEvent.url)
     }
   }
 

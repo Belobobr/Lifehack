@@ -9,6 +9,7 @@
   <string name="drawer_item_movies">Filme</string>
   <string name="drawer_item_taxi">Taxi</string>
   <string name="drawer_item_poster">Afișa</string>
+  <string name="drawer_item_about">Despre aplicație</string>
   <string name="title_exchange_rates">Schimb valutar</string>
   <string name="best_exchange">Cel mai convenabil curs</string>
   <string name="bank_list">Lista băncilor</string>
@@ -44,9 +45,16 @@
   <string name="choose_app">Selectează o aplicație</string>
   <string name="all_categories">Toate categoriile</string>
   <string name="title_main">Pagina principală</string>
+  <string name="title_about">Despre aplicație</string>
   <string formatted="false" name="format_branch_monday_friday_hours_2">(L - V: %s - %s)</string>
   <string formatted="false" name="format_branch_sat_hours_2">(S: %s - %s)</string>
   <string name="format_exchange_rates_best_bank">Se folosește cursul băncii %s</string>
   <string name="bank_not_found">Nu a fost gasită banca potrivită</string>
   <string name="language">Русский язык</string>
+  <string name="field_contact">Suntem în contact:</string>
+  <string name="contact_email">info@fusionworks.md</string>
+  <string name="contact_url">http://www.lifehack.md</string>
+  <string name="contact_developer_url">http://www.fusionworks.md</string>
+  <string name="app_version">Versiunea: 1.0.0</string>
+  <string name="developed_">Creat de:</string>
 </resources>

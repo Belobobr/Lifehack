@@ -91,6 +91,7 @@ open class NavigationDrawerActivity : BaseActivity() {
     drawerItems.add(Constant.DRAWER_ITEM_MOVIES)
     drawerItems.add(Constant.DRAWER_ITEM_PRICES)
     drawerItems.add(Constant.DRAWER_ITEM_POSTER)
+    drawerItems.add(Constant.DRAWER_ITEM_ABOUT)
 
     createDrawerItems()
   }
@@ -232,6 +233,10 @@ open class NavigationDrawerActivity : BaseActivity() {
         navigator.navigateToMoviesActivity(this)
         finish()
       }
+      Constant.DRAWER_ITEM_ABOUT -> {
+        navigator.navigateToAboutActivity(this)
+        finish()
+      }
     }
   }
 
@@ -245,14 +250,14 @@ open class NavigationDrawerActivity : BaseActivity() {
     private val DRAWER_TITLE_RES_ID = intArrayOf(R.string.drawer_item_main,
         R.string.drawer_item_life_hacks, R.string.drawer_item_exchange_rates,
         R.string.drawer_item_movies, R.string.drawer_item_taxi, R.string.drawer_item_prices,
-        R.string.drawer_item_sales, R.string.drawer_item_poster)
+        R.string.drawer_item_sales, R.string.drawer_item_poster, R.string.drawer_item_about)
 
     private val DRAWER_ICON_RES_ID = intArrayOf(R.drawable.ic_home, R.drawable.ic_newspaper,
         R.drawable.ic_currency_exchange, R.drawable.ic_movie, R.drawable.ic_taxi,
         R.drawable.ic_price_tag, R.drawable.ic_sale,
-        R.drawable.ic_advertising)
+        R.drawable.ic_advertising, R.drawable.ic_information)
 
     private val DRAWER_ITEM_ACTIVE_STATE = booleanArrayOf(true, true, true, true, true, false, true,
-        false)
+        false, true)
   }
 }

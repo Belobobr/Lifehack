@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_movie.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.util.rx.RxBus
 
 class MoviesActivity : NavigationDrawerActivity() {
 
@@ -31,5 +32,12 @@ class MoviesActivity : NavigationDrawerActivity() {
         R.array.cinema_list, android.R.layout.simple_spinner_item)
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     cinemaSpinner.adapter = adapter;
+  }
+
+  override fun listenForEvents() {
+    super.listenForEvents()
+    RxBus.event(MovieClickEvent::class.java)
+        .compose(bindToLifecycle<MovieClickEvent>())
+        .subscribe { navigator.navigateToMovieDetailActivity(this) }
   }
 }

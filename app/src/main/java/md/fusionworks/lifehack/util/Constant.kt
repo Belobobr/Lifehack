@@ -12,6 +12,7 @@ object Constant {
   const val DRAWER_ITEM_PRICES = 5
   const val DRAWER_ITEM_SALES = 6
   const val DRAWER_ITEM_POSTER = 7
+  const val DRAWER_ITEM_ABOUT = 8
   // public static final int DRAWER_ITEM_SETTINGS = 7;
 
   const val NOTIFICATION_TOAST_INFO = 100

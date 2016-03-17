@@ -49,6 +49,7 @@ class BranchMapFragmentKotlin : BaseFragment() {
         Constant.EXTRA_PARAM_BRANCH_LIST)
     routePolylines = arrayListOf<Polyline>()
     weakHandler = WeakHandler()
+
     buildGoogleApiClient()
   }
 
