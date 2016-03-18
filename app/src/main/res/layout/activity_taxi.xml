@@ -24,6 +24,7 @@
           android:id="@+id/lastUsedTaxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="#636363"
           android:clipToPadding="false"
           android:elevation="2dp"
           android:outlineProvider="bounds"
@@ -33,6 +34,7 @@
           android:id="@+id/taxiPhoneNumberList"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="#434343"
           />
     </LinearLayout>
     <android.support.design.widget.AppBarLayout

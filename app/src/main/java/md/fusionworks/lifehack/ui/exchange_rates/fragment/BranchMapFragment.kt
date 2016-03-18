@@ -7,17 +7,19 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
 import com.badoo.mobile.util.WeakHandler
 import com.directions.route.*
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
-import kotlinx.android.synthetic.main.fragment_branch_map_k.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.ui.base.view.BaseFragment
 import md.fusionworks.lifehack.ui.exchange_rates.event.ScrollToMapEvent
@@ -33,7 +35,12 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class BranchMapFragmentKotlin : BaseFragment() {
+class BranchMapFragment : BaseFragment() {
+
+  private lateinit var branchMapView: MapView
+  private lateinit var imageOverMap: ImageView
+  private lateinit var rootLayout: FrameLayout
+
 
   private lateinit var map: GoogleMap
   private val branchMap = HashMap<Marker, BranchModel>()
@@ -87,7 +94,10 @@ class BranchMapFragmentKotlin : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    val view = inflater?.inflate(R.layout.fragment_branch_map_k, container, false)
+    val view = inflater?.inflate(R.layout.fragment_branch_map, container, false)
+    branchMapView = view?.findViewById(R.id.branchMapView) as MapView
+    imageOverMap = view?.findViewById(R.id.imageOverMap) as ImageView
+    rootLayout = view?.findViewById(R.id.rootLayout) as FrameLayout
     initializeMap(savedInstanceState)
     return view
   }
@@ -242,8 +252,8 @@ class BranchMapFragmentKotlin : BaseFragment() {
 
   companion object {
 
-    fun newInstance(branchModelList: List<BranchModel>?): BranchMapFragmentKotlin {
-      val branchMapFragment = BranchMapFragmentKotlin()
+    fun newInstance(branchModelList: List<BranchModel>?): BranchMapFragment {
+      val branchMapFragment = BranchMapFragment()
       val bundle = Bundle()
       bundle.putParcelableArrayList(Constant.EXTRA_PARAM_BRANCH_LIST,
           ArrayList(branchModelList))

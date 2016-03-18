@@ -62,6 +62,5 @@ class Navigator {
           context.getString(R.string.choose_app))
       context.startActivity(chooserIntent)
     }
-
   }
 }

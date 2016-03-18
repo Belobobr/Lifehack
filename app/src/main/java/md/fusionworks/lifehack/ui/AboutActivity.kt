@@ -26,5 +26,4 @@ class AboutActivity : NavigationDrawerActivity() {
   }
 
   override fun getSelfDrawerItem() = Constant.DRAWER_ITEM_ABOUT
-
 }
