@@ -1,8 +1,8 @@
 package md.fusionworks.lifehack.util.rx
 
-import md.fusionworks.lifehack.data.api.NotFoundException
-import md.fusionworks.lifehack.data.api.ResponseCode
-import md.fusionworks.lifehack.data.api.UnknownException
+import md.fusionworks.lifehack.api.NotFoundException
+import md.fusionworks.lifehack.api.ResponseCode
+import md.fusionworks.lifehack.api.UnknownException
 import md.fusionworks.lifehack.util.Constant
 import retrofit2.Response
 import rx.Observable

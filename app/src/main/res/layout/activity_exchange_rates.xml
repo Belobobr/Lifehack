@@ -14,7 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
-    <md.fusionworks.lifehack.ui.widget.ClickFixNestedScrollView
+    <md.fusionworks.lifehack.widget.ClickFixNestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +45,7 @@
             android:layout_marginTop="16dp"
             />
       </LinearLayout>
-    </md.fusionworks.lifehack.ui.widget.ClickFixNestedScrollView>
+    </md.fusionworks.lifehack.widget.ClickFixNestedScrollView>
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"

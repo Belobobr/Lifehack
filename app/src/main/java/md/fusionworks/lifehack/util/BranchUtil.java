@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.util.Calendar;
 import java.util.Date;
 import md.fusionworks.lifehack.R;
-import md.fusionworks.lifehack.ui.exchange_rates.model.BranchModel;
+import md.fusionworks.lifehack.exchange_rates.model.BranchModel;
 
 /**
  * Created by ungvas on 2/12/16.

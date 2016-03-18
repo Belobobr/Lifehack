@@ -44,7 +44,7 @@
             android:background="@color/divider"
             />
 
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/contactField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             view:typeface="font/Roboto-Regular.ttf"
             />
 
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/emailField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             android:textSize="17.0sp"
             view:typeface="font/Roboto-Light.ttf"
             />
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/urlField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             android:background="@color/divider"
             />
 
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/versionField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_marginTop="27.0dip"
             android:background="@color/divider"
             />
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/developedField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

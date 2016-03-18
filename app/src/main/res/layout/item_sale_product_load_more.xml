@@ -23,7 +23,7 @@
       paynetApplication:cpb_sweep_speed="1.0"
       />
 
-  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+  <md.fusionworks.lifehack.widget.TypefaceTextView
       android:id="@+id/messageField"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

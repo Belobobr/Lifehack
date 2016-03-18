@@ -9,7 +9,7 @@
     android:paddingRight="16dp"
     >
 
-  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+  <md.fusionworks.lifehack.widget.TypefaceTextView
       android:id="@+id/addressField"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
       android:textSize="14sp"
       view:typeface="font/Roboto-Regular.ttf"
       />
-  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+  <md.fusionworks.lifehack.widget.TypefaceTextView
       android:id="@+id/scheduleField"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
       android:visibility="gone"
       view:typeface="font/Roboto-Regular.ttf"
       />
-  <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+  <md.fusionworks.lifehack.widget.TypefaceTextView
       android:id="@+id/phoneField"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

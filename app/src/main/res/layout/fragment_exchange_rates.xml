@@ -9,7 +9,7 @@
     android:orientation="vertical"
     >
 
-  <md.fusionworks.lifehack.ui.widget.RetryView
+  <md.fusionworks.lifehack.widget.RetryView
       android:id="@+id/retryView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -42,7 +42,7 @@
           android:paddingRight="16dp"
           android:paddingTop="16dp"
           >
-        <md.fusionworks.lifehack.ui.widget.TypefaceEditText
+        <md.fusionworks.lifehack.widget.TypefaceEditText
             android:id="@+id/amountInField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             view:typeface="font/Roboto-Bold.ttf"
             />
 
-        <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
+        <md.fusionworks.lifehack.widget.CurrenciesGroup
             android:id="@+id/currenciesInGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:textSize="25sp"
             />
 
-        <md.fusionworks.lifehack.ui.widget.TypefaceEditText
+        <md.fusionworks.lifehack.widget.TypefaceEditText
             android:id="@+id/amountOutField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             view:typeface="font/Roboto-Bold.ttf"
             />
 
-        <md.fusionworks.lifehack.ui.widget.CurrenciesGroup
+        <md.fusionworks.lifehack.widget.CurrenciesGroup
             android:id="@+id/currenciesOutGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
             android:weightSum="100"
             >
 
-          <md.fusionworks.lifehack.ui.widget.DateView
+          <md.fusionworks.lifehack.widget.DateView
               android:id="@+id/ratesDateField"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
               />
         </LinearLayout>
 
-        <md.fusionworks.lifehack.ui.widget.TypefaceTextView
+        <md.fusionworks.lifehack.widget.TypefaceTextView
             android:id="@+id/bestExchangeBankField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
