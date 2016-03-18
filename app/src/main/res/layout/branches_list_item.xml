@@ -11,7 +11,7 @@
     android:weightSum="100"
     >
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:id="@+id/nameField"
       android:layout_width="0dp"
       android:layout_height="match_parent"
@@ -26,7 +26,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:id="@+id/addressField"
       android:layout_width="0dp"
       android:layout_height="match_parent"
@@ -41,7 +41,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:id="@+id/scheduleField"
       android:layout_width="0dp"
       android:layout_height="match_parent"
@@ -56,7 +56,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:id="@+id/workField"
       android:layout_width="0dp"
       android:layout_height="match_parent"

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 
 class MainActivity : NavigationDrawerActivity() {
 

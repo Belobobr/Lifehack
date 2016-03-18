@@ -9,7 +9,7 @@
     android:weightSum="100"
     >
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="25"
@@ -23,7 +23,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_marginLeft="1dp"
@@ -38,7 +38,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_marginLeft="1dp"
@@ -53,7 +53,7 @@
       view:typeface="font/Roboto-Regular.ttf"
       />
 
-  <md.fusionworks.lifehack.widget.TypefaceTextView
+  <md.fusionworks.lifehack.view.widget.TypefaceTextView
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_marginLeft="1dp"

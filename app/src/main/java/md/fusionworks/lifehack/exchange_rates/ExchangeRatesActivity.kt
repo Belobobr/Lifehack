@@ -3,14 +3,14 @@ package md.fusionworks.lifehack.exchange_rates
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_exchange_rates.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import md.fusionworks.lifehack.exchange_rates.event.ScrollToMapEvent
 import md.fusionworks.lifehack.exchange_rates.event.WhereToBuyEvent
 import md.fusionworks.lifehack.exchange_rates.fragment.BranchListFragment
 import md.fusionworks.lifehack.exchange_rates.fragment.BranchMapFragment
 import md.fusionworks.lifehack.exchange_rates.fragment.ExchangeRatesFragment
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 
 class ExchangeRatesActivity : NavigationDrawerActivity() {
 

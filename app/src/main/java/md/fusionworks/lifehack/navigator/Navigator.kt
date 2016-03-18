@@ -3,9 +3,9 @@ package md.fusionworks.lifehack.navigator
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import md.fusionworks.lifehack.about.AboutActivity
 import md.fusionworks.lifehack.LifehacksActivity
 import md.fusionworks.lifehack.R
+import md.fusionworks.lifehack.about.AboutActivity
 import md.fusionworks.lifehack.exchange_rates.ExchangeRatesActivity
 import md.fusionworks.lifehack.main.MainActivity
 import md.fusionworks.lifehack.movies.MovieDetailActivity

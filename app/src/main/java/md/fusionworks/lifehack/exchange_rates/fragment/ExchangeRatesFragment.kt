@@ -9,20 +9,20 @@ import com.jakewharton.rxbinding.widget.RxAdapterView
 import com.jakewharton.rxbinding.widget.RxTextView
 import kotlinx.android.synthetic.main.fragment_exchange_rates.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.repository.ExchangeRatesRepository
-import md.fusionworks.lifehack.fragment.BaseFragment
+import md.fusionworks.lifehack.exchange_rates.ExchangeRatesRepository
+import md.fusionworks.lifehack.view.fragment.BaseFragment
 import md.fusionworks.lifehack.exchange_rates.BankSpinnerAdapter
 import md.fusionworks.lifehack.exchange_rates.event.WhereToBuyEvent
 import md.fusionworks.lifehack.exchange_rates.model.*
-import md.fusionworks.lifehack.widget.DateView
-import md.fusionworks.lifehack.widget.RetryView
+import md.fusionworks.lifehack.view.widget.DateView
+import md.fusionworks.lifehack.view.widget.RetryView
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.Converter
 import md.fusionworks.lifehack.util.DateUtil
 import md.fusionworks.lifehack.util.ExchangeRatesUtil
-import md.fusionworks.lifehack.util.rx.ObservableTransformation
-import md.fusionworks.lifehack.util.rx.ObserverAdapter
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.ObservableTransformation
+import md.fusionworks.lifehack.rx.ObserverAdapter
+import md.fusionworks.lifehack.rx.RxBus
 import rx.Observable
 import java.util.*
 

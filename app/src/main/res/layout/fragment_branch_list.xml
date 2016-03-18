@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="4dp"
-    view:cardBackgroundColor="@color/white"
+    view:cardBackgroundColor="@md.fusionworks.lifehack.extension.color/white"
     view:cardCornerRadius="0dp"
     view:cardUseCompatPadding="true"
     >

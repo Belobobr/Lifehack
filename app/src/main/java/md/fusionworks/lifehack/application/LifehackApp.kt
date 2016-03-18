@@ -8,8 +8,10 @@ import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import md.fusionworks.lifehack.BuildConfig
+import md.fusionworks.lifehack.application.AppComponent
+import md.fusionworks.lifehack.application.AppModule
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.LocaleHelper
+import md.fusionworks.lifehack.helper.LocaleHelper
 
 /**
  * Created by ungvas on 10/20/15.

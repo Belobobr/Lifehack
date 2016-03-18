@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_menu.view.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 
 /**
  * Created by ungvas on 2/17/16.

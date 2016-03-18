@@ -8,8 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.exchange_rates.model.BankSpinnerItemModel
-import md.fusionworks.lifehack.util.toGone
-import md.fusionworks.lifehack.util.toVisible
+import md.fusionworks.lifehack.extension.toGone
+import md.fusionworks.lifehack.extension.toVisible
 
 /**
  * Created by ungvas on 10/30/15.

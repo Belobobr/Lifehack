@@ -3,7 +3,7 @@ package md.fusionworks.lifehack.about
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_about.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
 
 class AboutActivity : NavigationDrawerActivity() {

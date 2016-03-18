@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 import org.jetbrains.anko.find
 
 /**

@@ -2,7 +2,7 @@ package md.fusionworks.lifehack.taxi
 
 import dagger.Component
 import md.fusionworks.lifehack.application.AppComponent
-import md.fusionworks.lifehack.PerActivity
+import md.fusionworks.lifehack.di.PerActivity
 
 /**
  * Created by ungvas on 3/18/16.

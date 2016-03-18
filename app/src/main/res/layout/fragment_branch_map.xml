@@ -1,4 +1,4 @@
-<md.fusionworks.lifehack.widget.SquareFrameLayout
+<md.fusionworks.lifehack.view.widget.SquareFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
@@ -41,4 +41,4 @@
         android:tint="#727272"
         />
   </RelativeLayout>
-</md.fusionworks.lifehack.widget.SquareFrameLayout>
+</md.fusionworks.lifehack.view.widget.SquareFrameLayout>

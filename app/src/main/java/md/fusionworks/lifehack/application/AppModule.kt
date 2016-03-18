@@ -3,7 +3,7 @@ package md.fusionworks.lifehack.application
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import md.fusionworks.lifehack.util.rx.RxBusDagger
+import md.fusionworks.lifehack.rx.RxBusDagger
 import javax.inject.Singleton
 
 /**

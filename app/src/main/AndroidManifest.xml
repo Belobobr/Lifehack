@@ -30,7 +30,7 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.AppCompat">
     <activity
-        android:name=".lauch.LaunchActivity"
+        android:name=".launch.LaunchActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.Lifehack.Launch">
       <intent-filter>

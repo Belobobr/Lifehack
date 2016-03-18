@@ -21,15 +21,15 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.fragment.BaseFragment
+import md.fusionworks.lifehack.view.fragment.BaseFragment
 import md.fusionworks.lifehack.exchange_rates.event.ScrollToMapEvent
 import md.fusionworks.lifehack.exchange_rates.event.ShowBranchMapInfoWindowEvent
 import md.fusionworks.lifehack.exchange_rates.event.ShowRouteOnMapEvent
 import md.fusionworks.lifehack.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.DialogUtil
-import md.fusionworks.lifehack.util.MapUtil
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.helper.MapHelper
+import md.fusionworks.lifehack.rx.RxBus
 import java.util.*
 
 /**
@@ -157,9 +157,9 @@ class BranchMapFragment : BaseFragment() {
 
   private fun pinHomeMarker(location: Location?) {
     if (location != null) {
-      MapUtil.createMarker(map, location.latitude, location.longitude,
+      MapHelper.createMarker(map, location.latitude, location.longitude,
           R.drawable.home_pin_icon)
-      MapUtil.goToPosition(map, location.latitude, location.longitude, false,
+      MapHelper.goToPosition(map, location.latitude, location.longitude, false,
           Constant.CAMERA_ZOOM)
     }
   }
@@ -168,7 +168,7 @@ class BranchMapFragment : BaseFragment() {
     map.clear()
     pinHomeMarker(myLastLocation)
     if (branchList != null) for (branch in branchList) {
-      val marker = MapUtil.createMarker(map, branch.address.location.lat,
+      val marker = MapHelper.createMarker(map, branch.address.location.lat,
           branch.address.location.lng, R.drawable.exchange_pin_icon)
       branchMap.put(marker, branch)
     }
@@ -178,7 +178,7 @@ class BranchMapFragment : BaseFragment() {
     weakHandler.postDelayed({ DialogUtil.showBranchMapInfoWindow(activity, branch) }, 100)
     weakHandler.postDelayed(
         {
-          MapUtil.goToPosition(map, branch?.address?.location?.lat,
+          MapHelper.goToPosition(map, branch?.address?.location?.lat,
               branch?.address?.location?.lng, false)
         }, 200)
   }
@@ -216,7 +216,7 @@ class BranchMapFragment : BaseFragment() {
 
             override fun onRoutingSuccess(arrayList: ArrayList<Route>, j: Int) {
               hideLoadingDialog()
-              MapUtil.goToPosition(map, branch?.address?.location?.lat,
+              MapHelper.goToPosition(map, branch?.address?.location?.lat,
                   branch?.address?.location?.lng, false)
 
               if (routePolylines.size > 0) {

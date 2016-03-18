@@ -1,8 +1,8 @@
 package md.fusionworks.lifehack.application
 
 import dagger.Component
-import md.fusionworks.lifehack.activity.BaseActivity
-import md.fusionworks.lifehack.util.rx.RxBusDagger
+import md.fusionworks.lifehack.view.activity.BaseActivity
+import md.fusionworks.lifehack.rx.RxBusDagger
 import javax.inject.Singleton
 
 /**

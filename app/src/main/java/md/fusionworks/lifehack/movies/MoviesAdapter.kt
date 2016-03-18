@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.adapter.LoadMoreAdapter
+import md.fusionworks.lifehack.view.adapter.LoadMoreAdapter
 import md.fusionworks.lifehack.sales.model.ProductModel
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 
 /**
  * Created by ungvas on 12/30/15.

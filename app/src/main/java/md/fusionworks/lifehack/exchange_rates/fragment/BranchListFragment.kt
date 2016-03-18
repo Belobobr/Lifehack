@@ -8,14 +8,14 @@ import android.widget.TextView
 import com.badoo.mobile.util.WeakHandler
 import kotlinx.android.synthetic.main.fragment_branch_list.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.fragment.BaseFragment
+import md.fusionworks.lifehack.view.fragment.BaseFragment
 import md.fusionworks.lifehack.exchange_rates.event.ScrollToMapEvent
 import md.fusionworks.lifehack.exchange_rates.event.ShowBranchMapInfoWindowEvent
 import md.fusionworks.lifehack.exchange_rates.event.ShowRouteOnMapEvent
 import md.fusionworks.lifehack.exchange_rates.model.BranchModel
 import md.fusionworks.lifehack.util.BranchUtil
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 import java.util.*
 
 /**

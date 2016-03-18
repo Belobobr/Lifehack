@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import color
+import md.fusionworks.lifehack.extension.color
 import com.bumptech.glide.Glide
-import drawable
+import md.fusionworks.lifehack.extension.drawable
 import kotlinx.android.synthetic.main.item_sale_product.view.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.adapter.LoadMoreAdapter
+import md.fusionworks.lifehack.view.adapter.LoadMoreAdapter
 import md.fusionworks.lifehack.sales.model.ProductModel
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
-import md.fusionworks.lifehack.util.tint
+import md.fusionworks.lifehack.rx.RxBus
+import md.fusionworks.lifehack.extension.tint
 
 /**
  * Created by ungvas on 12/30/15.

@@ -55,7 +55,7 @@
             android:src="@drawable/ic_calendar"
             android:tint="@color/mainColorBlue"
             />
-        <md.fusionworks.lifehack.widget.DateView
+        <md.fusionworks.lifehack.view.widget.DateView
             android:id="@+id/ratesDateField"
             android:layout_width="0dp"
             android:layout_marginLeft="6dp"

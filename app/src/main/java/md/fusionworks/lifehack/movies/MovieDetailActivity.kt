@@ -3,7 +3,7 @@ package md.fusionworks.lifehack.movies
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.activity.BaseActivity
+import md.fusionworks.lifehack.view.activity.BaseActivity
 import org.jetbrains.anko.find
 
 class MovieDetailActivity : BaseActivity() {

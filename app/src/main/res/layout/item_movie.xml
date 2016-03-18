@@ -24,7 +24,7 @@
       android:layout_weight="1"
       android:orientation="vertical"
       >
-    <md.fusionworks.lifehack.widget.TypefaceTextView
+    <md.fusionworks.lifehack.view.widget.TypefaceTextView
         android:id="@+id/nameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:gravity="center|left"
         android:orientation="horizontal"
         >
-      <md.fusionworks.lifehack.widget.TypefaceTextView
+      <md.fusionworks.lifehack.view.widget.TypefaceTextView
           android:id="@+id/prevPriceField"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
           view:typeface="font/Roboto-Regular.ttf"
           />
 
-      <md.fusionworks.lifehack.widget.TypefaceTextView
+      <md.fusionworks.lifehack.view.widget.TypefaceTextView
           android:id="@+id/minPriceField"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

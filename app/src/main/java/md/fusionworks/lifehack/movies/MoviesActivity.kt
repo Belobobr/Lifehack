@@ -5,9 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_movie.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.rx.RxBus
 
 class MoviesActivity : NavigationDrawerActivity() {
 

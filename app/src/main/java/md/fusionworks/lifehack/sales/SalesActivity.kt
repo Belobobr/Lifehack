@@ -6,18 +6,18 @@ import android.view.View
 import android.widget.AdapterView
 import kotlinx.android.synthetic.main.activity_sales.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.repository.SalesRepository
-import md.fusionworks.lifehack.activity.NavigationDrawerActivity
-import md.fusionworks.lifehack.adapter.LoadMoreAdapter
+import md.fusionworks.lifehack.sales.SalesRepository
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.view.adapter.LoadMoreAdapter
 import md.fusionworks.lifehack.sales.model.ProductModel
 import md.fusionworks.lifehack.sales.model.SaleCategoryModel
-import md.fusionworks.lifehack.widget.RetryView
+import md.fusionworks.lifehack.view.widget.RetryView
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.util.DateUtil
-import md.fusionworks.lifehack.util.LocaleHelper
-import md.fusionworks.lifehack.util.rx.ObservableTransformation
-import md.fusionworks.lifehack.util.rx.ObserverAdapter
-import md.fusionworks.lifehack.util.rx.RxBus
+import md.fusionworks.lifehack.helper.LocaleHelper
+import md.fusionworks.lifehack.rx.ObservableTransformation
+import md.fusionworks.lifehack.rx.ObserverAdapter
+import md.fusionworks.lifehack.rx.RxBus
 import rx.Observable
 import java.util.*
 
