@@ -2,31 +2,32 @@ package md.fusionworks.lifehack.taxi
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_taxi.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.taxi.persistence.TaxiDataStore
-import md.fusionworks.lifehack.taxi.TaxiRepository
-import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
-import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.rx.ObservableTransformation
-import md.fusionworks.lifehack.rx.RxBus
+import md.fusionworks.lifehack.di.HasComponent
 import md.fusionworks.lifehack.extension.toVisible
+import md.fusionworks.lifehack.rx.ObservableTransformation
+import md.fusionworks.lifehack.rx.RxBusDagger
+import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
+import javax.inject.Inject
 
-class TaxiActivity : NavigationDrawerActivity() {
+class TaxiActivity : NavigationDrawerActivity(), HasComponent<TaxiComponent> {
 
-  private lateinit var taxiRepository: TaxiRepository
-  private lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
-  private lateinit var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  override lateinit var component: TaxiComponent
+
+  @Inject lateinit var taxiRepository: TaxiRepository
+  @Inject lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  @Inject lateinit var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  @Inject lateinit var rxBus: RxBusDagger
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    initializeDIComponent()
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_taxi)
-    taxiRepository = TaxiRepository(Realm.getDefaultInstance(),
-        TaxiDataStore(Realm.getDefaultInstance()))
   }
 
   override fun onResume() {
@@ -36,7 +37,7 @@ class TaxiActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBus.event(TaxiPhoneNumberClickEvent::class.java)
+    rxBus.event(TaxiPhoneNumberClickEvent::class.java)
         .compose(bindToLifecycle<TaxiPhoneNumberClickEvent>())
         .subscribe { taxiPhoneNumberClickEvent ->
           onPhoneNumberClick(taxiPhoneNumberClickEvent.taxiPhoneNumberModel.phoneNumber)
@@ -52,7 +53,7 @@ class TaxiActivity : NavigationDrawerActivity() {
 
   private fun initializeTaxiPhoneNumberList(taxiPhoneNumberModelList: List<TaxiPhoneNumberModel>) {
     taxiPhoneNumberList.layoutManager = GridLayoutManager(this, 4)
-    taxiPhoneNumberAdapter = TaxiPhoneNumberAdapter(taxiPhoneNumberModelList)
+    taxiPhoneNumberAdapter.addItems(taxiPhoneNumberModelList)
     taxiPhoneNumberList.adapter = taxiPhoneNumberAdapter
 
     getLastUsedPhoneNumbers(Observable.just(taxiPhoneNumberModelList))
@@ -64,7 +65,7 @@ class TaxiActivity : NavigationDrawerActivity() {
 
     lastUsedTaxiPhoneNumberList.layoutManager = GridLayoutManager(
         this, 4)
-    lastUsedTaxiPhoneNumberAdapter = TaxiPhoneNumberAdapter(taxiPhoneNumberModelList)
+    lastUsedTaxiPhoneNumberAdapter.addItems(taxiPhoneNumberModelList)
     lastUsedTaxiPhoneNumberList.adapter = lastUsedTaxiPhoneNumberAdapter
     lastUsedTaxiPhoneNumberList.toVisible()
   }
@@ -107,5 +108,13 @@ class TaxiActivity : NavigationDrawerActivity() {
   private fun onPhoneNumberClick(phoneNumber: Int) {
     taxiRepository.updateLastUsedDate(phoneNumber)
     navigator.navigateToCallActivity(this, phoneNumber)
+  }
+
+  override fun initializeDIComponent() {
+    component = DaggerTaxiComponent
+        .builder()
+        .appComponent(appComponent)
+        .build()
+    component.inject(this)
   }
 }

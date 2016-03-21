@@ -6,13 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.rx.RxBus
-import org.jetbrains.anko.find
+import md.fusionworks.lifehack.di.PerActivity
+import md.fusionworks.lifehack.rx.RxBusDagger
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 2/17/16.
  */
-class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumberModel>) : RecyclerView.Adapter<TaxiPhoneNumberAdapter.TaxiPhoneNumberViewHolder>() {
+@PerActivity
+class TaxiPhoneNumberAdapter
+@Inject
+constructor(val rxBus: RxBusDagger) : RecyclerView.Adapter<TaxiPhoneNumberAdapter.TaxiPhoneNumberViewHolder>() {
+
+  private lateinit var taxiPhoneNumberList: List<TaxiPhoneNumberModel>
+
+  fun addItems(taxiPhoneNumberList: List<TaxiPhoneNumberModel>) {
+    this.taxiPhoneNumberList = taxiPhoneNumberList
+  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaxiPhoneNumberViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_taxi_phone_number, parent,
@@ -21,20 +31,24 @@ class TaxiPhoneNumberAdapter(private val taxiPhoneNumberList: List<TaxiPhoneNumb
   }
 
   override fun onBindViewHolder(holder: TaxiPhoneNumberViewHolder, position: Int) {
-    holder.phoneNumberField.text = taxiPhoneNumberList[position].phoneNumber.toString()
+    holder.bind(taxiPhoneNumberList[position], rxBus)
   }
 
   override fun getItemCount() = taxiPhoneNumberList.size
 
-  inner class TaxiPhoneNumberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class TaxiPhoneNumberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val phoneNumberField: TextView
+    private lateinit var phoneNumberField: TextView
 
     init {
-      phoneNumberField = itemView.find(R.id.phoneNumberField)
+      phoneNumberField = itemView.findViewById(R.id.phoneNumberField) as TextView
+    }
+
+    fun bind(taxiPhoneNumberModel: TaxiPhoneNumberModel, rxBus: RxBusDagger) {
+      phoneNumberField.text = taxiPhoneNumberModel.phoneNumber.toString()
       itemView.setOnClickListener {
-        RxBus.postIfHasObservers(
-            TaxiPhoneNumberClickEvent(taxiPhoneNumberList[adapterPosition]))
+        rxBus.postIfHasObservers(
+            TaxiPhoneNumberClickEvent(taxiPhoneNumberModel))
       }
     }
   }
