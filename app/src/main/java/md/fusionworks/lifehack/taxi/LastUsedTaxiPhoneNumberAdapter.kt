@@ -14,9 +14,9 @@ import javax.inject.Inject
  * Created by ungvas on 2/17/16.
  */
 @PerActivity
-class TaxiPhoneNumberAdapter
+class LastUsedTaxiPhoneNumberAdapter
 @Inject
-constructor(private val rxBus: RxBusDagger) : RecyclerView.Adapter<TaxiPhoneNumberAdapter.TaxiPhoneNumberViewHolder>() {
+constructor(private val rxBus: RxBusDagger) : RecyclerView.Adapter<LastUsedTaxiPhoneNumberAdapter.TaxiPhoneNumberViewHolder>() {
 
   private lateinit var taxiPhoneNumberList: List<TaxiPhoneNumberModel>
 

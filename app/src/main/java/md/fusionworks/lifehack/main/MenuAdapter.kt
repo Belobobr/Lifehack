@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @PerActivity
 class MenuAdapter
-@Inject constructor(val rxBus: RxBusDagger) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+@Inject constructor(private val rxBus: RxBusDagger) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
   private val itemList = intArrayOf(Constant.DRAWER_ITEM_LIFE_HACKS,
       Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI,
