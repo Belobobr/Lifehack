@@ -75,7 +75,6 @@ class MainActivity : NavigationDrawerActivity(), HasComponent<MainComponent> {
     component = DaggerMainComponent
         .builder()
         .appComponent(appComponent)
-        .mainModule(MainModule(this))
         .build()
     component.inject(this)
   }

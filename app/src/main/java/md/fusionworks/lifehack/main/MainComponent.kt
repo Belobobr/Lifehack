@@ -8,7 +8,7 @@ import md.fusionworks.lifehack.di.PerActivity
  * Created by ungvas on 3/21/16.
  */
 @PerActivity
-@Component(modules = arrayOf(MainModule::class), dependencies = arrayOf(AppComponent::class))
+@Component(dependencies = arrayOf(AppComponent::class))
 interface MainComponent {
 
   fun inject(mainActivity: MainActivity)
