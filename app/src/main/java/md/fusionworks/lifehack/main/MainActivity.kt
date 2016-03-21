@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
+import md.fusionworks.lifehack.di.HasComponent
+import md.fusionworks.lifehack.rx.RxBusDagger
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.rx.RxBus
+import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
+import javax.inject.Inject
 
-class MainActivity : NavigationDrawerActivity() {
+class MainActivity : NavigationDrawerActivity(), HasComponent<MainComponent> {
 
-  private lateinit var menuAdapter: MenuAdapter
+  override lateinit var component: MainComponent
+
+  @Inject lateinit var rxBus: RxBusDagger
+  @Inject lateinit var menuAdapter: MenuAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    initializeDIComponent()
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    menuAdapter = MenuAdapter()
     initializeMenuList()
   }
 
@@ -29,7 +34,7 @@ class MainActivity : NavigationDrawerActivity() {
 
   override fun listenForEvents() {
     super.listenForEvents()
-    RxBus.event(MenuItemClickEvent::class.java).compose(
+    rxBus.event(MenuItemClickEvent::class.java).compose(
         bindToLifecycle<MenuItemClickEvent>()).subscribe { menuItemClickEvent ->
       onMenuItemClickEvent(menuItemClickEvent.itemId)
     }
@@ -64,5 +69,14 @@ class MainActivity : NavigationDrawerActivity() {
         finish()
       }
     }
+  }
+
+  override fun initializeDIComponent() {
+    component = DaggerMainComponent
+        .builder()
+        .appComponent(appComponent)
+        .mainModule(MainModule(this))
+        .build()
+    component.inject(this)
   }
 }

@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.sales
+package md.fusionworks.lifehack.sales.adapter
 
 import android.app.Activity
 import android.content.Context

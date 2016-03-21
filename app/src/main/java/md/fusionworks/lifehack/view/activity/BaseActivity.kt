@@ -7,9 +7,11 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import md.fusionworks.lifehack.R
+import md.fusionworks.lifehack.application.AppComponent
+import md.fusionworks.lifehack.application.LifehackApp
 import md.fusionworks.lifehack.navigator.Navigator
-import md.fusionworks.lifehack.view.widget.LoadingDialog
 import md.fusionworks.lifehack.util.Constant
+import md.fusionworks.lifehack.view.widget.LoadingDialog
 import org.jetbrains.anko.find
 import rx.subscriptions.CompositeSubscription
 
@@ -75,6 +77,9 @@ open class BaseActivity : RxAppCompatActivity() {
       this.loadingDialog.show()
     }
   }
+
+  val appComponent: AppComponent
+    get() = LifehackApp.component
 
   fun hideLoadingDialog() {
     if (this.loadingDialog != null) {

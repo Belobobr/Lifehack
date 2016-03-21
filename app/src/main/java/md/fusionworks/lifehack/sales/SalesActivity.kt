@@ -18,6 +18,8 @@ import md.fusionworks.lifehack.helper.LocaleHelper
 import md.fusionworks.lifehack.rx.ObservableTransformation
 import md.fusionworks.lifehack.rx.ObserverAdapter
 import md.fusionworks.lifehack.rx.RxBus
+import md.fusionworks.lifehack.sales.adapter.SaleCategorySpinnerAdapter
+import md.fusionworks.lifehack.sales.adapter.SaleProductAdapter
 import rx.Observable
 import java.util.*
 

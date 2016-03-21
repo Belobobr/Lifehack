@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_menu.view.*
 import md.fusionworks.lifehack.R
+import md.fusionworks.lifehack.di.PerActivity
+import md.fusionworks.lifehack.rx.RxBusDagger
 import md.fusionworks.lifehack.util.Constant
-import md.fusionworks.lifehack.rx.RxBus
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 2/17/16.
  */
-class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+
+@PerActivity
+class MenuAdapter
+@Inject constructor(val rxBus: RxBusDagger) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
   private val itemList = intArrayOf(Constant.DRAWER_ITEM_LIFE_HACKS,
       Constant.DRAWER_ITEM_EXCHANGE_RATES, Constant.DRAWER_ITEM_SALES, Constant.DRAWER_ITEM_TAXI,
@@ -24,15 +29,15 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-    holder.bindMenu(position);
+    holder.bindMenu(itemList[position], rxBus);
   }
 
   override fun getItemCount() = itemList.size
 
-  inner class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bindMenu(position: Int) {
-      when (itemList[position]) {
+    fun bindMenu(menuItem: Int, rxBus: RxBusDagger) {
+      when (menuItem) {
         Constant.DRAWER_ITEM_LIFE_HACKS -> {
           itemView.titleField.text = itemView.context.getString(
               R.string.drawer_item_life_hacks)
@@ -62,7 +67,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
       }
 
       itemView.setOnClickListener { v ->
-        RxBus.postIfHasObservers(MenuItemClickEvent(itemList[adapterPosition]))
+        rxBus.postIfHasObservers(MenuItemClickEvent(menuItem))
       }
     }
   }

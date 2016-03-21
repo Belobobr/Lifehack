@@ -1,4 +1,4 @@
-package md.fusionworks.lifehack.sales
+package md.fusionworks.lifehack.sales.adapter
 
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
@@ -17,6 +17,7 @@ import md.fusionworks.lifehack.sales.model.ProductModel
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.rx.RxBus
 import md.fusionworks.lifehack.extension.tint
+import md.fusionworks.lifehack.sales.NavigateToUrlEvent
 
 /**
  * Created by ungvas on 12/30/15.

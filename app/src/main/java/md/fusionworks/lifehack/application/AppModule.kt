@@ -14,8 +14,5 @@ class AppModule(application: Application) {
 
   @Provides
   @Singleton
-  fun provideRxBus(): RxBusDagger {
-    return RxBusDagger()
-  }
-
+  fun provideRxBus(): RxBusDagger = RxBusDagger()
 }
