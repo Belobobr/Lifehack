@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
+import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.rx.RxBusDagger
 import javax.inject.Singleton
 
@@ -15,9 +16,13 @@ class AppModule(application: Application) {
 
   @Provides
   @Singleton
-  fun provideRxBus(): RxBusDagger = RxBusDagger()
+  fun provideRxBus() = RxBusDagger()
 
   @Provides
   @Singleton
-  fun provideRelam(): Realm = Realm.getDefaultInstance()
+  fun provideRealm() = Realm.getDefaultInstance()
+
+  @Provides
+  @Singleton
+  fun provideNavigator() = Navigator()
 }

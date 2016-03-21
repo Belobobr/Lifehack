@@ -1,12 +1,16 @@
 package md.fusionworks.lifehack.taxi.persistence
 
 import io.realm.Realm
-import java.util.Date
+import md.fusionworks.lifehack.di.PerActivity
+import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 2/18/16.
  */
-class TaxiDataStore(private val realm: Realm) {
+@PerActivity
+class TaxiDataStore
+@Inject constructor(private val realm: Realm) {
 
   fun add(phoneNumberList: IntArray) = realm.executeTransaction { realm ->
     for (i in phoneNumberList.indices) {

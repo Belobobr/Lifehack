@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_taxi.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.di.HasComponent
 import md.fusionworks.lifehack.extension.toVisible
+import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.rx.ObservableTransformation
 import md.fusionworks.lifehack.rx.RxBusDagger
 import md.fusionworks.lifehack.util.Constant
@@ -15,18 +15,17 @@ import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import javax.inject.Inject
 
-class TaxiActivity : NavigationDrawerActivity(), HasComponent<TaxiComponent> {
-
-  override lateinit var component: TaxiComponent
+class TaxiActivity : NavigationDrawerActivity() {
 
   @Inject lateinit var taxiRepository: TaxiRepository
   @Inject lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
   @Inject lateinit var lastUsedTaxiPhoneNumberAdapter: LastUsedTaxiPhoneNumberAdapter
   @Inject lateinit var rxBus: RxBusDagger
+  @Inject lateinit var appNavigator: Navigator
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    initializeDIComponent()
     super.onCreate(savedInstanceState)
+    component.inject(this)
     setContentView(R.layout.activity_taxi)
   }
 
@@ -107,14 +106,6 @@ class TaxiActivity : NavigationDrawerActivity(), HasComponent<TaxiComponent> {
 
   private fun onPhoneNumberClick(phoneNumber: Int) {
     taxiRepository.updateLastUsedDate(phoneNumber)
-    navigator.navigateToCallActivity(this, phoneNumber)
-  }
-
-  override fun initializeDIComponent() {
-    component = DaggerTaxiComponent
-        .builder()
-        .appComponent(appComponent)
-        .build()
-    component.inject(this)
+    appNavigator.navigateToCallActivity(this, phoneNumber)
   }
 }

@@ -2,8 +2,8 @@ package md.fusionworks.lifehack.application
 
 import dagger.Component
 import io.realm.Realm
+import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.rx.RxBusDagger
-import md.fusionworks.lifehack.view.activity.BaseActivity
 import javax.inject.Singleton
 
 /**
@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
 
-  fun inject(baseActivity: BaseActivity)
-
   fun provideRxBus(): RxBusDagger
 
   fun provideRealm(): Realm
+
+  fun provideNavigator(): Navigator
 }

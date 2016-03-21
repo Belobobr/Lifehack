@@ -1,12 +1,14 @@
 package md.fusionworks.lifehack.taxi
 
+import md.fusionworks.lifehack.di.PerActivity
 import md.fusionworks.lifehack.taxi.persistence.TaxiPhoneNumber
-import md.fusionworks.lifehack.taxi.TaxiPhoneNumberModel
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 2/18/16.
  */
-class TaxiPhoneNumberDataMapper {
+@PerActivity
+class TaxiPhoneNumberDataMapper @Inject constructor() {
 
   fun transform(taxiPhoneNumber: TaxiPhoneNumber): TaxiPhoneNumberModel = TaxiPhoneNumberModel(
       taxiPhoneNumber.phoneNumber,

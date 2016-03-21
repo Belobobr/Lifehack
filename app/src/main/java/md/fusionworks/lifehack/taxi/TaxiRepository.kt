@@ -14,12 +14,7 @@ import javax.inject.Inject
 class TaxiRepository
 @Inject
 constructor(
-    private val realm: Realm, private val taxiDataStore: TaxiDataStore) {
-  private val taxiPhoneNumberDataMapper: TaxiPhoneNumberDataMapper
-
-  init {
-    taxiPhoneNumberDataMapper = TaxiPhoneNumberDataMapper()
-  }
+    private val realm: Realm, private val taxiDataStore: TaxiDataStore, private val taxiPhoneNumberDataMapper: TaxiPhoneNumberDataMapper) {
 
   val hasData: Boolean
     get() = realm.where(TaxiPhoneNumber::

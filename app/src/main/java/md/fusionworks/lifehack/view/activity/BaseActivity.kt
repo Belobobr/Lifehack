@@ -9,6 +9,9 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.application.AppComponent
 import md.fusionworks.lifehack.application.LifehackApp
+import md.fusionworks.lifehack.di.HasComponent
+import md.fusionworks.lifehack.launch.ActivityComponent
+import md.fusionworks.lifehack.launch.DaggerActivityComponent
 import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.view.widget.LoadingDialog
@@ -18,7 +21,9 @@ import rx.subscriptions.CompositeSubscription
 /**
  * Created by ungvas on 10/15/15.
  */
-open class BaseActivity : RxAppCompatActivity() {
+open class BaseActivity : RxAppCompatActivity(), HasComponent<ActivityComponent> {
+
+  override lateinit var component: ActivityComponent
 
   val coordinatorLayout by lazy { find<CoordinatorLayout>(R.id.coordinatorLayout) }
 
@@ -27,6 +32,7 @@ open class BaseActivity : RxAppCompatActivity() {
   protected lateinit var loadingDialogCancelSubscription: CompositeSubscription
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    initializeDIComponent()
     super.onCreate(savedInstanceState)
     navigator = Navigator()
     loadingDialog = LoadingDialog(this) {
@@ -93,6 +99,10 @@ open class BaseActivity : RxAppCompatActivity() {
   protected fun onLoadingDialogCanceled() {
   }
 
-  protected open fun initializeDIComponent() {
+  private fun initializeDIComponent() {
+    component = DaggerActivityComponent
+        .builder()
+        .appComponent(appComponent)
+        .build()
   }
 }

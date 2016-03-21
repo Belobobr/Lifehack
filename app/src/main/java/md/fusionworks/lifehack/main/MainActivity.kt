@@ -4,22 +4,21 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import md.fusionworks.lifehack.R
-import md.fusionworks.lifehack.di.HasComponent
+import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.rx.RxBusDagger
 import md.fusionworks.lifehack.util.Constant
 import md.fusionworks.lifehack.view.activity.NavigationDrawerActivity
 import javax.inject.Inject
 
-class MainActivity : NavigationDrawerActivity(), HasComponent<MainComponent> {
-
-  override lateinit var component: MainComponent
+class MainActivity : NavigationDrawerActivity() {
 
   @Inject lateinit var rxBus: RxBusDagger
   @Inject lateinit var menuAdapter: MenuAdapter
+  @Inject lateinit var appNavigator: Navigator
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    initializeDIComponent()
     super.onCreate(savedInstanceState)
+    component.inject(this)
     setContentView(R.layout.activity_main)
 
     initializeMenuList()
@@ -49,33 +48,29 @@ class MainActivity : NavigationDrawerActivity(), HasComponent<MainComponent> {
   private fun onMenuItemClickEvent(itemId: Int) {
     when (itemId) {
       Constant.DRAWER_ITEM_EXCHANGE_RATES -> {
-        navigator.navigateToExchangeRatesActivity(this)
+        appNavigator.navigateToExchangeRatesActivity(this)
         finish()
       }
       Constant.DRAWER_ITEM_TAXI -> {
-        navigator.navigateToTaxiActivity(this)
+        appNavigator.navigateToTaxiActivity(this)
         finish()
       }
       Constant.DRAWER_ITEM_LIFE_HACKS -> {
-        navigator.navigateToLifeHacksActivity(this)
+        appNavigator.navigateToLifeHacksActivity(this)
         finish()
       }
       Constant.DRAWER_ITEM_SALES -> {
-        navigator.navigateToSalesActivity(this)
+        appNavigator.navigateToSalesActivity(this)
         finish()
       }
       Constant.DRAWER_ITEM_ABOUT -> {
-        navigator.navigateToAboutActivity(this)
+        appNavigator.navigateToAboutActivity(this)
+        finish()
+      }
+      Constant.DRAWER_ITEM_MOVIES -> {
+        appNavigator.navigateToMoviesActivity(this)
         finish()
       }
     }
-  }
-
-  override fun initializeDIComponent() {
-    component = DaggerMainComponent
-        .builder()
-        .appComponent(appComponent)
-        .build()
-    component.inject(this)
   }
 }
