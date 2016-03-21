@@ -1,16 +1,20 @@
 package md.fusionworks.lifehack.taxi
 
 import io.realm.Realm
+import md.fusionworks.lifehack.di.PerActivity
 import md.fusionworks.lifehack.taxi.persistence.TaxiDataStore
 import md.fusionworks.lifehack.taxi.persistence.TaxiPhoneNumber
-import md.fusionworks.lifehack.taxi.TaxiPhoneNumberDataMapper
-import md.fusionworks.lifehack.taxi.TaxiPhoneNumberModel
 import rx.Observable
+import javax.inject.Inject
 
 /**
  * Created by ungvas on 2/18/16.
  */
-class TaxiRepository(private val realm: Realm, private val taxiDataStore: TaxiDataStore) {
+@PerActivity
+class TaxiRepository
+@Inject
+constructor(
+    private val realm: Realm, private val taxiDataStore: TaxiDataStore) {
   private val taxiPhoneNumberDataMapper: TaxiPhoneNumberDataMapper
 
   init {

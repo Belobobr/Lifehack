@@ -14,14 +14,15 @@ import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class TaxiActivity : NavigationDrawerActivity(), HasComponent<TaxiComponent> {
 
   override lateinit var component: TaxiComponent
 
   @Inject lateinit var taxiRepository: TaxiRepository
-  @Inject lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
-  @Inject lateinit var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  @Inject @Named("a") lateinit var taxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
+  @Inject @Named("b") lateinit var lastUsedTaxiPhoneNumberAdapter: TaxiPhoneNumberAdapter
   @Inject lateinit var rxBus: RxBusDagger
 
   override fun onCreate(savedInstanceState: Bundle?) {
