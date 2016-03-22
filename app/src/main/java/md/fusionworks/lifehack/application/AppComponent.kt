@@ -1,7 +1,9 @@
 package md.fusionworks.lifehack.application
 
+import com.google.gson.Gson
 import dagger.Component
 import io.realm.Realm
+import md.fusionworks.lifehack.api.banks.CinemaService
 import md.fusionworks.lifehack.navigator.Navigator
 import md.fusionworks.lifehack.rx.RxBusDagger
 import javax.inject.Singleton
@@ -18,4 +20,8 @@ interface AppComponent {
   fun provideRealm(): Realm
 
   fun provideNavigator(): Navigator
+
+  fun provideGsonConverter(): Gson
+
+  fun provideCinemaService(): CinemaService
 }

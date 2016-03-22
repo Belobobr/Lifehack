@@ -4,6 +4,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import md.fusionworks.lifehack.BuildConfig
 import md.fusionworks.lifehack.api.banks.BanksService
+import md.fusionworks.lifehack.api.banks.CinemaService
 import md.fusionworks.lifehack.api.prices.PricesService
 import md.fusionworks.lifehack.util.Constant
 import okhttp3.OkHttpClient
@@ -62,5 +63,29 @@ class ServiceFactory {
         .build()
 
     return retrofit.create(PricesService::class.java)
+  }
+
+  fun buildCinemaService(): CinemaService {
+    val httpLoggingInterceptor = HttpLoggingInterceptor()
+    httpLoggingInterceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .connectTimeout(Constant.CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
+        .readTimeout(Constant.CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
+
+    val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl(PricesService.ENDPOINT)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(
+            RxJavaCallAdapterFactory.create())
+        .build()
+
+    return retrofit.create(CinemaService::class.java)
   }
 }

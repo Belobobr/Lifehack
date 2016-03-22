@@ -10,7 +10,7 @@ import javax.inject.Inject
 @PerActivity
 class TaxiPhoneNumberDataMapper @Inject constructor() {
 
-  fun transform(taxiPhoneNumber: TaxiPhoneNumber): TaxiPhoneNumberModel = TaxiPhoneNumberModel(
+  fun transform(taxiPhoneNumber: TaxiPhoneNumber) = TaxiPhoneNumberModel(
       taxiPhoneNumber.phoneNumber,
       taxiPhoneNumber.lastCallDate)
 

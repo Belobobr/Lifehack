@@ -4,6 +4,7 @@ import dagger.Component
 import md.fusionworks.lifehack.application.AppComponent
 import md.fusionworks.lifehack.di.PerActivity
 import md.fusionworks.lifehack.main.MainActivity
+import md.fusionworks.lifehack.movies.MoviesActivity
 import md.fusionworks.lifehack.taxi.TaxiActivity
 
 /**
@@ -18,4 +19,6 @@ interface ActivityComponent {
   fun inject(mainActivity: MainActivity)
 
   fun inject(taxiActivity: TaxiActivity)
+
+  fun inject(moviesActivity: MoviesActivity)
 }
