@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_movie.*
 import md.fusionworks.lifehack.R
 import md.fusionworks.lifehack.api.cinema.model.CinemaModel
+import md.fusionworks.lifehack.api.cinema.model.MovieModel
 import md.fusionworks.lifehack.helper.LocaleHelper
 import md.fusionworks.lifehack.rx.ObservableTransformation
 import md.fusionworks.lifehack.rx.ObserverAdapter
@@ -27,7 +28,8 @@ class MoviesActivity : NavigationDrawerActivity() {
     movieList.layoutManager = LinearLayoutManager(this)
     movieList.adapter = MoviesAdapter(movieList)
     initializeCinemaSpinner()
-    getAllCinemas()
+    //getAllCinemas()
+    getAllMovies()
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -60,6 +62,25 @@ class MoviesActivity : NavigationDrawerActivity() {
             .subscribe {
               object : ObserverAdapter<List<CinemaModel>>() {
                 override fun onNext(t: List<CinemaModel>) {
+
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+              }
+            })
+  }
+
+  private fun getAllMovies() {
+    showLoadingDialog()
+    loadingDialogCancelSubscription.add(
+        moviesRepository.allMovies
+            .compose(ObservableTransformation.applyIOToMainThreadSchedulers())
+            .compose(bindToLifecycle())
+            .subscribe {
+              object : ObserverAdapter<List<MovieModel>>() {
+                override fun onNext(t: List<MovieModel>) {
 
                 }
 
